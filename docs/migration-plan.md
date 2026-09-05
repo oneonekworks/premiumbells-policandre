@@ -1,0 +1,213 @@
+# Migration Plan
+
+**Status:** Active  
+**Last updated:** 2026-09-05
+
+## Delivery principles
+
+- The Next.js 12 production site remains the rollback target until final
+  acceptance.
+- Work proceeds in small, demonstrable vertical slices.
+- The old repository and GCS bucket are read-only migration inputs.
+- Content migration is automated and repeatable; manual work is reserved for
+  editorial judgement.
+- Existing design behaviour is preserved before optional visual improvements.
+- Each phase ends with explicit verification and an updated status document.
+
+## Phase 0 — Foundation and source audit
+
+**Goal:** Establish a durable source of truth before implementation.
+
+- [x] Record target architecture.
+- [x] Record initial content model.
+- [x] Inventory legacy routes, data collections, media origins, and counts.
+- [x] Record pricing-removal requirement.
+- [x] Create migration status tracking.
+- [ ] Initialise or connect version control for `rbells_policandre`.
+- [ ] Generate the authoritative media manifest.
+- [ ] Export/back up the GCS bucket or confirm an existing recoverable backup.
+- [ ] Capture baseline production screenshots and performance measurements.
+
+**Exit criteria:** Source inventory and backups are reproducible; the new
+repository is versioned; unresolved scope decisions are recorded.
+
+## Phase 1 — Sanity project and Studio foundation
+
+**Goal:** Create the content platform without changing production.
+
+- [ ] User creates/owns the Sanity organisation and project.
+- [ ] Confirm project ID, dataset name, region/options, and editor accounts.
+- [ ] Configure local public project variables and private tokens.
+- [ ] Scaffold a standalone Studio in `studio/`.
+- [ ] Add schemas and singleton handling from `content-model.md`.
+- [ ] Add validation, previews, desk structure, and document ordering.
+- [ ] Configure CORS for local and preview origins.
+- [ ] Generate TypeScript types from schemas/queries.
+- [ ] Deploy Studio to a temporary Sanity-hosted URL.
+
+**Exit criteria:** An authorised editor can create, preview, validate, and
+publish sample categories and projects without touching source code.
+
+## Phase 2 — Next.js/Sanity integration
+
+**Goal:** Establish the production data boundary.
+
+- [ ] Add typed Sanity clients for published and preview data.
+- [ ] Add central query definitions and query result types.
+- [ ] Add Sanity image URL builder/loader for `next/image`.
+- [ ] Add Draft Mode enable/disable routes with secret validation.
+- [ ] Add signed publish-webhook route and targeted revalidation.
+- [ ] Add environment-variable validation and example documentation.
+- [ ] Add basic error logging and missing-content behaviour.
+
+**Exit criteria:** The Next app renders typed published content, previews drafts,
+and updates a changed document without a full redeploy.
+
+## Phase 3 — `Clopote` vertical slice
+
+**Goal:** Prove the complete editorial and visitor experience before bulk import.
+
+Representative records:
+
+- `Schitul Duca` — simple project and small gallery.
+- `Parohia Ziua Crucii, Iași` — gallery plus multiple YouTube videos.
+- `Parohia Roșu Chiajna, Sfințire` — 89-image performance stress case.
+
+Implementation:
+
+- [ ] Create site shell, header, work sidebar, and responsive mobile navigation.
+- [ ] Build `/lucrarile-noastre/clopote` as a Server Component route.
+- [ ] Build typed project cards and responsive image loading.
+- [ ] Build `/lucrarile-noastre/clopote/[project]` full page.
+- [ ] Add parallel/intercepted modal route for soft navigation.
+- [ ] Add accessible slide-over details and fullscreen lightbox.
+- [ ] Add URL-based search/filter behaviour.
+- [ ] Add project metadata and social sharing image rules.
+- [ ] Verify keyboard, Back/Forward, refresh, direct URL, and mobile behaviour.
+- [ ] Measure initial grid and large-gallery performance.
+
+**Exit criteria:** All three projects are editable in Studio and work correctly
+as cards, modal routes, direct pages, and fullscreen galleries.
+
+## Phase 4 — Migration tooling
+
+**Goal:** Convert the repository data and media without manual re-entry.
+
+- [ ] `inventory-legacy`: normalise all active records into an intermediate
+  manifest without writing to Sanity.
+- [ ] `validate-media`: resolve local/GCS/Cloudinary URLs and record status,
+  bytes, MIME type, dimensions, and checksum where available.
+- [ ] `migrate-content`: create deterministic Sanity document IDs and references.
+- [ ] `migrate-assets`: upload originals, deduplicate by checksum/source, and
+  preserve gallery order.
+- [ ] Add concurrency limits, retry with backoff, checkpoints, and resume.
+- [ ] Add dry-run and category/project filters.
+- [ ] Emit machine-readable and human-readable reports.
+- [ ] Block affected records on slug collisions or missing required media.
+- [ ] Add tests for mapping, URL normalisation, and idempotency.
+
+**Exit criteria:** Re-running an import produces no duplicate documents or
+assets, and source-versus-target counts reconcile for the test slice.
+
+## Phase 5 — Portfolio migration
+
+Recommended order:
+
+1. Clopote remainder
+2. Policandre
+3. Reconditionari policandre
+4. Automatizari
+5. Usi
+6. Orologii and sonorizari after scope decision
+
+- [ ] Resolve duplicate slugs with approved canonical names and redirects.
+- [ ] Import all active records and media.
+- [ ] Review titles, descriptions, dates, alt text, and cover crops in Studio.
+- [ ] Verify category counts and gallery ordering.
+- [ ] Test Rohia (201 images) and Drobeta doors (176 images) as maximum galleries.
+
+**Exit criteria:** All approved portfolio categories reconcile with the source
+manifest and pass visual/performance review.
+
+## Phase 6 — Services and catalogue
+
+- [ ] Build service overview and dynamic service routes.
+- [ ] Convert repeated service layouts to structured reusable sections.
+- [ ] Import active services and their galleries.
+- [ ] Decide whether maintenance services launch, remain hidden, or are removed.
+- [ ] Import informational catalogue items and technical specifications.
+- [ ] Verify that no legacy prices appear in documents, queries, rendered HTML,
+  metadata, exports, or search indexes.
+- [ ] Replace incorrect legacy service links.
+
+**Exit criteria:** Editors can create and update services/catalogue entries, and
+the public site contains no price information.
+
+## Phase 7 — Homepage, blog, and global content
+
+- [ ] Rebuild the homepage using named, typed sections.
+- [ ] Import global company, navigation, footer, and contact information.
+- [ ] Import catalogue PDF records.
+- [ ] Migrate testimonial and audio content.
+- [ ] Migrate blog metadata and hard-coded article bodies to Portable Text.
+- [ ] Migrate about video with a valid poster and interactive controls.
+- [ ] Add blog listing, article routes, and related-content links.
+
+**Exit criteria:** All primary old-site sections are CMS-managed and visually
+reviewed across supported breakpoints.
+
+## Phase 8 — SEO, accessibility, and production readiness
+
+- [ ] Complete canonical and redirect table.
+- [ ] Add metadata, Open Graph, sitemap, robots, and structured data.
+- [ ] Test focus management, dialog semantics, labels, contrast, and reduced
+  motion.
+- [ ] Verify image dimensions, `sizes`, lazy loading, alt text, and error states.
+- [ ] Run cross-browser and responsive browser tests.
+- [ ] Run production build, lint, type checks, tests, and content verification.
+- [ ] Configure monitoring, analytics/consent decision, and quota/billing alerts.
+- [ ] Write editor and recovery runbooks.
+
+**Exit criteria:** No critical accessibility, content, media, routing, SEO, or
+performance defect remains.
+
+## Phase 9 — Staged deployment and cutover
+
+- [ ] Deploy a production-like preview with the final environment configuration.
+- [ ] Freeze legacy content briefly and run the final incremental import.
+- [ ] Export Sanity dataset and archive final source manifest.
+- [ ] Verify domain, TLS, redirects, metadata, analytics, and contact actions.
+- [ ] Point production domain to the new deployment.
+- [ ] Run immediate smoke checks and monitor errors/traffic.
+- [ ] Retain the old deployment and rollback instructions through the agreed
+  observation period.
+- [ ] Move GCS from delivery dependency to archive-only policy after acceptance.
+
+**Rollback:** Restore the previous Vercel deployment/domain assignment. No source
+objects are deleted during cutover, so content recovery does not depend on the
+new application.
+
+## User decision gates
+
+Implementation must pause for approval at these points:
+
+1. Sanity project ownership and dataset configuration.
+2. Canonical replacements for duplicate or invalid slugs.
+3. Keep/remove decisions for maintenance, orologii, and sonorizari content.
+4. Visual acceptance of the `Clopote` vertical slice.
+5. Final URL/redirect table.
+6. Production cutover.
+
+## Definition of done
+
+The migration is complete only when:
+
+- Normal content updates require no code changes.
+- Editors upload originals once and responsive images are automatic.
+- All approved legacy content and media reconcile against reports.
+- Old URLs resolve or redirect correctly.
+- Modal navigation is shareable and browser-history aware.
+- No prices are publicly exposed.
+- The app passes build, type, lint, browser, accessibility, and content checks.
+- Backup, billing, publishing, and rollback procedures are documented.
+
