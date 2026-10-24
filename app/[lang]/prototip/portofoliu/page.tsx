@@ -2,6 +2,7 @@ import Link from 'next/link';
 import {notFound} from 'next/navigation';
 import {client} from '@/sanity/client';
 import {PORTFOLIO_PAGE_QUERY, PROJECTS_QUERY} from '@/sanity/queries';
+import type {PORTFOLIO_PAGE_QUERY_RESULT, PROJECTS_QUERY_RESULT} from '@/sanity/types';
 import {pageNumber, PROJECT_PAGE_SIZE} from '@/sanity/pagination';
 import {SanityImage} from '@/components/sanity-image';
 import {Pagination} from '@/components/pagination';
@@ -13,8 +14,8 @@ export default async function PortfolioPage({searchParams}: {
 }) {
   const page = pageNumber((await searchParams).pagina);
   const [copy, projects] = await Promise.all([
-    client.fetch(PORTFOLIO_PAGE_QUERY, {}, {cache: 'no-store'}),
-    client.fetch(PROJECTS_QUERY, {start: (page - 1) * PROJECT_PAGE_SIZE, end: page * PROJECT_PAGE_SIZE}, {cache: 'no-store'}),
+    client.fetch<PORTFOLIO_PAGE_QUERY_RESULT>(PORTFOLIO_PAGE_QUERY, {lang: 'ro'}, {cache: 'no-store'}),
+    client.fetch<PROJECTS_QUERY_RESULT>(PROJECTS_QUERY, {lang: 'ro', start: (page - 1) * PROJECT_PAGE_SIZE, end: page * PROJECT_PAGE_SIZE}, {cache: 'no-store'}),
   ]);
   if (page > 1 && !projects.items.length) notFound();
 

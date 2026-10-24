@@ -2,9 +2,14 @@ import Link from 'next/link';
 import {notFound} from 'next/navigation';
 import {client} from '@/sanity/client';
 import {PROJECT_QUERY} from '@/sanity/queries';
+import type {PROJECT_QUERY_RESULT} from '@/sanity/types';
 import {GALLERY_PAGE_SIZE, pageNumber} from '@/sanity/pagination';
 import {SanityImage} from '@/components/sanity-image';
 import {Pagination} from '@/components/pagination';
+import {getDictionary} from '@/lib/i18n/dictionaries';
+
+// The prototype is Romanian-only (see layout.tsx).
+const {countries} = getDictionary('ro');
 
 export const dynamic = 'force-dynamic';
 
@@ -14,8 +19,8 @@ export default async function ProjectPage({params, searchParams}: {
 }) {
   const {slug} = await params;
   const page = pageNumber((await searchParams).pagina);
-  const project = await client.fetch(PROJECT_QUERY, {
-    slug, start: (page - 1) * GALLERY_PAGE_SIZE, end: page * GALLERY_PAGE_SIZE,
+  const project = await client.fetch<PROJECT_QUERY_RESULT>(PROJECT_QUERY, {
+    lang: 'ro', slug, start: (page - 1) * GALLERY_PAGE_SIZE, end: page * GALLERY_PAGE_SIZE,
   }, {cache: 'no-store'});
   if (!project || (page > 1 && !project.gallery?.length)) notFound();
 
@@ -24,7 +29,7 @@ export default async function ProjectPage({params, searchParams}: {
       <Link className="mb-8 inline-flex min-h-11 items-center underline" href="/prototip/portofoliu">← Toate lucrările</Link>
       <p className="mb-3 text-sm uppercase tracking-widest">{project.category}</p>
       <h1 className="max-w-3xl font-display font-semibold text-teal-900 text-4xl leading-tight sm:text-6xl">{project.title}</h1>
-      <p className="mt-4">{[project.location?.locality, project.location?.county, project.location?.country].filter(Boolean).join(', ')}</p>
+      <p className="mt-4">{[project.location?.locality, project.location?.county, project.location?.country && countries[project.location.country]].filter(Boolean).join(', ')}</p>
       <p className="mt-6 max-w-3xl whitespace-pre-line text-lg leading-relaxed">{project.summary}</p>
       <h2 className="mb-6 mt-12 font-display font-semibold text-teal-900 text-3xl">Fotografii ({project.imageCount ?? 0})</h2>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

@@ -45,7 +45,10 @@ All custom content labels are Romanian; built-in Studio controls use its
 default language. Use the standard Studio uploader so upload progress and
 failures remain visible. This workflow has not yet been accepted on a phone.
 
-1. In **Categorii de lucrări**, create `Clopote`, generate its short address,
+1. Fields are now `{ro, en}` locale objects (see the content model). Leave
+   **Publicat în** on Română only until English text is reviewed; the language
+   filter button hides English while editing on a phone.
+   In **Categorii de lucrări**, create `Clopote`, generate its short address,
    and publish it. Categories and projects get Sanity-generated document IDs.
 2. In **Textul paginii**, edit the portfolio title and introduction. Publish.
 3. In **Lucrări și fotografii**, create a draft, enter its name, generate the

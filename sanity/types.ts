@@ -21,8 +21,30 @@ export type PortfolioPage = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  intro?: string;
+  publishedLanguages?: Array<string>;
+  title?: LocaleString;
+  intro?: LocaleText;
+  seo?: Seo;
+};
+
+export type Seo = {
+  _type: "seo";
+  metaTitle?: LocaleString;
+  metaDescription?: LocaleText;
+  shareImage?: ImageWithMetadata;
+  noIndex?: boolean;
+};
+
+export type LocaleText = {
+  _type: "localeText";
+  ro?: string;
+  en?: string;
+};
+
+export type LocaleString = {
+  _type: "localeString";
+  ro?: string;
+  en?: string;
 };
 
 export type WorkCategoryReference = {
@@ -38,21 +60,89 @@ export type Project = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
+  publishedLanguages?: Array<string>;
+  title?: LocaleString;
   slug?: Slug;
   category?: WorkCategoryReference;
   location?: {
     locality?: string;
     county?: string;
-    country?: string;
+    country?: "RO" | "MD";
   };
-  summary?: string;
+  year?: number;
+  displayDate?: LocaleString;
+  summary?: LocaleText;
   coverImage?: ImageWithMetadata;
   gallery?: Array<
     {
       _key: string;
     } & ImageWithMetadata
   >;
+  videos?: Array<
+    {
+      _key: string;
+    } & Video
+  >;
+  body?: LocaleBlockContent;
+  specifications?: Array<
+    {
+      _key: string;
+    } & Specification
+  >;
+  featured?: boolean;
+  displayOrder?: number;
+  seo?: Seo;
+  legacy?: LegacySource;
+};
+
+export type LegacySource = {
+  _type: "legacySource";
+  collection?: string;
+  legacyId?: string;
+  legacySlug?: string;
+  sourceFile?: string;
+  sourceHash?: string;
+  migratedAt?: string;
+};
+
+export type LocaleBlockContent = {
+  _type: "localeBlockContent";
+  ro?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h3";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  en?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h3";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
 };
 
 export type SanityImageAssetReference = {
@@ -68,8 +158,9 @@ export type ImageWithMetadata = {
   media?: unknown;
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
-  alt?: string;
-  caption?: string;
+  alt?: LocaleString;
+  caption?: LocaleString;
+  credit?: string;
 };
 
 export type Slug = {
@@ -84,8 +175,48 @@ export type WorkCategory = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  slug?: Slug;
+  publishedLanguages?: Array<string>;
+  title?: LocaleString;
+  slug?: LocaleSlug;
+  summary?: LocaleText;
+  coverImage?: ImageWithMetadata;
+  displayOrder?: number;
+  enabled?: boolean;
+  seo?: Seo;
+  legacy?: LegacySource;
+};
+
+export type LocaleSlug = {
+  _type: "localeSlug";
+  ro?: Slug;
+  en?: Slug;
+};
+
+export type Specification = {
+  _type: "specification";
+  label?: LocaleString;
+  value?: string;
+  unit?: string;
+};
+
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type Video = {
+  _type: "video";
+  provider?: "youtube" | "file";
+  url?: string;
+  file?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  title?: LocaleString;
+  poster?: ImageWithMetadata;
 };
 
 export type SanityImageCrop = {
@@ -203,12 +334,21 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | PortfolioPage
+  | Seo
+  | LocaleText
+  | LocaleString
   | WorkCategoryReference
   | Project
+  | LegacySource
+  | LocaleBlockContent
   | SanityImageAssetReference
   | ImageWithMetadata
   | Slug
   | WorkCategory
+  | LocaleSlug
+  | Specification
+  | SanityFileAssetReference
+  | Video
   | SanityImageCrop
   | SanityImageHotspot
   | SanityImagePaletteSwatch
@@ -222,7 +362,7 @@ export type AllSanitySchemaTypes =
 
 // Source: ../rbells_policandre/sanity/queries.ts
 // Variable: PORTFOLIO_PAGE_QUERY
-// Query: *[_type == "portfolioPage" && _id == "portfolioPage"][0]{title, intro}
+// Query: *[_type == "portfolioPage" && _id == "portfolioPage" && $lang in coalesce(publishedLanguages, ["ro"])][0]{    "title": select($lang == "en" => title.en, title.ro), "intro": select($lang == "en" => intro.en, intro.ro)  }
 export type PORTFOLIO_PAGE_QUERY_RESULT = {
   title: string | null;
   intro: string | null;
@@ -230,7 +370,7 @@ export type PORTFOLIO_PAGE_QUERY_RESULT = {
 
 // Source: ../rbells_policandre/sanity/queries.ts
 // Variable: PROJECTS_QUERY
-// Query: {    "total": count(*[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && defined(slug.current)]),    "items": *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && defined(slug.current)]      | order(_createdAt desc, _id asc)[$start...$end]{        _id, title, "slug": slug.current, summary, location,        "category": category->title,        coverImage{asset, crop, hotspot, alt, caption}      }  }
+// Query: {    "total": count(*[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current)]),    "items": *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current)]      | order(_createdAt desc, _id asc)[$start...$end]{        _id, "title": select($lang == "en" => title.en, title.ro), "slug": slug.current, "summary": select($lang == "en" => summary.en, summary.ro),        location, year, "category": select($lang == "en" => category->title.en, category->title.ro),        coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro)}      }  }
 export type PROJECTS_QUERY_RESULT = {
   total: number;
   items: Array<{
@@ -241,8 +381,9 @@ export type PROJECTS_QUERY_RESULT = {
     location: {
       locality?: string;
       county?: string;
-      country?: string;
+      country?: "MD" | "RO";
     } | null;
+    year: number | null;
     category: string | null;
     coverImage: {
       asset: SanityImageAssetReference | null;
@@ -256,7 +397,7 @@ export type PROJECTS_QUERY_RESULT = {
 
 // Source: ../rbells_policandre/sanity/queries.ts
 // Variable: PROJECT_QUERY
-// Query: *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && slug.current == $slug][0]{    _id, title, summary, location, "category": category->title,    coverImage{asset, crop, hotspot, alt, caption},    "imageCount": count(gallery),    "gallery": gallery[$start...$end]{_key, asset, crop, hotspot, alt, caption}  }
+// Query: *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && slug.current == $slug][0]{    _id, "title": select($lang == "en" => title.en, title.ro), "summary": select($lang == "en" => summary.en, summary.ro), location, year,    "displayDate": select($lang == "en" => displayDate.en, displayDate.ro), "category": select($lang == "en" => category->title.en, category->title.ro),    coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro)},    "imageCount": count(gallery),    "gallery": gallery[$start...$end]{_key, asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro)}  }
 export type PROJECT_QUERY_RESULT = {
   _id: string;
   title: string | null;
@@ -264,8 +405,10 @@ export type PROJECT_QUERY_RESULT = {
   location: {
     locality?: string;
     county?: string;
-    country?: string;
+    country?: "MD" | "RO";
   } | null;
+  year: number | null;
+  displayDate: string | null;
   category: string | null;
   coverImage: {
     asset: SanityImageAssetReference | null;
@@ -288,9 +431,9 @@ export type PROJECT_QUERY_RESULT = {
 // Query TypeMap
 declare global {
   interface SanityQueries {
-    '\n  *[_type == "portfolioPage" && _id == "portfolioPage"][0]{title, intro}\n': PORTFOLIO_PAGE_QUERY_RESULT;
-    '\n  {\n    "total": count(*[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && defined(slug.current)]),\n    "items": *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && defined(slug.current)]\n      | order(_createdAt desc, _id asc)[$start...$end]{\n        _id, title, "slug": slug.current, summary, location,\n        "category": category->title,\n        coverImage{asset, crop, hotspot, alt, caption}\n      }\n  }\n': PROJECTS_QUERY_RESULT;
-    '\n  *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && slug.current == $slug][0]{\n    _id, title, summary, location, "category": category->title,\n    coverImage{asset, crop, hotspot, alt, caption},\n    "imageCount": count(gallery),\n    "gallery": gallery[$start...$end]{_key, asset, crop, hotspot, alt, caption}\n  }\n': PROJECT_QUERY_RESULT;
+    '\n  *[_type == "portfolioPage" && _id == "portfolioPage" && $lang in coalesce(publishedLanguages, ["ro"])][0]{\n    "title": select($lang == "en" => title.en, title.ro), "intro": select($lang == "en" => intro.en, intro.ro)\n  }\n': PORTFOLIO_PAGE_QUERY_RESULT;
+    '\n  {\n    "total": count(*[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current)]),\n    "items": *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current)]\n      | order(_createdAt desc, _id asc)[$start...$end]{\n        _id, "title": select($lang == "en" => title.en, title.ro), "slug": slug.current, "summary": select($lang == "en" => summary.en, summary.ro),\n        location, year, "category": select($lang == "en" => category->title.en, category->title.ro),\n        coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro)}\n      }\n  }\n': PROJECTS_QUERY_RESULT;
+    '\n  *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && slug.current == $slug][0]{\n    _id, "title": select($lang == "en" => title.en, title.ro), "summary": select($lang == "en" => summary.en, summary.ro), location, year,\n    "displayDate": select($lang == "en" => displayDate.en, displayDate.ro), "category": select($lang == "en" => category->title.en, category->title.ro),\n    coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro)},\n    "imageCount": count(gallery),\n    "gallery": gallery[$start...$end]{_key, asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro)}\n  }\n': PROJECT_QUERY_RESULT;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too

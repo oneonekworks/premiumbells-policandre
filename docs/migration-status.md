@@ -140,6 +140,19 @@ These items do not block completing the rest of Phase 0.
   Turbopack dev reload loop on the prototype route. Lint, typecheck, build, and
   11 browser checks pass (1 mobile-only check skipped on desktop). Visual review
   by the user is pending.
+- Shell approved by the user.
+- Expanded the Studio portfolio schemas with locale objects, the
+  `publishedLanguages` gate, SEO, video, specifications, legacy provenance,
+  category ordering/visibility, and the language filter plugin. Frontend
+  queries take `$lang`, read locale fields with `select()` (typed by TypeGen),
+  hide unpublished languages, and fall back to Romanian only for alt text.
+- Exported the dataset documents to `.migration/backups/`, then migrated the
+  four prototype documents (2 projects, Clopote, page copy) to `{ro}` locale
+  values and country codes with the idempotent `localize-prototype-fields`
+  migration. Validation: 3 documents valid; Clopote warns until a category
+  cover image is chosen.
+- Studio typecheck, lint, and build pass. Frontend lint, typecheck, build,
+  7 query tests, 6 migration tests, and 11 browser checks pass.
 
 ### 2026-10-10
 

@@ -9,14 +9,26 @@ editors to add content without developer intervention.
 
 ## Implemented prototype subset
 
-The sibling `studio-premiumbells` now registers minimal `project`,
-`workCategory`, `portfolioPage`, and `imageWithMetadata` schemas. The prototype
-uses a direct image array for `project.gallery` to support native multi-upload.
-Only Romanian plain-string fields are implemented. They will be converted to the
-translation storage below during schema expansion; the existing prototype
-documents need a one-off conversion script at that point. The larger model below
-remains proposed. See the [prototype runbook](mobile-publishing-prototype.md)
-before extending it.
+As of 2026-10-24 the sibling `studio-premiumbells` implements the portfolio
+slice with the translation storage below:
+
+- Locale objects `localeString`, `localeText`, `localeBlockContent`,
+  `localeSlug`, generated from `studio-premiumbells/i18n.ts`, plus the
+  `localeRule` validator and the shared `publishedLanguages` field.
+- Shared objects `imageWithMetadata` (localised `alt`/`caption`, `credit`),
+  `seo`, `video`, `specification`, and `legacySource`.
+- `project`, `workCategory`, and `portfolioPage` as specified below, with these
+  deliberate differences: `project.gallery` stays a direct image array (native
+  multi-upload); `project.archived` and `seo.canonicalUrl` are omitted
+  (unpublishing covers archiving; canonical overrides are not needed yet);
+  `location.country` is a code (`RO`, `MD`) rendered through the frontend
+  dictionaries; `workCategory` has no `shortTitle`, `icon`, or `theme` yet.
+- `@sanity/language-filter` on those three document types, Romanian always shown.
+
+The four prototype documents were converted by the Studio migration
+`localize-prototype-fields` after a document export to
+`.migration/backups/production-2026-10-24-before-locale.tar.gz`. Services,
+catalogue, blog, and global singletons remain proposed.
 
 ## Translation storage (decided 2026-10-24)
 

@@ -3,6 +3,10 @@
 - `env.ts`: public identifiers and validation (`1fzbw4s1` / `production`).
 - `client.ts`: server-only, tokenless, published-only reads.
 - `queries.ts`: bounded project lists and galleries plus editable page copy.
+  Every query takes `$lang`, filters by `publishedLanguages`, and reads locale
+  objects through `select()` helpers so TypeGen infers plain strings. Because
+  the query strings are interpolated, pass the generated `*_RESULT` type to
+  `client.fetch<...>()` explicitly.
 - `types.ts`: generated from the standalone sibling Studio; do not edit by hand.
 - `pagination.ts`: bounded page input and page sizes.
 

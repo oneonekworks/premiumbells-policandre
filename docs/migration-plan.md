@@ -60,8 +60,11 @@ backup, account, or analytics inputs remain pending.
 - [x] Configure public project variables for the tokenless published prototype.
 - [ ] Configure private preview tokens when authenticated preview is implemented.
 - [x] Connect the existing standalone sibling `../studio-premiumbells`.
-- [ ] Add schemas and singleton handling from `content-model.md`.
-- [ ] Add validation, previews, desk structure, and document ordering.
+- [ ] Add schemas and singleton handling from `content-model.md` (portfolio
+  schemas with translation storage done 2026-10-24; services, catalogue, blog,
+  and global singletons pending).
+- [x] Add validation, previews, desk structure, and document ordering for the
+  portfolio schemas.
 - [ ] Configure CORS for local and preview origins.
 - [x] Generate TypeScript types for the minimal prototype schemas/queries.
 - [ ] Deploy Studio to a temporary Sanity-hosted URL.

@@ -14,6 +14,7 @@ const ro = {
   menu: {open: 'Deschide meniul', close: 'Închide meniul', title: 'Meniu'},
   contact: {call: 'Sunați-ne', email: 'Scrieți-ne', heading: 'Contact'},
   language: {label: 'Limba', ro: 'Română', en: 'English'},
+  countries: {RO: 'România', MD: 'Republica Moldova'},
   footer: {
     tagline: 'Policandre, clopote și iconostase pentru biserici ortodoxe, alese și montate cu grijă.',
     navigation: 'Navigare',
@@ -62,6 +63,7 @@ const en: Dictionary = {
   menu: {open: 'Open menu', close: 'Close menu', title: 'Menu'},
   contact: {call: 'Call us', email: 'Email us', heading: 'Contact'},
   language: {label: 'Language', ro: 'Română', en: 'English'},
+  countries: {RO: 'Romania', MD: 'Moldova'},
   footer: {
     tagline: 'Chandeliers, bells and iconostases for Orthodox churches, carefully chosen and installed.',
     navigation: 'Navigation',
