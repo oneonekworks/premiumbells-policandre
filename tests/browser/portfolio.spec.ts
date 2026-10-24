@@ -3,7 +3,7 @@ import {expect, test} from '@playwright/test';
 test('published portfolio works on navigation and reload without horizontal overflow', async ({page}) => {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
-  await page.goto('/');
+  await page.goto('/lucrarile-noastre');
   await page.getByRole('link', {name: 'Deschide portofoliul'}).click();
   await expect(page).toHaveURL(/\/prototip\/portofoliu$/);
   await expect(page.locator('main h1')).toBeVisible();

@@ -20,21 +20,21 @@ export default async function PortfolioPage({searchParams}: {
 
   return (
     <>
-      <p className="mb-4 text-sm uppercase tracking-[0.2em]">Lucrări și detalii</p>
-      <h1 className="max-w-3xl font-serif text-4xl leading-tight sm:text-6xl">{copy?.title ?? 'Lucrările noastre'}</h1>
+      <p className="eyebrow mb-4">Lucrări și detalii</p>
+      <h1 className="max-w-3xl font-display font-semibold text-teal-900 text-4xl leading-tight sm:text-6xl">{copy?.title ?? 'Lucrările noastre'}</h1>
       {copy?.intro && <p className="mt-6 max-w-2xl whitespace-pre-line text-lg leading-relaxed">{copy.intro}</p>}
       {!projects.items.length ? (
-        <p className="my-12 rounded-lg border border-[#173b38]/20 p-6">Nu există încă lucrări publicate.</p>
+        <p className="my-12 rounded-lg border border-line p-6">Nu există încă lucrări publicate.</p>
       ) : (
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {projects.items.map((project) => (
             <article key={project._id}>
               <Link className="group block" href={`/prototip/portofoliu/${project.slug}`} prefetch={false}>
-                <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-lg bg-[#e5e6dd]">
+                <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-lg bg-stone">
                   <SanityImage image={project.coverImage} cover />
                 </div>
                 <p className="mb-2 text-sm">{[project.category, project.location?.locality].filter(Boolean).join(' · ')}</p>
-                <h2 className="font-serif text-2xl group-hover:underline">{project.title}</h2>
+                <h2 className="font-display font-semibold text-teal-900 text-2xl group-hover:underline">{project.title}</h2>
               </Link>
               {project.summary && <p className="mt-3 line-clamp-3 leading-relaxed">{project.summary}</p>}
             </article>

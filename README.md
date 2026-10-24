@@ -23,6 +23,7 @@ See the [prototype runbook](docs/mobile-publishing-prototype.md).
 - [Content model](docs/content-model.md)
 - [Migration plan](docs/migration-plan.md)
 - [Migration status](docs/migration-status.md)
+- [Design foundations and site shell](docs/design-foundations.md)
 - [Migration scripts](scripts/README.md)
 
 ## Local development
@@ -32,7 +33,8 @@ npm install
 npm run dev
 ```
 
-Open <http://localhost:3000/prototip/portofoliu>.
+Open <http://localhost:3000> (English at `/en`; publishing prototype at
+`/prototip/portofoliu`).
 Run `npm run dev` in `../studio-premiumbells` for the editor on port 3333.
 
 Public Sanity identifiers default to the approved project/dataset.

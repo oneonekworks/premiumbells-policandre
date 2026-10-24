@@ -38,7 +38,8 @@ slice. Do not wait for bulk migration to validate the importer.
 - [ ] Obtain Search Console/Analytics exports and identify valuable legacy URLs.
 - [x] Decide translation storage and locale URL conventions (2026-10-24).
 - [ ] Draft page architecture and old-to-new URL decisions.
-- [ ] Approve compact design foundations and representative responsive layouts.
+- [ ] Approve compact design foundations and representative responsive layouts
+  (shell implemented 2026-10-24; see [design foundations](design-foundations.md)).
 - [ ] Export/back up the GCS bucket or confirm an existing recoverable backup.
 - [ ] Capture baseline production screenshots and performance measurements.
 

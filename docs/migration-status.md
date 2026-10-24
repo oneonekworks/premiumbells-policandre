@@ -131,6 +131,15 @@ These items do not block completing the rest of Phase 0.
   recorded them in the content model, architecture, and brief. English stays
   the second language; a third language waits for demand data. Implementation
   follows during schema expansion.
+- Implemented [design foundations and the site shell](design-foundations.md):
+  tokens, Cormorant Garamond/Inter, header, mobile menu dialog, footer, and an
+  RO | EN switcher. All routes moved under `app/[lang]` with `proxy.ts`
+  (Romanian unprefixed, `/en` with translated sections, `/ro` and Romanian
+  sections under `/en` redirected). Placeholder home, services, works, and blog
+  pages; 404 inside the shell. `npm run dev` now uses Webpack because of a
+  Turbopack dev reload loop on the prototype route. Lint, typecheck, build, and
+  11 browser checks pass (1 mobile-only check skipped on desktop). Visual review
+  by the user is pending.
 
 ### 2026-10-10
 
