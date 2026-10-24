@@ -55,7 +55,7 @@ GCS bucket `rbells` --> migration source + retained archive
 
 ### Web application
 
-- Next.js 16.3 App Router and React 19.
+- Next.js 16.4 App Router and React 19.
 - Strict TypeScript for all new application, CMS integration, and migration
   code. Legacy JavaScript is read as input, not copied into the new app.
 - Tailwind CSS 4 with compact named design tokens and bespoke layouts refining

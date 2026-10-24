@@ -14,7 +14,7 @@ Use Node.js 22.12+ (verified locally with Node.js 24).
 
 ```bash
 # Terminal 1, from rbells_policandre
-npm run dev -- --webpack
+npm run dev
 
 # Terminal 2, from studio-premiumbells
 npm run dev
@@ -132,7 +132,7 @@ npm run typecheck
 npm run test:sanity
 npm run test:migration
 npm run test:browser
-npm run build -- --webpack
+npm run build
 ```
 
 TypeGen scans `../rbells_policandre/sanity/queries.ts` and writes generated types
@@ -159,9 +159,12 @@ editor publishes an approved test project.
 - Studio production build passes. Its existing auto-update setting warns that
   no deployment `appId` is configured; configure this with the eventual hosted
   Studio, not during this local prototype.
-- Dependency audit reports 23 frontend-tree findings (9 moderate, 13 high,
-  1 critical), including the pre-existing pinned Next.js 16.3.3. The Studio
-  install reports 18 findings (9 moderate, 9 high). Resolve and recheck before
-  deployment; no broad dependency downgrade or forced audit fix was applied.
-  The audit's Next.js advisory ranges indicate patches through 16.3.8 are
-  needed. This prototype does not constitute production security acceptance.
+- 2026-10-24: Next.js and `eslint-config-next` are pinned to 16.4.3, outside
+  the advisory range (16.0.0–16.4.0), and non-breaking `npm audit fix` updates
+  were applied. The frontend audit now reports 14 transitive findings
+  (11 moderate, 3 high, 0 critical), all through `next-sanity` tooling; npm's
+  only offered fix is a major downgrade to `next-sanity@11`, which was not
+  applied. The default Turbopack build now passes, as do lint, typecheck,
+  5/5 query tests, 6/6 migration tests, and 4/4 browser checks against the
+  production build. The Studio audit was not rechecked. Recheck both before
+  deployment; this prototype does not constitute production security acceptance.

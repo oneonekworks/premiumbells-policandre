@@ -2,11 +2,11 @@
 
 **Overall status:** Local Sanity portfolio prototype implemented; phone acceptance pending
 **Current phase:** Phase 1 — Mobile publishing prototype
-**Last updated:** 2026-10-10
+**Last updated:** 2026-10-24
 
 ## Accepted decisions
 
-- Frontend: Next.js 16.3 App Router, React 19, strict TypeScript.
+- Frontend: Next.js 16.4 App Router, React 19, strict TypeScript.
 - Styling: Tailwind CSS 4 with a compact bespoke design language refining the
   existing real photography, teal accents, and premium ecclesiastical identity.
 - CMS: existing Sanity project `1fzbw4s1`, dataset `production`, authorized for
@@ -101,16 +101,26 @@ These items do not block completing the rest of Phase 0.
 - The 2026-10-10 review found an existing modification to legacy
   `data/catalog.json`; it was not written by this migration task and remains
   untouched. The legacy repository is read-only for this work.
-- `rbells_policandre` is a Git repository on branch `main`; no remote is set yet.
+- `rbells_policandre` is a Git repository; the prototype is committed on branch
+  `prototype/mobile-publishing`. No remote is set yet.
 - Sanity frontend dependencies, typed queries, and temporary noindex prototype
   routes are now installed. Schema ownership is in `../studio-premiumbells`.
-- The standalone Studio is not currently a Git repository; no repository was
-  initialized and no commit was made in either workspace.
-- The default Turbopack build was blocked in the execution environment while
-  trying to bind a helper process to a port. `next build --webpack` completed,
-  including compilation, TypeScript, static generation, and build traces.
+- `../studio-premiumbells` is a separate Git repository on `main` with an
+  initial commit. No remote is set yet.
+- As of 2026-10-24 the default Turbopack production build passes; the earlier
+  `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-10-24
+
+- Committed the prototype on `prototype/mobile-publishing` and initialised the
+  Studio repository with its first commit.
+- Upgraded Next.js and `eslint-config-next` from 16.3.3 to 16.4.3, clearing the
+  critical Next.js advisories; applied non-breaking audit fixes only. Remaining
+  frontend findings: 11 moderate and 3 high, all transitive via `next-sanity`.
+- Lint, typecheck, Turbopack production build, 5 query tests, 6 migration tests,
+  and 4 browser checks pass.
 
 ### 2026-10-10
 
