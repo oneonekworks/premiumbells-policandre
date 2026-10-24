@@ -1,0 +1,544 @@
+{
+  "schemaVersion": 1,
+  "exclusions": [
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4871_cuy2vi",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4871_cuy2vi",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4872_gggu9s",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4872_gggu9s",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4873_aurjew",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4873_aurjew",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4874_mrjhxx",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4874_mrjhxx",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4875_ffdg2u",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4875_ffdg2u",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4876_ifclom",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4876_ifclom",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4877_jcudko",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4877_jcudko",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4878_tgb71c",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4878_tgb71c",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4879_avthyj",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4879_avthyj",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4880_m4rxed",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4880_m4rxed",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4881_tcazjp",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4881_tcazjp",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4882_pvhepv",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4882_pvhepv",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4883_rgp4hm",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4883_rgp4hm",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4884_sv7wb7",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4884_sv7wb7",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4885_rssrkr",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4885_rssrkr",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4887_vg17zq",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4887_vg17zq",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4888_a2rnhb",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4888_a2rnhb",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4889_haly4d",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4889_haly4d",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4890_kpteqs",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4890_kpteqs",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4891_dinbzv",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4891_dinbzv",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4892_swjz6z",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4892_swjz6z",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4893_sknkgv",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4893_sknkgv",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4895_brn8i5",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4895_brn8i5",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4896_rr2uff",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4896_rr2uff",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4897_lyxbyx",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4897_lyxbyx",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4898_rlajbh",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4898_rlajbh",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4899_txxuqh",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4899_txxuqh",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4900_xzjo4y",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4900_xzjo4y",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4901_ulhudy",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4901_ulhudy",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4902_vhyv6r",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4902_vhyv6r",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4903_hzau8k",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4903_hzau8k",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4904_o8bm7d",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4904_o8bm7d",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4905_cbrtbm",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4905_cbrtbm",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4906_g5mi8t",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4906_g5mi8t",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4907_foh6fz",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4907_foh6fz",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4908_golng0",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4908_golng0",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4909_jfpaai",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4909_jfpaai",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4910_slpbzd",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4910_slpbzd",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4911_nzovxq",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4911_nzovxq",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4912_enbg1o",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4912_enbg1o",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4913_xad1qx",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4913_xad1qx",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4914_fkb3ko",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4914_fkb3ko",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4915_usgzzn",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4915_usgzzn",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4916_pfu0mc",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4916_pfu0mc",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4917_guenft",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4917_guenft",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "cloudinary:https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4918_yyssa9",
+      "resolvedUrl": "https://res.cloudinary.com/dnkcfipnn/image/upload/f_auto,q_auto/v1/clopoterusia/USI%20BRONZ/IMG_4918_yyssa9",
+      "origin": "cloudinary",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "external:https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg",
+      "resolvedUrl": "https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg",
+      "origin": "external",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "external:https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg",
+      "resolvedUrl": "https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg",
+      "origin": "external",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "external:https://tailwindui.com/img/logos/workflow-mark.svg",
+      "resolvedUrl": "https://tailwindui.com/img/logos/workflow-mark.svg",
+      "origin": "external",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/assets/services/policandre/113311.jpg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/assets/services/policandre/113311.jpg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_.jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_.jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(1).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(1).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(1)%202.jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(1)%202.jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(2).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(2).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(2)%202.jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(2)%202.jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(3).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(3).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(3)%202.jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(3)%202.jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(4).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(4).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(4)%202.jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(4)%202.jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(5).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(5).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(5)%202.jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(5)%202.jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(6).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(6).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(6)%202.jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(6)%202.jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(7).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(7).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(7)%202.jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(7)%202.jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(8).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(8).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(9).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_(9).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(1).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(1).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(2).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(2).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(3).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(3).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(4).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(4).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(5).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(5).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(6).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(6).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(7).jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_%20(7).jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_10.jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_10.jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_11.jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_11.jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "gcs://rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_12.jpeg",
+      "resolvedUrl": "https://storage.googleapis.com/rbells/policandre_ro/solutii/reconditionare-policandre/Reconditionare_Policandre_12.jpeg",
+      "origin": "gcs",
+      "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
+      "decisionDate": "2026-09-20"
+    }
+  ]
+}

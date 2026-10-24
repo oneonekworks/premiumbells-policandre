@@ -1,7 +1,9 @@
 # Target Architecture
 
 **Status:** Accepted foundation  
-**Last updated:** 2026-09-05
+**Last updated:** 2026-10-10
+
+Product scope and open approval gates are defined in [the rebuild brief](rebuild-brief.md).
 
 ## Objective
 
@@ -16,8 +18,9 @@ responsive, web-appropriate formats automatically.
 - `rbells-tw` is the production reference and remains available until cutover.
 - Existing public URLs should be preserved wherever practical.
 - Existing GCS objects remain the migration source and recovery archive.
-- The public site is Romanian-first. Internationalisation is not part of the
-  first release, but the model must not prevent adding it later.
+- The public site is Romanian-first, with reviewed English content targeted for
+  launch. Greek and other languages are future additions; shared media and
+  technical facts must not require duplication per language.
 - Products are informational catalogue entries. Public pricing is explicitly
   out of scope for the rebuilt site.
 - The design should preserve grids, slide-over details, fullscreen galleries,
@@ -55,8 +58,8 @@ GCS bucket `rbells` --> migration source + retained archive
 - Next.js 16.3 App Router and React 19.
 - Strict TypeScript for all new application, CMS integration, and migration
   code. Legacy JavaScript is read as input, not copied into the new app.
-- Tailwind CSS 4 with a small set of named design tokens derived from the old
-  site.
+- Tailwind CSS 4 with compact named design tokens and bespoke layouts refining
+  the old identity, not copying its template styling.
 - Server Components by default. Client Components are limited to navigation,
   search/filtering, dialogs, lightboxes, carousels, audio, and video controls.
 - No general-purpose client state library unless a demonstrated cross-route
@@ -68,9 +71,12 @@ Before implementing framework features, consult the versioned documentation in
 ### Content management
 
 - Sanity is the primary source of truth for editable content.
-- Start on the Sanity Free plan with one public `production` dataset.
-- Use a separately deployed Sanity Studio from this repository's `studio/`
-  directory. The public application should not depend on loading Studio code.
+- Prefer Sanity Free, subject to the mobile publishing acceptance test. A public
+  `production` dataset was initially proposed; the authorized prototype now
+  targets the existing public-readable `1fzbw4s1/production` dataset.
+- Use the standalone sibling `../studio-premiumbells` as the authoritative
+  Studio. This repository's `studio/` is only a documentation pointer.
+  The public application must not load Studio code.
 - Keep frontend Sanity integration, generated types, query helpers, image URL
   helpers, and webhook verification under `sanity/`.
 - Preview unpublished content through authenticated Draft Mode.
@@ -105,8 +111,8 @@ Before implementing framework features, consult the versioned documentation in
 
 ### Hosting
 
-- Vercel is the preferred deployment platform because it provides the simplest
-  operational path for this Next.js application.
+- Hosting is unresolved against the approximately USD 20/month total operating
+  budget. Compare suitable commercial plans before provisioning.
 - Hosting remains replaceable: Sanity access must not use Vercel-only data APIs.
 - The Vercel Hobby plan is technically compatible but is currently limited by
   Vercel to non-commercial use. Hosting-plan compliance is an operational
@@ -120,7 +126,7 @@ Proposed top-level organisation:
 app/                    routes, layouts, loading and error boundaries
 components/             reusable presentation and interaction components
 sanity/                 frontend client, queries, types and image helpers
-studio/                 separately deployable Sanity Studio
+studio/                 pointer to sibling ../studio-premiumbells
 scripts/                inventory, import and verification utilities
 docs/                   architecture and migration source of truth
 public/                 small immutable local assets only
@@ -131,7 +137,8 @@ small brand assets may remain local; editorial photography belongs in Sanity.
 
 ## Route architecture
 
-Target canonical routes:
+Proposed Romanian canonical routes (not a final redirect map; preserve valid
+nested legacy service routes and decide English routing before implementation):
 
 ```text
 /
@@ -224,6 +231,15 @@ allow-listed inline marks.
 
 - Final lightbox package versus a small accessible custom implementation.
 - Dedicated streaming provider for owned videos.
-- Future locales and translation workflow.
+- Translation storage/workflow and locale routing for Romanian/English launch;
+  Greek and other locales later.
 - Alternative commercial provider if Vercel plan constraints are undesirable.
 - Exact analytics and consent tooling.
+
+## Implemented prototype exception
+
+See [mobile publishing prototype](mobile-publishing-prototype.md). Its temporary
+noindex routes use uncached published reads to verify publish/refresh behavior.
+The caching, preview, modal, and production route architecture above remains the
+target after actual-phone acceptance. Studio and frontend are sibling folders,
+not an embedded Studio or a nested package.

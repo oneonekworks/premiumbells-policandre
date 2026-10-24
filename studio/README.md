@@ -1,11 +1,8 @@
-# Sanity Studio
+# Standalone Studio location
 
-This directory is reserved for the separately deployable Sanity Studio.
+The actual Studio is the sibling `../studio-premiumbells`, connected to Sanity
+project `1fzbw4s1`, dataset `production`. This directory remains a documentation
+pointer; do not scaffold a second Studio here.
 
-The Studio will own schemas, validation, preview configuration, singleton desk
-structure, and editorial ordering. It will be scaffolded only after the Sanity
-project is created under the user's/company's account.
-
-The intended first dataset is a public dataset named `production`. That name and
-visibility still require user confirmation before scaffolding.
-
+See [the prototype runbook](../docs/mobile-publishing-prototype.md) for local
+startup, schema ownership, TypeGen, and mobile acceptance instructions.

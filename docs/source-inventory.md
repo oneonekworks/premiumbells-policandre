@@ -25,9 +25,10 @@ not proof that every remote object exists.
 | Legacy `price` field occurrences | 162 |
 
 An earlier broad path scan estimated approximately 2,230 distinct GCS object
-paths after relative media paths were resolved. The authoritative number must be
-produced by the planned media-manifest script because not every path is written
-as a complete URL.
+paths. The implemented media manifest supersedes that estimate: the 2026-09-20
+snapshot records 2,242 GCS-origin assets and 2,534 unique assets overall. See
+[migration status](migration-status.md) for exclusions and unresolved errors.
+This reference inventory is not a complete GCS bucket listing.
 
 ## Content sources
 

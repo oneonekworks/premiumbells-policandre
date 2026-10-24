@@ -1,7 +1,12 @@
 # Migration Plan
 
 **Status:** Active  
-**Last updated:** 2026-09-05
+**Last updated:** 2026-10-10
+
+See [the rebuild brief](rebuild-brief.md) for agreed scope and approval gates.
+The phases below are workstreams: prototype only the minimal content model
+first, and pull deterministic import tooling forward as needed for the Clopote
+slice. Do not wait for bulk migration to validate the importer.
 
 ## Delivery principles
 
@@ -11,7 +16,10 @@
 - The old repository and GCS bucket are read-only migration inputs.
 - Content migration is automated and repeatable; manual work is reserved for
   editorial judgement.
-- Existing design behaviour is preserved before optional visual improvements.
+- Useful existing behaviour is preserved within a bespoke refinement. Establish
+  compact visual foundations before the first slice, not an exhaustive redesign.
+- SEO and Romanian/English content architecture begin in Phase 0; Phase 8 is
+  final verification, not the start of SEO work.
 - Each phase ends with explicit verification and an updated status document.
 
 ## Phase 0 — Foundation and source audit
@@ -23,8 +31,13 @@
 - [x] Inventory legacy routes, data collections, media origins, and counts.
 - [x] Record pricing-removal requirement.
 - [x] Create migration status tracking.
-- [ ] Initialise or connect version control for `rbells_policandre`.
-- [ ] Generate the authoritative media manifest.
+- [x] Initialise version control for `rbells_policandre`.
+- [ ] Connect an approved remote when repository publication is requested.
+- [x] Generate the authoritative media manifest and explicit exclusions.
+- [x] Consolidate the product, design, language, CMS, and budget brief.
+- [ ] Obtain Search Console/Analytics exports and identify valuable legacy URLs.
+- [ ] Draft page/locale architecture and old-to-new URL decisions.
+- [ ] Approve compact design foundations and representative responsive layouts.
 - [ ] Export/back up the GCS bucket or confirm an existing recoverable backup.
 - [ ] Capture baseline production screenshots and performance measurements.
 
@@ -35,18 +48,29 @@ repository is versioned; unresolved scope decisions are recorded.
 
 **Goal:** Create the content platform without changing production.
 
+Explicit user authorization is required before account/project setup. Begin
+with the small mobile publishing prototype in the brief; confirm usability
+before expanding to the full schema set. Foundation planning can proceed while
+backup, account, or analytics inputs remain pending.
+
 - [ ] User creates/owns the Sanity organisation and project.
 - [ ] Confirm project ID, dataset name, region/options, and editor accounts.
-- [ ] Configure local public project variables and private tokens.
-- [ ] Scaffold a standalone Studio in `studio/`.
+- [x] Configure public project variables for the tokenless published prototype.
+- [ ] Configure private preview tokens when authenticated preview is implemented.
+- [x] Connect the existing standalone sibling `../studio-premiumbells`.
 - [ ] Add schemas and singleton handling from `content-model.md`.
 - [ ] Add validation, previews, desk structure, and document ordering.
 - [ ] Configure CORS for local and preview origins.
-- [ ] Generate TypeScript types from schemas/queries.
+- [x] Generate TypeScript types for the minimal prototype schemas/queries.
 - [ ] Deploy Studio to a temporary Sanity-hosted URL.
 
 **Exit criteria:** An authorised editor can create, preview, validate, and
-publish sample categories and projects without touching source code.
+publish sample categories and projects without touching source code, and the
+user accepts actual-phone photo upload, ordering, editing, and large-gallery use.
+
+The minimal prototype is implemented locally; see
+[its runbook and phone acceptance record](mobile-publishing-prototype.md).
+Full schema expansion and actual-phone acceptance remain open.
 
 ## Phase 2 — Next.js/Sanity integration
 
@@ -147,7 +171,7 @@ the public site contains no price information.
 
 - [ ] Rebuild the homepage using named, typed sections.
 - [ ] Import global company, navigation, footer, and contact information.
-- [ ] Import catalogue PDF records.
+- [ ] Import only reviewed price-free catalogue PDF records.
 - [ ] Migrate testimonial and audio content.
 - [ ] Migrate blog metadata and hard-coded article bodies to Portable Text.
 - [ ] Migrate about video with a valid poster and interactive controls.
@@ -156,10 +180,14 @@ the public site contains no price information.
 **Exit criteria:** All primary old-site sections are CMS-managed and visually
 reviewed across supported breakpoints.
 
-## Phase 8 — SEO, accessibility, and production readiness
+## Phase 8 — Final SEO, accessibility, and production-readiness verification
 
 - [ ] Complete canonical and redirect table.
-- [ ] Add metadata, Open Graph, sitemap, robots, and structured data.
+- [ ] Verify metadata, Open Graph, sitemap, robots, and structured data built
+  throughout the preceding slices.
+- [ ] Verify reviewed Romanian/English content, language navigation, canonicals,
+  and hreflang; no empty translated pages or indexed staging environments.
+- [ ] Approve hosting cost/commercial suitability against the total budget.
 - [ ] Test focus management, dialog semantics, labels, contrast, and reduced
   motion.
 - [ ] Verify image dimensions, `sizes`, lazy loading, alt text, and error states.

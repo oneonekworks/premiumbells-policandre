@@ -1,15 +1,28 @@
 # Sanity Content Model
 
 **Status:** Proposed foundation  
-**Last updated:** 2026-09-05
+**Last updated:** 2026-10-10
 
 This model is intentionally content-oriented rather than a direct copy of the
 legacy JavaScript objects. It should support the current design while allowing
 editors to add content without developer intervention.
 
+## Implemented prototype subset
+
+The sibling `studio-premiumbells` now registers minimal `project`,
+`workCategory`, `portfolioPage`, and `imageWithMetadata` schemas. The prototype
+uses a direct image array for `project.gallery` to support native multi-upload.
+Only Romanian fields are implemented; this does not settle translation storage.
+The larger model below remains proposed. See the
+[prototype runbook](mobile-publishing-prototype.md) before extending it.
+
 ## Modelling principles
 
-- Romanian is the primary language for the first release.
+- Romanian is primary and English is targeted for launch; Greek is deferred.
+- Translate copy, navigation, SEO, alt text, and captions while sharing media,
+  model codes, dimensions, and other language-independent facts. The tables
+  below describe logical fields, not a finalized translation storage strategy.
+- Track translation readiness and never publish empty locale equivalents.
 - Slugs are stable identifiers and cannot silently change after publication.
 - Reorderable content uses explicit ordered arrays.
 - Relationships use references rather than repeated strings.
@@ -218,6 +231,10 @@ There is intentionally no public `price` field. Legacy price values must not be
 copied into Portable Text, descriptions, captions, SEO, or image metadata. A
 future private quotation system would be a separate model with separate access
 controls, not an extension of this public document.
+
+The same restriction applies to prices embedded in images and PDFs. Catalogue
+downloads require a reviewed price-free derivative before publication. Original
+catalogues are reference sources, not automatically approved public assets.
 
 ### `blogPost`
 

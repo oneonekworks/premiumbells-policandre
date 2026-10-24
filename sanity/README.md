@@ -1,15 +1,14 @@
 # Sanity frontend integration
 
-This directory will contain code used by the Next.js application to consume
-Sanity content, including:
+- `env.ts`: public identifiers and validation (`1fzbw4s1` / `production`).
+- `client.ts`: server-only, tokenless, published-only reads.
+- `queries.ts`: bounded project lists and galleries plus editable page copy.
+- `types.ts`: generated from the standalone sibling Studio; do not edit by hand.
+- `pagination.ts`: bounded page input and page sizes.
 
-- Environment validation.
-- Public and preview clients.
-- Typed GROQ queries.
-- Generated schema/query types.
-- Image URL builder and `next/image` loader.
-- Preview and revalidation helpers.
+Run `npm run sanity:typegen` from this app after changing schemas or queries.
+The image component in `components/sanity-image.tsx` uses Sanity CDN transforms.
+The prototype explicitly disables fetch caching; refresh after publication.
+Production caching, draft preview, and webhook handling are later milestones.
 
-It must not contain secrets or Studio-only bundles. Implementation begins after
-the Sanity project ID and dataset are available.
-
+See [the prototype runbook](../docs/mobile-publishing-prototype.md).
