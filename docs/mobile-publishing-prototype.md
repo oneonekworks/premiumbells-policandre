@@ -22,7 +22,8 @@ npm run dev
 
 - Website: <http://localhost:3000/lucrarile-noastre> (the former
   `/prototip/portofoliu` routes were replaced by the Clopote slice on 2026-10-24)
-- Editor: <http://localhost:3333>
+- Editor: <http://localhost:3333>, or the hosted Studio
+  <https://premiumbells.sanity.studio> (deployed 2026-10-24; use this on the phone)
 - Project settings: <https://www.sanity.io/manage/project/1fzbw4s1>
 
 The public IDs default to the values above. `.env.example` documents overrides;

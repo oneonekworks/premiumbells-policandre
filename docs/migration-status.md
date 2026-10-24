@@ -172,6 +172,10 @@ These items do not block completing the rest of Phase 0.
   transparency is kept; undecodable formats pass through flagged. Studio
   typecheck, lint, and build pass. The Studio UI itself and phone/HEIC
   behaviour still need verification by a signed-in editor.
+- Deployed the Studio to <https://premiumbells.sanity.studio> (app ID recorded
+  in `sanity.cli.ts`, schema deployed, auto-updates on) and aligned local
+  `sanity`/`@sanity/vision` with the hosted runtime (6.20.0). Signing in
+  requires a member of project `1fzbw4s1`. Phone acceptance can now proceed.
 
 ### 2026-10-10
 

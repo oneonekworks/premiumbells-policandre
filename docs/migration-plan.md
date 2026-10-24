@@ -67,7 +67,7 @@ backup, account, or analytics inputs remain pending.
   portfolio schemas.
 - [ ] Configure CORS for local and preview origins.
 - [x] Generate TypeScript types for the minimal prototype schemas/queries.
-- [ ] Deploy Studio to a temporary Sanity-hosted URL.
+- [x] Deploy Studio to a Sanity-hosted URL (premiumbells.sanity.studio, 2026-10-24).
 
 **Exit criteria:** An authorised editor can create, preview, validate, and
 publish sample categories and projects without touching source code, and the
