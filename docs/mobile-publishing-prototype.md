@@ -54,12 +54,17 @@ failures remain visible. This workflow has not yet been accepted on a phone.
 2. In **Textul paginii**, edit the portfolio title and introduction. Publish.
 3. In **Lucrări și fotografii**, create a draft, enter its name, generate the
    short address, select the category, location, and description.
-4. In **2. Fotografii**, upload 10–20 actual phone photos into **Galerie foto**.
-   This is an array of images, allowing native multi-file uploads. Open images
-   to add required accessibility descriptions and optional captions. Reorder
-   with the Studio's standard controls.
-5. For **Fotografie de copertă**, use **Select** to reuse an uploaded image.
-   Add its accessibility description and adjust crop/hotspot if needed.
+4. In **2. Fotografii**, tap **Adaugă fotografii (optimizate)** and choose
+   10–20 actual phone photos at once. Each photo is shrunk in the browser to at
+   most 2560px (JPEG ~85%, PNG kept as PNG), stripped of metadata such as GPS,
+   uploaded three at a time, and appended in the selected order. The panel shows
+   each file's size before → after; failed files can be retried. Plain uploads of
+   full-size originals are switched off Studio-wide. Open images to add required
+   accessibility descriptions and optional captions; reorder with the standard
+   controls. Keep the originals on the phone or computer as proof of authorship.
+5. For **Fotografie de copertă**, use **Select** to reuse an uploaded image, or
+   **Select → Încarcă fotografie (optimizată)** for a new single photo. Add its
+   accessibility description and adjust crop/hotspot if needed.
 6. Before publishing, refresh the website: the draft must remain absent.
    Publish, then refresh again: the project and changed page copy should appear.
 7. Edit the published title without publishing: the old published title should
@@ -76,9 +81,9 @@ confidential material. Check photo metadata and visible text before uploading.
 | --- | --- | --- |
 | Device and browser | Phone model, OS, browser version, connection | Pending |
 | Create/edit draft | Category, locality, country, description; touch targets | Pending |
-| Upload 10–20 photos | Count, original formats, sizes, elapsed time | Pending |
-| HEIC / HEIF | Actual file format received, success/failure, orientation | Pending |
-| Interrupted upload | Disable network during upload, reconnect, retry failed files; check duplicates | Pending |
+| Upload 10–20 photos | Count, original formats, before → after sizes shown, elapsed time | Pending |
+| HEIC / HEIF | Optimised to JPEG in this browser? (Safari: expected yes; Chrome: passes through unoptimised), orientation | Pending |
+| Interrupted upload | Disable network during upload, reconnect, use "Reîncearcă"; check order and duplicates | Pending |
 | Cover and order | Reuse asset, adjust crop, reorder, reopen, confirm order | Pending |
 | Captions and alt text | Edit and confirm on published website | Pending |
 | Page copy | Edit title/intro, publish, verify without code changes | Pending |

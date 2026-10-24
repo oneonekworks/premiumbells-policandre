@@ -165,6 +165,13 @@ These items do not block completing the rest of Phase 0.
   checks on the production build pass (1 mobile-only check skipped on desktop).
   Search/filter, the three representative imported projects, and large-gallery
   performance measurement remain open for Phase 3.
+- Added in-browser photo optimisation to the Studio: a multi-photo gallery
+  button and a single-image asset source shrink photos to 2560px (JPEG ~85%),
+  strip metadata, and upload; plain full-size uploads are disabled. In Chrome,
+  legacy 14.9 MB / 14.6 MB photos became 594 KB / 733 KB in ~0.3 s; PNG
+  transparency is kept; undecodable formats pass through flagged. Studio
+  typecheck, lint, and build pass. The Studio UI itself and phone/HEIC
+  behaviour still need verification by a signed-in editor.
 
 ### 2026-10-10
 
