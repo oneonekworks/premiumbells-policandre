@@ -1,5 +1,4 @@
-export const PROJECT_PAGE_SIZE = 12;
-export const GALLERY_PAGE_SIZE = 24;
+export const PROJECT_PAGE_SIZE = 24;
 
 export function pageNumber(value: string | string[] | undefined): number {
   if (typeof value !== 'string' || !/^[1-9]\d*$/.test(value)) return 1;

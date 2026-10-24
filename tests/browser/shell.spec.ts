@@ -38,7 +38,7 @@ test('unknown paths return 404 inside the shell', async ({page}) => {
   expect(response?.status()).toBe(404);
   await expect(page.getByRole('heading', {name: 'Pagina nu a fost găsită.'})).toBeVisible();
   await expect(page.locator('header')).toBeVisible();
-  expect((await page.goto('/en/prototip/portofoliu'))?.status()).toBe(404);
+  expect((await page.goto('/en/lucrarile-noastre-inexistent'))?.status()).toBe(404);
 });
 
 test('mobile menu opens, closes with Escape, and closes after navigation', async ({page, isMobile}) => {

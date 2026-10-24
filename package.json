@@ -9,7 +9,7 @@
     "lint": "eslint",
     "inventory:legacy": "tsx scripts/inventory-legacy.ts",
     "test:migration": "tsx --test scripts/*.test.ts",
-    "test:sanity": "node --import tsx --test tests/sanity.test.ts",
+    "test:unit": "node --import tsx --test tests/*.test.ts",
     "test:browser": "playwright test",
     "typecheck": "next typegen && tsc --noEmit",
     "sanity:typegen": "npm --prefix ../studio-premiumbells run typegen"

@@ -184,13 +184,16 @@ Implementation, following the installed Next.js 16 internationalisation guide:
   to the equivalent page only when that translation is published.
 - Fixed interface strings (buttons, pagination, aria labels) live in typed code
   dictionaries; navigation and marketing copy live in Sanity.
-- `/prototip/*` moves under `app/[lang]` or into its own route group with a
-  separate root layout when the root layout moves.
+- Route interception compares the client's current URL with internal route
+  patterns, so `proxy.ts` maps the `Next-Url` request header the same way as
+  the pathname. Next 16.4 also re-applies the interception rewrite on each
+  internal pass, so the intercepted `[project]` param can arrive as
+  `(.)(.)(.)slug`; `stripInterceptionMarkers()` removes the markers. Re-check
+  both on Next upgrades.
 
-### Project modal routes
+### Project modal routes (implemented 2026-10-24)
 
-The initial project-details implementation should use a parallel `@modal` slot
-and an intercepted project route:
+Project details use a parallel `@modal` slot and an intercepted project route:
 
 ```text
 app/[lang]/lucrarile-noastre/[category]/layout.tsx
@@ -200,6 +203,14 @@ app/[lang]/lucrarile-noastre/[category]/@modal/default.tsx
 app/[lang]/lucrarile-noastre/[category]/@modal/(.)[project]/page.tsx
 app/[lang]/lucrarile-noastre/[category]/@modal/[...catchAll]/page.tsx
 ```
+
+`/lucrarile-noastre` lists the categories with the editable page copy. The
+category layout renders the sidebar (chips on phones) around both the grid and
+the full project page. `ProjectDetails` is shared by the slide-over and the full
+page; the gallery shows 24 thumbnails at a time and opens a fullscreen lightbox
+(native `<dialog>`, arrows, swipe, thumbnails). A category slug from the other
+language permanently redirects. Reads remain uncached until the publish
+webhook milestone.
 
 Expected behaviour:
 

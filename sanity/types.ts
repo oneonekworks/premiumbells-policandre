@@ -369,9 +369,58 @@ export type PORTFOLIO_PAGE_QUERY_RESULT = {
 } | null;
 
 // Source: ../rbells_policandre/sanity/queries.ts
-// Variable: PROJECTS_QUERY
-// Query: {    "total": count(*[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current)]),    "items": *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current)]      | order(_createdAt desc, _id asc)[$start...$end]{        _id, "title": select($lang == "en" => title.en, title.ro), "slug": slug.current, "summary": select($lang == "en" => summary.en, summary.ro),        location, year, "category": select($lang == "en" => category->title.en, category->title.ro),        coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro)}      }  }
-export type PROJECTS_QUERY_RESULT = {
+// Variable: CATEGORIES_QUERY
+// Query: *[_type == "workCategory" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && enabled != false && defined(select($lang == "en" => slug.en.current, slug.ro.current))] | order(displayOrder asc, _id asc){    _id, "title": select($lang == "en" => title.en, title.ro), "slug": select($lang == "en" => slug.en.current, slug.ro.current),    coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},    "projectCount": count(*[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current) && references(^._id)])  }
+export type CATEGORIES_QUERY_RESULT = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  coverImage: {
+    asset: SanityImageAssetReference | null;
+    crop: SanityImageCrop | null;
+    hotspot: SanityImageHotspot | null;
+    alt: string | null;
+    caption: string | null;
+    lqip: string | null;
+    width: number | null;
+    height: number | null;
+  } | null;
+  projectCount: number;
+}>;
+
+// Source: ../rbells_policandre/sanity/queries.ts
+// Variable: CATEGORY_QUERY
+// Query: *[_type == "workCategory" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && enabled != false && defined(select($lang == "en" => slug.en.current, slug.ro.current)) && $slug in [slug.ro.current, slug.en.current]][0]{    _id, "title": select($lang == "en" => title.en, title.ro), "summary": select($lang == "en" => summary.en, summary.ro), "slug": select($lang == "en" => slug.en.current, slug.ro.current),    "slugs": {"ro": slug.ro.current, "en": select("en" in publishedLanguages => slug.en.current)},    coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},    seo{"title": select($lang == "en" => metaTitle.en, metaTitle.ro), "description": select($lang == "en" => metaDescription.en, metaDescription.ro), noIndex}  }
+export type CATEGORY_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  summary: string | null;
+  slug: string | null;
+  slugs: {
+    ro: string | null;
+    en: string | null;
+  };
+  coverImage: {
+    asset: SanityImageAssetReference | null;
+    crop: SanityImageCrop | null;
+    hotspot: SanityImageHotspot | null;
+    alt: string | null;
+    caption: string | null;
+    lqip: string | null;
+    width: number | null;
+    height: number | null;
+  } | null;
+  seo: {
+    title: string | null;
+    description: string | null;
+    noIndex: boolean | null;
+  } | null;
+} | null;
+
+// Source: ../rbells_policandre/sanity/queries.ts
+// Variable: CATEGORY_PROJECTS_QUERY
+// Query: {    "total": count(*[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current) && category._ref == $categoryId]),    "items": *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current) && category._ref == $categoryId]      | order(coalesce(displayOrder, 1000000) asc, featured desc, _createdAt desc, _id asc)[$start...$end]{        _id, "title": select($lang == "en" => title.en, title.ro), "slug": slug.current, "summary": select($lang == "en" => summary.en, summary.ro),        location, year, "displayDate": select($lang == "en" => displayDate.en, displayDate.ro),        coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}      }  }
+export type CATEGORY_PROJECTS_QUERY_RESULT = {
   total: number;
   items: Array<{
     _id: string;
@@ -384,24 +433,45 @@ export type PROJECTS_QUERY_RESULT = {
       country?: "MD" | "RO";
     } | null;
     year: number | null;
-    category: string | null;
+    displayDate: string | null;
     coverImage: {
       asset: SanityImageAssetReference | null;
       crop: SanityImageCrop | null;
       hotspot: SanityImageHotspot | null;
       alt: string | null;
       caption: string | null;
+      lqip: string | null;
+      width: number | null;
+      height: number | null;
     } | null;
   }>;
 };
 
 // Source: ../rbells_policandre/sanity/queries.ts
 // Variable: PROJECT_QUERY
-// Query: *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && slug.current == $slug][0]{    _id, "title": select($lang == "en" => title.en, title.ro), "summary": select($lang == "en" => summary.en, summary.ro), location, year,    "displayDate": select($lang == "en" => displayDate.en, displayDate.ro), "category": select($lang == "en" => category->title.en, category->title.ro),    coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro)},    "imageCount": count(gallery),    "gallery": gallery[$start...$end]{_key, asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro)}  }
+// Query: *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current) && slug.current == $slug && category._ref == $categoryId][0]{    _id, "title": select($lang == "en" => title.en, title.ro), "summary": select($lang == "en" => summary.en, summary.ro), "body": select($lang == "en" => body.en, body.ro),    location, year, "displayDate": select($lang == "en" => displayDate.en, displayDate.ro), publishedLanguages,    coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},    "specifications": specifications[]{_key, "label": select($lang == "en" => label.en, label.ro), value, unit},    "videos": videos[]{_key, provider, url, "file": file.asset->url, "title": select($lang == "en" => title.en, title.ro), poster{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}},    "gallery": gallery[]{_key, asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},    seo{"title": select($lang == "en" => metaTitle.en, metaTitle.ro), "description": select($lang == "en" => metaDescription.en, metaDescription.ro), noIndex, shareImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}}  }
 export type PROJECT_QUERY_RESULT = {
   _id: string;
   title: string | null;
   summary: string | null;
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "h3" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
   location: {
     locality?: string;
     county?: string;
@@ -409,15 +479,40 @@ export type PROJECT_QUERY_RESULT = {
   } | null;
   year: number | null;
   displayDate: string | null;
-  category: string | null;
+  publishedLanguages: Array<string> | null;
   coverImage: {
     asset: SanityImageAssetReference | null;
     crop: SanityImageCrop | null;
     hotspot: SanityImageHotspot | null;
     alt: string | null;
     caption: string | null;
+    lqip: string | null;
+    width: number | null;
+    height: number | null;
   } | null;
-  imageCount: number | null;
+  specifications: Array<{
+    _key: string;
+    label: string | null;
+    value: string | null;
+    unit: string | null;
+  }> | null;
+  videos: Array<{
+    _key: string;
+    provider: "file" | "youtube" | null;
+    url: string | null;
+    file: string | null;
+    title: string | null;
+    poster: {
+      asset: SanityImageAssetReference | null;
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+      alt: string | null;
+      caption: string | null;
+      lqip: string | null;
+      width: number | null;
+      height: number | null;
+    } | null;
+  }> | null;
   gallery: Array<{
     _key: string;
     asset: SanityImageAssetReference | null;
@@ -425,15 +520,35 @@ export type PROJECT_QUERY_RESULT = {
     hotspot: SanityImageHotspot | null;
     alt: string | null;
     caption: string | null;
+    lqip: string | null;
+    width: number | null;
+    height: number | null;
   }> | null;
+  seo: {
+    title: string | null;
+    description: string | null;
+    noIndex: boolean | null;
+    shareImage: {
+      asset: SanityImageAssetReference | null;
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+      alt: string | null;
+      caption: string | null;
+      lqip: string | null;
+      width: number | null;
+      height: number | null;
+    } | null;
+  } | null;
 } | null;
 
 // Query TypeMap
 declare global {
   interface SanityQueries {
     '\n  *[_type == "portfolioPage" && _id == "portfolioPage" && $lang in coalesce(publishedLanguages, ["ro"])][0]{\n    "title": select($lang == "en" => title.en, title.ro), "intro": select($lang == "en" => intro.en, intro.ro)\n  }\n': PORTFOLIO_PAGE_QUERY_RESULT;
-    '\n  {\n    "total": count(*[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current)]),\n    "items": *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current)]\n      | order(_createdAt desc, _id asc)[$start...$end]{\n        _id, "title": select($lang == "en" => title.en, title.ro), "slug": slug.current, "summary": select($lang == "en" => summary.en, summary.ro),\n        location, year, "category": select($lang == "en" => category->title.en, category->title.ro),\n        coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro)}\n      }\n  }\n': PROJECTS_QUERY_RESULT;
-    '\n  *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && slug.current == $slug][0]{\n    _id, "title": select($lang == "en" => title.en, title.ro), "summary": select($lang == "en" => summary.en, summary.ro), location, year,\n    "displayDate": select($lang == "en" => displayDate.en, displayDate.ro), "category": select($lang == "en" => category->title.en, category->title.ro),\n    coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro)},\n    "imageCount": count(gallery),\n    "gallery": gallery[$start...$end]{_key, asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro)}\n  }\n': PROJECT_QUERY_RESULT;
+    '\n  *[_type == "workCategory" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && enabled != false && defined(select($lang == "en" => slug.en.current, slug.ro.current))] | order(displayOrder asc, _id asc){\n    _id, "title": select($lang == "en" => title.en, title.ro), "slug": select($lang == "en" => slug.en.current, slug.ro.current),\n    coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},\n    "projectCount": count(*[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current) && references(^._id)])\n  }\n': CATEGORIES_QUERY_RESULT;
+    '\n  *[_type == "workCategory" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && enabled != false && defined(select($lang == "en" => slug.en.current, slug.ro.current)) && $slug in [slug.ro.current, slug.en.current]][0]{\n    _id, "title": select($lang == "en" => title.en, title.ro), "summary": select($lang == "en" => summary.en, summary.ro), "slug": select($lang == "en" => slug.en.current, slug.ro.current),\n    "slugs": {"ro": slug.ro.current, "en": select("en" in publishedLanguages => slug.en.current)},\n    coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},\n    seo{"title": select($lang == "en" => metaTitle.en, metaTitle.ro), "description": select($lang == "en" => metaDescription.en, metaDescription.ro), noIndex}\n  }\n': CATEGORY_QUERY_RESULT;
+    '\n  {\n    "total": count(*[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current) && category._ref == $categoryId]),\n    "items": *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current) && category._ref == $categoryId]\n      | order(coalesce(displayOrder, 1000000) asc, featured desc, _createdAt desc, _id asc)[$start...$end]{\n        _id, "title": select($lang == "en" => title.en, title.ro), "slug": slug.current, "summary": select($lang == "en" => summary.en, summary.ro),\n        location, year, "displayDate": select($lang == "en" => displayDate.en, displayDate.ro),\n        coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}\n      }\n  }\n': CATEGORY_PROJECTS_QUERY_RESULT;
+    '\n  *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current) && slug.current == $slug && category._ref == $categoryId][0]{\n    _id, "title": select($lang == "en" => title.en, title.ro), "summary": select($lang == "en" => summary.en, summary.ro), "body": select($lang == "en" => body.en, body.ro),\n    location, year, "displayDate": select($lang == "en" => displayDate.en, displayDate.ro), publishedLanguages,\n    coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},\n    "specifications": specifications[]{_key, "label": select($lang == "en" => label.en, label.ro), value, unit},\n    "videos": videos[]{_key, provider, url, "file": file.asset->url, "title": select($lang == "en" => title.en, title.ro), poster{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}},\n    "gallery": gallery[]{_key, asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},\n    seo{"title": select($lang == "en" => metaTitle.en, metaTitle.ro), "description": select($lang == "en" => metaDescription.en, metaDescription.ro), noIndex, shareImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}}\n  }\n': PROJECT_QUERY_RESULT;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too

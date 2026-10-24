@@ -5,6 +5,7 @@ import {SiteFooter} from '@/components/site/footer';
 import {SiteHeader} from '@/components/site/header';
 import {getDictionary} from '@/lib/i18n/dictionaries';
 import {isLang, languages} from '@/lib/i18n/routing';
+import {site} from '@/lib/site';
 import '../globals.css';
 
 // Both fonts include latin-ext for Romanian ș/ț and cyrillic for a possible
@@ -17,6 +18,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {default: 'Premium Bells', template: '%s | Premium Bells'},
   description: 'Policandre, clopote și iconostase pentru biserici ortodoxe.',
   // The whole site stays noindex until launch.

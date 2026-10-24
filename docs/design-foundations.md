@@ -71,6 +71,6 @@ buttons, and cards; it moves to the Sanity `homePage` singleton.
 
 ## Development note
 
-`npm run dev` uses Webpack. Under Turbopack dev (Next 16.4.3), the dynamic
-`/prototip/portofoliu` route enters a reload loop in the browser; Turbopack
+`npm run dev` uses Webpack. Under Turbopack dev (Next 16.4.3), the
+former dynamic `/prototip/portofoliu` route entered a reload loop in the browser; Turbopack
 production builds and Webpack dev are unaffected. Re-test on Next upgrades.

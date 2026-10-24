@@ -153,6 +153,18 @@ These items do not block completing the rest of Phase 0.
   cover image is chosen.
 - Studio typecheck, lint, and build pass. Frontend lint, typecheck, build,
   7 query tests, 6 migration tests, and 11 browser checks pass.
+- Built the Clopote slice (works for every category): `/lucrarile-noastre`
+  overview, category layout with sidebar, paginated project grid, intercepted
+  slide-over and full project page sharing one details component, 24-at-a-time
+  gallery, fullscreen lightbox, click-to-load YouTube, rich text,
+  specifications, canonical/hreflang/Open Graph metadata, wrong-language slug
+  redirects, and a section error boundary. Removed the `/prototip` routes.
+- Worked around two Next 16.4 + proxy interception issues (mapped `Next-Url`
+  header; stripped repeated `(.)` markers) and a nested-dialog event leak.
+- Lint, typecheck, build, 11 unit tests, 6 migration tests, and 15 browser
+  checks on the production build pass (1 mobile-only check skipped on desktop).
+  Search/filter, the three representative imported projects, and large-gallery
+  performance measurement remain open for Phase 3.
 
 ### 2026-10-10
 

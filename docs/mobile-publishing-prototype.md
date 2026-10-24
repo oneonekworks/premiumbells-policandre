@@ -20,7 +20,8 @@ npm run dev
 npm run dev
 ```
 
-- Website: <http://localhost:3000/prototip/portofoliu>
+- Website: <http://localhost:3000/lucrarile-noastre> (the former
+  `/prototip/portofoliu` routes were replaced by the Clopote slice on 2026-10-24)
 - Editor: <http://localhost:3333>
 - Project settings: <https://www.sanity.io/manage/project/1fzbw4s1>
 
@@ -102,7 +103,8 @@ format as accepted because the fallback worked.
 - For the upload prototype, `project.gallery` is a direct image array, instead
   of the proposed `galleryItem.image` wrapper. This enables native multi-upload;
   decide the final production shape after phone acceptance and before imports.
-- `/prototip/portofoliu` and `/prototip/portofoliu/[slug]` are temporary noindex
+- (Superseded 2026-10-24 by `/lucrarile-noastre/[category]/[project]`.)
+  `/prototip/portofoliu` and `/prototip/portofoliu/[slug]` were temporary noindex
   routes. The root also remains noindex during prototype development. This is
   not access control and does not finalize any existing URL or redirect.
 - Explicit `published` client perspective, no token, server-only client,
@@ -132,7 +134,7 @@ npm run build
 # From rbells_policandre
 npm run lint
 npm run typecheck
-npm run test:sanity
+npm run test:unit
 npm run test:migration
 npm run test:browser
 npm run build

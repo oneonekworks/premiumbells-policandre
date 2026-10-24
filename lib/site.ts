@@ -2,6 +2,8 @@
 // `siteSettings` singleton during schema expansion.
 export const site = {
   name: 'Premium Bells',
+  // Canonical origin for metadata; override per environment.
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.policandre.ro',
   legalName: 'S.C. Premium Bells SRL',
   cui: '36422758',
   registration: 'J40/10836/12.08.2016',

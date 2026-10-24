@@ -104,15 +104,15 @@ Representative records:
 
 Implementation:
 
-- [ ] Create site shell, header, work sidebar, and responsive mobile navigation.
-- [ ] Build `/lucrarile-noastre/clopote` as a Server Component route.
-- [ ] Build typed project cards and responsive image loading.
-- [ ] Build `/lucrarile-noastre/clopote/[project]` full page.
-- [ ] Add parallel/intercepted modal route for soft navigation.
-- [ ] Add accessible slide-over details and fullscreen lightbox.
-- [ ] Add URL-based search/filter behaviour.
-- [ ] Add project metadata and social sharing image rules.
-- [ ] Verify keyboard, Back/Forward, refresh, direct URL, and mobile behaviour.
+- [x] Create site shell, header, work sidebar, and responsive mobile navigation.
+- [x] Build `/lucrarile-noastre/clopote` as a Server Component route.
+- [x] Build typed project cards and responsive image loading.
+- [x] Build `/lucrarile-noastre/clopote/[project]` full page.
+- [x] Add parallel/intercepted modal route for soft navigation.
+- [x] Add accessible slide-over details and fullscreen lightbox.
+- [ ] Add URL-based search/filter behaviour (not started).
+- [x] Add project metadata and social sharing image rules.
+- [x] Verify keyboard, Back/Forward, refresh, direct URL, and mobile behaviour.
 - [ ] Measure initial grid and large-gallery performance.
 
 **Exit criteria:** All three projects are editable in Studio and work correctly

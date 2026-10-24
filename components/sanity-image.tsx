@@ -1,29 +1,38 @@
 'use client';
 
 import Image from 'next/image';
-import {createImageUrlBuilder} from '@sanity/image-url';
-import {dataset, projectId} from '@/sanity/env';
-import type {PROJECT_QUERY_RESULT} from '@/sanity/types';
+import {imageBuilder, imageSource, type SanityImageValue} from '@/sanity/image';
 
-const builder = createImageUrlBuilder({projectId, dataset});
-
-export function SanityImage({image, cover = false}: {
-  image: NonNullable<PROJECT_QUERY_RESULT>['coverImage'];
-  cover?: boolean;
+/**
+ * Fills its positioned parent. With `ratio` (width/height) the Sanity CDN crops
+ * around the editor's hotspot; without it the whole image is scaled to fit.
+ * Every width is a CDN transform, so originals are never downloaded.
+ */
+export function SanityImage({image, sizes, ratio, priority = false, className = ''}: {
+  image: SanityImageValue | null | undefined;
+  sizes: string;
+  ratio?: number;
+  priority?: boolean;
+  className?: string;
 }) {
   if (!image?.asset?._ref) return null;
-  const source = {asset: image.asset, crop: image.crop ?? undefined, hotspot: image.hotspot ?? undefined};
+  const source = imageSource(image);
   return (
     <Image
-      src={builder.image(source).width(800).auto('format').url()}
+      src={imageBuilder.image(source).width(800).auto('format').url()}
       loader={({width, quality}) => {
-        const url = builder.image(source).width(width).quality(quality ?? 75).auto('format');
-        return cover ? url.height(Math.round(width * 0.75)).fit('crop').url() : url.fit('max').url();
+        const url = imageBuilder.image(source).width(width).quality(quality ?? 75).auto('format');
+        return ratio ? url.height(Math.round(width / ratio)).fit('crop').url() : url.fit('max').url();
       }}
-      alt={image.alt ?? image.caption ?? 'Fotografie din lucrare'}
+      alt={image.alt ?? ''}
       fill
-      sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
-      className={cover ? 'object-cover' : 'object-contain'}
+      sizes={sizes}
+      priority={priority}
+      // The blur preview fills the box, so only use it when the image is cropped
+      // to that box; letterboxed (contain) images would show a stretched blur.
+      placeholder={ratio && image.lqip ? 'blur' : 'empty'}
+      blurDataURL={ratio ? image.lqip ?? undefined : undefined}
+      className={`${ratio ? 'object-cover' : 'object-contain'} ${className}`}
     />
   );
 }

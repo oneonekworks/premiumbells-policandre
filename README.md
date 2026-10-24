@@ -33,8 +33,8 @@ npm install
 npm run dev
 ```
 
-Open <http://localhost:3000> (English at `/en`; publishing prototype at
-`/prototip/portofoliu`).
+Open <http://localhost:3000> (English at `/en`; portfolio at
+`/lucrarile-noastre`).
 Run `npm run dev` in `../studio-premiumbells` for the editor on port 3333.
 
 Public Sanity identifiers default to the approved project/dataset.
