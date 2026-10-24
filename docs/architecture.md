@@ -1,7 +1,7 @@
 # Target Architecture
 
 **Status:** Accepted foundation  
-**Last updated:** 2026-10-10
+**Last updated:** 2026-10-24
 
 Product scope and open approval gates are defined in [the rebuild brief](rebuild-brief.md).
 
@@ -138,7 +138,7 @@ small brand assets may remain local; editorial photography belongs in Sanity.
 ## Route architecture
 
 Proposed Romanian canonical routes (not a final redirect map; preserve valid
-nested legacy service routes and decide English routing before implementation):
+nested legacy service routes):
 
 ```text
 /
@@ -151,16 +151,54 @@ nested legacy service routes and decide English routing before implementation):
 /blog/[post]
 ```
 
+### Language routing (decided 2026-10-24)
+
+Romanian stays unprefixed; English lives under `/en/` with translated section
+names and localised category/service slugs. Project and catalogue slugs are
+shared. Storage and readiness rules are in [the content model](content-model.md).
+
+| Romanian | English |
+| --- | --- |
+| `/` | `/en` |
+| `/servicii` | `/en/services` |
+| `/servicii/policandre` | `/en/services/chandeliers` |
+| `/lucrarile-noastre` | `/en/our-work` |
+| `/lucrarile-noastre/clopote` | `/en/our-work/bells` |
+| `/lucrarile-noastre/clopote/schitul-duca` | `/en/our-work/bells/schitul-duca` |
+| `/blog/[ro-post]` | `/en/blog/[en-post]` |
+
+Implementation, following the installed Next.js 16 internationalisation guide:
+
+- Every public route lives under `app/[lang]/`. `app/[lang]/layout.tsx` is the
+  root layout and sets `<html lang>` through `next/root-params`;
+  `generateStaticParams` returns `ro` and `en`.
+- Internal folder names are Romanian. `proxy.ts` rewrites unprefixed requests to
+  `/ro/...`, permanently redirects explicit `/ro/...` requests to the unprefixed
+  URL, and maps the fixed English section names (`services`, `our-work`) to the
+  internal Romanian folders with a static table. It never fetches content.
+- Category and service pages resolve `[category]`/`[service]` against
+  `slug[$lang]` in GROQ. A wrong-language slug redirects to the correct one.
+- A typed `href(lang, route, params)` helper builds every internal link, so
+  translated segments are never hand-written in components.
+- No automatic redirect by `Accept-Language`. A visible RO | EN switcher links
+  to the equivalent page only when that translation is published.
+- Fixed interface strings (buttons, pagination, aria labels) live in typed code
+  dictionaries; navigation and marketing copy live in Sanity.
+- `/prototip/*` moves under `app/[lang]` or into its own route group with a
+  separate root layout when the root layout moves.
+
+### Project modal routes
+
 The initial project-details implementation should use a parallel `@modal` slot
 and an intercepted project route:
 
 ```text
-app/(site)/lucrarile-noastre/[category]/layout.tsx
-app/(site)/lucrarile-noastre/[category]/page.tsx
-app/(site)/lucrarile-noastre/[category]/[project]/page.tsx
-app/(site)/lucrarile-noastre/[category]/@modal/default.tsx
-app/(site)/lucrarile-noastre/[category]/@modal/(.)[project]/page.tsx
-app/(site)/lucrarile-noastre/[category]/@modal/[...catchAll]/page.tsx
+app/[lang]/lucrarile-noastre/[category]/layout.tsx
+app/[lang]/lucrarile-noastre/[category]/page.tsx
+app/[lang]/lucrarile-noastre/[category]/[project]/page.tsx
+app/[lang]/lucrarile-noastre/[category]/@modal/default.tsx
+app/[lang]/lucrarile-noastre/[category]/@modal/(.)[project]/page.tsx
+app/[lang]/lucrarile-noastre/[category]/@modal/[...catchAll]/page.tsx
 ```
 
 Expected behaviour:
@@ -201,6 +239,8 @@ allow-listed inline marks.
   projects only as overlays.
 - Generate title, description, canonical URL, Open Graph image, and social
   metadata from typed content.
+- Emit self-canonicals and `alternates.languages` (hreflang) only for published
+  language pairs, with Romanian as `x-default`.
 - Generate `sitemap.ts` and `robots.ts` from published content.
 - Use permanent redirects for corrected or consolidated legacy URLs.
 - Record old-to-new mappings before changing production DNS.
@@ -231,8 +271,8 @@ allow-listed inline marks.
 
 - Final lightbox package versus a small accessible custom implementation.
 - Dedicated streaming provider for owned videos.
-- Translation storage/workflow and locale routing for Romanian/English launch;
-  Greek and other locales later.
+- Whether and when to add Greek or another third language (needs demand data
+  and a native reviewer); English URL slugs for each category and service.
 - Alternative commercial provider if Vercel plan constraints are undesirable.
 - Exact analytics and consent tooling.
 

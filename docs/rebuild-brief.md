@@ -28,11 +28,17 @@ materials, finishes, and technical specifications without prices.
 - Romanian is primary; Romanian and reviewed English content are the launch
   target following the user's updated language requirement.
 - Prepare for Greek and additional languages without implementing them now.
+  Reviewed 2026-10-24: English stays the second language (Romanian diaspora,
+  wider Orthodox enquiries, and an available reviewer). A third language —
+  Greek, or Russian for Moldova as a business decision — is added only when
+  Search Console/Analytics or enquiry data shows demand and a native reviewer
+  is available.
 - Share media and language-independent technical facts; translate visible copy,
-  navigation, image descriptions, and SEO fields. Translation storage strategy
-  and locale URL conventions still require a technical design decision.
-- Preserve useful Romanian URLs. `/en/` and future `/el/` are proposals, not an
-  approved route map. Account for existing nested service routes.
+  navigation, image descriptions, and SEO fields. Translation storage is decided
+  in [the content model](content-model.md).
+- Preserve useful Romanian URLs unprefixed. English uses `/en/` with translated
+  section names and category/service slugs; project slugs are shared. See
+  [language routing](architecture.md#language-routing-decided-2026-10-24).
 - Publish only ready translations; do not create empty indexed locale pages.
   Use self-canonicals and hreflang for published equivalents.
 - SEO starts with URL/content architecture, not a final polish phase. Capture

@@ -1,7 +1,7 @@
 # Sanity Content Model
 
 **Status:** Proposed foundation  
-**Last updated:** 2026-10-10
+**Last updated:** 2026-10-24
 
 This model is intentionally content-oriented rather than a direct copy of the
 legacy JavaScript objects. It should support the current design while allowing
@@ -12,16 +12,81 @@ editors to add content without developer intervention.
 The sibling `studio-premiumbells` now registers minimal `project`,
 `workCategory`, `portfolioPage`, and `imageWithMetadata` schemas. The prototype
 uses a direct image array for `project.gallery` to support native multi-upload.
-Only Romanian fields are implemented; this does not settle translation storage.
-The larger model below remains proposed. See the
-[prototype runbook](mobile-publishing-prototype.md) before extending it.
+Only Romanian plain-string fields are implemented. They will be converted to the
+translation storage below during schema expansion; the existing prototype
+documents need a one-off conversion script at that point. The larger model below
+remains proposed. See the [prototype runbook](mobile-publishing-prototype.md)
+before extending it.
+
+## Translation storage (decided 2026-10-24)
+
+Launch languages are Romanian (required) and English (optional per document).
+Greek or another language is added later only when demand data and a native
+reviewer exist; see [the rebuild brief](rebuild-brief.md).
+
+### Field-level translation for structured content
+
+`project`, `workCategory`, `service`, `catalogItem`, singletons
+(`siteSettings`, `navigation`, `homePage`, `portfolioPage`), and shared objects
+(`imageWithMetadata`, `seo`, `specification` labels, `callToAction` labels) stay
+one document per item. Translatable fields use locale objects keyed by language:
+
+```ts
+title:   {ro: 'Schitul Duca', en: 'Duca Hermitage'}   // localeString
+summary: {ro: '…', en: '…'}                           // localeText
+body:    {ro: [...], en: [...]}                       // localeBlockContent
+```
+
+- A single `languages` list in the Studio (`i18n.ts`) generates the
+  `localeString`, `localeText`, and `localeBlockContent` object types. Only
+  `ro` is required. Adding a language is a schema change, not a data migration.
+- Media, gallery order, dates, locations, dimensions, reference codes,
+  relationships, and project slugs are shared, never duplicated per language.
+- `@sanity/language-filter` lets editors hide English while editing on a phone.
+- Plain locale objects were chosen over `sanity-plugin-internationalized-array`:
+  the language set is small and known, GROQ stays readable (`title[$lang]`),
+  TypeGen output stays simple, and mobile editing shows stacked inputs.
+
+### Document-level translation for blog posts
+
+Each `blogPost` language is its own document with a `language` field and an
+optional `translationOf` reference to the Romanian original. Articles may differ
+in structure or exist only in Romanian. No document-internationalization plugin
+is used for the initial three posts.
+
+### Publication readiness
+
+Every translatable document has `publishedLanguages` (Studio label
+**Publicat în**), a multi-select defaulting to `['ro']`.
+
+- Selecting `en` makes the English title, summary, and SEO fields required by
+  validation; the document cannot be published with them empty.
+- English routes, sitemap entries, hreflang alternates, and language-switcher
+  links exist only when `en` is selected. No empty locale pages are generated.
+- On a ready English page, optional fields fall back as follows: captions
+  without English text are hidden; image `alt` falls back to Romanian.
+- The importer writes Romanian values only, with `publishedLanguages: ['ro']`.
+
+### Localised slugs
+
+| Document | Slug shape | Example |
+| --- | --- | --- |
+| `workCategory` | `{ro, en}` | `clopote` / `bells` |
+| `service` | `{ro, en}` | `policandre` / `chandeliers` |
+| `project` | shared | `schitul-duca` in both languages |
+| `catalogItem` | shared | reference-based slug in both languages |
+| `blogPost` | per document | each language document owns its slug |
+
+`slug.en` is required only when `en` is in `publishedLanguages`. Slugs remain
+stable after publication in every language.
 
 ## Modelling principles
 
 - Romanian is primary and English is targeted for launch; Greek is deferred.
 - Translate copy, navigation, SEO, alt text, and captions while sharing media,
-  model codes, dimensions, and other language-independent facts. The tables
-  below describe logical fields, not a finalized translation storage strategy.
+  model codes, dimensions, and other language-independent facts, using the
+  translation storage above. Tables below list logical fields; translatable
+  string/text/rich-text fields use the matching locale object type.
 - Track translation readiness and never publish empty locale equivalents.
 - Slugs are stable identifiers and cannot silently change after publication.
 - Reorderable content uses explicit ordered arrays.

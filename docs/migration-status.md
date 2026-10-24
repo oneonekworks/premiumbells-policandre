@@ -12,7 +12,13 @@
 - CMS: existing Sanity project `1fzbw4s1`, dataset `production`, authorized for
   the local prototype; actual-phone publishing acceptance remains pending.
 - Editors: one administrator initially, optionally two; simple mobile editing.
-- Languages: Romanian primary plus reviewed English at launch; Greek later.
+- Languages: Romanian primary plus reviewed English at launch; a third language
+  (Greek or another) only after demand data and a native reviewer exist.
+- Translation storage: one document with `{ro, en}` locale fields for structured
+  content; separate documents per language for blog posts; explicit
+  `publishedLanguages` readiness gate.
+- Language URLs: Romanian unprefixed; English under `/en/` with translated
+  section names and category/service slugs; shared project slugs.
 - Markets: Romania/Moldova, with English for wider European visitors.
 - Budget: approximately USD 20/month total; hosting choice remains unresolved.
 - SEO: foundational from URL/content planning onward, without ranking guarantees.
@@ -121,6 +127,10 @@ These items do not block completing the rest of Phase 0.
   frontend findings: 11 moderate and 3 high, all transitive via `next-sanity`.
 - Lint, typecheck, Turbopack production build, 5 query tests, 6 migration tests,
   and 4 browser checks pass.
+- Decided translation storage, readiness gating, and language URL conventions;
+  recorded them in the content model, architecture, and brief. English stays
+  the second language; a third language waits for demand data. Implementation
+  follows during schema expansion.
 
 ### 2026-10-10
 
