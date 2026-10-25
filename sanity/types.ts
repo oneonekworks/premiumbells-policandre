@@ -182,6 +182,11 @@ export type WorkCategory = {
   coverImage?: ImageWithMetadata;
   displayOrder?: number;
   enabled?: boolean;
+  suggestedSpecifications?: Array<
+    {
+      _key: string;
+    } & SpecificationSuggestion
+  >;
   seo?: Seo;
   legacy?: LegacySource;
 };
@@ -190,6 +195,12 @@ export type LocaleSlug = {
   _type: "localeSlug";
   ro?: Slug;
   en?: Slug;
+};
+
+export type SpecificationSuggestion = {
+  _type: "specificationSuggestion";
+  label?: LocaleString;
+  unit?: string;
 };
 
 export type Specification = {
@@ -346,6 +357,7 @@ export type AllSanitySchemaTypes =
   | Slug
   | WorkCategory
   | LocaleSlug
+  | SpecificationSuggestion
   | Specification
   | SanityFileAssetReference
   | Video

@@ -182,6 +182,16 @@ These items do not block completing the rest of Phase 0.
 
 ### 2026-10-25
 
+- Reworked technical details entry in the Studio (not yet deployed): each row
+  is one fact with clearer descriptions, a preview that reads "Greutate: 1000
+  kg", and a soft warning when a value looks like several facts. New optional
+  `workCategory.suggestedSpecifications` (label RO/EN + default unit) drives
+  tap-to-fill chips above the rows (`components/SpecificationsInput.tsx`); a
+  generic list shows until a category is chosen. Seed migration
+  `seed-suggested-specifications` (Policandre, Clopote; `setIfMissing`) was
+  dry-run only; dataset exported to
+  `.migration/backups/production-2026-10-25-before-suggestions.tar.gz`. The
+  Drobeta row still needs splitting by the editor. Studio unit tests 12.
 - Refined the upload optimiser: photos within 2560px are kept, with metadata
   stripped losslessly (JPEG APP1/XMP/MPF/comments and trailing data; WebP
   EXIF/XMP chunks); orientation-flagged photos are re-saved once; shrunk JPEGs

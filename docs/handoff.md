@@ -53,7 +53,8 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    [mobile-publishing-prototype.md](mobile-publishing-prototype.md) — device,
    HEIC, 10–20 photos, interrupted upload, duplicates, reorder, publish and
    unpublish. Closes Phase 1.
-2. **Small Studio fix — technical details entry** (Sonnet, Medium): the
+2. **Small Studio fix — technical details entry** (built and committed, awaiting
+   deploy, seed run and the Drobeta edit — see change log 2026-10-25): the
    Drobeta specification was entered as one row (Denumire "1000 kg", Valoare
    "III nivele, 238 lumini", Unitate "470 x 470cm"). Make one fact per row
    obvious: clearer descriptions and placeholders, a suggested list of labels
