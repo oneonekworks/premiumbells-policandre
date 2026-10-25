@@ -190,6 +190,14 @@ These items do not block completing the rest of Phase 0.
   photos shrink 14.2 MB → 580 KB. 5 Node unit tests cover the byte-level
   stripping. Studio redeployed. Of 166 legacy JPEGs, 101 carry EXIF, 1 has an
   orientation flag, and 1 is a PNG with a `.jpg` name.
+- Raised the upload limit to 3200px (JPEG 85% ≈ 0.65–1 MB for typical photos,
+  ~2 MB for dense gilded detail) and added a 1.5 MB cap: heavier photos within
+  3200px are re-compressed at the same size only when that saves ≥20%
+  (transparent PNGs excepted). Verified in Chrome: the user's WebP photos stay
+  byte-identical; a 1280px/4.5 MB JPEG → 833 KB; 6000px marble photo → 844 KB;
+  heavily compressed 399 KB source → 365 KB at 3200px; orientation-6 photo
+  re-saved upright; opaque 14.9 MB photo-like PNG → 583 KB JPEG; transparent
+  PNG kept. Studio redeployed.
 
 ### 2026-10-10
 
