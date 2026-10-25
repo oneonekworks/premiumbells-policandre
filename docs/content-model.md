@@ -127,7 +127,7 @@ stable after publication in every language.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `asset` | Sanity image | yes | Hotspot and crop enabled |
-| `alt` | string | yes | Empty only when explicitly decorative |
+| `alt` | localeString | no | Generated on the website when missing: editor text → caption → "Project, place – fotografia N din M" (decided 2026-10-25) |
 | `caption` | string | no | Visible editorial caption |
 | `credit` | string | no | Photographer/source |
 | `legacySourceUrl` | url | migration only | Removed after verification if unnecessary |

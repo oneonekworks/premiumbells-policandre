@@ -100,7 +100,7 @@ export function Lightbox({images, index, onIndexChange, onClose, labels}: {
                   aria-label={`${thumbnailIndex + 1} ${labels.of} ${count}`}
                   className={`relative block size-14 overflow-hidden rounded ${thumbnailIndex === index ? 'ring-2 ring-gold-500' : 'opacity-60 hover:opacity-100'}`}
                 >
-                  <SanityImage image={thumbnail} ratio={1} sizes="56px" />
+                  <SanityImage image={{...thumbnail, alt: ''}} ratio={1} sizes="56px" />
                 </button>
               </li>
             ))}

@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import Link from 'next/link';
 import {notFound} from 'next/navigation';
 import {ProjectDetails} from '@/components/portfolio/project-details';
+import {photoAlt, subject} from '@/lib/alt';
 import {sanityImageUrl} from '@/sanity/image';
 import {localizedHref} from '@/lib/i18n/routing';
 import {languageAlternates, truncate} from '@/lib/seo';
@@ -32,7 +33,9 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
     openGraph: {
       title: project.title ?? undefined,
       description: truncate(project.summary),
-      images: image ? [{url: image, width: 1200, height: 630, alt: share?.alt ?? ''}] : undefined,
+      images: image && share
+        ? [{url: image, width: 1200, height: 630, alt: photoAlt(share, subject(project.title, project.location?.locality))}]
+        : undefined,
     },
     ...(project.seo?.noIndex ? {robots: {index: false}} : {}),
   };

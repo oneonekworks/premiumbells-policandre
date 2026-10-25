@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {youtubeId} from '../components/portfolio/video-embed';
+import {photoAlt, subject} from '../lib/alt';
 import {plural} from '../lib/i18n/format';
 import {alternateHref, localizedHref, parsePublicPath, resolveEnglishPath} from '../lib/i18n/routing';
 import {languageAlternates} from '../lib/seo';
@@ -43,4 +44,15 @@ test('YouTube IDs are read from watch, short, embed, and shorts URLs', () => {
     'https://www.youtube.com/watch?feature=share&v=dQw4w9WgXcQ',
   ]) assert.equal(youtubeId(url), 'dQw4w9WgXcQ');
   assert.equal(youtubeId('https://vimeo.com/1'), null);
+});
+
+test('photo alt text: written text first, then caption, then generated description', () => {
+  const place = subject('Schitul Duca', 'Brasov', 'Brasov');
+  assert.equal(place, 'Schitul Duca, Brasov');
+  const position = {index: 2, total: 12, template: 'fotografia {index} din {total}'};
+  assert.equal(photoAlt({alt: 'Clopot de 600 kg'}, place, position), 'Clopot de 600 kg');
+  assert.equal(photoAlt({alt: ' ', caption: 'Anul 2022'}, place, position), 'Anul 2022');
+  assert.equal(photoAlt({alt: null, caption: null}, place, position), 'Schitul Duca, Brasov – fotografia 3 din 12');
+  assert.equal(photoAlt({}, 'Bilingual work', {index: 0, total: 1, template: 'photo {index} of {total}'}), 'Bilingual work – photo 1 of 1');
+  assert.equal(photoAlt({}, 'Clopote'), 'Clopote');
 });

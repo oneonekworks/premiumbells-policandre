@@ -31,7 +31,7 @@ export function CategoryNav({items, label}: {items: CategoryNavItem[]; label: st
                 }`}
               >
                 <span className="relative hidden size-12 shrink-0 overflow-hidden rounded-md bg-stone lg:block">
-                  <SanityImage image={item.image} sizes="48px" ratio={1} />
+                  <SanityImage image={item.image && {...item.image, alt: ''}} sizes="48px" ratio={1} />
                 </span>
                 <span className="flex flex-col">
                   <span className={`font-medium ${active ? 'text-teal-900' : 'text-ink'}`}>{item.title}</span>

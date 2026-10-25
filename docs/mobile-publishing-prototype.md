@@ -67,8 +67,10 @@ failures remain visible. This workflow has not yet been accepted on a phone.
    Kept photos keep their file name; re-saved ones become `.jpg`. Photos upload
    three at a time and are appended in the selected order.
    The panel shows each file's result; failed files can be retried. Plain uploads of
-   full-size originals are switched off Studio-wide. Open images to add required
-   accessibility descriptions and optional captions; reorder with the standard
+   full-size originals are switched off Studio-wide. Photo descriptions (alt text)
+   are optional: when one is missing the website generates it, e.g. „Schitul
+   Duca, Brașov – fotografia 3 din 12”. Write real descriptions for important
+   photos such as the cover; add optional captions; reorder with the standard
    controls. Keep the originals on the phone or computer as proof of authorship.
 5. For **Fotografie de copertă**, use **Select** to reuse an uploaded image, or
    **Select → Încarcă fotografie (optimizată)** for a new single photo. Add its

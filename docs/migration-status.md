@@ -198,6 +198,12 @@ These items do not block completing the rest of Phase 0.
   heavily compressed 399 KB source → 365 KB at 3200px; orientation-6 photo
   re-saved upright; opaque 14.9 MB photo-like PNG → 583 KB JPEG; transparent
   PNG kept. Studio redeployed.
+- Made photo descriptions (alt text) optional after phone testing showed that
+  requiring one per gallery photo blocked publishing. The website now uses the
+  editor's text, then the caption, then a generated description from the
+  project name and locality with the photo position (RO/EN). Decorative
+  thumbnails (sidebar, lightbox strip) use empty alt. Studio redeployed; unit
+  (12) and browser (15) tests pass.
 
 ### 2026-10-10
 

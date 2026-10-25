@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import Link from 'next/link';
 import {SanityImage} from '@/components/sanity-image';
+import {photoAlt} from '@/lib/alt';
 import {getDictionary} from '@/lib/i18n/dictionaries';
 import {plural} from '@/lib/i18n/format';
 import {localizedHref} from '@/lib/i18n/routing';
@@ -39,7 +40,7 @@ export default async function WorksPage({params}: PageProps<'/[lang]/lucrarile-n
             <li key={category._id} className="group relative">
               <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-stone">
                 <SanityImage
-                  image={category.coverImage}
+                  image={category.coverImage && {...category.coverImage, alt: photoAlt(category.coverImage, category.title ?? '')}}
                   ratio={4 / 3}
                   priority={index < 3}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

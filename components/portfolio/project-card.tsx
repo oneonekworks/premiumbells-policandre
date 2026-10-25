@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import {SanityImage} from '@/components/sanity-image';
+import {photoAlt, subject} from '@/lib/alt';
 import type {Dictionary} from '@/lib/i18n/dictionaries';
 import type {ProjectCard as ProjectCardData} from '@/sanity/portfolio';
 
@@ -22,7 +23,10 @@ export function ProjectCard({project, href, countries, priority = false}: {
     <article className="group relative">
       <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-stone">
         <SanityImage
-          image={project.coverImage}
+          image={project.coverImage && {
+            ...project.coverImage,
+            alt: photoAlt(project.coverImage, subject(project.title, project.location?.locality)),
+          }}
           ratio={4 / 3}
           priority={priority}
           sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 30vw"

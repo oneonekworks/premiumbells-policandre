@@ -1,4 +1,5 @@
 import {PortableText, type PortableTextComponents} from 'next-sanity';
+import {photoAlt, subject} from '@/lib/alt';
 import type {Dictionary} from '@/lib/i18n/dictionaries';
 import type {ProjectDetail} from '@/sanity/portfolio';
 import {Gallery} from './gallery';
@@ -41,6 +42,11 @@ export function ProjectDetails({project, category, dictionary, headingLevel}: {
   const meta = projectMeta(project, dictionary.countries);
   const videos = project.videos ?? [];
   const specifications = project.specifications ?? [];
+  const described = subject(project.title, project.location?.locality);
+  const gallery = (project.gallery ?? []).map((image, index, all) => ({
+    ...image,
+    alt: photoAlt(image, described, {index, total: all.length, template: portfolio.photoOf}),
+  }));
 
   return (
     <article className="space-y-10">
@@ -80,12 +86,12 @@ export function ProjectDetails({project, category, dictionary, headingLevel}: {
         </div>
       )}
 
-      {project.gallery?.length ? (
+      {gallery.length ? (
         <section>
           <h2 className="mb-5 font-display text-3xl font-semibold text-teal-900">
-            {portfolio.gallery} <span className="text-lg font-normal text-ink-soft">({project.gallery.length})</span>
+            {portfolio.gallery} <span className="text-lg font-normal text-ink-soft">({gallery.length})</span>
           </h2>
-          <Gallery images={project.gallery} labels={portfolio} />
+          <Gallery images={gallery} labels={portfolio} />
         </section>
       ) : null}
     </article>
