@@ -177,6 +177,20 @@ These items do not block completing the rest of Phase 0.
   `sanity`/`@sanity/vision` with the hosted runtime (6.20.0). Signing in
   requires a member of project `1fzbw4s1`. Phone acceptance can now proceed.
 
+### 2026-10-25
+
+- Refined the upload optimiser: photos within 2560px are kept, with metadata
+  stripped losslessly (JPEG APP1/XMP/MPF/comments and trailing data; WebP
+  EXIF/XMP chunks); orientation-flagged photos are re-saved once; shrunk JPEGs
+  step quality down (0.85 → 0.65) rather than grow. Files are identified by
+  content, not extension. Verified in Chrome: the user's two WebP photos
+  (407 KB, 257 KB) are byte-identical after upload preparation; a small JPEG
+  with injected EXIF/GPS comes back byte-identical to its metadata-free source;
+  a real orientation-6 legacy photo is re-saved upright (1.1 MB → 600 KB); large
+  photos shrink 14.2 MB → 580 KB. 5 Node unit tests cover the byte-level
+  stripping. Studio redeployed. Of 166 legacy JPEGs, 101 carry EXIF, 1 has an
+  orientation flag, and 1 is a PNG with a `.jpg` name.
+
 ### 2026-10-10
 
 - Connected the authorized sibling Studio and frontend to `1fzbw4s1/production`.

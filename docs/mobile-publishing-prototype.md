@@ -56,10 +56,13 @@ failures remain visible. This workflow has not yet been accepted on a phone.
 3. In **Lucrări și fotografii**, create a draft, enter its name, generate the
    short address, select the category, location, and description.
 4. In **2. Fotografii**, tap **Adaugă fotografii (optimizate)** and choose
-   10–20 actual phone photos at once. Each photo is shrunk in the browser to at
-   most 2560px (JPEG ~85%, PNG kept as PNG), stripped of metadata such as GPS,
-   uploaded three at a time, and appended in the selected order. The panel shows
-   each file's size before → after; failed files can be retried. Plain uploads of
+   10–20 actual phone photos at once. Photos larger than 2560px are shrunk in the
+   browser (JPEG 85%, stepping down only if needed to stay below the original
+   size; PNG stays PNG). Smaller JPEG/WebP photos keep their original pixels and
+   only lose metadata (GPS, camera, XMP) losslessly; one with an orientation flag
+   is re-saved once, upright. A photo that needed no shrinking is never uploaded
+   larger. Photos upload three at a time and are appended in the selected order.
+   The panel shows each file's result; failed files can be retried. Plain uploads of
    full-size originals are switched off Studio-wide. Open images to add required
    accessibility descriptions and optional captions; reorder with the standard
    controls. Keep the originals on the phone or computer as proof of authorship.
