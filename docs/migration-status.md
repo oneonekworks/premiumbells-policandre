@@ -204,6 +204,13 @@ These items do not block completing the rest of Phase 0.
   project name and locality with the photo position (RO/EN). Decorative
   thumbnails (sidebar, lightbox strip) use empty alt. Studio redeployed; unit
   (12) and browser (15) tests pass.
+- Added duplicate protection to gallery uploads: a SHA-1 fingerprint of each
+  picked file is stored as the asset's `source.id`; photos already in the
+  gallery or repeated within one selection are skipped before upload, and an
+  upload resolving to an asset already in the gallery is not added again.
+  Photos uploaded earlier have no fingerprint and are matched by identical
+  bytes only. 3 new Studio unit tests (8 total); Studio redeployed. The upload
+  UI still needs verification by a signed-in editor.
 
 ### 2026-10-10
 

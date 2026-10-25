@@ -65,7 +65,11 @@ failures remain visible. This workflow has not yet been accepted on a phone.
      needed to stay below the original size; PNG stays PNG).
    - Orientation flag or HEIC: re-saved once as JPEG, upright.
    Kept photos keep their file name; re-saved ones become `.jpg`. Photos upload
-   three at a time and are appended in the selected order.
+   three at a time and are appended in the selected order. Photos already in
+   the gallery, or picked twice in one selection, are skipped ("Omisă"): each
+   upload stores a SHA-1 fingerprint of the picked file as the asset's
+   `source.id`, and identical bytes resolving to an existing asset are never
+   added twice. The same photo may still be used in different projects.
    The panel shows each file's result; failed files can be retried. Plain uploads of
    full-size originals are switched off Studio-wide. Photo descriptions (alt text)
    are optional: when one is missing the website generates it, e.g. „Schitul
@@ -94,6 +98,7 @@ confidential material. Check photo metadata and visible text before uploading.
 | Upload 10–20 photos | Count, original formats, before → after sizes shown, elapsed time | Pending |
 | HEIC / HEIF | Optimised to JPEG in this browser? (Safari: expected yes; Chrome: passes through unoptimised), orientation | Pending |
 | Interrupted upload | Disable network during upload, reconnect, use "Reîncearcă"; check order and duplicates | Pending |
+| Duplicate photos | Re-select already uploaded photos and pick one twice; expect "Omisă" and no new gallery entries | Pending |
 | Cover and order | Reuse asset, adjust crop, reorder, reopen, confirm order | Pending |
 | Captions and alt text | Edit and confirm on published website | Pending |
 | Page copy | Edit title/intro, publish, verify without code changes | Pending |
