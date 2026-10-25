@@ -1,8 +1,8 @@
 # Migration Status
 
-**Overall status:** Local Sanity portfolio prototype implemented; phone acceptance pending
-**Current phase:** Phase 1 — Mobile publishing prototype
-**Last updated:** 2026-10-24
+**Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy import not started
+**Current phase:** Phase 1 acceptance record and Phase 3/4 (Clopote importer) next — see [handoff](handoff.md)
+**Last updated:** 2026-10-25
 
 ## Accepted decisions
 
@@ -67,16 +67,19 @@
 
 ## Next actions
 
-1. Obtain baseline Search Console/Analytics exports and draft the page/URL plan
-   using [the agreed brief](rebuild-brief.md). Review representative designs.
-2. Run the [actual-phone prototype acceptance test](mobile-publishing-prototype.md)
-   before expanding schemas or importing legacy content.
-3. Resolve the one missing local cover (`/img/works-cover/4.jpg`) and approve
-   canonical replacements for the duplicate slugs `clopote-sihastria-rascai`
-   and `manastirea-faget` before their affected records are migrated.
-4. Confirm/perform a recoverable GCS backup before bulk migration.
-5. Connect `rbells_policandre` to its intended Git remote when authorized.
-6. After mobile/design acceptance, build the `Clopote` vertical slice.
+Updated 2026-10-25. Detailed order, owners, and a kickoff prompt for new
+sessions are in [the session handoff](handoff.md). In short:
+
+1. Record the actual-phone acceptance test (uploads already work from a phone).
+2. Small Studio fix for entering technical details one fact per row.
+3. Importer for the three representative Clopote projects (needs a write token
+   in `.env.local` and a confirmed GCS backup).
+4. Tag-based caching and a signed publish webhook.
+5. Hosting decision, a separate preview project, and Git remotes.
+6. Search/filter in category grids.
+7. Search Console/Analytics baseline, URL map, duplicate slugs
+   (`clopote-sihastria-rascai`, `manastirea-faget`), missing cover
+   `/img/works-cover/4.jpg`.
 
 ## Remaining prototype acceptance inputs
 

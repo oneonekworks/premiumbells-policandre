@@ -17,6 +17,7 @@ See the [prototype runbook](docs/mobile-publishing-prototype.md).
 
 ## Start here
 
+- [Session handoff: state, gotchas, next steps, kickoff prompt](docs/handoff.md)
 - [Agreed rebuild brief and decision gates](docs/rebuild-brief.md)
 - [Architecture](docs/architecture.md)
 - [Legacy source inventory](docs/source-inventory.md)
