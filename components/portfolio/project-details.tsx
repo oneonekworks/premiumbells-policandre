@@ -48,30 +48,32 @@ export function ProjectDetails({project, category, dictionary, headingLevel}: {
     alt: photoAlt(image, described, {index, total: all.length, template: portfolio.photoOf}),
   }));
 
+  const hasText = Boolean(project.summary || project.body?.length);
+  const hasSpecs = specifications.length > 0;
+
+  // Description and video share the left column; the details card sits in a
+  // fixed right column from the container's 3xl width up (the slide-over is
+  // narrower than the window, so a viewport breakpoint would misfire). On
+  // narrow containers the order is description, details, video.
   return (
-    <article className="space-y-10">
+    <article className="@container space-y-10">
       <header>
         <p className="eyebrow">{category}</p>
         <Heading className="mt-3 font-display text-4xl font-semibold leading-tight text-teal-900 sm:text-5xl">{project.title}</Heading>
         {meta && <p className="mt-3 text-ink-soft">{meta}</p>}
-        {project.summary && <p className="mt-6 max-w-3xl whitespace-pre-line text-lg leading-relaxed">{project.summary}</p>}
       </header>
 
-      {videos.length > 0 && (
-        <section aria-label={portfolio.videos} className="grid gap-4 sm:grid-cols-2">
-          {videos.map((video) => (
-            <VideoEmbed key={video._key} video={video} playLabel={portfolio.playVideo} />
-          ))}
-        </section>
-      )}
+      {(hasText || hasSpecs || videos.length > 0) && (
+        <div className={hasSpecs ? 'grid gap-x-10 gap-y-10 @3xl:grid-cols-[minmax(0,1fr)_20rem]' : 'space-y-10'}>
+          {hasText && (
+            <div className="max-w-3xl space-y-4 @3xl:col-start-1">
+              {project.summary && <p className="whitespace-pre-line text-lg leading-relaxed">{project.summary}</p>}
+              {project.body?.length ? <PortableText value={project.body} components={portableText} /> : null}
+            </div>
+          )}
 
-      {(project.body?.length || specifications.length > 0) && (
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
-          {project.body?.length ? (
-            <div className="max-w-3xl space-y-4"><PortableText value={project.body} components={portableText} /></div>
-          ) : <div />}
-          {specifications.length > 0 && (
-            <section className="rounded-lg border border-line bg-white p-5">
+          {hasSpecs && (
+            <section className={`h-fit rounded-lg border border-line bg-white p-5 @3xl:col-start-2 @3xl:row-start-1 @3xl:row-span-2${hasText ? '' : ' @3xl:col-start-1 @3xl:row-span-1 @3xl:max-w-sm'}`}>
               <h2 className="eyebrow">{portfolio.specifications}</h2>
               <dl className="mt-4 divide-y divide-line">
                 {specifications.map((item) => (
@@ -81,6 +83,14 @@ export function ProjectDetails({project, category, dictionary, headingLevel}: {
                   </div>
                 ))}
               </dl>
+            </section>
+          )}
+
+          {videos.length > 0 && (
+            <section aria-label={portfolio.videos} className="grid gap-4 @3xl:col-start-1 @xl:grid-cols-2">
+              {videos.map((video) => (
+                <VideoEmbed key={video._key} video={video} playLabel={portfolio.playVideo} />
+              ))}
             </section>
           )}
         </div>
