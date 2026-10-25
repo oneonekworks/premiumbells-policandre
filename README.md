@@ -24,6 +24,7 @@ See the [prototype runbook](docs/mobile-publishing-prototype.md).
 - [Migration plan](docs/migration-plan.md)
 - [Migration status](docs/migration-status.md)
 - [Design foundations and site shell](docs/design-foundations.md)
+- [Backlog of parked tasks](docs/backlog.md)
 - [Migration scripts](scripts/README.md)
 
 ## Local development
