@@ -1,7 +1,7 @@
 # Migration Status
 
 **Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy importer built and three Clopote projects imported as drafts
-**Current phase:** Review/publish the three imported drafts, then measure the 89-photo gallery (Phase 3 exit) — see [handoff](handoff.md)
+**Current phase:** Phase 3 exit measured; next: category ordering decision and the rest of Clopote, or data delivery — see [handoff](handoff.md)
 **Last updated:** 2026-10-30
 
 ## Accepted decisions
@@ -72,8 +72,8 @@ sessions are in [the session handoff](handoff.md). In short:
 
 1. Record the actual-phone acceptance test (uploads already work from a phone).
 2. Small Studio fix for entering technical details one fact per row.
-3. Importer for the three representative Clopote projects — done 2026-10-30;
-   the drafts await review and publishing, then the large-gallery measurement.
+3. Importer for the three representative Clopote projects — done and
+   published 2026-10-30; large-gallery performance measured.
 4. Tag-based caching and a signed publish webhook.
 5. Hosting decision, a separate preview project, and Git remotes.
 6. Search/filter in category grids.
@@ -145,6 +145,30 @@ These items do not block completing the rest of Phase 0.
   assets). A second run uploaded nothing and left all drafts unchanged. Studio
   validation: no errors; Schitul Duca and Roșu Chiajna warn that the
   description is empty (the legacy records had none).
+- Published the three drafts with the import token at the user's request (the
+  Studio publish had not reached the dataset).
+- Measured the 89-photo project (`/lucrarile-noastre/clopote/rosu-chiajna-sfintire`)
+  on a local production build with headless Chrome, cache disabled:
+
+  | | Desktop 1440×900 | Phone 390×844 (DPR 3, ~1.6 Mbps, 4× CPU) |
+  | --- | --- | --- |
+  | LCP | 0.60 s (blur placeholder) | 0.88 s (YouTube poster) |
+  | CLS | 0 | 0 |
+  | Initial load | 88 requests, 789 KB (images 349 KB) | 67 requests, 916 KB (images 482 KB) |
+  | After scrolling the page | 791 KB | 1.25 MB |
+  | After "Arată mai multe fotografii" (48 shown) | 1.15 MB | 2.04 MB |
+  | Largest image | 20 KB (384w thumbnails) | 53 KB (640w thumbnails) |
+  | Lightbox photo | 1920w, 109 KB | 1200w, 53 KB |
+
+  24 thumbnails per page, lazy loading, no original-size downloads, and
+  64px lazy lightbox thumbnails. Times are against a local server, so they
+  exclude real network latency for the HTML. The 89-photo page's HTML is
+  ~244 KB uncompressed (~42 KB transferred), mostly per-photo blur
+  placeholders. Phase 3's large-gallery exit criterion is met for 89 photos;
+  the 176- and 201-photo galleries remain to be checked in Phase 5.
+- Generated alt text repeats the locality when the title already contains it
+  ("Parohia Ziua Crucii, Iași, Iași – fotografia 1 din 18"); most legacy titles
+  include the place, so fix this before the bulk import.
 - Open for the bulk import: category grids order unnumbered works by creation
   date, so imported works would sort above earlier editor-made ones; decide an
   order (for example by year) before importing the rest.

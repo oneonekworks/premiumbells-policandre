@@ -19,10 +19,10 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   upload (≤3200px kept losslessly, larger shrunk, 1.5 MB cap, metadata
   stripped), duplicate photo skipping, optional alt text.
 - **Content** (live dataset `1fzbw4s1/production`): categories Clopote and
-  Policandre; published projects Lucrare de test and Drobeta, Turnul Severin
-  (31 photos, uploaded from a phone). Imported as **drafts** for review:
-  Schitul Duca (replaces the hand-made one), Parohia Ziua Crucii, Iași, and
-  Parohia Roșu Chiajna, Sfințire (89 photos) — `drafts.legacy-clopote-*`.
+  Policandre; published projects Lucrare de test, Drobeta, Turnul Severin
+  (31 photos, uploaded from a phone), and the imported Schitul Duca
+  (replaces the hand-made one), Parohia Ziua Crucii, Iași, and Parohia Roșu
+  Chiajna, Sfințire (89 photos) — IDs `legacy-clopote-*`.
 - **Importer** (2026-10-30): `npm run migrate:assets` / `migrate:content`,
   dry run by default; see `scripts/README.md`. All legacy media will move to
   Sanity (decided 2026-10-30); GCS stays the archive.
@@ -69,10 +69,10 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    obvious: clearer descriptions and placeholders, a suggested list of labels
    (Greutate, Înălțime, Diametru, Nivele, Lumânări/Lumini), and a preview that
    reads "Greutate: 1000 kg". Fix the Drobeta row with the user.
-3. **Importer for the Clopote slice** (done 2026-10-30 for three projects;
-   remaining: the user reviews and publishes the drafts, then measure the
-   89-photo gallery on a production build — page weight, images loaded, LCP —
-   and decide the category ordering before importing the rest of Clopote).
+3. **Importer for the Clopote slice** (done 2026-10-30: three projects
+   imported and published; 89-photo gallery measured, see the change log).
+   Before importing the rest of Clopote: decide category ordering (for
+   example by year) and stop generated alt text repeating the locality.
    Original brief — Phase 4 pulled forward:
    `scripts/migrate-content.ts` and `scripts/migrate-assets.ts` with dry-run,
    deterministic IDs, checkpoints, reports, the same image rules as the Studio
