@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "projects": {
+    "worksClopote:2022-schitul_duca": {
+      "location": { "locality": "Brașov", "county": "Brașov", "country": "RO" },
+      "replaces": ["844fdca8-135a-4334-9bfa-4c9f6318dc82"],
+      "note": "Replaces the hand-made prototype document by user decision on 2026-10-30; location taken from it."
+    },
+    "worksClopote:2022-parohia-ziua-crucii-iasi": {
+      "location": { "locality": "Iași", "county": "Iași", "country": "RO" }
+    },
+    "worksClopote:2022-rosu-chiajna-sfintire": {
+      "location": { "locality": "Roșu, Chiajna", "county": "Ilfov", "country": "RO" },
+      "specifications": [
+        { "label": "Greutate", "value": "460", "unit": "kg" },
+        { "label": "Greutate", "value": "620", "unit": "kg" }
+      ],
+      "note": "Legacy weight \"460kg si 620kg\" split into one fact per row."
+    }
+  }
+}

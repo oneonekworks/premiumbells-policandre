@@ -808,7 +808,7 @@ function loadStructuredData(legacyRoot: string): StructuredData[] {
   });
 }
 
-function loadDefaultExport(file: string): unknown {
+export function loadDefaultExport(file: string): unknown {
   const source = readFileSync(file, "utf8");
   const transpiled = ts.transpileModule(source, {
     fileName: file,
@@ -1106,7 +1106,7 @@ function toPosix(value: string): string {
   return value.split(path.sep).join("/");
 }
 
-function stableId(canonical: string): string {
+export function stableId(canonical: string): string {
   return createHash("sha256").update(canonical).digest("hex");
 }
 
@@ -1216,7 +1216,7 @@ async function checkRemote(
   };
 }
 
-async function mapConcurrent<T>(
+export async function mapConcurrent<T>(
   items: T[],
   concurrency: number,
   worker: (item: T, index: number) => Promise<void>,
@@ -1234,7 +1234,7 @@ async function mapConcurrent<T>(
   await Promise.all(runners);
 }
 
-function delay(milliseconds: number): Promise<void> {
+export function delay(milliseconds: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 

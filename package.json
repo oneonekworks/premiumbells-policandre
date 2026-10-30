@@ -12,7 +12,9 @@
     "test:unit": "node --import tsx --test tests/*.test.ts",
     "test:browser": "playwright test",
     "typecheck": "next typegen && tsc --noEmit",
-    "sanity:typegen": "npm --prefix ../studio-premiumbells run typegen"
+    "sanity:typegen": "npm --prefix ../studio-premiumbells run typegen",
+    "migrate:assets": "tsx scripts/migrate-assets.ts",
+    "migrate:content": "tsx scripts/migrate-content.ts"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.64.0",
+    "@sanity/client": "^7.28.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -31,6 +34,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.3",
     "groq-js": "^2.0.0",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "tsx": "^4.23.13",
     "typescript": "^5"

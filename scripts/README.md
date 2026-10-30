@@ -63,11 +63,50 @@ Run the focused tests with:
 npm run test:migration
 ```
 
+## Legacy portfolio import (implemented 2026-10-30)
+
+Two commands import legacy portfolio records into Sanity. Both are dry runs
+unless `--write` is passed, select one collection (`--collection`, default
+`worksClopote`) and optionally records by legacy page or `_nr`
+(`--project a,b`), and write JSON and Markdown reports to
+`.migration/reports/`. They need the media manifest from
+`npm run inventory:legacy` and, for Sanity access, `SANITY_API_WRITE_TOKEN`
+in `.env.local` (Editor role; never printed). Export the dataset first.
+
+```bash
+npm run migrate:assets -- --project 2022-schitul_duca
+npm run migrate:assets -- --project 2022-schitul_duca --write
+npm run migrate:content -- --project 2022-schitul_duca --write
+```
+
+- `migrate-assets.ts` reads each cover and gallery photo (legacy `public/` or
+  an HTTP GET from GCS, cached in `.migration/cache/`), applies the Studio's
+  photo rules (`lib/optimize-image.ts`: shrink above 3200px, strip metadata
+  losslessly, 1.5 MB cap), and uploads it with the SHA-1 of the original as
+  `source.id` (`source.name` `premiumbells-legacy-import`), the fingerprint
+  the Studio's duplicate check uses. A photo already in Sanity with that
+  fingerprint is reused. Progress is saved after each photo in
+  `.migration/checkpoints/assets.json`, so a stopped run resumes.
+- `migrate-content.ts` maps records with `lib/legacy-portfolio.ts` and writes
+  them as drafts with deterministic IDs (`legacy-<category>-<legacy page>`),
+  oldest first. It blocks a record on a missing cover, an empty gallery,
+  unavailable photos, maintenance flags, or a slug used by another document;
+  skips a project that is already published; and does not rewrite an
+  unchanged draft. Romanian only, `publishedLanguages: ['ro']`, no prices.
+- `config/legacy-overrides.json` holds reviewed per-record decisions keyed by
+  `<collection>:<page>`: location, slug, split specifications, and existing
+  documents the import `replaces` (deleted when it is written).
+
+Mapping rules: slug from the legacy page without the year prefix
+(`2022-schitul_duca` → `schitul-duca`); description lines → `summary`;
+blank `information` values dropped, `310kg` → value `310`, unit `kg`, values
+holding several facts flagged for an override; YouTube embeds → watch URLs;
+`subtitle`, `briefInfo`, and `current` are listed for review, not imported.
+
 ## Next migration stages
 
-- `migrate-content.ts` — create deterministic Sanity documents and references.
-- `migrate-assets.ts` — upload and deduplicate media while preserving order.
-- `verify-migration.ts` — reconcile source and target counts and required fields.
+- `verify-migration.ts` — reconcile source and target counts and required fields
+  across a whole collection (the slice was checked with ad hoc queries).
 
 All later migration commands must support a dry run, category/project filters,
 machine-readable reports, bounded concurrency, retries, checkpoints, and safe

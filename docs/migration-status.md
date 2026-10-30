@@ -1,8 +1,8 @@
 # Migration Status
 
-**Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy import not started
-**Current phase:** Phase 1 acceptance record and Phase 3/4 (Clopote importer) next — see [handoff](handoff.md)
-**Last updated:** 2026-10-25
+**Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy importer built and three Clopote projects imported as drafts
+**Current phase:** Review/publish the three imported drafts, then measure the 89-photo gallery (Phase 3 exit) — see [handoff](handoff.md)
+**Last updated:** 2026-10-30
 
 ## Accepted decisions
 
@@ -72,8 +72,8 @@ sessions are in [the session handoff](handoff.md). In short:
 
 1. Record the actual-phone acceptance test (uploads already work from a phone).
 2. Small Studio fix for entering technical details one fact per row.
-3. Importer for the three representative Clopote projects (needs a write token
-   in `.env.local` and a confirmed GCS backup).
+3. Importer for the three representative Clopote projects — done 2026-10-30;
+   the drafts await review and publishing, then the large-gallery measurement.
 4. Tag-based caching and a signed publish webhook.
 5. Hosting decision, a separate preview project, and Git remotes.
 6. Search/filter in category grids.
@@ -120,6 +120,34 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-10-30
+
+- Decided to migrate all legacy media into Sanity (option C) rather than keep
+  legacy photos on GCS: the 2,202 included GCS images total ~1.2 GB (median
+  382 KB), far below Sanity Free's asset allowance, and the image CDN serves
+  smaller responsive versions than GCS's single-size files. GCS stays the
+  read-only archive; the user also keeps a local copy of the assets.
+- Exported the dataset documents to
+  `.migration/backups/production-2026-10-30-before-clopote-import.tar.gz`.
+- Built the importer (`scripts/migrate-assets.ts`, `scripts/migrate-content.ts`,
+  `scripts/lib/legacy-portfolio.ts`, `scripts/lib/optimize-image.ts`, overrides
+  in `scripts/config/legacy-overrides.json`); see the scripts README. Added
+  `sharp` and `@sanity/client` as dev dependencies. 13 new migration tests
+  (19 total); typecheck and lint pass.
+- Imported Schitul Duca (11 photos), Parohia Ziua Crucii, Iași (18 photos,
+  2 videos, Greutate 310 kg) and Parohia Roșu Chiajna, Sfințire (89 photos,
+  1 video, Greutate 460 kg and 620 kg split into two rows) as drafts
+  `drafts.legacy-clopote-*`. 121 photo references → 118 unique assets
+  (40.6 MB; legacy covers are identical to one gallery photo each); 101 photos
+  were above 3200px and shrunk (44.1 MB → 39.1 MB prepared). The hand-made
+  Schitul Duca document was deleted by user decision (its 3 photos remain as
+  assets). A second run uploaded nothing and left all drafts unchanged. Studio
+  validation: no errors; Schitul Duca and Roșu Chiajna warn that the
+  description is empty (the legacy records had none).
+- Open for the bulk import: category grids order unnumbered works by creation
+  date, so imported works would sort above earlier editor-made ones; decide an
+  order (for example by year) before importing the rest.
 
 ### 2026-10-24
 
