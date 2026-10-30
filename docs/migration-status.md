@@ -1,7 +1,7 @@
 # Migration Status
 
-**Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy importer built; all 39 Clopote works imported (3 published, 36 drafts awaiting review)
-**Current phase:** Clopote imported; next: editorial review of the Clopote drafts, then data delivery — see [handoff](handoff.md)
+**Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy importer built; all 39 Clopote works imported and published
+**Current phase:** Clopote imported and published; next: data delivery — see [handoff](handoff.md)
 **Last updated:** 2026-10-30
 
 ## Accepted decisions
@@ -146,6 +146,14 @@ These items do not block completing the rest of Phase 0.
   (Zosin, Sihăstria Rascai, Biserica din lemn); 7 empty-description warnings;
   Călugăreni's "67,6 kg" triggers the several-facts warning (decimal comma,
   a false positive).
+- The user filled the three localities (Râșca; Chișinău; Botoșani) and
+  published those three. "Descrierea lucrării" is now optional in the Studio
+  (it blocked publishing works without a description); Studio deployed, which
+  also shipped the pending "Ordine în categorie" help text. After a fresh
+  export (`production-2026-10-30-before-clopote-publish.tar.gz`) and a clean
+  validation run, the other 33 drafts were published with the import token at
+  the user's request: 41 published projects, 40 in Clopote. Category and
+  project pages checked on the dev server.
 
 - Closed the phone acceptance record (Phase 1) on the user's acceptance.
   Per-check details were not recorded; rows with evidence from the work
