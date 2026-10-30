@@ -10,7 +10,7 @@
 - Styling: Tailwind CSS 4 with a compact bespoke design language refining the
   existing real photography, teal accents, and premium ecclesiastical identity.
 - CMS: existing Sanity project `1fzbw4s1`, dataset `production`, authorized for
-  the local prototype; actual-phone publishing acceptance remains pending.
+  the local prototype; phone publishing accepted by the user on 2026-10-30.
 - Editors: one administrator initially, optionally two; simple mobile editing.
 - Languages: Romanian primary plus reviewed English at launch; a third language
   (Greek or another) only after demand data and a native reviewer exist.
@@ -70,7 +70,7 @@
 Updated 2026-10-25. Detailed order, owners, and a kickoff prompt for new
 sessions are in [the session handoff](handoff.md). In short:
 
-1. Record the actual-phone acceptance test (uploads already work from a phone).
+1. Phone acceptance — closed 2026-10-30 (accepted by the user).
 2. Small Studio fix for entering technical details one fact per row.
 3. Importer for the three representative Clopote projects — done and
    published 2026-10-30; large-gallery performance measured.
@@ -122,6 +122,11 @@ These items do not block completing the rest of Phase 0.
 ## Change log
 
 ### 2026-10-30
+
+- Closed the phone acceptance record (Phase 1) on the user's acceptance.
+  Per-check details were not recorded; rows with evidence from the work
+  (Drobeta phone upload, optional alt text, technical details, the 89-photo
+  measurement) are noted. The 200-image editor check moves to Phase 5.
 
 - Decided to migrate all legacy media into Sanity (option C) rather than keep
   legacy photos on GCS: the 2,202 included GCS images total ~1.2 GB (median

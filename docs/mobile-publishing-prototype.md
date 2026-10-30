@@ -1,6 +1,6 @@
 # Mobile portfolio publishing prototype
 
-**Date:** 2026-10-10 · **Status:** implemented locally; actual-phone acceptance pending.
+**Date:** 2026-10-10 · **Status:** implemented; accepted by the user on 2026-10-30 after phone use (see the record below).
 
 The authorized target is the existing Sanity project `1fzbw4s1`, dataset
 `production`, with schemas owned by the standalone sibling `studio-premiumbells`.
@@ -89,23 +89,28 @@ Only upload public-safe, price-free content. Draft documents are excluded from
 the frontend; uploaded assets are not private files and must not contain
 confidential material. Check photo metadata and visible text before uploading.
 
-## Acceptance record — complete on the actual device
+## Acceptance record
 
-| Check | Evidence to record | Result |
+Closed on 2026-10-30 by the user's acceptance. The user tested on their own
+phone but did not record per-check details; "Accepted, not recorded" marks
+those rows. Evidence gathered during the work is noted where it exists.
+
+| Check | Evidence | Result |
 | --- | --- | --- |
-| Device and browser | Phone model, OS, browser version, connection | Pending |
-| Create/edit draft | Category, locality, country, description; touch targets | Pending |
-| Upload 10–20 photos | Count, original formats, before → after sizes shown, elapsed time | Pending |
-| HEIC / HEIF | Optimised to JPEG in this browser? (Safari: expected yes; Chrome: passes through unoptimised), orientation | Pending |
-| Interrupted upload | Disable network during upload, reconnect, use "Reîncearcă"; check order and duplicates | Pending |
-| Duplicate photos | Re-select already uploaded photos and pick one twice; expect "Omisă" and no new gallery entries | Pending |
-| Cover and order | Reuse asset, adjust crop, reorder, reopen, confirm order | Pending |
-| Captions and alt text | Edit and confirm on published website | Pending |
-| Page copy | Edit title/intro, publish, verify without code changes | Pending |
-| Draft isolation | New draft, unpublished edits, and unpublish checks above | Pending |
-| 200-image editor | Time to open/edit/reorder, scrolling, memory, network thumbnail sizes | Pending |
-| 200-image website | Only 24 gallery entries/page; transformed lazy images; no original downloads | Pending |
-| User acceptance | Accept/reject with specific blockers | Pending |
+| Device and browser | Not recorded | Accepted, not recorded |
+| Create/edit draft | Drobeta, Turnul Severin created and published from a phone (2026-10-24/25) | Accepted |
+| Upload 10–20 photos | Drobeta gallery: 31 photos uploaded from a phone | Accepted |
+| HEIC / HEIF | Not recorded | Accepted, not recorded |
+| Interrupted upload | Not recorded | Accepted, not recorded |
+| Duplicate photos | Not recorded on the phone; unit-tested in the Studio | Accepted, not recorded |
+| Cover and order | Not recorded | Accepted, not recorded |
+| Captions and alt text | Phone testing showed required alt text blocked publishing; made optional with generated descriptions (2026-10-25) | Accepted after fix |
+| Page copy | Not recorded | Accepted, not recorded |
+| Draft isolation | Drafts excluded from the website (query tests); three imported drafts stayed hidden until published (2026-10-30) | Accepted |
+| Technical details | Drobeta row entered as one fact, then split by the editor after the Studio fix (2026-10-25) | Accepted after fix |
+| 200-image editor | Not tested | Deferred to Phase 5 (Rohia, 201 photos) |
+| 200-image website | 89-photo gallery measured 2026-10-30: 24 per page, lazy CDN-sized images, no originals; see the migration change log | Accepted for 89; 176/201 in Phase 5 |
+| User acceptance | "Phone acceptance record is fine" — user, 2026-10-30 | **Accepted** |
 
 Sanity's [asset documentation](https://www.sanity.io/docs/content-lake/assets)
 lists HEIF among supported image types. This does not prove this phone/browser's

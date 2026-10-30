@@ -58,10 +58,9 @@ is cheaper than continuing a long conversation, and these docs carry the state.
 
 ## Recommended next steps (in order)
 
-1. **Phone acceptance record** (user, ~30 min): fill in the table in
-   [mobile-publishing-prototype.md](mobile-publishing-prototype.md) — device,
-   HEIC, 10–20 photos, interrupted upload, duplicates, reorder, publish and
-   unpublish. Closes Phase 1.
+1. **Phone acceptance record** (closed 2026-10-30): accepted by the user; see
+   [mobile-publishing-prototype.md](mobile-publishing-prototype.md). The
+   200-image editor check moves to Phase 5 (Rohia, 201 photos).
 2. **Small Studio fix — technical details entry** (done 2026-10-25: deployed, seeded,
    Drobeta fixed): the
    Drobeta specification was entered as one row (Denumire "1000 kg", Valoare
