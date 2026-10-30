@@ -2,20 +2,561 @@
   "schemaVersion": 1,
   "projects": {
     "worksClopote:2022-schitul_duca": {
-      "location": { "locality": "Brașov", "county": "Brașov", "country": "RO" },
-      "replaces": ["844fdca8-135a-4334-9bfa-4c9f6318dc82"],
+      "location": {
+        "locality": "Brașov",
+        "county": "Brașov",
+        "country": "RO"
+      },
+      "replaces": [
+        "844fdca8-135a-4334-9bfa-4c9f6318dc82"
+      ],
       "note": "Replaces the hand-made prototype document by user decision on 2026-10-30; location taken from it."
     },
     "worksClopote:2022-parohia-ziua-crucii-iasi": {
-      "location": { "locality": "Iași", "county": "Iași", "country": "RO" }
+      "location": {
+        "locality": "Iași",
+        "county": "Iași",
+        "country": "RO"
+      }
     },
     "worksClopote:2022-rosu-chiajna-sfintire": {
-      "location": { "locality": "Roșu, Chiajna", "county": "Ilfov", "country": "RO" },
+      "location": {
+        "locality": "Roșu, Chiajna",
+        "county": "Ilfov",
+        "country": "RO"
+      },
       "specifications": [
-        { "label": "Greutate", "value": "460", "unit": "kg" },
-        { "label": "Greutate", "value": "620", "unit": "kg" }
+        {
+          "label": "Greutate",
+          "value": "460",
+          "unit": "kg"
+        },
+        {
+          "label": "Greutate",
+          "value": "620",
+          "unit": "kg"
+        }
       ],
       "note": "Legacy weight \"460kg si 620kg\" split into one fact per row."
+    },
+    "worksClopote:2022-cascioarele-giugiu": {
+      "slug": "cascioarele-giurgiu",
+      "location": {
+        "locality": "Căscioarele",
+        "county": "Giurgiu",
+        "country": "RO"
+      },
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Slug typo Giugiu → Giurgiu fixed."
+    },
+    "worksClopote:2022-parohia-moi": {
+      "location": {
+        "locality": "Moi, Târgu Jiu",
+        "county": "Gorj",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Greutate",
+          "value": "60",
+          "unit": "kg"
+        },
+        {
+          "label": "Greutate",
+          "value": "170",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Locality from the title; to confirm."
+    },
+    "worksClopote:2022-caransebes-montaj-clopote": {
+      "location": {
+        "locality": "Caransebeș",
+        "county": "Caraș-Severin",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Greutate",
+          "value": "170",
+          "unit": "kg"
+        },
+        {
+          "label": "Greutate",
+          "value": "42",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:2022-todiresti-iasi": {
+      "location": {
+        "locality": "Todirești",
+        "county": "Iași",
+        "country": "RO"
+      },
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:2022-adancata-suceava": {
+      "location": {
+        "locality": "Adâncata",
+        "county": "Suceava",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "8"
+        },
+        {
+          "label": "Greutate",
+          "value": "4–64",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:2022-coarnele-caprei": {
+      "location": {
+        "locality": "Coarnele Caprei",
+        "county": "Iași",
+        "country": "RO"
+      },
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). County from geography; to confirm."
+    },
+    "worksClopote:2021-parohia-velea": {
+      "location": {
+        "locality": "Velea",
+        "county": "Giurgiu",
+        "country": "RO"
+      },
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:2021-modelu-nord": {
+      "location": {
+        "locality": "Modelu",
+        "county": "Călărași",
+        "country": "RO"
+      },
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:2021-soimaresti-neamt": {
+      "location": {
+        "locality": "Șoimărești",
+        "county": "Neamț",
+        "country": "RO"
+      },
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:clopote-cu-jug-bolintin-vale-2021": {
+      "location": {
+        "locality": "Bolintin-Vale",
+        "county": "Giurgiu",
+        "country": "RO"
+      },
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:clopote-sihastria-rascai": {
+      "slug": "sihastria-rascai",
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "10"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Same work as worksAutomatizari:clopote-sihastria-rascai; imported once, here. Skip that record when Automatizări is imported; redirect both old URLs. Location and the legacy 64 kg need the user's input."
+    },
+    "worksClopote:manastirea-zosin": {
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "8"
+        },
+        {
+          "label": "Greutate",
+          "value": "6–850",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Location needs the user's input."
+    },
+    "worksClopote:straja-tarcau": {
+      "location": {
+        "locality": "Straja, Tarcău",
+        "county": "Neamț",
+        "country": "RO"
+      },
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:versesti-neamt": {
+      "location": {
+        "locality": "Versești",
+        "county": "Neamț",
+        "country": "RO"
+      },
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:clopote-calugareni-neamt-2021": {
+      "location": {
+        "locality": "Călugăreni, Poiana Teiului",
+        "county": "Neamț",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Greutate",
+          "value": "133",
+          "unit": "kg"
+        },
+        {
+          "label": "Greutate",
+          "value": "67,6",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:clopote-satul-doina": {
+      "location": {
+        "locality": "Doina, Răuseni",
+        "county": "Botoșani",
+        "country": "RO"
+      },
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:magazin-iasi": {
+      "location": {
+        "locality": "Iași",
+        "county": "Iași",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Greutate",
+          "value": "100",
+          "unit": "kg"
+        },
+        {
+          "label": "Greutate",
+          "value": "64",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). GCS MP4 video skipped; add it after uploading to YouTube."
+    },
+    "worksClopote:hurdugi": {
+      "location": {
+        "locality": "Hurdugi, Dimitrie Cantemir",
+        "county": "Vaslui",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "6"
+        },
+        {
+          "label": "Greutate",
+          "value": "5–120",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:persani-fagaras": {
+      "location": {
+        "locality": "Perșani",
+        "county": "Brașov",
+        "country": "RO"
+      },
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:sibiu": {
+      "location": {
+        "locality": "Sibiu",
+        "county": "Sibiu",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Greutate",
+          "value": "100",
+          "unit": "kg"
+        },
+        {
+          "label": "Greutate",
+          "value": "60",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:gramesti-suceava": {
+      "location": {
+        "locality": "Grămești",
+        "county": "Suceava",
+        "country": "RO"
+      },
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:schitul-putna": {
+      "location": {
+        "locality": "Galanești",
+        "county": "Suceava",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "8"
+        },
+        {
+          "label": "Greutate",
+          "value": "9–310",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:manastirea-pantocrator": {
+      "location": {
+        "locality": "Drăgănești-Vlașca",
+        "county": "Teleorman",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "7"
+        },
+        {
+          "label": "Greutate",
+          "value": "6–160",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:catedrala-giurgiu": {
+      "location": {
+        "locality": "Giurgiu",
+        "county": "Giurgiu",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "6"
+        },
+        {
+          "label": "Greutate",
+          "value": "6–160",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:capela-militara-botosani": {
+      "location": {
+        "locality": "Botoșani",
+        "county": "Botoșani",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "6"
+        },
+        {
+          "label": "Greutate",
+          "value": "6–90",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:clopote-saveni-botosani": {
+      "location": {
+        "locality": "Săveni",
+        "county": "Botoșani",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "4"
+        },
+        {
+          "label": "Greutate",
+          "value": "10–160",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:crainiceni-botosani": {
+      "location": {
+        "locality": "Crainiceni",
+        "county": "Botoșani",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "8"
+        },
+        {
+          "label": "Greutate totală",
+          "value": "≈1000",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Locality from the title; to confirm."
+    },
+    "worksClopote:victoria-botosani": {
+      "location": {
+        "locality": "Victoria, Stăuceni",
+        "county": "Botoșani",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "4"
+        },
+        {
+          "label": "Greutate",
+          "value": "10–160",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:buna-vestire-giurgiu": {
+      "location": {
+        "locality": "Giurgiu",
+        "county": "Giurgiu",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "6"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:suharau-comanesti-suceava": {
+      "location": {
+        "locality": "Comănești, Suharău",
+        "county": "Botoșani",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "5"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Title says Botoșani, page and description Suceava; to confirm."
+    },
+    "worksClopote:galati-sf-stelian": {
+      "location": {
+        "locality": "Galați",
+        "county": "Galați",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "4"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:catedralei-mitropolitane-chisinau": {
+      "location": {
+        "locality": "Chișinău",
+        "country": "MD"
+      },
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:resita": {
+      "location": {
+        "locality": "Reșița",
+        "county": "Caraș-Severin",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "6"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Six bells per the description (briefInfo said five)."
+    },
+    "worksClopote:2016-ialoveni": {
+      "location": {
+        "locality": "Ialoveni",
+        "county": "Ialoveni",
+        "country": "MD"
+      },
+      "specifications": [
+        {
+          "label": "Greutate",
+          "value": "32",
+          "unit": "kg"
+        },
+        {
+          "label": "Greutate",
+          "value": "64",
+          "unit": "kg"
+        },
+        {
+          "label": "Greutate",
+          "value": "120",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksClopote:2016-biserica-din-lemn": {
+      "specifications": [
+        {
+          "label": "Greutate",
+          "value": "32",
+          "unit": "kg"
+        },
+        {
+          "label": "Greutate",
+          "value": "64",
+          "unit": "kg"
+        },
+        {
+          "label": "Greutate",
+          "value": "120",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Location needs the user's input."
+    },
+    "worksClopote:2016-putna": {
+      "location": {
+        "locality": "Putna",
+        "county": "Suceava",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de clopote",
+          "value": "11"
+        },
+        {
+          "label": "Greutate",
+          "value": "16–5200",
+          "unit": "kg"
+        }
+      ],
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
     }
   }
 }

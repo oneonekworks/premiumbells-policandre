@@ -239,6 +239,24 @@ export function stableStringify(value: unknown): string {
 const shortKey = (value: string) => stableId(value).slice(0, 12);
 const text = (value: unknown) => (typeof value === "string" ? value.trim().replace(/\s+/g, " ") : "");
 
+/** Legacy description HTML → plain text: line breaks and headings become new lines, other tags are dropped. */
+export function htmlToText(value: unknown): string {
+  if (typeof value !== "string") return "";
+  return value
+    .replace(/<br\s*\/?>|<\/(?:h[1-6]|p|div|li)>/gi, "\n")
+    .replace(/<[^>]*>/g, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/\uFFFC/g, "")
+    .split("\n")
+    .map((line) => line.trim().replace(/\s+/g, " ").replace(/\s+([,.;:])/g, "$1"))
+    .filter(Boolean)
+    .join("\n");
+}
+
+/** Placeholder values such as "-" mean "no value". */
+const isPlaceholder = (value: string) => /^[-–—]+$/.test(value);
+
 export function mapLegacyProject(work: LegacyWork, context: MapContext): ProjectPlan {
   const { collection, override } = context;
   const key = projectKey(collection, work);
@@ -340,7 +358,7 @@ export function mapLegacyProject(work: LegacyWork, context: MapContext): Project
   } else {
     specifications = Object.entries(work.information ?? {}).flatMap(([label, raw], index) => {
       const rawValue = text(raw);
-      if (!rawValue) return [];
+      if (!rawValue || isPlaceholder(rawValue)) return [];
       if (looksLikeSeveralFacts(rawValue)) {
         issue("warning", "several-facts", `${label} "${rawValue}" holds several facts; split it with an override.`);
       }
@@ -364,7 +382,7 @@ export function mapLegacyProject(work: LegacyWork, context: MapContext): Project
   }
 
   const yearMatch = /\b(19|20)\d{2}\b/.exec(String(work.year ?? ""));
-  const summaryText = override?.summary ?? [text(work.description), text(work.descriptionLine2)].filter(Boolean).join("\n");
+  const summaryText = override?.summary ?? [htmlToText(work.description), htmlToText(work.descriptionLine2)].filter(Boolean).join("\n");
 
   for (const [field, value] of [["subtitle", work.subtitle], ["briefInfo", work.briefInfo]] as const) {
     const fieldText = text(value);

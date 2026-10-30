@@ -1,7 +1,7 @@
 # Migration Status
 
-**Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy importer built and three Clopote projects imported as drafts
-**Current phase:** Phase 3 exit measured; next: category ordering decision and the rest of Clopote, or data delivery — see [handoff](handoff.md)
+**Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy importer built; all 39 Clopote works imported (3 published, 36 drafts awaiting review)
+**Current phase:** Clopote imported; next: editorial review of the Clopote drafts, then data delivery — see [handoff](handoff.md)
 **Last updated:** 2026-10-30
 
 ## Accepted decisions
@@ -122,6 +122,30 @@ These items do not block completing the rest of Phase 0.
 ## Change log
 
 ### 2026-10-30
+
+- Imported the rest of `worksClopote` (36 works) as drafts after a full dry
+  run and the user's approval of a written proposal (locations from titles and
+  descriptions, slug decisions, one-fact-per-row weights). Dataset exported
+  first to `.migration/backups/production-2026-10-30-before-clopote-bulk.tar.gz`.
+  829 photos: 821 uploaded, 8 matched by fingerprint (407.6 MB → 366.5 MB
+  prepared; 178 shrunk above 3200px); 0 failed. 791 gallery photos across the
+  36 drafts (two byte-identical repeats dropped, Velea and Sat Doina). A second
+  run reported all 36 unchanged.
+- Decisions recorded in `scripts/config/legacy-overrides.json`:
+  `clopote-sihastria-rascai` is the same work as the Automatizări record and is
+  imported once, under Clopote, as `sihastria-rascai` (skip the Automatizări
+  copy later; redirect both old URLs); `cascioarele-giugiu` →
+  `cascioarele-giurgiu`; repeated legacy `_nr`/`historyNr` kept as provenance
+  only (IDs come from the legacy page); no Clopote record is in maintenance;
+  two or three bells → one "Greutate" row each, sets of four or more →
+  "Număr de clopote" plus a "Greutate" range, `-` → no row. The Magazin Iași
+  MP4 on GCS is skipped (YouTube only).
+- Importer: legacy description HTML becomes plain-text summary lines; `-`
+  specification values are dropped. Migration tests 21.
+- Studio validation: errors only for the three drafts without a locality
+  (Zosin, Sihăstria Rascai, Biserica din lemn); 7 empty-description warnings;
+  Călugăreni's "67,6 kg" triggers the several-facts warning (decimal comma,
+  a false positive).
 
 - Closed the phone acceptance record (Phase 1) on the user's acceptance.
   Per-check details were not recorded; rows with evidence from the work

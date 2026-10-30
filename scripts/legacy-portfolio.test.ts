@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import type { ManifestAsset } from "./lib/legacy-media";
 import {
   findPlanConflicts,
+  htmlToText,
   loadLegacyPortfolio,
   looksLikeSeveralFacts,
   mapLegacyProject,
@@ -87,6 +88,15 @@ test("splits a single value and unit, and flags values holding several facts", (
   assert.equal(looksLikeSeveralFacts("310kg"), false);
 });
 
+test("turns legacy description HTML into plain text lines", () => {
+  assert.equal(
+    htmlToText("<h3>Automatizare 10 clopote. </h3><br /> Pe <strong>muntele Athos</strong> , <em>dangatele</em>.￼"),
+    "Automatizare 10 clopote.\nPe muntele Athos, dangatele.",
+  );
+  assert.equal(htmlToText(" "), "");
+  assert.equal(htmlToText(undefined), "");
+});
+
 test("normalises YouTube embeds to watch URLs without tracking", () => {
   assert.equal(
     normalizeYouTubeUrl("https://www.youtube.com/embed/VQfXmk_547Q?si=uBMU3KEVSfB5Gg2A"),
@@ -117,6 +127,12 @@ test("maps a legacy record to a Romanian-only project draft", () => {
   assert.ok(!JSON.stringify(document).includes("price"));
   assert.deepEqual(plan.issues.map((issue) => issue.code).sort(), ["excluded-image", "unsupported-video"]);
   assert.deepEqual(plan.review, ['subtitle not imported: "Clopot 310kg, 2022"']);
+});
+
+test("drops placeholder specification values such as \"-\"", () => {
+  const { document, issues } = mapLegacyProject({ ...work, information: { Greutate: "-" } }, context());
+  assert.equal(document.specifications, undefined);
+  assert.equal(issues.some((issue) => issue.code === "several-facts"), false);
 });
 
 test("is deterministic, so re-running produces the same document", () => {

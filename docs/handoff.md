@@ -22,7 +22,10 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   Policandre; published projects Lucrare de test, Drobeta, Turnul Severin
   (31 photos, uploaded from a phone), and the imported Schitul Duca
   (replaces the hand-made one), Parohia Ziua Crucii, Iași, and Parohia Roșu
-  Chiajna, Sfințire (89 photos) — IDs `legacy-clopote-*`.
+  Chiajna, Sfințire (89 photos) — IDs `legacy-clopote-*`. The other 36
+  Clopote works are imported as **drafts** awaiting the user's Studio review
+  (2026-10-30); three still need a locality (Zosin, Sihăstria Rascai,
+  Biserica din lemn).
 - **Importer** (2026-10-30): `npm run migrate:assets` / `migrate:content`,
   dry run by default; see `scripts/README.md`. All legacy media will move to
   Sanity (decided 2026-10-30); GCS stays the archive.
@@ -71,7 +74,11 @@ is cheaper than continuing a long conversation, and these docs carry the state.
 3. **Importer for the Clopote slice** (done 2026-10-30: three projects
    imported and published; 89-photo gallery measured, see the change log).
    Category ordering decided (order number, featured, year newest first).
-   Next: import the rest of Clopote with the same commands.
+   Rest of Clopote imported as drafts 2026-10-30 (see the change log). Next:
+   the user reviews the drafts in the Studio, fills the three missing
+   localities and confirms the guessed ones (Moi, Coarnele Caprei, Crainiceni,
+   Suharău–Comănești), then publishes. Skip `worksAutomatizari:clopote-sihastria-rascai`
+   when Automatizări is imported (same work, imported under Clopote).
    Original brief — Phase 4 pulled forward:
    `scripts/migrate-content.ts` and `scripts/migrate-assets.ts` with dry-run,
    deterministic IDs, checkpoints, reports, the same image rules as the Studio

@@ -98,8 +98,9 @@ npm run migrate:content -- --project 2022-schitul_duca --write
   documents the import `replaces` (deleted when it is written).
 
 Mapping rules: slug from the legacy page without the year prefix
-(`2022-schitul_duca` → `schitul-duca`); description lines → `summary`;
-blank `information` values dropped, `310kg` → value `310`, unit `kg`, values
+(`2022-schitul_duca` → `schitul-duca`); description lines → plain-text
+`summary` (legacy HTML tags dropped, `<br>` and headings become new lines);
+blank or `-` `information` values dropped, `310kg` → value `310`, unit `kg`, values
 holding several facts flagged for an override; YouTube embeds → watch URLs;
 `subtitle`, `briefInfo`, and `current` are listed for review, not imported.
 
