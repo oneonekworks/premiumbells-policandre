@@ -166,9 +166,9 @@ These items do not block completing the rest of Phase 0.
   ~244 KB uncompressed (~42 KB transferred), mostly per-photo blur
   placeholders. Phase 3's large-gallery exit criterion is met for 89 photos;
   the 176- and 201-photo galleries remain to be checked in Phase 5.
-- Generated alt text repeats the locality when the title already contains it
-  ("Parohia Ziua Crucii, Iași, Iași – fotografia 1 din 18"); most legacy titles
-  include the place, so fix this before the bulk import.
+- Generated alt text no longer repeats a place the title already names
+  (diacritic-insensitive word match in `lib/alt.ts`): "Parohia Ziua Crucii,
+  Iași – fotografia 1 din 18", "Schitul Duca, Brașov – …". Unit tests 13.
 - Open for the bulk import: category grids order unnumbered works by creation
   date, so imported works would sort above earlier editor-made ones; decide an
   order (for example by year) before importing the rest.

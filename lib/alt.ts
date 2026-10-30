@@ -4,9 +4,24 @@
 
 type Describable = {alt?: string | null; caption?: string | null};
 
-/** "Schitul Duca, Brașov" — subject and place, skipping empty parts. */
+const words = (text: string) =>
+  text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+
+/**
+ * "Schitul Duca, Brașov" — subject and place, skipping empty parts and places
+ * the text already names ("Parohia Ziua Crucii, Iași" + "Iași" stays as is).
+ */
 export function subject(title: string | null | undefined, ...place: (string | null | undefined)[]): string {
-  return [title, ...place].map((part) => part?.trim()).filter((part, index, all) => part && all.indexOf(part) === index).join(', ');
+  const parts: string[] = [];
+  const named = new Set<string>();
+  for (const part of [title, ...place].map((value) => value?.trim())) {
+    if (!part) continue;
+    const partWords = words(part);
+    if (parts.length && partWords.length && partWords.every((word) => named.has(word))) continue;
+    parts.push(part);
+    partWords.forEach((word) => named.add(word));
+  }
+  return parts.join(', ');
 }
 
 /**

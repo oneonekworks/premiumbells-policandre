@@ -56,3 +56,12 @@ test('photo alt text: written text first, then caption, then generated descripti
   assert.equal(photoAlt({}, 'Bilingual work', {index: 0, total: 1, template: 'photo {index} of {total}'}), 'Bilingual work – photo 1 of 1');
   assert.equal(photoAlt({}, 'Clopote'), 'Clopote');
 });
+
+test('generated subject does not repeat a place the title already names', () => {
+  assert.equal(subject('Parohia Ziua Crucii, Iași', 'Iași'), 'Parohia Ziua Crucii, Iași');
+  assert.equal(subject('Parohia Roșu Chiajna, Sfințire', 'Roșu, Chiajna'), 'Parohia Roșu Chiajna, Sfințire');
+  assert.equal(subject('Catedrala din Iasi', 'Iași'), 'Catedrala din Iasi');
+  assert.equal(subject('Schitul Duca', 'Brașov', 'Brașov'), 'Schitul Duca, Brașov');
+  assert.equal(subject('Drobeta, Turnul Severin', 'Drobeta-Turnu Severin'), 'Drobeta, Turnul Severin, Drobeta-Turnu Severin');
+  assert.equal(subject(null, 'Iași'), 'Iași');
+});
