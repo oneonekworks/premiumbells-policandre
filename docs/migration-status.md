@@ -169,9 +169,12 @@ These items do not block completing the rest of Phase 0.
 - Generated alt text no longer repeats a place the title already names
   (diacritic-insensitive word match in `lib/alt.ts`): "Parohia Ziua Crucii,
   Iași – fotografia 1 din 18", "Schitul Duca, Brașov – …". Unit tests 13.
-- Open for the bulk import: category grids order unnumbered works by creation
-  date, so imported works would sort above earlier editor-made ones; decide an
-  order (for example by year) before importing the rest.
+- Category grids now order works by "Ordine în categorie" (lower first), then
+  "Lucrare reprezentativă", then year, newest first (works without a year count
+  as newest), then creation date (decided by the user). Fixed `featured desc`,
+  which put works with an unset flag above featured ones; it now uses
+  `coalesce(featured, false)`. Unit tests 14. The Studio help text for
+  "Ordine în categorie" is updated and committed but not deployed yet.
 
 ### 2026-10-24
 

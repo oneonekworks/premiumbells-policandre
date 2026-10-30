@@ -45,8 +45,8 @@ const documents = [
   {_id: 'drafts.portfolioPage', _type: 'portfolioPage', title: {ro: 'Modificări private'}},
 ];
 
-async function query(source: string, params = {}) {
-  return (await evaluate(parse(source, {params}), {dataset: documents, params})).get();
+async function query(source: string, params = {}, dataset: unknown[] = documents) {
+  return (await evaluate(parse(source, {params}), {dataset, params})).get();
 }
 
 test('categories are ordered, hidden ones excluded, and counts exclude drafts', async () => {
@@ -72,6 +72,22 @@ test('category projects exclude drafts, releases, and other categories; displayO
   assert.equal('gallery' in result.items[0], false);
   const english = await query(CATEGORY_PROJECTS_QUERY, {lang: 'en', categoryId: 'clopote', start: 0, end: 24});
   assert.deepEqual(english.items.map((item: {title: string}) => item.title), ['Bilingual work']);
+});
+
+test('category projects: order number, then featured, then year (newest first, no year counts as newest)', async () => {
+  const work = (id: string, extra: object) => ({...project, _id: id, title: {ro: id}, slug: {current: id}, ...extra});
+  const dataset = [
+    work('older-2019', {year: 2019, _createdAt: '2026-10-30T00:00:00Z'}),
+    work('recent-2023', {year: 2023, _createdAt: '2026-10-01T00:00:00Z'}),
+    work('no-year', {_createdAt: '2026-09-01T00:00:00Z'}),
+    work('featured-2018', {year: 2018, featured: true}),
+    work('pinned', {year: 2010, displayOrder: 1}),
+    work('same-year-newer', {year: 2023, _createdAt: '2026-10-02T00:00:00Z'}),
+  ];
+  const result = await query(CATEGORY_PROJECTS_QUERY, {lang: 'ro', categoryId: 'clopote', start: 0, end: 24}, dataset);
+  assert.deepEqual(result.items.map((item: {title: string}) => item.title), [
+    'pinned', 'featured-2018', 'no-year', 'same-year-newer', 'recent-2023', 'older-2019',
+  ]);
 });
 
 test('project detail requires the matching category and a published language', async () => {

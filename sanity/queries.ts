@@ -46,7 +46,7 @@ export const CATEGORY_PROJECTS_QUERY = defineQuery(`
   {
     "total": count(*[${publicProject} && category._ref == $categoryId]),
     "items": *[${publicProject} && category._ref == $categoryId]
-      | order(coalesce(displayOrder, 1000000) asc, featured desc, _createdAt desc, _id asc)[$start...$end]{
+      | order(coalesce(displayOrder, 1000000) asc, coalesce(featured, false) desc, coalesce(year, 9999) desc, _createdAt desc, _id asc)[$start...$end]{
         _id, "title": ${localized('title')}, "slug": slug.current, "summary": ${localized('summary')},
         location, year, "displayDate": ${localized('displayDate')},
         coverImage{${imageFields}}

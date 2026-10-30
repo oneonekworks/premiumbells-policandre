@@ -26,7 +26,7 @@ is cheaper than continuing a long conversation, and these docs carry the state.
 - **Importer** (2026-10-30): `npm run migrate:assets` / `migrate:content`,
   dry run by default; see `scripts/README.md`. All legacy media will move to
   Sanity (decided 2026-10-30); GCS stays the archive.
-- **Checks:** website lint, typecheck, build, 13 unit tests, 19 migration tests,
+- **Checks:** website lint, typecheck, build, 14 unit tests, 19 migration tests,
   15 browser tests; Studio typecheck, lint, build, 8 unit tests.
 
 ## Gotchas for the next session
@@ -71,8 +71,8 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    reads "Greutate: 1000 kg". Fix the Drobeta row with the user.
 3. **Importer for the Clopote slice** (done 2026-10-30: three projects
    imported and published; 89-photo gallery measured, see the change log).
-   Before importing the rest of Clopote: decide category ordering (for
-   example by year).
+   Category ordering decided (order number, featured, year newest first).
+   Next: import the rest of Clopote with the same commands.
    Original brief — Phase 4 pulled forward:
    `scripts/migrate-content.ts` and `scripts/migrate-assets.ts` with dry-run,
    deterministic IDs, checkpoints, reports, the same image rules as the Studio

@@ -257,7 +257,7 @@ Initial categories are `policandre`, `reconditionari-policandre`, `clopote`,
 | `gallery` | galleryItem[] | yes | Ordered |
 | `videos` | video[] | no | Ordered |
 | `featured` | boolean | yes | Defaults false |
-| `displayOrder` | number | no | Stable category order |
+| `displayOrder` | number | no | Overrides category order; otherwise featured, then year newest first (no year = newest), then creation date |
 | `archived` | boolean | yes | Defaults false; draft/published use Sanity document state |
 | `seo` | seo | no | |
 | `legacy` | legacySource | migration only | |
