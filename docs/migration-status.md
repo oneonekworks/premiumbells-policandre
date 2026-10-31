@@ -2,7 +2,7 @@
 
 **Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy importer built; all 39 Clopote works imported and published
 **Current phase:** Clopote imported and published; next: data delivery — see [handoff](handoff.md)
-**Last updated:** 2026-10-30
+**Last updated:** 2026-10-31
 
 ## Accepted decisions
 
@@ -120,6 +120,15 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-10-31
+
+- The user confirmed the guessed localities: Moi (Târgu Jiu), Coarnele Caprei
+  (Iași), Crainiceni (Botoșani), Comănești, Suharău (Botoșani); noted in the
+  overrides.
+- "Localitate" is now optional in the Studio (country stays required, default
+  RO); the website already omits a missing locality from the place line and
+  generated alt text.
 
 ### 2026-10-30
 

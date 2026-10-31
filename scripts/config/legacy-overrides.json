@@ -66,7 +66,7 @@
           "unit": "kg"
         }
       ],
-      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Locality from the title; to confirm."
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Locality from the title; confirmed by the user on 2026-10-31."
     },
     "worksClopote:2022-caransebes-montaj-clopote": {
       "location": {
@@ -121,7 +121,7 @@
         "county": "Iași",
         "country": "RO"
       },
-      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). County from geography; to confirm."
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). County from geography; confirmed by the user on 2026-10-31."
     },
     "worksClopote:2021-parohia-velea": {
       "location": {
@@ -410,7 +410,7 @@
           "unit": "kg"
         }
       ],
-      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Locality from the title; to confirm."
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Locality from the title; confirmed by the user on 2026-10-31."
     },
     "worksClopote:victoria-botosani": {
       "location": {
@@ -457,7 +457,7 @@
           "value": "5"
         }
       ],
-      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Title says Botoșani, page and description Suceava; to confirm."
+      "note": "Approved by the user on 2026-10-30 (Clopote import proposal). Title says Botoșani, page and description Suceava; confirmed by the user on 2026-10-31."
     },
     "worksClopote:galati-sf-stelian": {
       "location": {

@@ -376,7 +376,7 @@ export function mapLegacyProject(work: LegacyWork, context: MapContext): Project
   const legacyCountry = COUNTRIES[normalizeCountry(work.country)];
   if (work.country && !legacyCountry) issue("warning", "unknown-country", `Unknown legacy country "${work.country}"; defaulted to RO.`);
   const location = override?.location ?? { country: legacyCountry ?? "RO" };
-  if (!override?.location) issue("warning", "missing-location", "No locality; add a location override (required to publish).");
+  if (!override?.location) issue("warning", "missing-location", "No locality; add a location override if the place is known.");
   else if (legacyCountry && location.country && legacyCountry !== location.country) {
     review.push(`Legacy country "${work.country}" differs from the override ${location.country}.`);
   }

@@ -74,8 +74,7 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    imported and published; 89-photo gallery measured, see the change log).
    Category ordering decided (order number, featured, year newest first).
    Rest of Clopote imported and published 2026-10-30 (see the change log).
-   Still to confirm in the Studio: guessed localities (Moi, Coarnele Caprei,
-   Crainiceni, Suharău–Comănești). Skip `worksAutomatizari:clopote-sihastria-rascai`
+   Guessed localities confirmed by the user on 2026-10-31. Skip `worksAutomatizari:clopote-sihastria-rascai`
    when Automatizări is imported (same work, imported under Clopote).
    Original brief — Phase 4 pulled forward:
    `scripts/migrate-content.ts` and `scripts/migrate-assets.ts` with dry-run,
