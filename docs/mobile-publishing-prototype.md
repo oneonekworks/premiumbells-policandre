@@ -80,6 +80,9 @@ failures remain visible. This workflow has not yet been accepted on a phone.
    **Select → Încarcă fotografie (optimizată)** for a new single photo. Add its
    accessibility description and adjust crop/hotspot if needed.
 6. Before publishing, refresh the website: the draft must remain absent.
+   (Since 2026-10-31 reads are cached: a publish shows on refresh only once the
+   publish webhook is live on the hosted site, otherwise within an hour. On
+   `npm run dev`, use a hard refresh.)
    Publish, then refresh again: the project and changed page copy should appear.
 7. Edit the published title without publishing: the old published title should
    remain on the website. Publish the change and refresh. Unpublish the project
@@ -133,15 +136,16 @@ format as accepted because the fallback worked.
   routes. The root also remains noindex during prototype development. This is
   not access control and does not finalize any existing URL or redirect.
 - Explicit `published` client perspective, no token, server-only client,
-  `useCdn: false`, and `cache: 'no-store'`. Refresh reads current published
-  content; there is no automatic open-tab live update. Draft/release IDs are
+  `useCdn: false`, and (until 2026-10-31) `cache: 'no-store'`; reads are now
+  tag-cached and revalidated by the publish webhook (see architecture). Refresh
+  reads current published content once revalidated; there is no automatic open-tab live update. Draft/release IDs are
   additionally excluded in project queries. See Sanity's
   [perspective documentation](https://www.sanity.io/docs/content-lake/perspectives).
 - Project lists fetch 12 cards; detail pages fetch 24 ordered image references.
   `next/image` uses the Sanity CDN builder, honoring crop/hotspot for covers,
   responsive widths, automatic format selection, and lazy loading. No public
   original-download links are rendered.
-- Production caching, signed webhooks, authenticated draft preview, visual
+- Production caching and the signed webhook route are done (2026-10-31); authenticated draft preview, visual
   editing, modal routing, and a fullscreen lightbox remain later milestones.
 - No MCP content tools are configured. Local Studio schema is authoritative.
   Schema deployment (`sanity schemas deploy`) is still required before future

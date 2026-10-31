@@ -12,7 +12,14 @@
 
 Run `npm run sanity:typegen` from this app after changing schemas or queries.
 The image component in `components/sanity-image.tsx` uses Sanity CDN transforms.
-The prototype explicitly disables fetch caching; refresh after publication.
-Production caching, draft preview, and webhook handling are later milestones.
+- `fetch.ts`: `sanityFetch()`, the only caller of the client; tags every read
+  and refreshes hourly as a backup. Draft Mode will branch here.
+- `cache-tags.ts`: tag names and the webhook document → tags mapping.
+- `revalidate.ts`: signed webhook handling for `app/api/revalidate`.
+
+Published reads are cached by tag and cleared by the signed Sanity publish
+webhook; see "Data delivery and caching" in `docs/architecture.md`. On
+`npm run dev`, hard-refresh to bypass the cache. Draft preview is a later
+milestone.
 
 See [the prototype runbook](../docs/mobile-publishing-prototype.md).

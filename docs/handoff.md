@@ -1,6 +1,6 @@
 # Session handoff
 
-**Updated:** 2026-10-30 · Start a new session with the kickoff prompt below; it
+**Updated:** 2026-10-31 · Start a new session with the kickoff prompt below; it
 is cheaper than continuing a long conversation, and these docs carry the state.
 
 ## Where we are
@@ -28,7 +28,12 @@ is cheaper than continuing a long conversation, and these docs carry the state.
 - **Importer** (2026-10-30): `npm run migrate:assets` / `migrate:content`,
   dry run by default; see `scripts/README.md`. All legacy media will move to
   Sanity (decided 2026-10-30); GCS stays the archive.
-- **Checks:** website lint, typecheck, build, 14 unit tests, 19 migration tests,
+- **Data delivery** (2026-10-31): published reads are tag-cached (hourly backup
+  refresh) and `POST /api/revalidate` revalidates tags from a signed Sanity
+  webhook. The webhook itself is not created yet: it needs the hosted URL
+  (step 5). Settings are in `docs/architecture.md`; the secret is
+  `SANITY_REVALIDATE_SECRET` in `.env.local`.
+- **Checks:** website lint, typecheck, build, 21 unit tests, 21 migration tests,
   15 browser tests; Studio typecheck, lint, build, 8 unit tests.
 
 ## Gotchas for the next session
@@ -44,6 +49,8 @@ is cheaper than continuing a long conversation, and these docs carry the state.
 - GROQ reads locale fields with `select($lang == "en" => x.en, x.ro)` helpers
   so TypeGen infers strings; interpolated queries need explicit
   `client.fetch<*_RESULT>()`. Regenerate types with `npm run sanity:typegen`.
+- Reads are cached now: on `npm run dev` use a hard refresh to see a publish;
+  a production build needs the webhook or `npm run revalidate:test`.
 - Browser tests: run against a production build on another port (see the
   scratch config pattern used in the change log) so a running dev server is
   not reused.
@@ -86,12 +93,17 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    sanity.io/manage and stored only in `.env.local`; confirmation of a GCS
    backup; a decision on the existing hand-made Schitul Duca document. Then
    measure large-gallery performance (Phase 3 exit).
-4. **Data delivery** (Opus, Medium–High) — Phase 2: replace `no-store` reads
-   with tag-based caching, a signed Sanity publish webhook for revalidation,
-   and later Draft Mode preview. Needed before any hosting.
+4. **Data delivery** (done 2026-10-31 except going live): tag-cached reads and
+   a signed revalidation route, verified locally against a production build
+   with `npm run revalidate:test`. Draft Mode preview is designed (see
+   architecture) but not built.
 5. **Hosting and preview** (user decision + Opus, Medium): choose hosting
    within the ~USD 20/month budget; create a *separate* Vercel (or other)
-   project — never the live policandre.ro project; connect Git remotes.
+   project — never the live policandre.ro project; connect Git remotes. Then
+   set `SANITY_REVALIDATE_SECRET` in the host's env, create the Sanity webhook
+   (settings in `docs/architecture.md`) and check a publish refreshes the
+   site. Single-instance hosting keeps Next's default cache; several instances
+   need a shared cache handler.
 6. **Search/filter in category grids** (Sonnet or Opus, Medium): URL-based
    query, Romanian diacritic-insensitive.
 7. **SEO baseline** (user): Search Console/Analytics exports to draft the

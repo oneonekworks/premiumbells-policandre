@@ -104,6 +104,13 @@ blank or `-` `information` values dropped, `310kg` → value `310`, unit `kg`, v
 holding several facts flagged for an override; YouTube embeds → watch URLs;
 `subtitle`, `briefInfo`, and `current` are listed for review, not imported.
 
+## Revalidation test request
+
+`npm run revalidate:test -- --url <origin> --type project --slug <slug>
+--category <categoryId>` (or `--type workCategory` / `portfolioPage`) sends a
+request to `/api/revalidate` signed like the Sanity publish webhook, using
+`SANITY_REVALIDATE_SECRET` from `.env.local` (never printed).
+
 ## Next migration stages
 
 - `verify-migration.ts` — reconcile source and target counts and required fields

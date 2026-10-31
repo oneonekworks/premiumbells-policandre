@@ -1,7 +1,8 @@
 import 'server-only';
 import {cache} from 'react';
 import type {Lang} from '@/lib/i18n/routing';
-import {client} from './client';
+import {cacheTags} from './cache-tags';
+import {sanityFetch} from './fetch';
 import {PROJECT_PAGE_SIZE} from './pagination';
 import {
   CATEGORIES_QUERY, CATEGORY_PROJECTS_QUERY, CATEGORY_QUERY, PORTFOLIO_PAGE_QUERY, PROJECT_QUERY,
@@ -11,28 +12,37 @@ import type {
   PORTFOLIO_PAGE_QUERY_RESULT, PROJECT_QUERY_RESULT,
 } from './types';
 
-// Published reads stay uncached so a refresh shows a publish immediately, as
-// in the phone acceptance runbook. Tag-based caching with a signed publish
-// webhook replaces `no-store` in the data-delivery milestone.
-const options = {cache: 'no-store'} as const;
+// Published reads are cached by tag and cleared by the publish webhook; see
+// cache-tags.ts. React cache() shares one read between a page and its metadata.
 
 export type ProjectCard = CATEGORY_PROJECTS_QUERY_RESULT['items'][number];
 export type ProjectDetail = NonNullable<PROJECT_QUERY_RESULT>;
 export type Category = NonNullable<CATEGORY_QUERY_RESULT>;
 
 export const getPortfolioPage = cache((lang: Lang) =>
-  client.fetch<PORTFOLIO_PAGE_QUERY_RESULT>(PORTFOLIO_PAGE_QUERY, {lang}, options));
+  sanityFetch<PORTFOLIO_PAGE_QUERY_RESULT>({
+    query: PORTFOLIO_PAGE_QUERY, params: {lang}, tags: [cacheTags.portfolioPage],
+  }));
 
+// Includes per-category project counts.
 export const getCategories = cache((lang: Lang) =>
-  client.fetch<CATEGORIES_QUERY_RESULT>(CATEGORIES_QUERY, {lang}, options));
+  sanityFetch<CATEGORIES_QUERY_RESULT>({
+    query: CATEGORIES_QUERY, params: {lang}, tags: [cacheTags.categories, cacheTags.projectCounts],
+  }));
 
 export const getCategory = cache((lang: Lang, slug: string) =>
-  client.fetch<CATEGORY_QUERY_RESULT>(CATEGORY_QUERY, {lang, slug}, options));
+  sanityFetch<CATEGORY_QUERY_RESULT>({
+    query: CATEGORY_QUERY, params: {lang, slug}, tags: [cacheTags.categories],
+  }));
 
 export const getCategoryProjects = cache((lang: Lang, categoryId: string, page: number) =>
-  client.fetch<CATEGORY_PROJECTS_QUERY_RESULT>(CATEGORY_PROJECTS_QUERY, {
-    lang, categoryId, start: (page - 1) * PROJECT_PAGE_SIZE, end: page * PROJECT_PAGE_SIZE,
-  }, options));
+  sanityFetch<CATEGORY_PROJECTS_QUERY_RESULT>({
+    query: CATEGORY_PROJECTS_QUERY,
+    params: {lang, categoryId, start: (page - 1) * PROJECT_PAGE_SIZE, end: page * PROJECT_PAGE_SIZE},
+    tags: [cacheTags.categoryProjects(categoryId)],
+  }));
 
 export const getProject = cache((lang: Lang, categoryId: string, slug: string) =>
-  client.fetch<PROJECT_QUERY_RESULT>(PROJECT_QUERY, {lang, categoryId, slug}, options));
+  sanityFetch<PROJECT_QUERY_RESULT>({
+    query: PROJECT_QUERY, params: {lang, categoryId, slug}, tags: [cacheTags.project(slug)],
+  }));

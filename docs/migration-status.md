@@ -1,7 +1,7 @@
 # Migration Status
 
 **Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy importer built; all 39 Clopote works imported and published
-**Current phase:** Clopote imported and published; next: data delivery — see [handoff](handoff.md)
+**Current phase:** Data delivery done locally (webhook goes live with hosting); next: hosting — see [handoff](handoff.md)
 **Last updated:** 2026-10-31
 
 ## Accepted decisions
@@ -74,7 +74,8 @@ sessions are in [the session handoff](handoff.md). In short:
 2. Small Studio fix for entering technical details one fact per row.
 3. Importer for the three representative Clopote projects — done and
    published 2026-10-30; large-gallery performance measured.
-4. Tag-based caching and a signed publish webhook.
+4. Tag-based caching and a signed publish webhook — done 2026-10-31; the
+   Sanity webhook is created with hosting.
 5. Hosting decision, a separate preview project, and Git remotes.
 6. Search/filter in category grids.
 7. Search Console/Analytics baseline, URL map, duplicate slugs
@@ -122,6 +123,25 @@ These items do not block completing the rest of Phase 0.
 ## Change log
 
 ### 2026-10-31
+
+- Data delivery (Phase 2): replaced `cache: 'no-store'` with tag-cached reads
+  through `sanityFetch()` (`sanity/fetch.ts`; per type, category grid and
+  project slug, plus a catch-all `sanity` tag; hourly backup refresh, decided
+  by the user). Added the signed webhook route `POST /api/revalidate`
+  (`next-sanity/webhook` signature check, `revalidateTag(tag, {expire: 0})`)
+  and `npm run revalidate:test`, which signs a test request with the local
+  secret. `SANITY_REVALIDATE_SECRET` was generated into `.env.local` only.
+  `/lucrarile-noastre` is now prerendered (ISR) instead of dynamic.
+- Verified on a production build (port 3100, cache debug logs): a second visit
+  read every query from cache; a signed `project` request cleared only that
+  project and its category grid, and the next visit refetched only the project;
+  a `workCategory` request refetched the category list and lookup and
+  regenerated the prerendered overview while the grid stayed cached; unsigned
+  requests got 401. Unit tests 21 (7 new for tags and signatures); browser
+  tests 15 passed against the production build.
+- Not live: the Sanity webhook needs a public URL, so it is created with
+  hosting (settings in `docs/architecture.md`). Draft Mode is designed, not
+  built.
 
 - The user confirmed the guessed localities: Moi (Târgu Jiu), Coarnele Caprei
   (Iași), Crainiceni (Botoșani), Comănești, Suharău (Botoșani); noted in the

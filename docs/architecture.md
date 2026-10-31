@@ -109,6 +109,73 @@ Before implementing framework features, consult the versioned documentation in
 - Queries used by a page and its metadata should be shared or memoised to avoid
   duplicate reads.
 
+#### Implemented (2026-10-31)
+
+Every published read goes through `sanityFetch()` (`sanity/fetch.ts`), which
+caches it with `next: {tags, revalidate: 3600}`; the hourly refresh is only a
+backup for a missed webhook. Loaders in `sanity/portfolio.ts` are wrapped in
+React `cache()` so a page and its metadata share one read. Tags
+(`sanity/cache-tags.ts`; every read also carries `sanity`):
+
+| Read | Tags |
+| --- | --- |
+| Works overview copy | `sanity:portfolioPage` |
+| Category list with project counts | `sanity:workCategory`, `sanity:project-counts` |
+| Category lookup by slug | `sanity:workCategory` |
+| Category grid | `sanity:category-projects:<categoryId>` |
+| Project page and slide-over | `sanity:project:<slug>` |
+
+Projects are tagged by slug, not ID, so publishing a new project also clears a
+cached 404 for its URL. `POST /api/revalidate` (`app/api/revalidate/route.ts`,
+logic in `sanity/revalidate.ts`) verifies the `sanity-webhook-signature`
+header against `SANITY_REVALIDATE_SECRET` (401 if wrong or missing, 500 if the
+secret is unset, 400 for a body without `_type`), waits 3 s for Content Lake
+consistency, and calls `revalidateTag(tag, {expire: 0})` so the first visit
+after a publish renders fresh content. Mapping:
+
+- `project`: old and new `project:<slug>` and `category-projects:<id>`; plus
+  `project-counts` on create, delete, category move, slug added/removed, or
+  language change. Missing slug or category → everything.
+- `workCategory` → `sanity:workCategory`; `portfolioPage` →
+  `sanity:portfolioPage`; any other type → `sanity` (everything).
+
+The revalidation is local to one server process (Next's default file/memory
+cache). Hosting with several instances needs a shared cache handler.
+
+#### Publish webhook (create in sanity.io/manage once hosting exists)
+
+Sanity needs a public URL, so the webhook goes live with hosting (handoff step
+5). Settings: project `1fzbw4s1` → API → Webhooks → Create.
+
+- Name: `Revalidare site`; URL: `https://<host>/api/revalidate`; dataset
+  `production`; trigger on Create, Update, Delete; drafts and versions off.
+- Filter: `_type in ["project", "workCategory", "portfolioPage"]` (widen it
+  when new public types are added; unknown types clear everything).
+- Projection:
+
+  ```groq
+  {_id, _type, "operation": delta::operation(),
+   "before": before(){"slug": slug.current, "category": category._ref, "languages": publishedLanguages},
+   "after": after(){"slug": slug.current, "category": category._ref, "languages": publishedLanguages}}
+  ```
+
+- HTTP method POST, API version `v2026-10-10`; Secret: the value of
+  `SANITY_REVALIDATE_SECRET` from `.env.local` (also set it in the host's
+  environment variables). Never paste it in chat.
+
+Check it with `npm run revalidate:test -- --url https://<host> --type
+workCategory` (signs a request with the local secret) and Sanity's webhook
+attempt log.
+
+#### Draft Mode preview (designed, not built)
+
+Draft Mode will branch inside `sanityFetch()`: when `draftMode().isEnabled`,
+use a server-only client with a viewer token, `perspective: 'drafts'` and
+`cache: 'no-store'`, and keep the published path unchanged. It needs a
+`/api/draft-mode/enable` route validating Sanity's preview URL secret
+(`next-sanity` `defineEnableDraftMode`), a read token in the host's env, and
+Presentation configured in the Studio.
+
 ### Hosting
 
 - Hosting is unresolved against the approximately USD 20/month total operating
@@ -209,8 +276,8 @@ category layout renders the sidebar (chips on phones) around both the grid and
 the full project page. `ProjectDetails` is shared by the slide-over and the full
 page; the gallery shows 24 thumbnails at a time and opens a fullscreen lightbox
 (native `<dialog>`, arrows, swipe, thumbnails). A category slug from the other
-language permanently redirects. Reads remain uncached until the publish
-webhook milestone.
+language permanently redirects. Reads are cached by tag (see Data delivery and
+caching).
 
 Expected behaviour:
 
@@ -290,7 +357,9 @@ allow-listed inline marks.
 ## Implemented prototype exception
 
 See [mobile publishing prototype](mobile-publishing-prototype.md). Its temporary
-noindex routes use uncached published reads to verify publish/refresh behavior.
+noindex routes used uncached published reads to verify publish/refresh
+behavior; since 2026-10-31 reads are tag-cached and refresh after a publish
+depends on the publish webhook.
 The caching, preview, modal, and production route architecture above remains the
 target after actual-phone acceptance. Studio and frontend are sibling folders,
 not an embedded Studio or a nested package.
