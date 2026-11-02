@@ -83,7 +83,7 @@ sessions are in [the session handoff](handoff.md). In short:
    2026-11-02, data processing); URL map accepted 2026-11-02
    ([url-map.md](url-map.md)); analytics tool for the rebuilt site.
 8. Phase 5 import of Policandre, Uși, Automatizări and Recondiționări —
-   dry runs done 2026-11-02, awaiting the user's review before writing.
+   imported and published 2026-11-02; large galleries measured.
 
 ## Remaining prototype acceptance inputs
 
@@ -102,7 +102,7 @@ These items do not block completing the rest of Phase 0.
 | GCS billing or access interruption | Keep production stable; create manifest and backup; migrate delivery to Sanity |
 | Missing or malformed legacy URLs | Validate every asset and emit a blocking report |
 | Duplicate slugs | Require approved canonical slugs; never resolve silently |
-| Very large galleries | Prove lazy loading/performance with 89, 176, and 201-image cases |
+| Very large galleries | Prove lazy loading/performance with 89, 176, and 201-image cases (all measured by 2026-11-02) |
 | Raw HTML in legacy content | Convert to Portable Text and allow-listed marks |
 | Legacy prices leak publicly | Omit price fields and add source/render verification checks |
 | Duplicate imports | Deterministic IDs, checksums, dry-run, checkpoints, and idempotent mutations |
@@ -129,6 +129,32 @@ These items do not block completing the rest of Phase 0.
 
 ### 2026-11-02
 
+- Published the 21 Phase 5 works with the import token at the user's request,
+  after a fresh export (`production-2026-11-02-before-phase5-publish.tar.gz`):
+  60 published projects — Policandre 11, Recondiționări 7, Clopote 39 (Lucrare
+  de test is no longer published), Uși 1, Automatizări 2; no drafts left.
+  Checked on a local production build: overview lists the five categories in
+  the new order with counts; every grid, the county lists, `?judet=maramures`
+  (3), `?cauta=spania` (Lleida), `?an=2023` (Lăpuș, Dej III) and project pages
+  work; the old `drobeta-turnul-severin` slug is 404 (never public). The local
+  server kept the old category list until a signed revalidation (served stale
+  once, then fresh), as the Netlify preview does on publish webhooks.
+- Measured the two largest galleries the same way as the 89-photo one
+  (headless Chrome, cache disabled; phone 390×844, DPR 3, ~1.6 Mbps, 4× CPU):
+
+  | | Rohia desktop | Rohia phone | Uși desktop | Uși phone |
+  | --- | ---: | ---: | ---: | ---: |
+  | Photos | 201 | 201 | 176 | 176 |
+  | LCP | 0.38 s | 0.80 s | 0.34 s | 0.80 s |
+  | CLS | 0 | 0 | 0 | 0 |
+  | Initial load | 91 req, 1.33 MB (images 852 KB) | 66 req, 1.04 MB (images 560 KB) | 97 req, 954 KB (images 479 KB) | 60 req, 594 KB (images 127 KB) |
+  | After scrolling | 1.33 MB | 1.51 MB | 954 KB | 1.36 MB |
+  | After "Arată mai multe fotografii" | 2.01 MB | 1.89 MB | 1.38 MB | 1.81 MB |
+  | Largest image | 52 KB | 119 KB | 29 KB | 61 KB |
+  | HTML transferred | 74 KB | 74 KB | 65 KB | 65 KB |
+
+  No horizontal overflow. The 89-, 176- and 201-photo cases are now all
+  measured, which closes the large-gallery risk.
 - Phase 5 written on the user's go-ahead: 875 photos uploaded, 29 reused by
   fingerprint, 0 failed (≈399 MB prepared). Categories created (published,
   cover from their newest work): Recondiționări (`category-reconditionari`,

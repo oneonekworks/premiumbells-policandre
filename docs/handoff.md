@@ -29,10 +29,10 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   upload (≤3200px kept losslessly, larger shrunk, 1.5 MB cap, metadata
   stripped), duplicate photo skipping, optional alt text.
 - **Content** (live dataset `1fzbw4s1/production`): categories Policandre,
-  Recondiționări, Clopote, Uși, Automatizări (2026-11-02); 21 Phase 5 drafts
-  not yet published (the hand-made Drobeta document was replaced by
-  `legacy-policandre-drobeta-turnu-severin`); published projects Lucrare de
-  test and the imported Schitul Duca
+  Recondiționări, Clopote, Uși, Automatizări (2026-11-02); 60 published
+  projects: Policandre 11, Recondiționări 7, Clopote 39, Uși 1, Automatizări
+  2 (Phase 5 published 2026-11-02; the hand-made Drobeta document was
+  replaced by `legacy-policandre-drobeta-turnu-severin`). Earlier: the imported Schitul Duca
   (replaces the hand-made one), Parohia Ziua Crucii, Iași, and Parohia Roșu
   Chiajna, Sfințire (89 photos) — IDs `legacy-clopote-*`. All 39 legacy
   Clopote works are imported and published (2026-10-30; 40 Clopote projects
@@ -149,8 +149,8 @@ is cheaper than continuing a long conversation, and these docs carry the state.
      Analytics or Umami; no cookie banner, fits the budget) unless Google Ads
      are planned, in which case GA4 with a consent banner and Consent Mode.
      Check current prices first; install at the policandre.ro cutover.
-8. **Phase 5 import of the other categories** (drafts written 2026-11-02, not
-   published; plan approved by the user): Policandre 11, Uși 1, Automatizări 2 (Sihăstria
+8. **Phase 5 import of the other categories** (done and published
+   2026-11-02; plan approved by the user): Policandre 11, Uși 1, Automatizări 2 (Sihăstria
    Rascăi skipped), Recondiționări 7; Orologii and Sonorizări not imported
    (no photos). Done: dataset export
    (`production-2026-11-02-before-phase5.tar.gz`), importer keys repeated
@@ -161,8 +161,9 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    failed); categories Recondiționări, Uși, Automatizări created with menu
    order Policandre 10, Recondiționări 20, Clopote 30, Uși 40, Automatizări
    50; 21 drafts; Studio validation clean apart from the decimal-comma
-   warning on Uși. Next: publish at the user's request (fresh export first); check grids and filters; measure Rohia (201 photos) and
-   Uși (176) on a production build. Flag for the user: Dej III and Făget
+   warning on Uși. Published at the user's request after a fresh export;
+   grids and filters checked; Rohia and Uși measured (LCP ≤ 0.8 s on a
+   throttled phone, CLS 0; see the change log). Open for the user: Dej III and Făget
    have identical technical details (Dej III's legacy brief says two
    chandeliers of 4 and 2 levels).
 9. **Parked:** Studio tab/Publish styling — see [backlog](backlog.md).
