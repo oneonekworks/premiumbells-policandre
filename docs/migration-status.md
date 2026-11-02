@@ -129,6 +129,17 @@ These items do not block completing the rest of Phase 0.
 
 ### 2026-11-02
 
+- Phase 5 written on the user's go-ahead: 875 photos uploaded, 29 reused by
+  fingerprint, 0 failed (≈399 MB prepared). Categories created (published,
+  cover from their newest work): Recondiționări (`category-reconditionari`,
+  slug `reconditionari-policandre`, order 20), Uși (`category-usi`, 40),
+  Automatizări (`category-automatizari`, 50); Policandre moved to 10. 21
+  drafts created (`legacy-policandre-*`, `legacy-usi-*`,
+  `legacy-automatizari-*`, `legacy-reconditionari-policandre-*`); the
+  hand-made Drobeta document was deleted by its replacement; a second run
+  reported all 21 unchanged. Studio validation: no errors; one new warning,
+  Uși "226,5" cm (decimal comma, same false positive as Călugăreni). Not
+  published yet.
 - Phase 5 import prepared (plan approved by the user; nothing written to
   Sanity content yet). Dataset exported to
   `.migration/backups/production-2026-11-02-before-phase5.tar.gz`. Importer:
