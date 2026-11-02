@@ -47,7 +47,8 @@ materials, finishes, and technical specifications without prices.
 - Measure qualified enquiries and organic visibility; no ranking guarantees.
 
 The user has Search Console, Analytics, and domain/DNS access. No access or
-exports have been supplied yet. Prefer exports or least-privilege invitations;
+exports have been supplied yet. policandre.ro never had analytics configured
+(confirmed 2026-11-02), so the baseline comes from Search Console only. Prefer exports or least-privilege invitations;
 never request passwords in chat.
 
 ## Bespoke but bounded design

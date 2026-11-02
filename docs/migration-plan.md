@@ -35,7 +35,8 @@ slice. Do not wait for bulk migration to validate the importer.
 - [ ] Connect an approved remote when repository publication is requested.
 - [x] Generate the authoritative media manifest and explicit exclusions.
 - [x] Consolidate the product, design, language, CMS, and budget brief.
-- [ ] Obtain Search Console/Analytics exports and identify valuable legacy URLs.
+- [ ] Obtain Search Console exports and identify valuable legacy URLs (no
+  Analytics history exists; confirmed 2026-11-02).
 - [x] Decide translation storage and locale URL conventions (2026-10-24).
 - [ ] Draft page architecture and old-to-new URL decisions.
 - [ ] Approve compact design foundations and representative responsive layouts

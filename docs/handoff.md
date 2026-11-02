@@ -126,10 +126,24 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    title and place, year and county filters, one cached read per category
    filtered on the server (see architecture). Data for the user: Zosin has no
    county; "Lucrare de test" is still published in Clopote.
-7. **SEO baseline** (user): Search Console/Analytics exports to draft the
-   old→new URL and redirect map; resolve duplicate slugs
-   `clopote-sihastria-rascai`, `manastirea-faget` and the missing cover
-   `/img/works-cover/4.jpg`.
+7. **SEO baseline** (revised 2026-11-02): policandre.ro has no analytics
+   history (the legacy gtag code exists but was never configured), so there is
+   no Analytics export. Instead:
+   - **User:** verify a Search Console **Domain** property for `policandre.ro`
+     with a DNS TXT record. Search data is collected regardless of sign-up,
+     so a new property should show past data (expected up to ~16 months, not
+     yet confirmed for this domain) after a day or two. Export Performance →
+     Pages and Indexing → Pages into `.migration/` (git-ignored), not chat.
+   - **Agent:** draft the old→new URL and redirect map from the legacy routes
+     (`docs/source-inventory.md`) without waiting; Search Console data, when
+     available, ranks which URLs to verify first.
+   - Resolve the duplicate slug `manastirea-faget` and the missing cover
+     `/img/works-cover/4.jpg` (`clopote-sihastria-rascai` is decided).
+   - Analytics for the rebuilt site is a launch decision (architecture,
+     deferred decisions): recommended a cookieless tool (e.g. Cloudflare Web
+     Analytics or Umami; no cookie banner, fits the budget) unless Google Ads
+     are planned, in which case GA4 with a consent banner and Consent Mode.
+     Check current prices first; install at the policandre.ro cutover.
 8. **Parked:** Studio tab/Publish styling — see [backlog](backlog.md).
 
 ## Kickoff prompt

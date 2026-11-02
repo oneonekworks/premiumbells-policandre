@@ -385,7 +385,9 @@ allow-listed inline marks.
 - Whether and when to add Greek or another third language (needs demand data
   and a native reviewer); English URL slugs for each category and service.
 - Alternative commercial provider if Vercel plan constraints are undesirable.
-- Exact analytics and consent tooling.
+- Exact analytics and consent tooling. No legacy analytics data exists;
+  recommended: a cookieless tool (no consent banner) unless Google Ads are
+  planned, then GA4 with Consent Mode. Decide before cutover.
 
 ## Implemented prototype exception
 

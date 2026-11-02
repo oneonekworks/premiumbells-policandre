@@ -79,9 +79,9 @@ sessions are in [the session handoff](handoff.md). In short:
 5. Hosting decision, a separate preview project, and Git remotes — done
    2026-11-02 (Netlify Free preview, publish webhook live).
 6. Search/filter in category grids — done 2026-11-02 (search, year, county).
-7. Search Console/Analytics baseline, URL map, duplicate slugs
-   (`clopote-sihastria-rascai`, `manastirea-faget`), missing cover
-   `/img/works-cover/4.jpg`.
+7. Search Console baseline (no Analytics history exists), URL map from the
+   legacy routes, duplicate slug `manastirea-faget`, missing cover
+   `/img/works-cover/4.jpg`; analytics tool for the rebuilt site.
 
 ## Remaining prototype acceptance inputs
 
@@ -126,6 +126,13 @@ These items do not block completing the rest of Phase 0.
 ## Change log
 
 ### 2026-11-02
+
+- SEO baseline (step 7) revised: the user confirmed policandre.ro never had
+  analytics configured, so there is no Analytics baseline. Plan: the user
+  verifies a Search Console Domain property by DNS (historical search data
+  expected after verification); the URL map is drafted from the legacy routes
+  meanwhile; the rebuilt site gets analytics at cutover (cookieless tool
+  recommended, GA4 with consent only if Google Ads are planned).
 
 - Search and filters on the category grids (handoff step 6): a search field
   (title and place, ignoring diacritics: "iasi" finds Iași, "rosu" finds Roșu),
