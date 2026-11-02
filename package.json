@@ -11,7 +11,7 @@
     "test:migration": "tsx --test scripts/*.test.ts",
     "test:unit": "node --import tsx --test tests/*.test.ts",
     "test:browser": "playwright test",
-    "typecheck": "next typegen && tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit && tsc --noEmit -p tsconfig.scripts.json",
     "sanity:typegen": "npm --prefix ../studio-premiumbells run typegen",
     "migrate:assets": "tsx scripts/migrate-assets.ts",
     "migrate:content": "tsx scripts/migrate-content.ts",
