@@ -11,7 +11,8 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   mobile menu, footer. Portfolio: `/lucrarile-noastre` overview, category pages
   with sidebar and grid, project slide-over (intercepted route), full project
   pages, gallery with fullscreen lightbox, YouTube, rich text, specifications,
-  canonical/hreflang/Open Graph metadata, generated alt text. Services, blog and
+  canonical/hreflang/Open Graph metadata, generated alt text, URL-based search
+  and year/county filters on category grids. Services, blog and
   home content are placeholders. The whole site is noindex.
 - **Hosting** (2026-11-02): Netlify Free, project `premiumbells-preview`,
   <https://premiumbells-preview.netlify.app>, public visibility (the team-login
@@ -42,8 +43,8 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   webhook. Live since 2026-11-02: the Sanity webhook `Revalidare site` posts
   to the Netlify preview and a publish shows there within seconds. Settings are in `docs/architecture.md`; the secret is
   `SANITY_REVALIDATE_SECRET` in `.env.local`.
-- **Checks:** website lint, typecheck, build, 21 unit tests, 21 migration tests,
-  15 browser tests; Studio typecheck, lint, build, 8 unit tests.
+- **Checks:** website lint, typecheck, build, 27 unit tests, 21 migration tests,
+  23 browser tests (1 skipped); Studio typecheck, lint, build, 8 unit tests.
 
 ## Gotchas for the next session
 
@@ -62,7 +63,11 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   a production build needs the webhook or `npm run revalidate:test`.
 - Browser tests: run against a production build on another port (see the
   scratch config pattern used in the change log) so a running dev server is
-  not reused.
+  not reused. Playwright must resolve `@playwright/test` from the repo, so put
+  the scratch config in the ignored `test-results/`, not outside the repo.
+- Grid search/filters live in `lib/portfolio-filters.ts` over one cached list
+  of all cards; if a category grows past a few hundred works, move the filter
+  into GROQ.
 - The dataset is live and public. Export it (`npx sanity dataset export
   production .migration/backups/<name>.tar.gz --no-assets`) before any
   migration; migrations dry-run by default. Never put tokens in chat or code.
@@ -116,8 +121,11 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    webhook revalidates it on publish. Before launch: review Netlify credit use
    (Personal, ~USD 9, avoids the free-plan pause) and point the webhook at the
    production URL.
-6. **Search/filter in category grids** (Sonnet or Opus, Medium): URL-based
-   query, Romanian diacritic-insensitive.
+6. **Search/filter in category grids** (done 2026-11-02, not pushed yet):
+   `?cauta=&an=&judet=` next to `?pagina=`, diacritic-insensitive search over
+   title and place, year and county filters, one cached read per category
+   filtered on the server (see architecture). Data for the user: Zosin has no
+   county; "Lucrare de test" is still published in Clopote.
 7. **SEO baseline** (user): Search Console/Analytics exports to draft the
    old→new URL and redirect map; resolve duplicate slugs
    `clopote-sihastria-rascai`, `manastirea-faget` and the missing cover

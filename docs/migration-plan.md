@@ -110,7 +110,7 @@ Implementation:
 - [x] Build `/lucrarile-noastre/clopote/[project]` full page.
 - [x] Add parallel/intercepted modal route for soft navigation.
 - [x] Add accessible slide-over details and fullscreen lightbox.
-- [ ] Add URL-based search/filter behaviour (not started).
+- [x] Add URL-based search/filter behaviour (2026-11-02: search, year, county).
 - [x] Add project metadata and social sharing image rules.
 - [x] Verify keyboard, Back/Forward, refresh, direct URL, and mobile behaviour.
 - [ ] Measure initial grid and large-gallery performance.

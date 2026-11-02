@@ -2,8 +2,10 @@ import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import {Pagination} from '@/components/pagination';
 import {ProjectCard} from '@/components/portfolio/project-card';
+import {ProjectFilters} from '@/components/portfolio/project-filters';
 import {plural} from '@/lib/i18n/format';
 import {localizedHref} from '@/lib/i18n/routing';
+import {applyFilters, filterOptions, filtersHref, hasFilters, parseFilters} from '@/lib/portfolio-filters';
 import {languageAlternates, truncate} from '@/lib/seo';
 import {pageNumber, PROJECT_PAGE_SIZE} from '@/sanity/pagination';
 import {getCategoryProjects} from '@/sanity/portfolio';
@@ -28,40 +30,63 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 export default async function CategoryPage({params, searchParams}: Props) {
   const {lang: langParam, category: slug} = await params;
   const {lang, category, dictionary} = await resolveCategory(langParam, slug);
-  const page = pageNumber((await searchParams).pagina);
-  const projects = await getCategoryProjects(lang, category._id, page);
-  if (page > 1 && !projects.items.length) notFound();
+  const query = await searchParams;
+  // One cached read of every card; search, filters and pages are applied here.
+  const projects = await getCategoryProjects(lang, category._id);
+  const options = filterOptions(projects, dictionary.countries);
+  const filters = parseFilters(query, options);
+  const matches = applyFilters(projects, filters, dictionary.countries);
+  const page = pageNumber(query.pagina);
+  const items = matches.slice((page - 1) * PROJECT_PAGE_SIZE, page * PROJECT_PAGE_SIZE);
+  if (page > 1 && !items.length) notFound();
+  const basePath = localizedHref(lang, categoryPath(category.slug!));
+  const {filters: labels} = dictionary.portfolio;
+  const total = plural(lang, projects.length, dictionary.portfolio.projects);
+
+  const grid = items.length === 0 ? (
+    <p className="rounded-lg border border-line p-6">{hasFilters(filters) ? labels.noResults : dictionary.portfolio.empty}</p>
+  ) : (
+    <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
+      {items.map((project, index) => (
+        <ProjectCard
+          key={project._id}
+          project={project}
+          href={localizedHref(lang, projectPath(category.slug!, project.slug!))}
+          countries={dictionary.countries}
+          priority={index < 3}
+        />
+      ))}
+    </div>
+  );
 
   return (
     <>
       <header className="mb-10">
         <h1 className="font-display text-5xl font-semibold leading-tight text-teal-900 sm:text-6xl">{category.title}</h1>
-        <p className="mt-2 text-ink-soft">{plural(lang, projects.total, dictionary.portfolio.projects)}</p>
+        <p className="mt-2 text-ink-soft">{total}</p>
         {category.summary && <p className="mt-5 max-w-2xl whitespace-pre-line text-lg leading-relaxed">{category.summary}</p>}
       </header>
 
-      {projects.items.length === 0 ? (
-        <p className="rounded-lg border border-line p-6">{dictionary.portfolio.empty}</p>
-      ) : (
-        <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
-          {projects.items.map((project, index) => (
-            <ProjectCard
-              key={project._id}
-              project={project}
-              href={localizedHref(lang, projectPath(category.slug!, project.slug!))}
-              countries={dictionary.countries}
-              priority={index < 3}
-            />
-          ))}
-        </div>
+      {projects.length === 0 ? grid : (
+        <ProjectFilters
+          basePath={basePath}
+          filters={filters}
+          options={options}
+          labels={labels}
+          result={hasFilters(filters)
+            ? labels.results.replace('{count}', String(matches.length)).replace('{total}', total)
+            : null}
+        >
+          {grid}
+          <Pagination
+            page={page}
+            total={matches.length}
+            pageSize={PROJECT_PAGE_SIZE}
+            href={(target) => filtersHref(basePath, filters, target)}
+            labels={dictionary.pagination}
+          />
+        </ProjectFilters>
       )}
-      <Pagination
-        page={page}
-        total={projects.total}
-        pageSize={PROJECT_PAGE_SIZE}
-        basePath={localizedHref(lang, categoryPath(category.slug!))}
-        labels={dictionary.pagination}
-      />
     </>
   );
 }

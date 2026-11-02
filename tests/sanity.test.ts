@@ -66,12 +66,11 @@ test('a category slug from either language resolves, returning the current-langu
 });
 
 test('category projects exclude drafts, releases, and other categories; displayOrder first', async () => {
-  const result = await query(CATEGORY_PROJECTS_QUERY, {lang: 'ro', categoryId: 'clopote', start: 0, end: 24});
-  assert.equal(result.total, 2);
-  assert.deepEqual(result.items.map((item: {title: string}) => item.title), ['Lucrare bilingvă', 'Titlu publicat']);
-  assert.equal('gallery' in result.items[0], false);
-  const english = await query(CATEGORY_PROJECTS_QUERY, {lang: 'en', categoryId: 'clopote', start: 0, end: 24});
-  assert.deepEqual(english.items.map((item: {title: string}) => item.title), ['Bilingual work']);
+  const result = await query(CATEGORY_PROJECTS_QUERY, {lang: 'ro', categoryId: 'clopote'});
+  assert.deepEqual(result.map((item: {title: string}) => item.title), ['Lucrare bilingvă', 'Titlu publicat']);
+  assert.equal('gallery' in result[0], false);
+  const english = await query(CATEGORY_PROJECTS_QUERY, {lang: 'en', categoryId: 'clopote'});
+  assert.deepEqual(english.map((item: {title: string}) => item.title), ['Bilingual work']);
 });
 
 test('category projects: order number, then featured, then year (newest first, no year counts as newest)', async () => {
@@ -84,8 +83,8 @@ test('category projects: order number, then featured, then year (newest first, n
     work('pinned', {year: 2010, displayOrder: 1}),
     work('same-year-newer', {year: 2023, _createdAt: '2026-10-02T00:00:00Z'}),
   ];
-  const result = await query(CATEGORY_PROJECTS_QUERY, {lang: 'ro', categoryId: 'clopote', start: 0, end: 24}, dataset);
-  assert.deepEqual(result.items.map((item: {title: string}) => item.title), [
+  const result = await query(CATEGORY_PROJECTS_QUERY, {lang: 'ro', categoryId: 'clopote'}, dataset);
+  assert.deepEqual(result.map((item: {title: string}) => item.title), [
     'pinned', 'featured-2018', 'no-year', 'same-year-newer', 'recent-2023', 'older-2019',
   ]);
 });

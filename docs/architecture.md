@@ -1,7 +1,7 @@
 # Target Architecture
 
 **Status:** Accepted foundation  
-**Last updated:** 2026-10-24
+**Last updated:** 2026-11-02
 
 Product scope and open approval gates are defined in [the rebuild brief](rebuild-brief.md).
 
@@ -122,7 +122,7 @@ React `cache()` so a page and its metadata share one read. Tags
 | Works overview copy | `sanity:portfolioPage` |
 | Category list with project counts | `sanity:workCategory`, `sanity:project-counts` |
 | Category lookup by slug | `sanity:workCategory` |
-| Category grid | `sanity:category-projects:<categoryId>` |
+| Category grid (all cards, filtered on the server) | `sanity:category-projects:<categoryId>` |
 | Project page and slide-over | `sanity:project:<slug>` |
 
 Projects are tagged by slug, not ID, so publishing a new project also clears a
@@ -141,6 +141,36 @@ after a publish renders fresh content. Mapping:
 
 The revalidation is local to one server process (Next's default file/memory
 cache). Hosting with several instances needs a shared cache handler.
+
+#### Category search and filters (2026-11-02)
+
+The grid reads every card of a category once (`CATEGORY_PROJECTS_QUERY`,
+capped at 500, same tag) and the page searches, filters and paginates that
+list in `lib/portfolio-filters.ts`. Every search, filter and page URL is a
+cache hit: no Sanity request per keystroke and no cache entry per query
+string, which a GROQ filter would create for each distinct search. Folding
+diacritics in our own code (NFD, combining marks removed) is also tested and
+predictable, unlike GROQ `match`. One read is small (40 cards, tens of KB) and
+stays fine up to a few hundred cards; past that, filter in GROQ instead.
+
+- URL: `?cauta=iasi&an=2021&judet=botosani&pagina=2`, the same names under
+  `/en`. A year or county the category does not have is ignored; changing the
+  search or a filter returns to page 1; pagination links keep the filters.
+  The canonical URL stays the unfiltered category.
+- Search: every word must appear in the title, locality, county or country
+  name, ignoring case, diacritics (ș/ş, ț/ţ, ă, â, î) and punctuation; the
+  description is not searched (it mentions bells everywhere).
+- Filters: year, and county with all Republic of Moldova works as one option
+  (`moldova`; most have no raion). Options come from the category's own works,
+  with counts.
+- `ProjectFilters` (client) is a GET form that works without JavaScript. With
+  it, typing waits 350 ms; starting a search, picking a filter, Enter and
+  "Șterge filtrele" push a history entry, further typing replaces it. The field
+  follows the URL on Back/Forward. A pending typing navigation is dropped if a
+  project slide-over opened meanwhile. Cards keep the canonical project URL, so
+  the slide-over opens over the filtered grid and closing returns to it.
+- Each search renders the page on the server (one Netlify function request),
+  hence the typing delay.
 
 #### Publish webhook (create in sanity.io/manage once hosting exists)
 

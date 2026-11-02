@@ -8,7 +8,8 @@
   the query strings are interpolated, pass the generated `*_RESULT` type to
   `client.fetch<...>()` explicitly.
 - `types.ts`: generated from the standalone sibling Studio; do not edit by hand.
-- `pagination.ts`: bounded page input and page sizes.
+- `pagination.ts`: bounded page input and page sizes. Grid search and filters
+  are in `lib/portfolio-filters.ts`; the page applies them to one cached list.
 
 Run `npm run sanity:typegen` from this app after changing schemas or queries.
 The image component in `components/sanity-image.tsx` uses Sanity CDN transforms.

@@ -42,16 +42,16 @@ export const CATEGORY_QUERY = defineQuery(`
   }
 `);
 
+// Every card of a category in grid order, read once and cached; the page
+// searches, filters and paginates this list (lib/portfolio-filters.ts). The
+// slice is only a safety cap.
 export const CATEGORY_PROJECTS_QUERY = defineQuery(`
-  {
-    "total": count(*[${publicProject} && category._ref == $categoryId]),
-    "items": *[${publicProject} && category._ref == $categoryId]
-      | order(coalesce(displayOrder, 1000000) asc, coalesce(featured, false) desc, coalesce(year, 9999) desc, _createdAt desc, _id asc)[$start...$end]{
-        _id, "title": ${localized('title')}, "slug": slug.current, "summary": ${localized('summary')},
-        location, year, "displayDate": ${localized('displayDate')},
-        coverImage{${imageFields}}
-      }
-  }
+  *[${publicProject} && category._ref == $categoryId]
+    | order(coalesce(displayOrder, 1000000) asc, coalesce(featured, false) desc, coalesce(year, 9999) desc, _createdAt desc, _id asc)[0...500]{
+      _id, "title": ${localized('title')}, "slug": slug.current, "summary": ${localized('summary')},
+      location, year, "displayDate": ${localized('displayDate')},
+      coverImage{${imageFields}}
+    }
 `);
 
 export const PROJECT_QUERY = defineQuery(`

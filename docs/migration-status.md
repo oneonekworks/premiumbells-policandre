@@ -1,7 +1,7 @@
 # Migration Status
 
 **Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy importer built; all 39 Clopote works imported and published
-**Current phase:** Preview hosted on Netlify with the publish webhook live; next: search/filter — see [handoff](handoff.md)
+**Current phase:** Preview hosted on Netlify with the publish webhook live; category search and filters built; next: SEO baseline — see [handoff](handoff.md)
 **Last updated:** 2026-11-02
 
 ## Accepted decisions
@@ -78,7 +78,7 @@ sessions are in [the session handoff](handoff.md). In short:
    Sanity webhook is created with hosting.
 5. Hosting decision, a separate preview project, and Git remotes — done
    2026-11-02 (Netlify Free preview, publish webhook live).
-6. Search/filter in category grids.
+6. Search/filter in category grids — done 2026-11-02 (search, year, county).
 7. Search Console/Analytics baseline, URL map, duplicate slugs
    (`clopote-sihastria-rascai`, `manastirea-faget`), missing cover
    `/img/works-cover/4.jpg`.
@@ -126,6 +126,30 @@ These items do not block completing the rest of Phase 0.
 ## Change log
 
 ### 2026-11-02
+
+- Search and filters on the category grids (handoff step 6): a search field
+  (title and place, ignoring diacritics: "iasi" finds Iași, "rosu" finds Roșu),
+  a year filter and a county filter (Republic of Moldova as one option), all in
+  the query string next to `?pagina=` (`cauta`, `an`, `judet`), so filtered
+  views can be shared and Back/Forward works. The grid now reads every card of
+  the category once (same cache tag) and the page filters it on the server;
+  reasons in `docs/architecture.md` ("Category search and filters"). 24 cards
+  per page kept (the brief's 12 was out of date). Labels in Romanian and
+  English; Clopote is not published in English yet, so the English labels
+  were not seen in a browser.
+- Checked on a local production build (port 3100, scratch Playwright config
+  in the ignored `test-results/` extending `playwright.config.ts` with
+  `baseURL` `http://127.0.0.1:3100` and `npm run start -- --port 3100`):
+  lint, typecheck, build, 27 unit tests (6 new: diacritic folding, search,
+  options, filters, query parsing, URLs), 21 migration tests, 23 browser tests
+  passed, 1 skipped (8 new: search, filters with no-results and clear,
+  pagination with filters, slide-over from filtered results with
+  Back/Forward; desktop and mobile). The first run showed that typing from an
+  unfiltered grid replaced its history entry, so Back left the site; starting
+  a search now pushes one entry.
+- Data seen while planning, for the user: Zosin has no county (locality
+  Botoșani), so it is missing from the county filter; "Lucrare de test" is
+  still published in Clopote (no year).
 
 - Pushed both repositories to private GitHub remotes after checking they were
   empty and scanning the history for secrets: website
