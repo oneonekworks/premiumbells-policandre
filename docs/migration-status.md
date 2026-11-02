@@ -127,6 +127,18 @@ These items do not block completing the rest of Phase 0.
 
 ### 2026-11-02
 
+- The user verified the Search Console Domain property for policandre.ro
+  (data processing). Drafted [the legacy URL map](url-map.md) from the live
+  site, its three sitemaps and the legacy page files: every live path is kept
+  (the rebuild reuses them); 6 redirects (two sitemap typos, a wrong blog
+  link, a never-built iconostasis page, `/blog2`, `/_lucrarile-noastre`);
+  `/api/hello` and three never-built services stay 404; `#Policandru-N`
+  anchors to be kept by the catalogue. Old projects never had URLs, so the
+  duplicate `manastirea-faget` only needs three new slugs (proposed), and the
+  missing `/img/works-cover/4.jpg` belongs to three photo-less Orologii and
+  Sonorizări records (proposed: not imported). Redirects are implemented at
+  cutover, when their targets exist.
+
 - SEO baseline (step 7) revised: the user confirmed policandre.ro never had
   analytics configured, so there is no Analytics baseline. Plan: the user
   verifies a Search Console Domain property by DNS (historical search data

@@ -126,7 +126,7 @@ technical specifications may be retained.
   is `/blog/raport-18-ianuarie-2023`.
 
 All of these require an explicit keep, redirect, consolidate, or remove decision
-before cutover.
+before cutover; proposals are in [the URL map](url-map.md) (2026-11-02).
 
 ## Data quality findings
 

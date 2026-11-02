@@ -129,6 +129,11 @@ is cheaper than continuing a long conversation, and these docs carry the state.
 7. **SEO baseline** (revised 2026-11-02): policandre.ro has no analytics
    history (the legacy gtag code exists but was never configured), so there is
    no Analytics export. Instead:
+   - **Done 2026-11-02:** the user verified the Search Console Domain
+     property (data still processing); the URL map is drafted in
+     [url-map.md](url-map.md) (keep every live path; 6 redirects; duplicate
+     slug and missing cover resolved as proposals). Open: the user's review of
+     its proposals, then the Search Console exports.
    - **User:** verify a Search Console **Domain** property for `policandre.ro`
      with a DNS TXT record. Search data is collected regardless of sign-up,
      so a new property should show past data (expected up to ~16 months, not
