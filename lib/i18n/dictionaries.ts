@@ -14,7 +14,7 @@ const ro = {
   menu: {open: 'Deschide meniul', close: 'Închide meniul', title: 'Meniu'},
   contact: {call: 'Sunați-ne', email: 'Scrieți-ne', heading: 'Contact'},
   language: {label: 'Limba', ro: 'Română', en: 'English'},
-  countries: {RO: 'România', MD: 'Republica Moldova'},
+  countries: {RO: 'România', MD: 'Republica Moldova', ES: 'Spania'},
   portfolio: {
     categories: 'Categorii de lucrări',
     projects: ['lucrare', 'lucrări', 'de lucrări'],
@@ -100,7 +100,7 @@ const en: Dictionary = {
   menu: {open: 'Open menu', close: 'Close menu', title: 'Menu'},
   contact: {call: 'Call us', email: 'Email us', heading: 'Contact'},
   language: {label: 'Language', ro: 'Română', en: 'English'},
-  countries: {RO: 'Romania', MD: 'Moldova'},
+  countries: {RO: 'Romania', MD: 'Moldova', ES: 'Spain'},
   portfolio: {
     categories: 'Work categories',
     projects: ['project', 'projects', 'projects'],

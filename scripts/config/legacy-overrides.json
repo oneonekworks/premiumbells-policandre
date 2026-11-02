@@ -557,6 +557,223 @@
         }
       ],
       "note": "Approved by the user on 2026-10-30 (Clopote import proposal)."
+    },
+    "worksPolicandre:manastirea-faget#1": {
+      "title": "Parohia Dej III",
+      "slug": "parohia-dej-iii",
+      "location": {
+        "locality": "Dej",
+        "county": "Cluj",
+        "country": "RO"
+      },
+      "note": "Legacy page copy-pasted from Făget; slug decided 2026-11-02. Technical details are identical to Mănăstirea Făget: probably copied, review."
+    },
+    "worksPolicandre:manastirea-faget#2": {
+      "title": "Mănăstirea Lăpuș, Maramureș",
+      "slug": "manastirea-lapus",
+      "location": {
+        "locality": "Lăpuș",
+        "county": "Maramureș",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Număr de policandre",
+          "value": "2"
+        },
+        {
+          "label": "Nivele",
+          "value": "4 și 3"
+        },
+        {
+          "label": "Înălțime",
+          "value": "4800 și 3830",
+          "unit": "mm"
+        },
+        {
+          "label": "Lumini",
+          "value": "58 și 37"
+        }
+      ],
+      "note": "Legacy page copy-pasted from Făget; slug decided 2026-11-02. One legacy row described two gilded chandeliers; split by fact."
+    },
+    "worksPolicandre:manastirea-faget#3": {
+      "title": "Mănăstirea Făget, Brașov",
+      "slug": "manastirea-faget",
+      "location": {
+        "locality": "Boholț",
+        "county": "Brașov",
+        "country": "RO"
+      },
+      "note": "Legacy title held the address, tax code and abbess's name. Technical details are identical to Parohia Dej III: review."
+    },
+    "worksPolicandre:drobeta-turnu-severin": {
+      "title": "Policandru cu coroană regală, Catedrala Drobeta-Turnu Severin",
+      "location": {
+        "locality": "Drobeta-Turnu Severin",
+        "county": "Mehedinți",
+        "country": "RO"
+      },
+      "replaces": [
+        "cf837c5c-8871-4407-958e-a612456385a7"
+      ],
+      "note": "Replaces the hand-made \"Drobeta, Turnul Severin\" document by user decision on 2026-11-02 (same work, same specifications; legacy year 2021)."
+    },
+    "worksPolicandre:catedrala-invierea-domnului-turnu-severin": {
+      "title": "26 de policandre, Catedrala Învierea Domnului, Drobeta-Turnu Severin",
+      "location": {
+        "locality": "Drobeta-Turnu Severin",
+        "county": "Mehedinți",
+        "country": "RO"
+      }
+    },
+    "worksPolicandre:sugatag-maramures": {
+      "location": {
+        "locality": "Șugatag",
+        "county": "Maramureș",
+        "country": "RO"
+      }
+    },
+    "worksPolicandre:rohia": {
+      "title": "Mănăstirea Sf. Ana, Rohia",
+      "location": {
+        "locality": "Rohia",
+        "county": "Maramureș",
+        "country": "RO"
+      }
+    },
+    "worksPolicandre:magurele": {
+      "title": "Policandru aurit, Măgurele",
+      "location": {
+        "locality": "Măgurele",
+        "county": "Ilfov",
+        "country": "RO"
+      }
+    },
+    "worksPolicandre:resita-lunca": {
+      "title": "Reșița, Moroasa-Lunca",
+      "location": {
+        "locality": "Reșița",
+        "county": "Caraș-Severin",
+        "country": "RO"
+      }
+    },
+    "worksPolicandre:spania-lleida": {
+      "title": "Lleida, Spania",
+      "location": {
+        "locality": "Lleida",
+        "country": "ES"
+      },
+      "note": "Legacy country said România."
+    },
+    "worksPolicandre:blaj-berg": {
+      "location": {
+        "locality": "Blaj",
+        "county": "Alba",
+        "country": "RO"
+      }
+    },
+    "worksUsi:usi-cupru-drobeta-turnu-severin": {
+      "title": "Uși masive din cupru, Catedrala Învierea Domnului, Drobeta-Turnu Severin",
+      "location": {
+        "locality": "Drobeta-Turnu Severin",
+        "county": "Mehedinți",
+        "country": "RO"
+      },
+      "specifications": [
+        {
+          "label": "Lățime (ramă la ramă)",
+          "value": "226,5",
+          "unit": "cm"
+        },
+        {
+          "label": "Înălțime dreptunghiulară",
+          "value": "275",
+          "unit": "cm"
+        },
+        {
+          "label": "Înălțime arc",
+          "value": "115",
+          "unit": "cm"
+        },
+        {
+          "label": "Înălțime totală",
+          "value": "390",
+          "unit": "cm"
+        }
+      ]
+    },
+    "worksAutomatizari:clopote-sihastria-rascai": {
+      "skip": "Same work as worksClopote:clopote-sihastria-rascai, imported once under Clopote as sihastria-rascai (decided 2026-10-30)."
+    },
+    "worksAutomatizari:fratautii-vechi-1": {
+      "title": "Automatizare clopot de 700 kg, Frătăuții Vechi",
+      "slug": "fratautii-vechi-clopot-700-kg",
+      "location": {
+        "locality": "Frătăuții Vechi",
+        "county": "Suceava",
+        "country": "RO"
+      }
+    },
+    "worksAutomatizari:fratautii-vechi-2": {
+      "title": "Automatizări, Frătăuții Vechi, 6 clopote",
+      "slug": "fratautii-vechi-6-clopote",
+      "location": {
+        "locality": "Frătăuții Vechi",
+        "county": "Suceava",
+        "country": "RO"
+      }
+    },
+    "worksReconditionariPolicandre:reconditionare-policandre-constantin-elena-iasi": {
+      "location": {
+        "locality": "Iași",
+        "county": "Iași",
+        "country": "RO"
+      }
+    },
+    "worksReconditionariPolicandre:reconditionare-policandre-catedrala-turnu-magurele-teleorman": {
+      "title": "Catedrala Turnu Măgurele, Teleorman",
+      "location": {
+        "locality": "Turnu Măgurele",
+        "county": "Teleorman",
+        "country": "RO"
+      }
+    },
+    "worksReconditionariPolicandre:reconditionare-policandru-sfantul-alexandru-alexandria": {
+      "location": {
+        "locality": "Alexandria",
+        "county": "Teleorman",
+        "country": "RO"
+      }
+    },
+    "worksReconditionariPolicandre:parohia-ziua-crucii-iasi-policandre": {
+      "title": "Parohia Ziua Crucii, Iași",
+      "location": {
+        "locality": "Iași",
+        "county": "Iași",
+        "country": "RO"
+      }
+    },
+    "worksReconditionariPolicandre:reconditionare-clopot-coarnele-caprei": {
+      "location": {
+        "locality": "Coarnele Caprei",
+        "county": "Iași",
+        "country": "RO"
+      }
+    },
+    "worksReconditionariPolicandre:reconditionare-clopot-caransebes": {
+      "location": {
+        "locality": "Caransebeș",
+        "county": "Caraș-Severin",
+        "country": "RO"
+      }
+    },
+    "worksReconditionariPolicandre:reconditionare-clopot-dorobanti-bucuresti": {
+      "title": "Parohia Dorobanți, București",
+      "location": {
+        "locality": "București",
+        "country": "RO"
+      }
     }
   }
 }

@@ -99,10 +99,9 @@ out in the legacy pages). New project URLs need no redirects, and legacy
   Slugs when Policandre is imported (decided 2026-11-02): Raport poze, Parohia Dej III →
   `parohia-dej-iii`; Mănăstirea Lăpuș, Maramureș → `manastirea-lapus`;
   Mănăstirea Făget, Jud. Brașov → `manastirea-faget`.
-  The importer keys overrides and document IDs by the legacy `page`
-  (`projectKey`, `projectDocumentId` in `scripts/lib/legacy-portfolio.ts`),
-  so the three records collide today; the Policandre import (Phase 5) must
-  tell them apart first (e.g. by `_nr` or title) before these slugs apply.
+  The importer now tells them apart by occurrence in legacy order (keys
+  `manastirea-faget#1`–`#3`, IDs `legacy-policandre-manastirea-faget-1`–`-3`;
+  2026-11-02), and the overrides set these slugs.
 - `/img/works-cover/4.jpg` (missing) is a placeholder cover on the three
   records without photos or pages: Orologiu 2 M (Sf. Ioan cel Nou, Chișinău),
   Orologiu Manta Cahul, Sonorizări Reșița. Decided 2026-11-02: not imported

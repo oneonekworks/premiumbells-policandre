@@ -67,7 +67,7 @@ npm run test:migration
 
 Two commands import legacy portfolio records into Sanity. Both are dry runs
 unless `--write` is passed, select one collection (`--collection`, default
-`worksClopote`) and optionally records by legacy page or `_nr`
+`worksClopote`) and optionally records by legacy page, `page#n` or `_nr`
 (`--project a,b`), and write JSON and Markdown reports to
 `.migration/reports/`. They need the media manifest from
 `npm run inventory:legacy` and, for Sanity access, `SANITY_API_WRITE_TOKEN`
@@ -89,13 +89,19 @@ npm run migrate:content -- --project 2022-schitul_duca --write
   `.migration/checkpoints/assets.json`, so a stopped run resumes.
 - `migrate-content.ts` maps records with `lib/legacy-portfolio.ts` and writes
   them as drafts with deterministic IDs (`legacy-<category>-<legacy page>`),
-  oldest first. It blocks a record on a missing cover, an empty gallery,
+  oldest first. A page copy-pasted onto several records of one collection
+  (the three `manastirea-faget` Policandre works) is told apart by its
+  1-based occurrence in legacy order: key `<page>#2`, ID suffix `-2`. A dry
+  run of a collection whose category does not exist yet previews with a
+  placeholder category; `--write` needs the published category. It blocks a record on a missing cover, an empty gallery,
   unavailable photos, maintenance flags, or a slug used by another document;
   skips a project that is already published; and does not rewrite an
   unchanged draft. Romanian only, `publishedLanguages: ['ro']`, no prices.
 - `config/legacy-overrides.json` holds reviewed per-record decisions keyed by
-  `<collection>:<page>`: location, slug, split specifications, and existing
-  documents the import `replaces` (deleted when it is written).
+  `<collection>:<page>` (or `<page>#n`): a clean `title` (the legacy one goes
+  to the review notes), location, slug, split specifications, existing
+  documents the import `replaces` (deleted when it is written), and `skip`
+  with a reason for records not to import.
 
 Mapping rules: slug from the legacy page without the year prefix
 (`2022-schitul_duca` → `schitul-duca`); description lines → plain-text

@@ -32,10 +32,13 @@ export const COLLECTION_CATEGORIES: Record<string, string> = {
   worksUsi: "usi",
 };
 
-const COUNTRIES: Record<string, "RO" | "MD"> = {
+type Country = "RO" | "MD" | "ES";
+
+const COUNTRIES: Record<string, Country> = {
   romania: "RO",
   moldova: "MD",
   "republica moldova": "MD",
+  spania: "ES",
 };
 
 export interface LegacyWork {
@@ -60,8 +63,12 @@ export interface LegacyWork {
 }
 
 export interface ProjectOverride {
+  /** Reason the record is not imported (e.g. the same work imported from another collection). */
+  skip?: string;
+  /** Clean title; the legacy one stays in the review notes. */
+  title?: string;
   slug?: string;
-  location?: { locality: string; county?: string; country?: "RO" | "MD" };
+  location?: { locality: string; county?: string; country?: Country };
   specifications?: Array<{ label: string; value: string; unit?: string }>;
   summary?: string;
   /** Existing document IDs this import supersedes; deleted when it is written. */
@@ -151,6 +158,8 @@ export interface ProjectPlan {
 export interface MapContext {
   collection: string;
   index: number;
+  /** Set when the legacy page repeats within the collection; see projectKey. */
+  occurrence?: number;
   legacyRoot: string;
   categoryId: string;
   manifest: Map<string, ManifestAsset>;
@@ -177,15 +186,20 @@ export function indexManifest(manifest: LegacyMediaManifest): Map<string, Manife
   return new Map(manifest.assets.map((asset) => [asset.canonical, asset]));
 }
 
-export function projectKey(collection: string, work: LegacyWork): string {
-  return `${collection}:${work.page ?? `nr-${work._nr ?? "unknown"}`}`;
+// A legacy page copy-pasted onto several records of one collection (the three
+// `manastirea-faget` Policandre works) is told apart by its 1-based
+// occurrence in legacy order: key `page#2`, ID suffix `-2`. The legacy data is
+// frozen, so the order is stable; records with a unique page keep plain keys.
+
+export function projectKey(collection: string, work: LegacyWork, occurrence?: number): string {
+  return `${collection}:${work.page ?? `nr-${work._nr ?? "unknown"}`}${occurrence ? `#${occurrence}` : ""}`;
 }
 
 /** Deterministic document ID from the collection and legacy page (no dots: dotted IDs are private). */
-export function projectDocumentId(collection: string, work: LegacyWork): string {
+export function projectDocumentId(collection: string, work: LegacyWork, occurrence?: number): string {
   const category = COLLECTION_CATEGORIES[collection] ?? collection;
   const page = (work.page ?? `nr-${work._nr ?? "unknown"}`).replace(/[^A-Za-z0-9_-]+/g, "-");
-  return `legacy-${category}-${page}`;
+  return `legacy-${category}-${page}${occurrence ? `-${occurrence}` : ""}`;
 }
 
 /** `2022-schitul_duca` → `schitul-duca`: no year prefix, underscores, or diacritics. */
@@ -258,15 +272,17 @@ export function htmlToText(value: unknown): string {
 const isPlaceholder = (value: string) => /^[-–—]+$/.test(value);
 
 export function mapLegacyProject(work: LegacyWork, context: MapContext): ProjectPlan {
-  const { collection, override } = context;
-  const key = projectKey(collection, work);
+  const { collection, override, occurrence } = context;
+  const key = projectKey(collection, work, occurrence);
   const issues: MappingIssue[] = [];
   const review: string[] = [];
   const issue = (severity: IssueSeverity, code: string, message: string) =>
     issues.push({ severity, code, message });
 
-  const title = text(work.title);
+  const legacyTitle = text(work.title);
+  const title = override?.title ?? legacyTitle;
   if (!title) issue("error", "missing-title", "Legacy record has no title.");
+  if (override?.title && override.title !== legacyTitle) review.push(`Legacy title: "${legacyTitle}"`);
   if (work._isInMaintenance) issue("error", "maintenance", "Legacy record is marked as in maintenance; not imported by default.");
 
   const slug = override?.slug ?? slugFromPage(work.page ?? "");
@@ -391,7 +407,7 @@ export function mapLegacyProject(work: LegacyWork, context: MapContext): Project
   if (work.current) review.push("Legacy `current: true`; `featured` left false pending a decision.");
 
   const document: ProjectDocument = {
-    _id: projectDocumentId(collection, work),
+    _id: projectDocumentId(collection, work, occurrence),
     _type: "project",
     publishedLanguages: ["ro"],
     title: { _type: "localeString", ro: title },
@@ -438,20 +454,32 @@ function normalizeCountry(value: unknown): string {
   return text(value).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 }
 
-/** Selects records from one collection, by legacy page or `_nr`; all when no filter is given. */
+/**
+ * Selects records from one collection, by legacy page (all records sharing it),
+ * `page#n` (one of them) or `_nr`; all when no filter is given.
+ */
 export function selectWorks(
   portfolio: Record<string, LegacyWork[]>,
   collection: string,
   projects: string[],
-): Array<{ work: LegacyWork; index: number }> {
+): Array<{ work: LegacyWork; index: number; occurrence?: number }> {
   const works = portfolio[collection];
   if (!Array.isArray(works)) throw new Error(`Unknown legacy collection: ${collection}`);
-  const selected = works
-    .map((work, index) => ({ work, index }))
-    .filter(({ work }) => projects.length === 0 || projects.includes(work.page ?? "") || projects.includes(String(work._nr)));
-  const missing = projects.filter(
-    (project) => !selected.some(({ work }) => work.page === project || String(work._nr) === project),
-  );
+  const counts = new Map<string, number>();
+  for (const work of works) if (work.page) counts.set(work.page, (counts.get(work.page) ?? 0) + 1);
+  const seen = new Map<string, number>();
+  const all = Array.from(works, (work, index) => {
+    if (!work.page || counts.get(work.page)! < 2) return { work, index };
+    const occurrence = (seen.get(work.page) ?? 0) + 1;
+    seen.set(work.page, occurrence);
+    return { work, index, occurrence };
+  });
+  const matches = (record: (typeof all)[number], project: string) =>
+    record.work.page === project ||
+    (record.occurrence !== undefined && `${record.work.page}#${record.occurrence}` === project) ||
+    String(record.work._nr) === project;
+  const selected = all.filter((record) => projects.length === 0 || projects.some((project) => matches(record, project)));
+  const missing = projects.filter((project) => !selected.some((record) => matches(record, project)));
   if (missing.length) throw new Error(`No ${collection} record matches: ${missing.join(", ")}`);
   return selected;
 }

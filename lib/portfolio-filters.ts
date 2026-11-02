@@ -9,7 +9,7 @@ type SearchParams = Record<string, string | string[] | undefined>;
 export type Filterable = {
   title: string | null;
   year: number | null;
-  location: {locality?: string; county?: string; country?: 'MD' | 'RO'} | null;
+  location: {locality?: string; county?: string; country?: 'MD' | 'RO' | 'ES'} | null;
 };
 
 export type Filters = {query: string; year: number | null; county: string | null};

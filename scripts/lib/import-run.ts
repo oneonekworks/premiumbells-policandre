@@ -111,22 +111,31 @@ export function buildPlans(
   options: ImportOptions,
   categoryId: string,
   resolveAsset: (canonical: string) => string | undefined,
-): { plans: ProjectPlan[]; conflicts: MappingIssue[] } {
+): { plans: ProjectPlan[]; conflicts: MappingIssue[]; skipped: Array<{ key: string; reason: string }> } {
   const manifest = indexManifest(loadManifest(options.manifestFile));
   const overrides = loadOverrides();
   const portfolio = loadLegacyPortfolio(options.legacyRoot);
-  const plans = selectWorks(portfolio, options.collection, options.projects).map(({ work, index }) =>
-    mapLegacyProject(work, {
+  const skipped: Array<{ key: string; reason: string }> = [];
+  const plans = selectWorks(portfolio, options.collection, options.projects).flatMap(({ work, index, occurrence }) => {
+    const key = projectKey(options.collection, work, occurrence);
+    const override = overrides.projects[key];
+    if (override?.skip) {
+      skipped.push({ key, reason: override.skip });
+      return [];
+    }
+    return [mapLegacyProject(work, {
       collection: options.collection,
       index,
+      occurrence,
       legacyRoot: options.legacyRoot,
       categoryId,
       manifest,
-      override: overrides.projects[projectKey(options.collection, work)],
+      override,
       resolveAsset,
-    }),
-  );
-  return { plans, conflicts: findPlanConflicts(plans) };
+    })];
+  });
+  for (const { key, reason } of skipped) console.log(`Skipped ${key}: ${reason}`);
+  return { plans, conflicts: findPlanConflicts(plans), skipped };
 }
 
 export function writeReport(name: string, data: unknown, markdown: string): { json: string; md: string } {

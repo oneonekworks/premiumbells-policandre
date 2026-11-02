@@ -47,9 +47,11 @@ async function main() {
     '*[_type == "workCategory" && slug.ro.current == $slug && !(_id in path("drafts.**"))][0]._id',
     { slug: categorySlug },
   );
-  if (!categoryId) throw new Error(`No published workCategory with slug "${categorySlug}".`);
+  if (!categoryId && options.write) throw new Error(`No published workCategory with slug "${categorySlug}".`);
+  // A dry run can preview a collection before its category is created.
+  if (!categoryId) console.warn(`No published workCategory with slug "${categorySlug}" yet; previewing with a placeholder.`);
 
-  const { plans, conflicts } = buildPlans(options, categoryId, (canonical) => checkpoint[canonical]?.assetId);
+  const { plans, conflicts, skipped } = buildPlans(options, categoryId ?? `category-pending-${categorySlug}`, (canonical) => checkpoint[canonical]?.assetId);
   console.log(`${options.write ? "WRITE" : "DRY RUN"}: ${plans.length} projects from ${options.collection}.`);
 
   const results: ProjectResult[] = [];
@@ -59,8 +61,8 @@ async function main() {
   }
   results.reverse();
 
-  const markdown = renderReport(options.write, options.collection, results, conflicts);
-  const files = writeReport("content", { mode: options.write ? "write" : "dry-run", conflicts, results }, markdown);
+  const markdown = renderReport(options.write, options.collection, results, conflicts, skipped);
+  const files = writeReport("content", { mode: options.write ? "write" : "dry-run", conflicts, skipped, results }, markdown);
   console.log(markdown);
   console.log(`Report: ${files.md}`);
   if (results.some((result) => result.status === "failed" || result.status === "blocked")) process.exitCode = 1;
@@ -136,7 +138,13 @@ async function processPlan(
   }
 }
 
-function renderReport(write: boolean, collection: string, results: ProjectResult[], conflicts: MappingIssue[]): string {
+function renderReport(
+  write: boolean,
+  collection: string,
+  results: ProjectResult[],
+  conflicts: MappingIssue[],
+  skipped: Array<{ key: string; reason: string }>,
+): string {
   const lines = [
     `# Content import — ${write ? "write" : "dry-run"}`,
     "",
@@ -148,6 +156,7 @@ function renderReport(write: boolean, collection: string, results: ProjectResult
       `| ${result.key} | \`${result.id}\` | \`${result.slug}\` | ${result.photos} | ${result.videos} | ${result.specifications} | ${result.replaces.join(", ") || "—"} | **${result.status}** |`),
     "",
   ];
+  if (skipped.length) lines.push("## Skipped", "", ...skipped.map(({ key, reason }) => `- ${key}: ${reason}`), "");
   if (conflicts.length) lines.push("## Conflicts in the selection", "", ...conflicts.map((issue) => `- ${issue.message}`), "");
   for (const result of results) {
     const notes = [

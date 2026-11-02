@@ -181,3 +181,33 @@ test("finds the three representative Clopote records in the legacy data", () => 
   assert.equal(selected.length, 3);
   assert.throws(() => selectWorks(portfolio, "worksClopote", ["does-not-exist"]), /No worksClopote record/);
 });
+
+test("tells apart records that share a legacy page by their occurrence", () => {
+  const portfolio = loadLegacyPortfolio(legacyRoot);
+  const faget = selectWorks(portfolio, "worksPolicandre", ["manastirea-faget"]);
+  assert.deepEqual(faget.map(({ occurrence }) => occurrence), [1, 2, 3]);
+  assert.match(faget[1].work.title ?? "", /Lăpuș/);
+  assert.deepEqual(selectWorks(portfolio, "worksPolicandre", ["manastirea-faget#3"]).map(({ occurrence }) => occurrence), [3]);
+  assert.equal(selectWorks(portfolio, "worksPolicandre", ["rohia"])[0].occurrence, undefined);
+  assert.throws(() => selectWorks(portfolio, "worksPolicandre", ["manastirea-faget#4"]), /No worksPolicandre record/);
+
+  const plans = faget.map(({ work, index, occurrence }) =>
+    mapLegacyProject(work, context({ collection: "worksPolicandre", index, occurrence, override: { slug: `faget-${occurrence}` } })),
+  );
+  assert.deepEqual(plans.map((plan) => plan.document._id), [
+    "legacy-policandre-manastirea-faget-1",
+    "legacy-policandre-manastirea-faget-2",
+    "legacy-policandre-manastirea-faget-3",
+  ]);
+  assert.deepEqual(plans.map((plan) => plan.key), [1, 2, 3].map((n) => `worksPolicandre:manastirea-faget#${n}`));
+  assert.deepEqual(findPlanConflicts(plans), []);
+  // A unique page keeps its plain ID, so already imported Clopote IDs do not change.
+  assert.equal(projectDocumentId("worksClopote", { page: "2022-schitul_duca" }, undefined), "legacy-clopote-2022-schitul_duca");
+});
+
+test("an override title replaces the legacy one, which stays in the review notes", () => {
+  const plan = mapLegacyProject(work, context({ override: { title: "Parohia Ziua Crucii", location: { locality: "Iași", country: "RO" } } }));
+  assert.equal(plan.document.title.ro, "Parohia Ziua Crucii");
+  assert.equal(plan.document.videos?.[0].title.ro, "Parohia Ziua Crucii – video 1");
+  assert.ok(plan.review.includes('Legacy title: "Parohia Ziua Crucii, Iași"'));
+});

@@ -85,3 +85,10 @@ test('grid URLs keep the filters, leave out defaults and encode the search', () 
   const parsed = new URL(filtersHref(base, {query: 'a&b=c', year: null, county: null}), 'http://x').searchParams;
   assert.equal(parsed.get('cauta'), 'a&b=c');
 });
+
+test('a work abroad without a county is found by its country name and listed in no county', () => {
+  const abroad = [...projects, {title: 'Lleida', year: 2019, location: {locality: 'Lleida', country: 'ES' as const}}];
+  const withSpain = {...countries, ES: 'Spania'};
+  assert.deepEqual(titles(applyFilters(abroad, {...noFilters, query: 'spania'}, withSpain)), ['Lleida']);
+  assert.deepEqual(filterOptions(abroad, withSpain).counties, options.counties);
+});

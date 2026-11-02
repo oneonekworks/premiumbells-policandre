@@ -67,7 +67,7 @@ export type Project = {
   location?: {
     locality?: string;
     county?: string;
-    country?: "RO" | "MD";
+    country?: "RO" | "MD" | "ES";
   };
   year?: number;
   displayDate?: LocaleString;
@@ -440,7 +440,7 @@ export type CATEGORY_PROJECTS_QUERY_RESULT = Array<{
   location: {
     locality?: string;
     county?: string;
-    country?: "MD" | "RO";
+    country?: "ES" | "MD" | "RO";
   } | null;
   year: number | null;
   displayDate: string | null;
@@ -484,7 +484,7 @@ export type PROJECT_QUERY_RESULT = {
   location: {
     locality?: string;
     county?: string;
-    country?: "MD" | "RO";
+    country?: "ES" | "MD" | "RO";
   } | null;
   year: number | null;
   displayDate: string | null;

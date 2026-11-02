@@ -82,6 +82,8 @@ sessions are in [the session handoff](handoff.md). In short:
 7. Search Console baseline (no Analytics history exists; property verified
    2026-11-02, data processing); URL map accepted 2026-11-02
    ([url-map.md](url-map.md)); analytics tool for the rebuilt site.
+8. Phase 5 import of Policandre, Uși, Automatizări and Recondiționări —
+   dry runs done 2026-11-02, awaiting the user's review before writing.
 
 ## Remaining prototype acceptance inputs
 
@@ -127,6 +129,21 @@ These items do not block completing the rest of Phase 0.
 
 ### 2026-11-02
 
+- Phase 5 import prepared (plan approved by the user; nothing written to
+  Sanity content yet). Dataset exported to
+  `.migration/backups/production-2026-11-02-before-phase5.tar.gz`. Importer:
+  pages repeated within a collection are keyed by occurrence (`page#n`, ID
+  suffix `-n`), so the three `manastirea-faget` works get
+  `legacy-policandre-manastirea-faget-1`–`-3`; new `title` and `skip`
+  overrides; content dry runs work before a category exists. Spain (`ES`)
+  added to the Studio country list (deployed) and the website. Overrides for
+  all 21 records (locations from titles, clean titles, Lăpuș split by fact,
+  Uși dimensions, Sihăstria Rascăi skipped in Automatizări). The user decided
+  the legacy "Policandru cu coroană regală, Catedrala Drobeta" replaces the
+  hand-made "Drobeta, Turnul Severin" (nothing references it; 28 of its
+  photos are reused by fingerprint). Dry runs: 21 drafts, no errors or
+  conflicts; 904 photos, 876 to upload (≈400 MB prepared), 28 already in
+  Sanity, 0 failed. Migration tests 23, unit tests 28.
 - The user verified the Search Console Domain property for policandre.ro
   (data processing). Drafted [the legacy URL map](url-map.md) from the live
   site, its three sitemaps and the legacy page files: every live path is kept

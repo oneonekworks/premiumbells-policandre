@@ -43,7 +43,7 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   webhook. Live since 2026-11-02: the Sanity webhook `Revalidare site` posts
   to the Netlify preview and a publish shows there within seconds. Settings are in `docs/architecture.md`; the secret is
   `SANITY_REVALIDATE_SECRET` in `.env.local`.
-- **Checks:** website lint, typecheck, build, 27 unit tests, 21 migration tests,
+- **Checks:** website lint, typecheck, build, 28 unit tests, 23 migration tests,
   23 browser tests (1 skipped); Studio typecheck, lint, build, 8 unit tests.
 
 ## Gotchas for the next session
@@ -147,7 +147,25 @@ is cheaper than continuing a long conversation, and these docs carry the state.
      Analytics or Umami; no cookie banner, fits the budget) unless Google Ads
      are planned, in which case GA4 with a consent banner and Consent Mode.
      Check current prices first; install at the policandre.ro cutover.
-8. **Parked:** Studio tab/Publish styling — see [backlog](backlog.md).
+8. **Phase 5 import of the other categories** (in progress 2026-11-02; plan
+   approved by the user): Policandre 11, Uși 1, Automatizări 2 (Sihăstria
+   Rascăi skipped), Recondiționări 7; Orologii and Sonorizări not imported
+   (no photos). Done: dataset export
+   (`production-2026-11-02-before-phase5.tar.gz`), importer keys repeated
+   pages by occurrence, `title`/`skip` overrides, Spain (`ES`) in the Studio
+   (deployed) and website, overrides for all 21 records, full dry runs.
+   The hand-made "Drobeta, Turnul Severin" is replaced by the legacy record
+   (user decision 2026-11-02). Next, after the user reviews the dry-run
+   report: `migrate:assets --write` per collection; create the categories Uși
+   (`usi`), Automatizări (`automatizari`), Recondiționări
+   (`reconditionari-policandre`) with a cover from their works, menu order
+   Policandre 10, Recondiționări 20, Clopote 30, Uși 40, Automatizări 50;
+   `migrate:content --write` (drafts); Studio validation; publish at the
+   user's request; check grids and filters; measure Rohia (201 photos) and
+   Uși (176) on a production build. Flag for the user: Dej III and Făget
+   have identical technical details (Dej III's legacy brief says two
+   chandeliers of 4 and 2 levels).
+9. **Parked:** Studio tab/Publish styling — see [backlog](backlog.md).
 
 ## Kickoff prompt
 
