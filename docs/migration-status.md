@@ -1,7 +1,7 @@
 # Migration Status
 
 **Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy importer built; all 39 Clopote works imported and published
-**Current phase:** Preview hosted on Netlify; next: create the Sanity webhook, then search/filter — see [handoff](handoff.md)
+**Current phase:** Preview hosted on Netlify with the publish webhook live; next: search/filter — see [handoff](handoff.md)
 **Last updated:** 2026-11-02
 
 ## Accepted decisions
@@ -77,7 +77,7 @@ sessions are in [the session handoff](handoff.md). In short:
 4. Tag-based caching and a signed publish webhook — done 2026-10-31; the
    Sanity webhook is created with hosting.
 5. Hosting decision, a separate preview project, and Git remotes — done
-   2026-11-02 (Netlify Free preview); the Sanity webhook is still to create.
+   2026-11-02 (Netlify Free preview, publish webhook live).
 6. Search/filter in category grids.
 7. Search Console/Analytics baseline, URL map, duplicate slugs
    (`clopote-sihastria-rascai`, `manastirea-faget`), missing cover
@@ -146,6 +146,10 @@ These items do not block completing the rest of Phase 0.
   after a `workCategory` request Netlify re-rendered the overview from Next and
   then served it from its durable cache again. Responses start in ~0.5 s from
   here, including static files, so it is network latency, not rendering.
+- The user created the Sanity webhook `Revalidare site`. End-to-end check:
+  with Parohia Versești, Neamț cached at 12:34:45 UTC, the user published a
+  summary edit at 12:35:54; at 12:36:46 the hosted project page and the
+  Clopote grid both showed the new text, ahead of the hourly backup refresh.
 
 ### 2026-10-31
 

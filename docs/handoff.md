@@ -39,8 +39,8 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   Sanity (decided 2026-10-30); GCS stays the archive.
 - **Data delivery** (2026-10-31): published reads are tag-cached (hourly backup
   refresh) and `POST /api/revalidate` revalidates tags from a signed Sanity
-  webhook. The route works on Netlify (signed test accepted, unsigned 401);
-  the Sanity webhook itself is not created yet. Settings are in `docs/architecture.md`; the secret is
+  webhook. Live since 2026-11-02: the Sanity webhook `Revalidare site` posts
+  to the Netlify preview and a publish shows there within seconds. Settings are in `docs/architecture.md`; the secret is
   `SANITY_REVALIDATE_SECRET` in `.env.local`.
 - **Checks:** website lint, typecheck, build, 21 unit tests, 21 migration tests,
   15 browser tests; Studio typecheck, lint, build, 8 unit tests.
@@ -111,13 +111,11 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    a signed revalidation route, verified locally against a production build
    with `npm run revalidate:test`. Draft Mode preview is designed (see
    architecture) but not built.
-5. **Hosting and preview** (done 2026-11-02 except the webhook): Netlify Free
-   preview, Git remotes, 15 browser tests pass against the hosted site.
-   Remaining: the user creates the Sanity webhook (settings in
-   `docs/architecture.md`, URL
-   `https://premiumbells-preview.netlify.app/api/revalidate`), then publish an
-   edit and check the hosted page updates within seconds. Review Netlify
-   credit use before launch (Personal, ~USD 9, avoids the free-plan pause).
+5. **Hosting and preview** (done 2026-11-02): Netlify Free preview, Git
+   remotes, 15 browser tests pass against the hosted site, and the Sanity
+   webhook revalidates it on publish. Before launch: review Netlify credit use
+   (Personal, ~USD 9, avoids the free-plan pause) and point the webhook at the
+   production URL.
 6. **Search/filter in category grids** (Sonnet or Opus, Medium): URL-based
    query, Romanian diacritic-insensitive.
 7. **SEO baseline** (user): Search Console/Analytics exports to draft the
