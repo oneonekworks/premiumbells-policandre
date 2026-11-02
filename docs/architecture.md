@@ -178,8 +178,11 @@ Presentation configured in the Studio.
 
 ### Hosting
 
-- Hosting is unresolved against the approximately USD 20/month total operating
-  budget. Compare suitable commercial plans before provisioning.
+- Preview hosting (2026-11-02): Netlify Free, which allows commercial use but
+  pauses the site when the 300 monthly credits run out; review usage before
+  launch and move to Personal (~USD 9) if needed. Netlify's Next.js adapter
+  supports tag revalidation natively (its durable cache honours
+  `revalidateTag`). The final production plan is still a Phase 8 decision.
 - Hosting remains replaceable: Sanity access must not use Vercel-only data APIs.
 - The Vercel Hobby plan is technically compatible but is currently limited by
   Vercel to non-commercial use. Hosting-plan compliance is an operational

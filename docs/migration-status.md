@@ -1,8 +1,8 @@
 # Migration Status
 
 **Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy importer built; all 39 Clopote works imported and published
-**Current phase:** Data delivery done locally (webhook goes live with hosting); next: hosting — see [handoff](handoff.md)
-**Last updated:** 2026-10-31
+**Current phase:** Preview hosted on Netlify; next: create the Sanity webhook, then search/filter — see [handoff](handoff.md)
+**Last updated:** 2026-11-02
 
 ## Accepted decisions
 
@@ -76,7 +76,8 @@ sessions are in [the session handoff](handoff.md). In short:
    published 2026-10-30; large-gallery performance measured.
 4. Tag-based caching and a signed publish webhook — done 2026-10-31; the
    Sanity webhook is created with hosting.
-5. Hosting decision, a separate preview project, and Git remotes.
+5. Hosting decision, a separate preview project, and Git remotes — done
+   2026-11-02 (Netlify Free preview); the Sanity webhook is still to create.
 6. Search/filter in category grids.
 7. Search Console/Analytics baseline, URL map, duplicate slugs
    (`clopote-sihastria-rascai`, `manastirea-faget`), missing cover
@@ -112,15 +113,39 @@ These items do not block completing the rest of Phase 0.
   `data/catalog.json`; it was not written by this migration task and remains
   untouched. The legacy repository is read-only for this work.
 - `rbells_policandre` is a Git repository; the prototype is committed on branch
-  `prototype/mobile-publishing`. No remote is set yet.
+  `prototype/mobile-publishing`, pushed to the private
+  `oneonekworks/premiumbells-policandre` (2026-11-02).
 - Sanity frontend dependencies, typed queries, and temporary noindex prototype
   routes are now installed. Schema ownership is in `../studio-premiumbells`.
 - `../studio-premiumbells` is a separate Git repository on `main` with an
-  initial commit. No remote is set yet.
+  initial commit, pushed to the private `oneonekworks/studio-prembells`
+  (2026-11-02).
 - As of 2026-10-24 the default Turbopack production build passes; the earlier
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-02
+
+- Pushed both repositories to private GitHub remotes after checking they were
+  empty and scanning the history for secrets: website
+  `oneonekworks/premiumbells-policandre` (`main`, `prototype/mobile-publishing`),
+  Studio `oneonekworks/studio-prembells` (`main`).
+- Hosted the preview on Netlify Free (`premiumbells-preview.netlify.app`). The
+  first build failed: `next build` type-checked `scripts/`, which imports the
+  Studio's image rules from the sibling repository. `scripts/` is now excluded
+  from `tsconfig.json` and checked through `tsconfig.scripts.json`; a clean
+  clone without the Studio builds.
+- The team-login visitor protection also blocked `/api/revalidate`, so the
+  project visibility is public (pages stay noindex). The secret first returned
+  "not configured" until it had the Functions scope and the project was
+  redeployed.
+- Checked on the hosted site: pages, English routes, 308 from `/ro/…`, 404s,
+  noindex and canonical metadata; 15 browser tests passed (1 skipped).
+  `npm run revalidate:test` was accepted (200) and an unsigned request got 401;
+  after a `workCategory` request Netlify re-rendered the overview from Next and
+  then served it from its durable cache again. Responses start in ~0.5 s from
+  here, including static files, so it is network latency, not rendering.
 
 ### 2026-10-31
 

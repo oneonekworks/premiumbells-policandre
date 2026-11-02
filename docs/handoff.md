@@ -1,19 +1,28 @@
 # Session handoff
 
-**Updated:** 2026-10-31 · Start a new session with the kickoff prompt below; it
+**Updated:** 2026-11-02 · Start a new session with the kickoff prompt below; it
 is cheaper than continuing a long conversation, and these docs carry the state.
 
 ## Where we are
 
-- **Website** (`rbells_policandre`, branch `prototype/mobile-publishing`, no
-  remote yet): Next.js 16.4.3, Tailwind 4, bilingual shell (Romanian
+- **Website** (`rbells_policandre`, branch `prototype/mobile-publishing`,
+  remote `oneonekworks/premiumbells-policandre`, private): Next.js 16.4.3, Tailwind 4, bilingual shell (Romanian
   unprefixed, English under `/en` via `proxy.ts`), design tokens, header,
   mobile menu, footer. Portfolio: `/lucrarile-noastre` overview, category pages
   with sidebar and grid, project slide-over (intercepted route), full project
   pages, gallery with fullscreen lightbox, YouTube, rich text, specifications,
   canonical/hreflang/Open Graph metadata, generated alt text. Services, blog and
-  home content are placeholders. Runs locally only; the whole site is noindex.
-- **Studio** (`../studio-premiumbells`, branch `main`, no remote yet): Sanity
+  home content are placeholders. The whole site is noindex.
+- **Hosting** (2026-11-02): Netlify Free, project `premiumbells-preview`,
+  <https://premiumbells-preview.netlify.app>, public visibility (the team-login
+  wall also blocks the webhook), deploys on push to `prototype/mobile-publishing`;
+  branch deploys and deploy previews off to save the 300 monthly credits.
+  Env: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`,
+  `NEXT_PUBLIC_SITE_URL=https://www.policandre.ro`, `NODE_VERSION=22`,
+  `SANITY_REVALIDATE_SECRET` (Production context, Functions scope). No custom
+  domain; policandre.ro stays on the old site until cutover.
+- **Studio** (`../studio-premiumbells`, branch `main`, remote
+  `oneonekworks/studio-prembells`, private): Sanity
   6.20 deployed at <https://premiumbells.sanity.studio>. Romanian/English locale
   fields with a "Publicat în" gate, language filter, optimised multi-photo
   upload (≤3200px kept losslessly, larger shrunk, 1.5 MB cap, metadata
@@ -30,8 +39,8 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   Sanity (decided 2026-10-30); GCS stays the archive.
 - **Data delivery** (2026-10-31): published reads are tag-cached (hourly backup
   refresh) and `POST /api/revalidate` revalidates tags from a signed Sanity
-  webhook. The webhook itself is not created yet: it needs the hosted URL
-  (step 5). Settings are in `docs/architecture.md`; the secret is
+  webhook. The route works on Netlify (signed test accepted, unsigned 401);
+  the Sanity webhook itself is not created yet. Settings are in `docs/architecture.md`; the secret is
   `SANITY_REVALIDATE_SECRET` in `.env.local`.
 - **Checks:** website lint, typecheck, build, 21 unit tests, 21 migration tests,
   15 browser tests; Studio typecheck, lint, build, 8 unit tests.
@@ -58,8 +67,13 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   production .migration/backups/<name>.tar.gz --no-assets`) before any
   migration; migrations dry-run by default. Never put tokens in chat or code.
 - Studio changes need `npx sanity deploy -y` from `../studio-premiumbells`.
-- Commit on the current branches; do not push or deploy the website without
-  the user's go-ahead.
+- Commit on the current branches; do not push without the user's go-ahead:
+  a push to `prototype/mobile-publishing` deploys to Netlify and uses credits.
+- The website build type-checks only the app; `scripts/` (which imports from
+  the sibling Studio) is checked by `tsconfig.scripts.json` in
+  `npm run typecheck`. Do not import the Studio from app code.
+- Netlify applies env var changes only to new deploys, and server secrets need
+  the Functions scope.
 - Import IDs must not contain dots (dotted IDs are private). Imports write
   drafts and skip already-published projects; re-runs reuse
   `.migration/checkpoints/assets.json`. The write token lives only in
@@ -97,13 +111,13 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    a signed revalidation route, verified locally against a production build
    with `npm run revalidate:test`. Draft Mode preview is designed (see
    architecture) but not built.
-5. **Hosting and preview** (user decision + Opus, Medium): choose hosting
-   within the ~USD 20/month budget; create a *separate* Vercel (or other)
-   project — never the live policandre.ro project; connect Git remotes. Then
-   set `SANITY_REVALIDATE_SECRET` in the host's env, create the Sanity webhook
-   (settings in `docs/architecture.md`) and check a publish refreshes the
-   site. Single-instance hosting keeps Next's default cache; several instances
-   need a shared cache handler.
+5. **Hosting and preview** (done 2026-11-02 except the webhook): Netlify Free
+   preview, Git remotes, 15 browser tests pass against the hosted site.
+   Remaining: the user creates the Sanity webhook (settings in
+   `docs/architecture.md`, URL
+   `https://premiumbells-preview.netlify.app/api/revalidate`), then publish an
+   edit and check the hosted page updates within seconds. Review Netlify
+   credit use before launch (Personal, ~USD 9, avoids the free-plan pause).
 6. **Search/filter in category grids** (Sonnet or Opus, Medium): URL-based
    query, Romanian diacritic-insensitive.
 7. **SEO baseline** (user): Search Console/Analytics exports to draft the
