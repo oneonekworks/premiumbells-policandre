@@ -132,8 +132,8 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    - **Done 2026-11-02:** the user verified the Search Console Domain
      property (data still processing); the URL map is drafted in
      [url-map.md](url-map.md) (keep every live path; 6 redirects; duplicate
-     slug and missing cover resolved as proposals). Open: the user's review of
-     its proposals, then the Search Console exports.
+     slug and missing cover resolved; all proposals accepted by the user). Open:
+     the Search Console exports once the data is processed.
    - **User:** verify a Search Console **Domain** property for `policandre.ro`
      with a DNS TXT record. Search data is collected regardless of sign-up,
      so a new property should show past data (expected up to ~16 months, not
@@ -142,8 +142,6 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    - **Agent:** draft the old→new URL and redirect map from the legacy routes
      (`docs/source-inventory.md`) without waiting; Search Console data, when
      available, ranks which URLs to verify first.
-   - Resolve the duplicate slug `manastirea-faget` and the missing cover
-     `/img/works-cover/4.jpg` (`clopote-sihastria-rascai` is decided).
    - Analytics for the rebuilt site is a launch decision (architecture,
      deferred decisions): recommended a cookieless tool (e.g. Cloudflare Web
      Analytics or Umami; no cookie banner, fits the budget) unless Google Ads

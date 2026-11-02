@@ -79,9 +79,9 @@ sessions are in [the session handoff](handoff.md). In short:
 5. Hosting decision, a separate preview project, and Git remotes — done
    2026-11-02 (Netlify Free preview, publish webhook live).
 6. Search/filter in category grids — done 2026-11-02 (search, year, county).
-7. Search Console baseline (no Analytics history exists), URL map from the
-   legacy routes, duplicate slug `manastirea-faget`, missing cover
-   `/img/works-cover/4.jpg`; analytics tool for the rebuilt site.
+7. Search Console baseline (no Analytics history exists; property verified
+   2026-11-02, data processing); URL map accepted 2026-11-02
+   ([url-map.md](url-map.md)); analytics tool for the rebuilt site.
 
 ## Remaining prototype acceptance inputs
 
@@ -136,8 +136,10 @@ These items do not block completing the rest of Phase 0.
   anchors to be kept by the catalogue. Old projects never had URLs, so the
   duplicate `manastirea-faget` only needs three new slugs (proposed), and the
   missing `/img/works-cover/4.jpg` belongs to three photo-less Orologii and
-  Sonorizări records (proposed: not imported). Redirects are implemented at
-  cutover, when their targets exist.
+  Sonorizări records (not imported). The user accepted all proposals
+  (including `lemn-bronz` → `/servicii/iconostase` and a new
+  `/servicii/clopote` hub). Redirects are implemented at cutover, when their
+  targets exist.
 
 - SEO baseline (step 7) revised: the user confirmed policandre.ro never had
   analytics configured, so there is no Analytics baseline. Plan: the user

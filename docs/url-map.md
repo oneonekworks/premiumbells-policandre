@@ -1,6 +1,6 @@
 # Legacy URL Map
 
-**Status:** Draft for review (2026-11-02) · Search Console data pending
+**Status:** Accepted by the user (2026-11-02) · Search Console data pending
 **Source:** live `https://www.policandre.ro` (checked 2026-11-02), its
 sitemaps (`categories.xml`, `products.xml`, `blog-posts.xml`, listed in
 `robots.txt`; `/sitemap.xml` is 404), and the `../rbells-tw` page files.
@@ -42,7 +42,7 @@ Live = HTTP status on 2026-11-02. Sitemap = listed in a legacy sitemap
 | `/servicii/policandre` | 200 | yes | same | keep | services not built |
 | `/servicii/policandre-la-comanda` | 200 | yes | same | keep | services not built |
 | `/servicii/reconditionare-policandre` | 200 | yes | same | keep | services not built |
-| `/servicii/clopote` | 404 | — | `/servicii/clopote` | decide | parent of the two bell pages; new hub page or keep 404 |
+| `/servicii/clopote` | 404 | — | `/servicii/clopote` | new page | hub for the two bell services (decided 2026-11-02) |
 | `/servicii/clopote/cu-jug` | 200 | yes | same | keep | services not built (nested) |
 | `/servicii/clopote/fara-balans` | 200 | yes | same | keep | services not built (nested) |
 | `/servicii/automatizari-clopote-cu-balans` | 200 | — | same | keep | services not built |
@@ -66,7 +66,7 @@ Live = HTTP status on 2026-11-02. Sitemap = listed in a legacy sitemap
 | `/servicii/servicii/iconostase` | 404 | typo in `categories.xml` | `/servicii/iconostase` |
 | `/servicii/servicii/usi` | 404 | typo in `categories.xml` | `/servicii/usi` |
 | `/blog/raport-18-ianuarie-23` | 404 | wrong link in legacy blog data | `/blog/raport-18-ianuarie-2023` |
-| `/servicii/iconostase/lemn-bronz` | 404 | linked from service records, page never existed | `/servicii/iconostase` (proposed) |
+| `/servicii/iconostase/lemn-bronz` | 404 | linked from service records, page never existed | `/servicii/iconostase` |
 | `/blog2` | 200 | experimental duplicate of the blog | `/blog` |
 | `/_lucrarile-noastre` | 200 | template page with placeholder menus | `/lucrarile-noastre` |
 
@@ -96,13 +96,17 @@ out in the legacy pages). New project URLs need no redirects, and legacy
 - `clopote-sihastria-rascai`: decided 2026-10-30, imported once as
   `sihastria-rascai` under Clopote; the Automatizări copy is skipped.
 - `manastirea-faget` is copy-pasted on three different Policandre works.
-  Proposed slugs when Policandre is imported: Raport poze, Parohia Dej III →
+  Slugs when Policandre is imported (decided 2026-11-02): Raport poze, Parohia Dej III →
   `parohia-dej-iii`; Mănăstirea Lăpuș, Maramureș → `manastirea-lapus`;
   Mănăstirea Făget, Jud. Brașov → `manastirea-faget`.
+  The importer keys overrides and document IDs by the legacy `page`
+  (`projectKey`, `projectDocumentId` in `scripts/lib/legacy-portfolio.ts`),
+  so the three records collide today; the Policandre import (Phase 5) must
+  tell them apart first (e.g. by `_nr` or title) before these slugs apply.
 - `/img/works-cover/4.jpg` (missing) is a placeholder cover on the three
   records without photos or pages: Orologiu 2 M (Sf. Ioan cel Nou, Chișinău),
-  Orologiu Manta Cahul, Sonorizări Reșița. Proposed: do not import them until
-  real photos exist (a project needs a cover and a gallery).
+  Orologiu Manta Cahul, Sonorizări Reșița. Decided 2026-11-02: not imported
+  until real photos exist (a project needs a cover and a gallery).
 
 ## Images and files
 
