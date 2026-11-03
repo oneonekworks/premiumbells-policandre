@@ -86,7 +86,8 @@ sessions are in [the session handoff](handoff.md). In short:
    imported and published 2026-11-02; large galleries measured; Phase 5
    closed 2026-11-03.
 9. Phase 6 — services and catalogue: plan accepted 2026-11-03
-   ([phase6-services-plan.md](phase6-services-plan.md)); implementation next.
+   ([phase6-services-plan.md](phase6-services-plan.md)); step 2 (price-text
+   detector) done 2026-11-03; next: step 3, the Studio schema.
 
 ## Remaining prototype acceptance inputs
 
@@ -132,6 +133,16 @@ These items do not block completing the rest of Phase 0.
 
 ### 2026-11-03
 
+- Phase 6 step 2: price-text detector in the Studio (`lib/priceText.ts`) and a
+  copy for the importer (`scripts/lib/price-text.ts`). Errors (block
+  publishing): `€`, euro/EUR, uppercase RON, TVA, an amount next to a currency,
+  "costă <număr>". Warnings: preț/prețuri, negociabil, la estimare, a bare
+  "lei", and a dotted thousands number without a unit ("13.112"). 33 shared
+  fixtures in `studio-premiumbells/lib/priceText.fixtures.json` (door 1 and 4,
+  pristol, bell line, no hits on "160 kg", "1,6 m", "nr. 18", "1.100 kg",
+  reference codes, dates); `scripts/price-text.test.ts` runs them on both
+  copies and checks the rule lists are identical. ESLint now ignores the
+  git-ignored `test-results/` scratch folder.
 - Phase 6 plan accepted by the user with the recommended defaults:
   [phase6-services-plan.md](phase6-services-plan.md) (legacy services and
   catalogue research, schema, routes, import mapping, price safeguards,

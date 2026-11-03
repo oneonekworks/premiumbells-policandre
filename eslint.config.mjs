@@ -13,6 +13,8 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "sanity/types.ts",
+    // Scratch Playwright configs and measurements (git-ignored).
+    "test-results/**",
   ]),
 ]);
 
