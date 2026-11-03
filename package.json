@@ -15,7 +15,8 @@
     "sanity:typegen": "npm --prefix ../studio-premiumbells run typegen",
     "migrate:assets": "tsx scripts/migrate-assets.ts",
     "migrate:content": "tsx scripts/migrate-content.ts",
-    "revalidate:test": "tsx scripts/send-revalidate-webhook.ts"
+    "revalidate:test": "tsx scripts/send-revalidate-webhook.ts",
+    "services:test-docs": "tsx scripts/service-test-documents.ts"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",

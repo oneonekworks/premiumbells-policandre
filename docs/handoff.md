@@ -45,8 +45,8 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   webhook. Live since 2026-11-02: the Sanity webhook `Revalidare site` posts
   to the Netlify preview and a publish shows there within seconds. Settings are in `docs/architecture.md`; the secret is
   `SANITY_REVALIDATE_SECRET` in `.env.local`.
-- **Checks:** website lint, typecheck, build, 36 unit tests, 26 migration tests,
-  23 browser tests (1 skipped); Studio typecheck, lint, build, 19 unit tests.
+- **Checks:** website lint, typecheck, build, 39 unit tests, 26 migration tests,
+  browser 29 passed and 17 skipped (16 wait for the Phase 6 test documents); Studio typecheck, lint, build, 19 unit tests.
 
 ## Gotchas for the next session
 
@@ -168,11 +168,14 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    have identical technical details (Dej III's legacy brief says two
    chandeliers of 4 and 2 levels).
 9. **Phase 6 — services and catalogue** (plan accepted 2026-11-03; step 2,
-   the price-text detector, step 3, the Studio schema, and step 4, the website
-   data layer, done 2026-11-03; the schema is not deployed yet): follow the steps and decisions in
+   steps 2–5 done 2026-11-03: price detector, Studio schema (not deployed),
+   data layer, routes and components): follow the steps and decisions in
    [phase6-services-plan.md](phase6-services-plan.md). Waiting on the user:
-   `npx sanity deploy -y`, the phone check of a test service and item, and
-   the webhook filter/projection change (architecture, "Publish webhook"). The user changes the
+   `npx sanity deploy -y`, the phone check of a test service and item, the
+   webhook filter/projection change (architecture, "Publish webhook"), and a
+   go-ahead to write the test documents (`npm run services:test-docs --
+   --write` after an export) so the 16 skipped service browser tests run;
+   then step 6 (importer). The user changes the
    webhook filter/projection and checks the Studio on the phone.
 10. **Parked:** Studio tab/Publish styling — see [backlog](backlog.md).
 

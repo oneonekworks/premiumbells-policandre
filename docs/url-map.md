@@ -122,12 +122,13 @@ only paths that bring visits, e.g. catalogue PDFs.
 
 ## Implementation (at cutover)
 
-- Add the redirects above to `next.config.ts` `redirects()` (308), with a
-  unit test over the table, once their targets exist (services and blog are
-  not built yet). `proxy.ts` keeps handling only language prefixes.
-- The services route must support the nested legacy paths
-  (`/servicii/clopote/cu-jug`, `/servicii/iconostase/marmura`), e.g.
-  `/servicii/[service]/[variant]`, rather than flattening them.
+- Redirects (308) in `next.config.ts` `redirects()` from `lib/redirects.ts`,
+  unit-tested in `tests/redirects.test.ts` (2026-11-03): the four service
+  rows and `/_lucrarile-noastre`. The two blog rows wait for the blog.
+  The service targets show content once Phase 6 is imported and published.
+  `proxy.ts` keeps handling only language prefixes.
+- The services routes keep the nested legacy paths:
+  `app/[lang]/servicii/[service]/[variant]` (built 2026-11-03).
 - Generate `sitemap.ts` and `robots.ts` from published content and submit the
   sitemap in Search Console; remove the noindex at launch.
 - After DNS cutover, re-check every row (a script over this table) and watch

@@ -7,7 +7,7 @@ import {projectMeta} from './project-card';
 import {VideoEmbed} from './video-embed';
 
 // Allow-listed rich text: paragraphs, one subheading level, lists, links.
-const portableText: PortableTextComponents = {
+export const portableText: PortableTextComponents = {
   block: {
     normal: ({children}) => <p className="leading-relaxed">{children}</p>,
     h3: ({children}) => <h3 className="pt-2 font-display text-2xl font-semibold text-teal-900">{children}</h3>,

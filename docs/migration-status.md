@@ -87,8 +87,9 @@ sessions are in [the session handoff](handoff.md). In short:
    closed 2026-11-03.
 9. Phase 6 — services and catalogue: plan accepted 2026-11-03
    ([phase6-services-plan.md](phase6-services-plan.md)); steps 2 (price-text
-   detector), 3 (Studio schema, committed, not deployed) and 4 (website data
-   layer) done 2026-11-03.
+   detector), 3 (Studio schema, committed, not deployed), 4 (website data
+   layer) and 5 (routes and components; content tests wait for the test
+   documents) done 2026-11-03.
 
 ## Remaining prototype acceptance inputs
 
@@ -134,6 +135,25 @@ These items do not block completing the rest of Phase 0.
 
 ### 2026-11-03
 
+- Phase 6 step 5: `/servicii` overview (active top-level services in order,
+  variants as links), `/servicii/[service]` and `/servicii/[service]/[variant]`
+  (`components/services/`: hero, body, variant cards, the eight sections,
+  related works from the category, a default "Cereți o ofertă" contact box
+  when the page has none). Models and catalogue items open a slide-over
+  dialog (`DialogGrid`) that writes the card id to the hash: `#Policandru-7`
+  opens that item, Back and Escape close it, focus returns to the card. Bell
+  table scrolls inside its box on phones; audio uses `<audio preload="none">`;
+  videos reuse the click-to-load YouTube embed. Metadata from `seo`, then
+  `summary`; hreflang only for published languages. 308 redirects in
+  `next.config.ts` (`lib/redirects.ts`, unit test). New
+  `npm run services:test-docs` (dry run by default) for five test documents.
+  Checked on a production build (port 3100): lint, typecheck, build, 39 unit
+  and 26 migration tests; browser 29 passed, 17 skipped — 6 new service tests
+  pass on desktop and mobile (overview in both languages, 404s, redirects);
+  the 16 content tests (overview tree, hub and variant, hidden/wrong-parent
+  404, wrong-language 308, `#Policandru-7` dialog, keyboard and Back, model
+  gallery and lightbox, YouTube, price crawl of HTML and visible text) skip
+  until the test documents are written with the user's go-ahead.
 - Phase 6 step 4: `SERVICES_QUERY`, `SERVICE_QUERY` (top-level or under a
   parent slug, either language) and `CATALOG_QUERY` with explicit projections;
   TypeGen; loaders in `sanity/services.ts`; `resolveService` in

@@ -113,9 +113,25 @@ holding several facts flagged for an override; YouTube embeds → watch URLs;
 ## Revalidation test request
 
 `npm run revalidate:test -- --url <origin> --type project --slug <slug>
---category <categoryId>` (or `--type workCategory` / `portfolioPage`) sends a
-request to `/api/revalidate` signed like the Sanity publish webhook, using
+--category <categoryId>` (or `--type workCategory` / `portfolioPage` /
+`service`, or `--type catalogItem --family <family>`) sends a request to
+`/api/revalidate` signed like the Sanity publish webhook, using
 `SANITY_REVALIDATE_SECRET` from `.env.local` (never printed).
+
+## Phase 6 price detector and test documents
+
+`lib/price-text.ts` is the importer's copy of the Studio price detector
+(`studio-premiumbells/lib/priceText.ts`); `price-text.test.ts` runs the shared
+fixtures on both and checks the rules match.
+
+`npm run services:test-docs` plans five published Romanian-only test
+documents for the service routes and `tests/browser/services.spec.ts`
+(`test-phase6-service` with sections, a variant, a hidden variant and two
+`policandre` catalogue items, one with the `Policandru-7` anchor), reusing
+existing image assets. Dry run by default; `--write` creates or replaces them,
+`--delete` removes them and their drafts (write token from `.env.local`;
+export the dataset first). The planned documents are checked for price text
+before writing.
 
 ## Next migration stages
 
