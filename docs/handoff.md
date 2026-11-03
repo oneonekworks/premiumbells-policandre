@@ -46,7 +46,7 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   to the Netlify preview and a publish shows there within seconds. Settings are in `docs/architecture.md`; the secret is
   `SANITY_REVALIDATE_SECRET` in `.env.local`.
 - **Checks:** website lint, typecheck, build, 28 unit tests, 26 migration tests,
-  23 browser tests (1 skipped); Studio typecheck, lint, build, 12 unit tests.
+  23 browser tests (1 skipped); Studio typecheck, lint, build, 19 unit tests.
 
 ## Gotchas for the next session
 
@@ -168,9 +168,10 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    have identical technical details (Dej III's legacy brief says two
    chandeliers of 4 and 2 levels).
 9. **Phase 6 — services and catalogue** (plan accepted 2026-11-03; step 2,
-   the price-text detector, done 2026-11-03): follow the steps and decisions in
-   [phase6-services-plan.md](phase6-services-plan.md), next step 3 (Studio
-   schema). The user changes the
+   the price-text detector, and step 3, the Studio schema, done 2026-11-03;
+   the schema is not deployed yet): follow the steps and decisions in
+   [phase6-services-plan.md](phase6-services-plan.md). Waiting on the user:
+   `npx sanity deploy -y` and the phone check of a test service and item. The user changes the
    webhook filter/projection and checks the Studio on the phone.
 10. **Parked:** Studio tab/Publish styling — see [backlog](backlog.md).
 

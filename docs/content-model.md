@@ -23,12 +23,13 @@ slice with the translation storage below:
   (unpublishing covers archiving; canonical overrides are not needed yet);
   `location.country` is a code (`RO`, `MD`) rendered through the frontend
   dictionaries; `workCategory` has no `shortTitle`, `icon`, or `theme` yet.
-- `@sanity/language-filter` on those three document types, Romanian always shown.
+- `@sanity/language-filter` on those three document types and on `service` and `catalogItem`, Romanian always shown.
 
 The four prototype documents were converted by the Studio migration
 `localize-prototype-fields` after a document export to
-`.migration/backups/production-2026-10-24-before-locale.tar.gz`. Services,
-catalogue, blog, and global singletons remain proposed.
+`.migration/backups/production-2026-10-24-before-locale.tar.gz`. Services and
+the catalogue are implemented in the Studio (Phase 6, below); blog and global
+singletons remain proposed.
 
 ## Translation storage (decided 2026-10-24)
 
@@ -266,43 +267,76 @@ Validation rules should require at least one cover/gallery image, ensure the
 cover has alt text, and reject duplicate slugs. Empty legacy specification
 values should not create rows.
 
-### `service`
+### `service` (implemented 2026-11-03, Phase 6 step 3; not deployed yet)
 
-Supports both overview cards and detailed service pages:
+One document type for services and their variants ("Serviciu"); a variant is
+a service with a `parent`. Studio file `schemaTypes/service.ts`, sections in
+`schemaTypes/serviceSections.ts`.
 
-- Title, slug, subtitle, summary, and body.
-- Hero/cover media.
-- Ordered structured sections.
-- Features/specifications.
-- Gallery and video.
-- Related projects and catalogue items.
-- Primary CTA.
-- `enabled` and `comingSoon` flags.
-- Display order.
-- SEO and legacy source.
+| Field | Label | Type | Rules |
+| --- | --- | --- | --- |
+| `publishedLanguages` | Publicat în | shared field | |
+| `title` | Denumire | localeString | required per published language, max 120 |
+| `slug` | Adresă scurtă | localeSlug | required per published language; Sanity's default check keeps each slug unique among all services (stricter than per parent) |
+| `parent` | Serviciu părinte (opțional) | reference → service | only top-level services are offered; validation rejects a parent that has a parent and a parent on a service that has variants (two levels) |
+| `status` | Afișare | `active` / `hidden` (Activ / Ascuns) | hidden = 404 and unlinked, still editable |
+| `cardLabel` | Text scurt pe card | localeString | optional, max 60 |
+| `summary` | Descriere scurtă | localeText | required, max 300; card text and meta-description fallback |
+| `coverImage` | Fotografie de copertă | imageWithMetadata | required |
+| `displayOrder` | Ordine în listă | integer | required, default 100 |
+| `body` | Text de prezentare | localeBlockContent | optional |
+| `sections` | Secțiuni ale paginii | array of the section objects below | sortable |
+| `relatedCategory` | Lucrări din categoria | reference → workCategory | optional |
+| `seo`, `legacy` | SEO, Proveniență | existing objects | |
 
-Initially supported section types should be deliberately small: rich text,
-media gallery, feature list, specification list, related projects, and CTA.
+Sections (each has an optional localeString `heading`):
 
-### `catalogItem`
+- `sectionGallery` Galerie foto: `images[]` (≥1, optimised multi-upload).
+- `sectionSteps` Etape de lucru: `steps[]` {`title`, `text`, `images[]`}.
+- `sectionModels` Modele / exemple: `models[]` {`title`, `description`,
+  `cover`, `gallery[]`, `specifications[]`, `anchorId`}; each opens a dialog.
+- `sectionBellSizes` Tabel dimensiuni clopote: `rows[]` {`weightKg`,
+  `diameterCm`, `heightCm`, `note` (musical note)} plus a `note` text under
+  the table; typed columns only.
+- `sectionBellSets` Seturi de clopote: `sets[]` {`title`, `weightsKg[]`,
+  `withElectronicRinger`, `description`, `audio` (MP3 file)}.
+- `sectionVideos` Video: `videos[]` (the shared `video` object).
+- `sectionCatalogue` Catalog: `families[]` (one or more catalogue families).
+- `sectionCta` Contact: `text`, `label` (default "Cereți o ofertă"),
+  `contact` (`phoneEmail` / `phone` / `email` / `link`) and `href` for links.
 
-An informational product or design reference:
+### `catalogItem` (implemented 2026-11-03, not deployed yet)
 
-- Title and slug.
-- Product family/category.
-- Reference code or SKU.
-- Image and optional gallery.
-- Short description.
-- Dimensions: height, diameter, width, depth.
-- Weight.
-- Candle/lamp count.
-- Levels.
-- Finish/material variants.
-- Specifications.
-- Availability or `madeToOrder` status.
-- Related service and projects.
-- Display order.
-- SEO and legacy source.
+"Produs din catalog", `schemaTypes/catalogItem.ts`. No page of its own; cards
+render inside a service's catalogue section.
+
+| Field | Label | Type | Rules |
+| --- | --- | --- | --- |
+| `publishedLanguages` | Publicat în | shared field | |
+| `title` | Denumire | localeString | required, max 120 |
+| `family` | Familie | `policandre` / `horos` / `componente` / `aplice` / `analoghii-chivoturi` / `sfesnice` | required; values appear in cache tags |
+| `number` | Număr în familie | string | optional ("nr. 4") |
+| `summary` | Descriere scurtă | localeText | optional |
+| `levels`, `candles` | Nivele, Lumânări | integer | positive |
+| `heightCm`, `diameterCm`, `widthCm`, `depthCm` | … (cm) | number | the site shows ≥100 cm in metres |
+| `weightKg` | Greutate (kg) | number | |
+| `madeToOrder` | Se execută la comandă | boolean | |
+| `image` | Fotografie | imageWithMetadata | required |
+| `gallery` | Alte fotografii | imageWithMetadata[] | max 50 |
+| `variants` | Finisaje și coduri | {`finish`: varnished/gilded/silvered/patinated, `referenceCode` (no spaces)} | two fields only |
+| `specifications` | Alte detalii tehnice | specification[] | ranges and prose |
+| `displayOrder` | Ordine în familie | integer | required |
+| `slug` | Adresă scurtă | slug | optional, reserved for future pages |
+| `anchorIds` | Ancore de link vechi | string[] | read-only (`Policandru-N`) |
+| `legacy` | Proveniență | legacySource | |
+
+Both types run a document-level price check (`lib/priceValidation.ts`, rules
+in `lib/priceText.ts`): any currency or amount is an error that blocks
+publishing; pricing words ("preț", "negociabil", "la estimare", a bare "lei",
+a number like 13.112) are a warning. Read-only `legacy` is skipped (the
+importer checks it). A Studio test asserts no schema `name`/`title`/`value`
+matches `preț|price|cost|tva`. Desk: "Servicii" (principale, variante, toate)
+and "Catalog" (one list per family; new items get the family).
 
 There is intentionally no public `price` field. Legacy price values must not be
 copied into Portable Text, descriptions, captions, SEO, or image metadata. A

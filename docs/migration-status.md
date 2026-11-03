@@ -86,8 +86,8 @@ sessions are in [the session handoff](handoff.md). In short:
    imported and published 2026-11-02; large galleries measured; Phase 5
    closed 2026-11-03.
 9. Phase 6 — services and catalogue: plan accepted 2026-11-03
-   ([phase6-services-plan.md](phase6-services-plan.md)); step 2 (price-text
-   detector) done 2026-11-03; next: step 3, the Studio schema.
+   ([phase6-services-plan.md](phase6-services-plan.md)); steps 2 (price-text
+   detector) and 3 (Studio schema, committed, not deployed) done 2026-11-03.
 
 ## Remaining prototype acceptance inputs
 
@@ -133,6 +133,16 @@ These items do not block completing the rest of Phase 0.
 
 ### 2026-11-03
 
+- Phase 6 step 3: Studio `service` (one type with an optional parent, two
+  levels), eight section objects, `catalogItem` (six families, finish and
+  reference code only), desk lists "Servicii" and "Catalog" (a list per family
+  whose new items get the family), language filter on both types, and a
+  document-level price check (errors block publishing, words warn). Studio
+  typecheck, lint, build, `sanity schema validate` (0 errors, 0 warnings) and
+  19 unit tests pass, including "no field named or titled as a price" and
+  "validator wired on both types". Schema extracted and website types
+  regenerated. Not deployed: waits for the user (`npx sanity deploy -y`, then
+  the phone check). Details in [content-model.md](content-model.md).
 - Phase 6 step 2: price-text detector in the Studio (`lib/priceText.ts`) and a
   copy for the importer (`scripts/lib/price-text.ts`). Errors (block
   publishing): `€`, euro/EUR, uppercase RON, TVA, an amount next to a currency,

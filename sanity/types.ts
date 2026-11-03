@@ -15,24 +15,99 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
-export type PortfolioPage = {
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type Audio = {
+  asset?: SanityFileAssetReference;
+  media?: unknown; // Unable to locate the referenced type "audio.media" in schema
+  _type: "file";
+};
+
+export type CatalogItem = {
   _id: string;
-  _type: "portfolioPage";
+  _type: "catalogItem";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   publishedLanguages?: Array<string>;
   title?: LocaleString;
-  intro?: LocaleText;
-  seo?: Seo;
+  family?:
+    | "policandre"
+    | "horos"
+    | "componente"
+    | "aplice"
+    | "analoghii-chivoturi"
+    | "sfesnice";
+  number?: string;
+  summary?: LocaleText;
+  levels?: number;
+  candles?: number;
+  heightCm?: number;
+  diameterCm?: number;
+  widthCm?: number;
+  depthCm?: number;
+  weightKg?: number;
+  madeToOrder?: boolean;
+  image?: ImageWithMetadata;
+  gallery?: Array<
+    {
+      _key: string;
+    } & ImageWithMetadata
+  >;
+  variants?: Array<{
+    finish?: "varnished" | "gilded" | "silvered" | "patinated";
+    referenceCode?: string;
+    _type: "catalogVariant";
+    _key: string;
+  }>;
+  specifications?: Array<
+    {
+      _key: string;
+    } & Specification
+  >;
+  displayOrder?: number;
+  slug?: Slug;
+  anchorIds?: Array<string>;
+  legacy?: LegacySource;
 };
 
-export type Seo = {
-  _type: "seo";
-  metaTitle?: LocaleString;
-  metaDescription?: LocaleText;
-  shareImage?: ImageWithMetadata;
-  noIndex?: boolean;
+export type LegacySource = {
+  _type: "legacySource";
+  collection?: string;
+  legacyId?: string;
+  legacySlug?: string;
+  sourceFile?: string;
+  sourceHash?: string;
+  migratedAt?: string;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type ImageWithMetadata = {
+  _type: "imageWithMetadata";
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt?: LocaleString;
+  caption?: LocaleString;
+  credit?: string;
 };
 
 export type LocaleText = {
@@ -47,11 +122,131 @@ export type LocaleString = {
   en?: string;
 };
 
+export type ServiceReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "service";
+};
+
 export type WorkCategoryReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "workCategory";
+};
+
+export type Service = {
+  _id: string;
+  _type: "service";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  publishedLanguages?: Array<string>;
+  title?: LocaleString;
+  slug?: LocaleSlug;
+  parent?: ServiceReference;
+  status?: "active" | "hidden";
+  cardLabel?: LocaleString;
+  summary?: LocaleText;
+  coverImage?: ImageWithMetadata;
+  displayOrder?: number;
+  body?: LocaleBlockContent;
+  sections?: Array<
+    | ({
+        _key: string;
+      } & SectionGallery)
+    | ({
+        _key: string;
+      } & SectionSteps)
+    | ({
+        _key: string;
+      } & SectionModels)
+    | ({
+        _key: string;
+      } & SectionBellSizes)
+    | ({
+        _key: string;
+      } & SectionBellSets)
+    | ({
+        _key: string;
+      } & SectionVideos)
+    | ({
+        _key: string;
+      } & SectionCatalogue)
+    | ({
+        _key: string;
+      } & SectionCta)
+  >;
+  relatedCategory?: WorkCategoryReference;
+  seo?: Seo;
+  legacy?: LegacySource;
+};
+
+export type Seo = {
+  _type: "seo";
+  metaTitle?: LocaleString;
+  metaDescription?: LocaleText;
+  shareImage?: ImageWithMetadata;
+  noIndex?: boolean;
+};
+
+export type LocaleBlockContent = {
+  _type: "localeBlockContent";
+  ro?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h3";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  en?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h3";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type LocaleSlug = {
+  _type: "localeSlug";
+  ro?: Slug;
+  en?: Slug;
+};
+
+export type PortfolioPage = {
+  _id: string;
+  _type: "portfolioPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  publishedLanguages?: Array<string>;
+  title?: LocaleString;
+  intro?: LocaleText;
+  seo?: Seo;
 };
 
 export type Project = {
@@ -95,80 +290,6 @@ export type Project = {
   legacy?: LegacySource;
 };
 
-export type LegacySource = {
-  _type: "legacySource";
-  collection?: string;
-  legacyId?: string;
-  legacySlug?: string;
-  sourceFile?: string;
-  sourceHash?: string;
-  migratedAt?: string;
-};
-
-export type LocaleBlockContent = {
-  _type: "localeBlockContent";
-  ro?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h3";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  en?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h3";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-};
-
-export type SanityImageAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-};
-
-export type ImageWithMetadata = {
-  _type: "imageWithMetadata";
-  asset?: SanityImageAssetReference;
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  alt?: LocaleString;
-  caption?: LocaleString;
-  credit?: string;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
 export type WorkCategory = {
   _id: string;
   _type: "workCategory";
@@ -191,10 +312,106 @@ export type WorkCategory = {
   legacy?: LegacySource;
 };
 
-export type LocaleSlug = {
-  _type: "localeSlug";
-  ro?: Slug;
-  en?: Slug;
+export type SectionCta = {
+  _type: "sectionCta";
+  heading?: LocaleString;
+  text?: LocaleText;
+  label?: LocaleString;
+  contact?: "phoneEmail" | "phone" | "email" | "link";
+  href?: string;
+};
+
+export type SectionCatalogue = {
+  _type: "sectionCatalogue";
+  heading?: LocaleString;
+  families?: Array<string>;
+};
+
+export type SectionVideos = {
+  _type: "sectionVideos";
+  heading?: LocaleString;
+  videos?: Array<
+    {
+      _key: string;
+    } & Video
+  >;
+};
+
+export type SectionBellSets = {
+  _type: "sectionBellSets";
+  heading?: LocaleString;
+  sets?: Array<{
+    title?: LocaleString;
+    weightsKg?: Array<number>;
+    withElectronicRinger?: boolean;
+    description?: LocaleText;
+    audio?: Audio;
+    _type: "bellSet";
+    _key: string;
+  }>;
+};
+
+export type SectionBellSizes = {
+  _type: "sectionBellSizes";
+  heading?: LocaleString;
+  rows?: Array<{
+    weightKg?: number;
+    diameterCm?: number;
+    heightCm?: number;
+    note?: string;
+    _type: "bellSize";
+    _key: string;
+  }>;
+  note?: LocaleText;
+};
+
+export type SectionModels = {
+  _type: "sectionModels";
+  heading?: LocaleString;
+  models?: Array<{
+    title?: LocaleString;
+    description?: LocaleText;
+    cover?: ImageWithMetadata;
+    gallery?: Array<
+      {
+        _key: string;
+      } & ImageWithMetadata
+    >;
+    specifications?: Array<
+      {
+        _key: string;
+      } & Specification
+    >;
+    anchorId?: string;
+    _type: "model";
+    _key: string;
+  }>;
+};
+
+export type SectionSteps = {
+  _type: "sectionSteps";
+  heading?: LocaleString;
+  steps?: Array<{
+    title?: LocaleString;
+    text?: LocaleText;
+    images?: Array<
+      {
+        _key: string;
+      } & ImageWithMetadata
+    >;
+    _type: "step";
+    _key: string;
+  }>;
+};
+
+export type SectionGallery = {
+  _type: "sectionGallery";
+  heading?: LocaleString;
+  images?: Array<
+    {
+      _key: string;
+    } & ImageWithMetadata
+  >;
 };
 
 export type SpecificationSuggestion = {
@@ -208,13 +425,6 @@ export type Specification = {
   label?: LocaleString;
   value?: string;
   unit?: string;
-};
-
-export type SanityFileAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
 };
 
 export type Video = {
@@ -344,22 +554,34 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
-  | PortfolioPage
-  | Seo
-  | LocaleText
-  | LocaleString
-  | WorkCategoryReference
-  | Project
+  | SanityFileAssetReference
+  | Audio
+  | CatalogItem
   | LegacySource
-  | LocaleBlockContent
+  | Slug
   | SanityImageAssetReference
   | ImageWithMetadata
-  | Slug
-  | WorkCategory
+  | LocaleText
+  | LocaleString
+  | ServiceReference
+  | WorkCategoryReference
+  | Service
+  | Seo
+  | LocaleBlockContent
   | LocaleSlug
+  | PortfolioPage
+  | Project
+  | WorkCategory
+  | SectionCta
+  | SectionCatalogue
+  | SectionVideos
+  | SectionBellSets
+  | SectionBellSizes
+  | SectionModels
+  | SectionSteps
+  | SectionGallery
   | SpecificationSuggestion
   | Specification
-  | SanityFileAssetReference
   | Video
   | SanityImageCrop
   | SanityImageHotspot
