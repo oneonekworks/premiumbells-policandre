@@ -167,9 +167,11 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    throttled phone, CLS 0; see the change log). Open for the user: Dej III and Făget
    have identical technical details (Dej III's legacy brief says two
    chandeliers of 4 and 2 levels).
-9. **Phase 6 — services and catalogue** (next, 2026-11-03): propose the
-   schema, routes, import mapping and open decisions before any change; see
-   [migration plan](migration-plan.md#phase-6--services-and-catalogue).
+9. **Phase 6 — services and catalogue** (plan accepted 2026-11-03, next:
+   implementation): follow the steps and decisions in
+   [phase6-services-plan.md](phase6-services-plan.md), starting at step 2
+   (price-text detector), then the Studio schema. The user changes the
+   webhook filter/projection and checks the Studio on the phone.
 10. **Parked:** Studio tab/Publish styling — see [backlog](backlog.md).
 
 ## Kickoff prompt

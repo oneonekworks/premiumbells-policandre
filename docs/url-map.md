@@ -49,7 +49,7 @@ Live = HTTP status on 2026-11-02. Sitemap = listed in a legacy sitemap
 | `/servicii/clopotar-electronic` | 200 | — | same | keep | services not built |
 | `/servicii/iconostase` | 200 | typo | same | keep | services not built |
 | `/servicii/iconostase/marmura` | 200 | yes | same | keep | services not built (nested) |
-| `/servicii/iconostase/lemn` | 200 | — | same | keep | services not built (nested) |
+| `/servicii/iconostase/lemn` | 200 | — | `/servicii/iconostase` | 308 | copy of the pristol page (decided 2026-11-03) |
 | `/servicii/iconostase/lemn-aur` | 200 | yes | same | keep | services not built (nested) |
 | `/servicii/iconostase/iconostas-bronz` | 200 | yes | same | keep | services not built (nested) |
 | `/servicii/iconostase/pristol-marmura` | 200 | yes | same | keep | services not built (nested) |
@@ -67,6 +67,7 @@ Live = HTTP status on 2026-11-02. Sitemap = listed in a legacy sitemap
 | `/servicii/servicii/usi` | 404 | typo in `categories.xml` | `/servicii/usi` |
 | `/blog/raport-18-ianuarie-23` | 404 | wrong link in legacy blog data | `/blog/raport-18-ianuarie-2023` |
 | `/servicii/iconostase/lemn-bronz` | 404 | linked from service records, page never existed | `/servicii/iconostase` |
+| `/servicii/iconostase/lemn` | 200 | duplicate of the pristol page, not linked from the hub (decided 2026-11-03) | `/servicii/iconostase` |
 | `/blog2` | 200 | experimental duplicate of the blog | `/blog` |
 | `/_lucrarile-noastre` | 200 | template page with placeholder menus | `/lucrarile-noastre` |
 
@@ -75,16 +76,20 @@ Live = HTTP status on 2026-11-02. Sitemap = listed in a legacy sitemap
 - `/api/hello` (create-next-app boilerplate, live 200).
 - `/servicii/clopote-suvenire`, `/servicii/cupole`,
   `/servicii/analog-sfesnice-chivot`: announced as "in maintenance", never
-  built (404 today). They get pages only if those services launch; the
-  analog/chivot/sfeșnice catalogue may cover the last one.
+  built (404 today). Decided 2026-11-03: imported as hidden drafts; each
+  gets its page (same path) only when the user publishes it. The
+  analog/chivot/sfeșnice page will hold that catalogue plus the aplice.
 
 ## Fragments and catalogue anchors
 
 `products.xml` lists `/servicii/policandre#Policandru-1` … `#Policandru-29`
 (`#Policandru-18` twice). When the catalogue is built, the policandre page
 should keep `id="Policandru-N"` on each entry (or open that entry), so shared
-links keep landing on the right chandelier. The catalogue's reference IDs
-should come from the same numbers.
+links keep landing on the right chandelier. Checked 2026-11-03: the legacy
+page never rendered these IDs, `products.xml` is malformed (`<xml`), and N is
+the 1-based position in `catalog.json` `policandre` (29 records); the new page
+opens the entry for the hash. Records 9 and 10 are identical and merge into
+one item carrying both anchors.
 
 ## Projects
 

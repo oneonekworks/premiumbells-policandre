@@ -85,7 +85,8 @@ sessions are in [the session handoff](handoff.md). In short:
 8. Phase 5 import of Policandre, Uși, Automatizări and Recondiționări —
    imported and published 2026-11-02; large galleries measured; Phase 5
    closed 2026-11-03.
-9. Phase 6 — services and catalogue: plan first (started 2026-11-03).
+9. Phase 6 — services and catalogue: plan accepted 2026-11-03
+   ([phase6-services-plan.md](phase6-services-plan.md)); implementation next.
 
 ## Remaining prototype acceptance inputs
 
@@ -131,6 +132,13 @@ These items do not block completing the rest of Phase 0.
 
 ### 2026-11-03
 
+- Phase 6 plan accepted by the user with the recommended defaults:
+  [phase6-services-plan.md](phase6-services-plan.md) (legacy services and
+  catalogue research, schema, routes, import mapping, price safeguards,
+  11 decisions, 10 steps). Notable findings: the Automatizări service page is
+  only a price-list image (excluded); `/servicii/iconostase/lemn` is a copy of
+  the pristol page (now a 308); the legacy page never rendered the
+  `#Policandru-N` IDs (N = position 1–29 in the catalogue list).
 - Phase 5 closed by the user ("everything is fine as is"); the Studio review
   is accepted and `verify-migration.ts` is deferred. Phase 6 (services and
   catalogue) starts in a new session with a plan first.
