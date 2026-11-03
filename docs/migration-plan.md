@@ -151,14 +151,19 @@ Recommended order:
 5. Usi
 6. Orologii and sonorizari after scope decision
 
-- [ ] Resolve duplicate slugs with approved canonical names and redirects.
-- [ ] Import all active records and media.
-- [ ] Review titles, descriptions, dates, alt text, and cover crops in Studio.
-- [ ] Verify category counts and gallery ordering.
-- [ ] Test Rohia (201 images) and Drobeta doors (176 images) as maximum galleries.
+- [x] Resolve duplicate slugs with approved canonical names and redirects.
+- [x] Import all active records and media.
+- [x] Review titles, descriptions, dates, alt text, and cover crops in Studio.
+- [x] Verify category counts and gallery ordering.
+- [x] Test Rohia (201 images) and Drobeta doors (176 images) as maximum galleries.
 
 **Exit criteria:** All approved portfolio categories reconcile with the source
 manifest and pass visual/performance review.
+
+**Closed 2026-11-03** by the user ("everything is fine as is"): 60 published
+projects in five categories; counts checked against the legacy records per
+collection; Orologii and Sonorizări not imported (no photos). The automated
+`verify-migration.ts` reconciliation is deferred (reuse it for services).
 
 ## Phase 6 — Services and catalogue
 

@@ -1,6 +1,6 @@
 # Session handoff
 
-**Updated:** 2026-11-02 · Start a new session with the kickoff prompt below; it
+**Updated:** 2026-11-03 · Start a new session with the kickoff prompt below; it
 is cheaper than continuing a long conversation, and these docs carry the state.
 
 ## Where we are
@@ -150,7 +150,8 @@ is cheaper than continuing a long conversation, and these docs carry the state.
      are planned, in which case GA4 with a consent banner and Consent Mode.
      Check current prices first; install at the policandre.ro cutover.
 8. **Phase 5 import of the other categories** (done and published
-   2026-11-02; plan approved by the user): Policandre 11, Uși 1, Automatizări 2 (Sihăstria
+   2026-11-02; Phase 5 closed by the user 2026-11-03; plan approved by the
+   user): Policandre 11, Uși 1, Automatizări 2 (Sihăstria
    Rascăi skipped), Recondiționări 7; Orologii and Sonorizări not imported
    (no photos). Done: dataset export
    (`production-2026-11-02-before-phase5.tar.gz`), importer keys repeated
@@ -166,7 +167,10 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    throttled phone, CLS 0; see the change log). Open for the user: Dej III and Făget
    have identical technical details (Dej III's legacy brief says two
    chandeliers of 4 and 2 levels).
-9. **Parked:** Studio tab/Publish styling — see [backlog](backlog.md).
+9. **Phase 6 — services and catalogue** (next, 2026-11-03): propose the
+   schema, routes, import mapping and open decisions before any change; see
+   [migration plan](migration-plan.md#phase-6--services-and-catalogue).
+10. **Parked:** Studio tab/Publish styling — see [backlog](backlog.md).
 
 ## Kickoff prompt
 
