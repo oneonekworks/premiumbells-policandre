@@ -86,3 +86,30 @@ test('signed bodies that are not documents are rejected', async () => {
   assert.equal((await run(await signedRequest('{"_id": "x"}'))).status, 400);
   assert.equal((await run(await signedRequest('not json'))).status, 400);
 });
+
+test('services share one tag; catalogue items revalidate their old and new family', () => {
+  assert.deepEqual(revalidationTags({_type: 'service', operation: 'update'}), [cacheTags.services]);
+  assert.deepEqual(revalidationTags({_type: 'service', operation: 'delete', before: {}, after: null}), [cacheTags.services]);
+  assert.deepEqual(revalidationTags({
+    _type: 'catalogItem', operation: 'update', before: {family: 'policandre'}, after: {family: 'policandre'},
+  }), [cacheTags.catalog('policandre')]);
+  assert.deepEqual(revalidationTags({
+    _type: 'catalogItem', operation: 'update', before: {family: 'policandre'}, after: {family: 'horos'},
+  }), [cacheTags.catalog('policandre'), cacheTags.catalog('horos')]);
+  assert.deepEqual(revalidationTags({_type: 'catalogItem', operation: 'create', before: null, after: {family: 'aplice'}}),
+    [cacheTags.catalog('aplice')]);
+});
+
+test('a catalogue payload without a family (old webhook projection) clears everything', () => {
+  assert.deepEqual(revalidationTags({_type: 'catalogItem', operation: 'update'}), [SANITY_TAG]);
+  assert.deepEqual(revalidationTags({
+    _type: 'catalogItem', operation: 'update', before: {slug: null, family: null}, after: {slug: null},
+  }), [SANITY_TAG]);
+});
+
+test('a signed service webhook revalidates the service tag', async () => {
+  const body = JSON.stringify({_id: 'legacy-service-clopote', _type: 'service', operation: 'update', before: {}, after: {}});
+  const result = await run(await signedRequest(body));
+  assert.equal(result.status, 200);
+  assert.deepEqual(result.revalidated, [cacheTags.services]);
+});

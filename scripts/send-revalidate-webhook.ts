@@ -3,6 +3,8 @@
 //
 //   npm run revalidate:test -- --url http://127.0.0.1:3100 --type project \
 //     --slug drobeta --category <categoryId>
+//   npm run revalidate:test -- --url http://127.0.0.1:3100 --type service
+//   npm run revalidate:test -- --url http://127.0.0.1:3100 --type catalogItem --family policandre
 import {existsSync} from "node:fs";
 import path from "node:path";
 import {parseArgs} from "node:util";
@@ -19,12 +21,15 @@ const {values} = parseArgs({
     type: {type: "string", default: "project"},
     slug: {type: "string"},
     category: {type: "string"},
+    family: {type: "string"},
     operation: {type: "string", default: "update"},
   },
 });
 
 async function main(secret: string) {
-  const state = values.type === "project" ? {slug: values.slug ?? null, category: values.category ?? null, languages: ["ro"]} : null;
+  const state = values.type === "project"
+    ? {slug: values.slug ?? null, category: values.category ?? null, languages: ["ro"]}
+    : values.type === "catalogItem" ? {family: values.family ?? null} : null;
   const body = JSON.stringify({_type: values.type, operation: values.operation, before: state, after: state});
   const response = await fetch(new URL("/api/revalidate", values.url), {
     method: "POST",

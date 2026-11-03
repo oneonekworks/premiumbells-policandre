@@ -124,6 +124,9 @@ React `cache()` so a page and its metadata share one read. Tags
 | Category lookup by slug | `sanity:workCategory` |
 | Category grid (all cards, filtered on the server) | `sanity:category-projects:<categoryId>` |
 | Project page and slide-over | `sanity:project:<slug>` |
+| Services overview, any service or variant page (`sanity/services.ts`) | `sanity:service` |
+| Catalogue section (one read per set of families) | `sanity:catalog:<family>` for each family |
+| Related works on a service page | `sanity:category-projects:<categoryId>` (the category grid read) |
 
 Projects are tagged by slug, not ID, so publishing a new project also clears a
 cached 404 for its URL. `POST /api/revalidate` (`app/api/revalidate/route.ts`,
@@ -137,7 +140,10 @@ after a publish renders fresh content. Mapping:
   `project-counts` on create, delete, category move, slug added/removed, or
   language change. Missing slug or category → everything.
 - `workCategory` → `sanity:workCategory`; `portfolioPage` →
-  `sanity:portfolioPage`; any other type → `sanity` (everything).
+  `sanity:portfolioPage`; `service` → `sanity:service` (one tag for about 20
+  documents, which also clears cached 404s for new slugs); `catalogItem` → old
+  and new `sanity:catalog:<family>`, or everything when the payload has no
+  family; any other type → `sanity` (everything).
 
 The revalidation is local to one server process (Next's default file/memory
 cache). Hosting with several instances needs a shared cache handler.
@@ -179,14 +185,17 @@ Sanity needs a public URL, so the webhook goes live with hosting (handoff step
 
 - Name: `Revalidare site`; URL: `https://<host>/api/revalidate`; dataset
   `production`; trigger on Create, Update, Delete; drafts and versions off.
-- Filter: `_type in ["project", "workCategory", "portfolioPage"]` (widen it
-  when new public types are added; unknown types clear everything).
-- Projection:
+- Filter: `_type in ["project", "workCategory", "portfolioPage", "service", "catalogItem"]`
+  (widen it when new public types are added; unknown types clear everything).
+  Until the user widens the live webhook (Phase 6), service and catalogue
+  publishes show on the preview after the hourly refresh.
+- Projection (Phase 6 adds `"family": family`; the live webhook still has the
+  previous projection without it until the user updates it):
 
   ```groq
   {_id, _type, "operation": delta::operation(),
-   "before": before(){"slug": slug.current, "category": category._ref, "languages": publishedLanguages},
-   "after": after(){"slug": slug.current, "category": category._ref, "languages": publishedLanguages}}
+   "before": before(){"slug": slug.current, "category": category._ref, "languages": publishedLanguages, "family": family},
+   "after": after(){"slug": slug.current, "category": category._ref, "languages": publishedLanguages, "family": family}}
   ```
 
 - HTTP method POST, API version `v2026-10-10`; Secret: the value of
@@ -194,8 +203,9 @@ Sanity needs a public URL, so the webhook goes live with hosting (handoff step
   environment variables). Never paste it in chat.
 
 Check it with `npm run revalidate:test -- --url https://<host> --type
-workCategory` (signs a request with the local secret) and Sanity's webhook
-attempt log.
+workCategory` (signs a request with the local secret; also `--type service`
+and `--type catalogItem --family policandre`) and Sanity's webhook attempt
+log.
 
 #### Draft Mode preview (designed, not built)
 

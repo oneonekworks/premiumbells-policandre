@@ -1,7 +1,8 @@
 // Cache tags for published Sanity reads and the publish webhook that clears
 // them. Every read also carries SANITY_TAG, so an unknown document type can
 // clear everything. Projects are tagged by slug rather than ID so a new
-// publish also clears a cached "not found" for that URL.
+// publish also clears a cached "not found" for that URL. Services share one
+// tag (about 20 documents), which also clears cached 404s for new slugs.
 export const SANITY_TAG = 'sanity';
 
 export const cacheTags = {
@@ -10,6 +11,8 @@ export const cacheTags = {
   projectCounts: 'sanity:project-counts',
   categoryProjects: (categoryId: string) => `sanity:category-projects:${categoryId}`,
   project: (slug: string) => `sanity:project:${slug}`,
+  services: 'sanity:service',
+  catalog: (family: string) => `sanity:catalog:${family}`,
 };
 
 /**
@@ -17,20 +20,23 @@ export const cacheTags = {
  * docs/architecture.md, "Publish webhook"):
  *
  * {_id, _type, "operation": delta::operation(),
- *  "before": before(){"slug": slug.current, "category": category._ref, "languages": publishedLanguages},
- *  "after": after(){"slug": slug.current, "category": category._ref, "languages": publishedLanguages}}
+ *  "before": before(){"slug": slug.current, "category": category._ref, "languages": publishedLanguages, "family": family},
+ *  "after": after(){"slug": slug.current, "category": category._ref, "languages": publishedLanguages, "family": family}}
+ *
+ * `family` is only set on catalogue items; until the webhook projection has
+ * it, a catalogue publish clears everything.
  */
 export type PublishPayload = {
   _id?: string;
   _type?: string;
   operation?: 'create' | 'update' | 'delete';
-  before?: ProjectState | null;
-  after?: ProjectState | null;
+  before?: DocumentState | null;
+  after?: DocumentState | null;
 };
-type ProjectState = {slug?: string | null; category?: string | null; languages?: string[] | null};
+type DocumentState = {slug?: string | null; category?: string | null; languages?: string[] | null; family?: string | null};
 
 const isString = (value: unknown): value is string => typeof value === 'string' && value.length > 0;
-const languageKey = (state?: ProjectState | null) => [...(state?.languages ?? ['ro'])].sort().join(',');
+const languageKey = (state?: DocumentState | null) => [...(state?.languages ?? ['ro'])].sort().join(',');
 
 /** Tags to revalidate for one changed document; the smallest valid scope. */
 export function revalidationTags(payload: PublishPayload): string[] {
@@ -56,6 +62,12 @@ export function revalidationTags(payload: PublishPayload): string[] {
         ...categories.map(cacheTags.categoryProjects),
         ...(countsChanged ? [cacheTags.projectCounts] : []),
       ])];
+    }
+    case 'service':
+      return [cacheTags.services];
+    case 'catalogItem': {
+      const families = [payload.before?.family, payload.after?.family].filter(isString);
+      return families.length ? [...new Set(families.map(cacheTags.catalog))] : [SANITY_TAG];
     }
     default:
       return [SANITY_TAG];

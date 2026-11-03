@@ -87,7 +87,8 @@ sessions are in [the session handoff](handoff.md). In short:
    closed 2026-11-03.
 9. Phase 6 — services and catalogue: plan accepted 2026-11-03
    ([phase6-services-plan.md](phase6-services-plan.md)); steps 2 (price-text
-   detector) and 3 (Studio schema, committed, not deployed) done 2026-11-03.
+   detector), 3 (Studio schema, committed, not deployed) and 4 (website data
+   layer) done 2026-11-03.
 
 ## Remaining prototype acceptance inputs
 
@@ -133,6 +134,17 @@ These items do not block completing the rest of Phase 0.
 
 ### 2026-11-03
 
+- Phase 6 step 4: `SERVICES_QUERY`, `SERVICE_QUERY` (top-level or under a
+  parent slug, either language) and `CATALOG_QUERY` with explicit projections;
+  TypeGen; loaders in `sanity/services.ts`; `resolveService` in
+  `sanity/service-routes.ts` (wrong-language slug → 308, wrong parent,
+  hidden, unpublished or top-level variant → 404); pure helpers in
+  `lib/services.ts`. Tags `sanity:service` and `sanity:catalog:<family>`;
+  webhook mapping for `service` and `catalogItem` (no family → everything);
+  `revalidate:test --type service|catalogItem --family`. 36 unit tests,
+  including a guard that no query mentions price/preț/cost or spreads `...`.
+  The live webhook still needs the user's filter and projection change
+  (text in [architecture.md](architecture.md), "Publish webhook").
 - Phase 6 step 3: Studio `service` (one type with an optional parent, two
   levels), eight section objects, `catalogItem` (six families, finish and
   reference code only), desk lists "Servicii" and "Catalog" (a list per family
