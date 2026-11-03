@@ -775,5 +775,75 @@
         "country": "RO"
       }
     }
+  },
+  "catalog": {
+    "catalog:policandre#11": {
+      "merge": "catalog:policandre#10",
+      "note": "identical to record 009 (decision 6); anchor Policandru-11 lands on it"
+    },
+    "catalog:policandre#18": {
+      "title": "Policandru masiv cu 5 nivele",
+      "specifications": [
+        {
+          "label": "Înălțimea horosului cu lanțuri",
+          "value": "7",
+          "unit": "m"
+        },
+        {
+          "label": "Lățimea horosului",
+          "value": "5",
+          "unit": "m"
+        },
+        {
+          "label": "Secții ale horosului",
+          "value": "12"
+        }
+      ]
+    },
+    "catalog:policandre#24": {
+      "title": "Horos nr. 5 (4–12 secții)",
+      "fields": {
+        "diameterCm": null,
+        "weightKg": null
+      },
+      "specifications": [
+        {
+          "label": "Diametru",
+          "value": "1,4–4,2",
+          "unit": "m"
+        },
+        {
+          "label": "Secții",
+          "value": "4–12"
+        },
+        {
+          "label": "Greutatea unei secții",
+          "value": "15",
+          "unit": "kg"
+        }
+      ]
+    },
+    "catalog:policandre#25": {
+      "fields": {
+        "weightKg": null
+      },
+      "specifications": [
+        {
+          "label": "Greutatea unei secții",
+          "value": "15",
+          "unit": "kg"
+        }
+      ]
+    },
+    "catalog:policandre#29": {
+      "gallery": [
+        "/services/policandre/pol-115411-2.jpg",
+        "/services/policandre/pol-115411-3.jpg",
+        "/services/policandre/pol-115411-4.jpg"
+      ]
+    },
+    "catalog:componente#1": {
+      "skip": "photo missing (HTTP 404); not imported (decision 6)"
+    }
   }
 }

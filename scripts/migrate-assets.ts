@@ -6,9 +6,11 @@ import type { ImageNeed } from "./lib/legacy-portfolio";
 import { optimizeImage } from "./lib/optimize-image";
 import {
   IMPORT_SOURCE_NAME,
+  buildDocumentPlans,
   buildPlans,
   createWriteClient,
   formatBytes,
+  isDocumentCollection,
   loadAssetCheckpoint,
   migrationDir,
   parseImportArgs,
@@ -71,7 +73,10 @@ async function main() {
   const options = parseImportArgs();
   const client = createWriteClient();
   const checkpoint = loadAssetCheckpoint();
-  const { plans } = buildPlans(options, "category-not-needed", () => undefined);
+  // Projects, or the Phase 6 services and catalogue (which also need MP3 files).
+  const plans = isDocumentCollection(options.collection)
+    ? buildDocumentPlans(options, () => undefined).plans
+    : buildPlans(options, "category-not-needed", () => undefined).plans;
 
   // One entry per photo, even when several projects share it.
   const needs = new Map<string, { image: ImageNeed; projects: string[] }>();
@@ -105,9 +110,10 @@ async function main() {
       result.sha1 = sha1;
       result.originalBytes = original.length;
 
+      const assetType = image.kind === "file" ? "sanity.fileAsset" : "sanity.imageAsset";
       const existing = await client.fetch<string | null>(
-        '*[_type == "sanity.imageAsset" && source.id == $sha1][0]._id',
-        { sha1 },
+        '*[_type == $assetType && source.id == $sha1][0]._id',
+        { sha1, assetType },
       );
       if (existing) {
         result.status = "existing";
@@ -119,7 +125,10 @@ async function main() {
         return;
       }
 
-      const optimized = await optimizeImage(original);
+      // Files (MP3) are uploaded as they are; photos get the Studio's rules.
+      const optimized = image.kind === "file"
+        ? { data: original, mode: "unchanged", extension: path.extname(image.canonical).slice(1) || "mp3", width: undefined, height: undefined }
+        : await optimizeImage(original);
       Object.assign(result, {
         uploadedBytes: optimized.data.length,
         mode: optimized.mode,
@@ -128,7 +137,7 @@ async function main() {
       });
       if (!options.write) return;
 
-      const asset = await client.assets.upload("image", optimized.data, {
+      const asset = await client.assets.upload(image.kind === "file" ? "file" : "image", optimized.data, {
         filename: filenameFor(image, optimized.extension),
         source: { name: IMPORT_SOURCE_NAME, id: sha1, url: image.resolvedUrl ?? image.canonical },
       });

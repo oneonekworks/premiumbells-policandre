@@ -118,6 +118,42 @@ holding several facts flagged for an override; YouTube embeds → watch URLs;
 `/api/revalidate` signed like the Sanity publish webhook, using
 `SANITY_REVALIDATE_SECRET` from `.env.local` (never printed).
 
+## Services and catalogue import (Phase 6, implemented 2026-11-03)
+
+The same two commands take `--collection services` or `--collection catalog`
+(dry run by default; `--project` selects keys such as `/servicii/usi` or
+`policandre#7`). Run order: dataset export, `migrate:content` dry run,
+`migrate:assets` dry run (downloads to the cache, sizes), `migrate:assets
+--write`, `migrate:content --write` (drafts), then
+`npm run verify:migration -- --collection services|catalog` (read-only:
+every planned document exists with the same media in the same order and its
+required fields).
+
+- `config/legacy-services.json` is the reviewed seed: every service text
+  (drafted price-free from the legacy wording), status, order, parent and
+  sections. Images, bell tables and sets are `file#path` pointers into
+  `rbells-tw` (`data/services.js#usi[0].gallery`,
+  `…/pristol-marmura.jsx#features[2:4].imageSrc`); page and component files
+  are read with the TypeScript parser (`lib/legacy-source.ts`, top-level
+  literal consts only, nothing executed). Bell rows read only weight, diameter,
+  height and note; sets only the weights in the title and the MP3.
+  `lib/legacy-services.ts` maps it; IDs `legacy-service-<path>`.
+- `lib/legacy-catalog.ts` maps `data/catalog.json` (`ru.iaroslavl`): IDs
+  `legacy-catalog-<family>-<NN>` (NN = position in the legacy list; for
+  chandeliers also the `Policandru-N` anchor), metres → centimetres,
+  "4 Kg" → 4, spaces removed from codes, known spellings fixed
+  (`fixWords`), and data problems listed for review. Overrides live under
+  `catalog` in `config/legacy-overrides.json` (`merge`, `skip`, `title`,
+  `fields`, `specifications`, `gallery`).
+- `lib/legacy-documents.ts` holds the pointer resolver, the media resolver
+  (images and MP3 files; manifest dispositions and the exclusion registry are
+  both honoured) and the price block: any currency or amount anywhere in a
+  planned document, or in a media filename, blocks the record. Parents are
+  written before variants; a slug used by another service, a missing parent
+  or a missing related category blocks a record.
+- `migrate-assets` uploads MP3s as file assets, unchanged, with the same
+  SHA-1 fingerprint and checkpoint.
+
 ## Phase 6 price detector and test documents
 
 `lib/price-text.ts` is the importer's copy of the Studio price detector

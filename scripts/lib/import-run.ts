@@ -14,6 +14,9 @@ import {
   type MappingIssue,
   type ProjectPlan,
 } from "./legacy-portfolio";
+import { mapLegacyCatalog, type CatalogOverride } from "./legacy-catalog";
+import { createSourceLoader, type DocumentPlan } from "./legacy-documents";
+import { loadServicesSeed, mapServices } from "./legacy-services";
 
 // Shared plumbing for migrate-assets and migrate-content: arguments, the
 // write client, the asset checkpoint, and reports. Everything generated stays
@@ -136,6 +139,28 @@ export function buildPlans(
   });
   for (const { key, reason } of skipped) console.log(`Skipped ${key}: ${reason}`);
   return { plans, conflicts: findPlanConflicts(plans), skipped };
+}
+
+/** Phase 6 collections: `services` (from the reviewed seed) and `catalog`. */
+export const DOCUMENT_COLLECTIONS = ["services", "catalog"] as const;
+export const isDocumentCollection = (collection: string) => (DOCUMENT_COLLECTIONS as readonly string[]).includes(collection);
+
+/** Maps the services seed or the catalogue; `--project` selects keys (`services:/servicii/usi`, `catalog:policandre#7`) or paths. */
+export function buildDocumentPlans(
+  options: ImportOptions,
+  resolveAsset: (canonical: string) => string | undefined,
+  transform?: (value: unknown) => unknown,
+): { plans: DocumentPlan[]; skipped: Array<{ key: string; reason: string }> } {
+  const manifest = indexManifest(loadManifest(options.manifestFile));
+  const load = createSourceLoader(options.legacyRoot, transform);
+  const context = { load, legacyRoot: options.legacyRoot, manifest, resolveAsset };
+  const result = options.collection === "services"
+    ? { plans: mapServices({ ...context, seed: loadServicesSeed() }), skipped: [] }
+    : mapLegacyCatalog({ ...context, overrides: (loadOverrides() as { catalog?: Record<string, CatalogOverride> }).catalog ?? {} });
+  const selected = options.projects.length
+    ? result.plans.filter((plan) => options.projects.some((wanted) => plan.key === wanted || plan.key.endsWith(`:${wanted}`)))
+    : result.plans;
+  return { plans: selected, skipped: result.skipped };
 }
 
 export function writeReport(name: string, data: unknown, markdown: string): { json: string; md: string } {

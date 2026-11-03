@@ -88,8 +88,8 @@ sessions are in [the session handoff](handoff.md). In short:
 9. Phase 6 — services and catalogue: plan accepted 2026-11-03
    ([phase6-services-plan.md](phase6-services-plan.md)); steps 2 (price-text
    detector), 3 (Studio schema, deployed 2026-11-03), 4 (website data
-   layer) and 5 (routes and components, checked with test documents) done
-   2026-11-03.
+   layer), 5 (routes and components, checked with test documents) and 6
+   (importer, dry runs clean) done 2026-11-03; next: step 7, media review.
 
 ## Remaining prototype acceptance inputs
 
@@ -135,6 +135,31 @@ These items do not block completing the rest of Phase 0.
 
 ### 2026-11-03
 
+- Phase 6 step 6 (importer), with the user's go-ahead: `--collection
+  services|catalog` in `migrate-content`/`migrate-assets`, the reviewed seed
+  `scripts/config/legacy-services.json` (17 services: 11 top-level, 6
+  variants; maintenance services Ascuns), `lib/legacy-catalog.ts`,
+  `lib/legacy-services.ts`, `lib/legacy-documents.ts`, `lib/legacy-source.ts`,
+  `verify-migration.ts`, catalogue overrides (009/010 merged with anchors
+  Policandru-10 and -11, component skipped, horos prose as detail rows, the
+  massive chandelier's horos details, three extra photos for #29), and
+  `automatizari-set.jpg` in the exclusion registry ("conține prețuri").
+  Dry runs against the live dataset (no writes): services 17 create, catalogue
+  52 create, none blocked; about 365 service media (6 MP3) and 52 catalogue
+  photos to upload. Review list in the report: catalogue spelling fixes,
+  002 levels, 011 and 015 codes, the 0010/115511 numbers, 017 without a number,
+  spaces removed from codes, legacy clopotar texts used as they are.
+  Mapping choices for the user: iconostasis examples are galleries with
+  captions (marble, bronze) or models (wood: Saransk and Pahomov; altars:
+  ten models, a/b/c photos merged); single analog/sfeșnice codes become a
+  "Cod de referință" detail row (the variant needs a finish); the Clopote hub
+  cover is `/img/clopote-thumb.jpg`; the clopotar and automation intros and
+  the door descriptions are drafts. Anchor note: the plan text says the
+  merged 009/010 answers to `Policandru-9`/`-10`, but by the position rule
+  they are `-10`/`-11`, which is what was used. Tests kept to the essentials
+  at the user's request: the "price keys do not matter" property for both
+  collections, a clean mapping of the real sources, and the price block
+  (30 migration tests).
 - Phase 6 step 5 checked with test content at the user's request: dataset
   exported (`production-2026-11-03-before-phase6-test-docs.tar.gz`), the five
   `test-phase6-*` documents written and published with

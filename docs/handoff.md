@@ -45,7 +45,9 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   webhook. Live since 2026-11-02: the Sanity webhook `Revalidare site` posts
   to the Netlify preview and a publish shows there within seconds. Settings are in `docs/architecture.md`; the secret is
   `SANITY_REVALIDATE_SECRET` in `.env.local`.
-- **Checks:** website lint, typecheck, build, 39 unit tests, 26 migration tests,
+- **Tests:** keep unit tests to the essentials (user, 2026-11-03); design
+  matters more.
+- **Checks:** website lint, typecheck, build, 39 unit tests, 30 migration tests,
   browser 45 passed and 1 skipped with the Phase 6 test documents written (without them, 16 service tests skip); Studio typecheck, lint, build, 19 unit tests.
 
 ## Gotchas for the next session
@@ -170,13 +172,14 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    throttled phone, CLS 0; see the change log). Open for the user: Dej III and Făget
    have identical technical details (Dej III's legacy brief says two
    chandeliers of 4 and 2 levels).
-9. **Phase 6 — services and catalogue** (plan accepted 2026-11-03; step 2,
-   steps 2–5 done 2026-11-03: price detector, Studio schema (deployed 2026-11-03),
-   data layer, routes and components): follow the steps and decisions in
+9. **Phase 6 — services and catalogue** (plan accepted 2026-11-03;
+   steps 2–6 done 2026-11-03: price detector, Studio schema (deployed),
+   data layer, routes and components, importer with clean dry runs): follow the steps and decisions in
    [phase6-services-plan.md](phase6-services-plan.md). Waiting on the user:
    the phone check of a test service and item, the
-   webhook filter/projection change (architecture, "Publish webhook"); then
-   step 6 (importer). Service browser tests need the test documents
+   webhook filter/projection change (architecture, "Publish webhook"); the
+   user's review of the seed texts in `scripts/config/legacy-services.json`;
+   then step 7 (media review and asset dry run) with the user's go-ahead. Service browser tests need the test documents
    (`npm run services:test-docs -- --write` after an export, `--delete`
    afterwards); otherwise 16 of them skip. The user changes the
    webhook filter/projection and checks the Studio on the phone.

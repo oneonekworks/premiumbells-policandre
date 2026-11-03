@@ -1,0 +1,347 @@
+{
+  "schemaVersion": 1,
+  "about": "Reviewed seed for the Phase 6 services import (docs/phase6-services-plan.md). Every text here is drafted price-free from the legacy wording and is reviewed by the user before publishing. Images, tables and sets are pointers into the legacy repository: `file#path`, where path starts at the module's default export (data/*.js, data/*.json) or at a top-level const (page and component files); `[n]`, `[a:b]` and `[*]` select items. Plain strings without `#` are legacy media references.",
+  "services": [
+    {
+      "path": "/servicii/policandre",
+      "status": "active",
+      "displayOrder": 10,
+      "title": "Policandre",
+      "cardLabel": "1–7 nivele",
+      "summary": "Policandre turnate masiv din bronz, de la un nivel la șapte, lăcuite sau aurite, și policandre cu horos.",
+      "cover": "data/servicePages.js#[0].imageUrl",
+      "coverAlt": "Policandre cu și fără horos, pe diferite niveluri.",
+      "body": [
+        "Reprezentăm două dintre cele mai bune turnătorii din Moscova și Iaroslavl, specializate în policandre în stil clasic, brad și tip horă, turnate masiv – clasa premium, precum și o turnătorie din Grecia care lucrează în stil bizantin, des solicitat în România."
+      ],
+      "relatedCategory": "policandre",
+      "sections": [
+        {"type": "catalogue", "heading": "Catalog", "families": ["policandre", "horos"]}
+      ]
+    },
+    {
+      "path": "/servicii/policandre-la-comanda",
+      "status": "active",
+      "displayOrder": 20,
+      "title": "Proiecte de policandre la comandă",
+      "cardLabel": "La comandă",
+      "summary": "Policandre executate la comandă, adaptate naosului, tradiției și stilului bisericii, după un proiect 3D aprobat de consiliul parohial.",
+      "cover": "data/servicePages.js#[1].imageUrl",
+      "coverAlt": "Proiect de policandru realizat la comandă.",
+      "body": [
+        "Executăm la comandă policandre adaptate naosului, zonei, tradiției și stilului, după diametrul și înălțimea dorite. Policandrele sunt turnate masiv din bronz. Înainte de execuție realizăm proiecte 3D, aprobate de consiliul parohial.",
+        "Include: sistemul de prindere în perete, lanțurile calculate după greutatea policandrului, becurile, asamblarea și punerea în funcțiune.",
+        "Am realizat deja în România multe policandre impunătoare tip horos, la comandă."
+      ],
+      "relatedCategory": "policandre",
+      "sections": [
+        {"type": "gallery", "heading": "Lucrări", "images": "data/services.js#policandreLaComanda.colaje"}
+      ]
+    },
+    {
+      "path": "/servicii/reconditionare-policandre",
+      "status": "active",
+      "displayOrder": 30,
+      "title": "Recondiționare de policandre",
+      "cardLabel": "Restaurare",
+      "summary": "Readucem la viață policandre și obiecte vechi turnate din bronz masiv.",
+      "cover": "data/servicePages.js#[2].imageUrl",
+      "coverAlt": "Policandru în curs de recondiționare.",
+      "body": [
+        "Readucem la viață policandre și tot ce este turnat din bronz masiv, inclusiv obiecte vechi de epocă.",
+        "Etapele de mai jos sunt din recondiționarea policandrului de la [Catedrala Sfântul Alexandru din Alexandria](/lucrarile-noastre/reconditionari-policandre/reconditionare-policandru-sfantul-alexandru-alexandria), august 2022."
+      ],
+      "relatedCategory": "reconditionari-policandre",
+      "sections": [
+        {"type": "gallery", "heading": "Lucrări", "images": "data/services.js#reconditionariPolicandre.colaje"},
+        {
+          "type": "steps",
+          "heading": "Etapele lucrării",
+          "steps": [
+            {"title": "Șlefuirea", "text": "Șlefuim metalul pentru a-i reda aspectul de fabrică și îndepărtăm zgârieturile și așchiile acumulate în timp.", "images": "data/services.js#reconditionariPolicandre.etapa_1_images"},
+            {"title": "Curățarea", "text": "Purificăm metalul și îndepărtăm oxizii.", "images": "data/services.js#reconditionariPolicandre.etapa_2_images"},
+            {"title": "Sudura", "text": "Sudăm elementele din bronz rupte.", "images": "data/services.js#reconditionariPolicandre.etapa_3_images"},
+            {"title": "Lustruirea", "text": "Ultima etapă este lustruirea metalului. Opțional, policandrul se lăcuiește, pentru ca recondiționarea să dureze mai mult.", "images": "data/services.js#reconditionariPolicandre.etapa_4_images"}
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/servicii/clopote",
+      "status": "active",
+      "displayOrder": 40,
+      "title": "Clopote",
+      "cardLabel": "Cu jug sau fără balans",
+      "summary": "Clopote bisericești de până la 16 tone: cu jug și balans sau fixe, fără balans, după tradiția Sfântului Munte Athos.",
+      "cover": "/img/clopote-thumb.jpg",
+      "coverAlt": "Clopote bisericești.",
+      "body": [
+        "Promovăm cele mai tradiționale clopote, de până la 16 tone: clopote fără balans, trase de sfoară, după tradiția de pe Sfântul Munte Athos, dar și stilul occidental, cu balans, cu ornamente tradiționale bogate și icoane canonice ortodoxe."
+      ],
+      "relatedCategory": "clopote",
+      "sections": []
+    },
+    {
+      "path": "/servicii/clopote/cu-jug",
+      "status": "active",
+      "displayOrder": 10,
+      "title": "Clopote cu jug",
+      "cardLabel": "Cu balans",
+      "summary": "Clopote rusești cu balans, cu jug din stejar sau din oțel.",
+      "cover": "data/servicePages.js#[3].imageUrl",
+      "coverAlt": "Clopot bisericesc cu jug.",
+      "body": ["Clopote rusești cu jug din stejar sau din oțel."],
+      "relatedCategory": "clopote",
+      "sections": [
+        {"type": "bellSizes", "heading": "Dimensiuni", "rows": "components/clopote-cu-jug-specs.js#tabelCuJug", "note": "Include: limba, icoane, text, ornamente, jug de stejar și transport până la biserică."},
+        {"type": "bellSets", "heading": "Seturi recomandate după note muzicale", "sets": "components/clopote-cu-jug-specs.js#sets"}
+      ]
+    },
+    {
+      "path": "/servicii/clopote/fara-balans",
+      "status": "active",
+      "displayOrder": 20,
+      "title": "Clopote fără balans",
+      "cardLabel": "Tragere cu sfoară",
+      "summary": "Clopote fixe care nu se balansează: se trage doar limba, după tradiția ortodoxă.",
+      "cover": "data/servicePages.js#[4].imageUrl",
+      "coverAlt": "Clopote bisericești fără balans.",
+      "body": [
+        "Clopotele sunt fixe și nu se balansează; se trage doar limba, după tradiția ortodoxă pe care o regăsim la Sfântul Munte Athos sau la Biserica Sfântului Mormânt de la Ierusalim."
+      ],
+      "relatedCategory": "clopote",
+      "sections": [
+        {"type": "bellSizes", "heading": "Dimensiuni", "rows": "components/clopote-fara-balans-specs.js#tabelFaraBalans", "note": "Include: limba, icoane, text, ornamente și transport până la biserică."},
+        {"type": "bellSets", "heading": "Seturi recomandate, acordate după note muzicale", "sets": "components/clopote-fara-balans-specs.js#sets"}
+      ]
+    },
+    {
+      "path": "/servicii/clopotar-electronic",
+      "status": "active",
+      "displayOrder": 50,
+      "title": "Clopotar electronic pentru clopote fixe",
+      "cardLabel": "Clopote fixe",
+      "summary": "Clopotar electronic pentru clopote fixe: melodii programate, telecomandă, motoare pentru limba clopotului și pornire de pe telefon.",
+      "cover": "data/servicePages.js#[5].imageUrl",
+      "coverAlt": "Clopotar electronic instalat pentru clopote fixe.",
+      "body": [
+        "Sistem electronic pentru tragerea clopotelor fixe: un controler programabil cu melodii tradiționale, motoare care acționează limba clopotului, telecomandă și modul GSM pentru pornirea de pe telefon."
+      ],
+      "relatedCategory": "automatizari",
+      "sections": [
+        {
+          "type": "models",
+          "heading": "Componente",
+          "models": [
+            {
+              "title": "GM870I – clopotar electronic, melodii Athos",
+              "anchorId": "GM870I",
+              "cover": "pages/servicii/clopotar-electronic.js#ceFeatures[0].imageSrc",
+              "description": "Ecran LCD color de 7 inchi.\nMeniu multilingv cu instrucțiuni pas cu pas.\nSunet de clopot de înaltă calitate.\nPână la 1000 de melodii înregistrate.\nÎnregistrarea melodiilor de la tastatura încorporată sau de la o tastatură externă (opțional).\nCalculează automat răsăritul și apusul după latitudinea și longitudinea locului.\n10 taste de apelare rapidă.\nPână la 24 de ieșiri de releu pentru ceasul turnului, clopote și slujbe (necesită opțiunea de releu RL085).\nProgramări automate pentru sărbători.\nBătaia orelor după tradiția locală.\nOrice melodie înainte sau după bătaia orelor și a sferturilor.\nSalvarea și restaurarea setărilor și melodiilor pe un stick USB.\nControl de pe calculator, telefon și tabletă (cu accesoriu opțional).\nCod de acces individual.\nMemoria se păstrează până la 10 ani la întreruperea curentului, datorită bateriei cu litiu încorporate.\nDimensiuni 334 × 60 × 180 mm, greutate 2,3 kg."
+            },
+            {"title": "KIITF4EVO – telecomandă de buzunar cu 4 canale", "anchorId": "KIITF4EVO", "cover": "pages/servicii/clopotar-electronic.js#ceFeatures[1].imageSrc", "descriptionFrom": "pages/servicii/clopotar-electronic.js#ceFeatures[1].detailList"},
+            {"title": "M-8000 – motor electric pentru limba clopotului", "anchorId": "M-8000", "cover": "pages/servicii/clopotar-electronic.js#ceFeatures[2].imageSrc", "descriptionFrom": "pages/servicii/clopotar-electronic.js#ceFeatures[2].detailList"},
+            {"title": "QUADRO – panou electric", "anchorId": "QUADRO", "cover": "pages/servicii/clopotar-electronic.js#ceFeatures[3].imageSrc", "descriptionFrom": "pages/servicii/clopotar-electronic.js#ceFeatures[3].detailList"},
+            {"title": "GSM4000 – modul GSM", "anchorId": "GSM4000", "cover": "pages/servicii/clopotar-electronic.js#ceFeatures[4].imageSrc", "descriptionFrom": "pages/servicii/clopotar-electronic.js#ceFeatures[4].detailList"}
+          ]
+        },
+        {"type": "gallery", "heading": "Fotografii", "images": "data/services.js#clopotarElectronic.images"}
+      ]
+    },
+    {
+      "path": "/servicii/automatizari-clopote-cu-balans",
+      "status": "active",
+      "displayOrder": 60,
+      "title": "Automatizări pentru clopote cu balans",
+      "cardLabel": "Sisteme automate",
+      "summary": "Seturi de automatizare pentru clopote cu balans: controler, motor liniar, modem, telecomenzi și ciocan extern.",
+      "cover": "data/servicePages.js#[6].imageUrl",
+      "coverAlt": "Sistem de automatizare pentru clopote cu balans.",
+      "body": [
+        "Automatizăm clopotele cu balans, ca să poată fi trase după program sau de la telecomandă. Mai jos sunt seturile recomandate după greutatea clopotelor; fiecare set se adaptează clopotelor bisericii."
+      ],
+      "relatedCategory": "automatizari",
+      "sections": [
+        {
+          "type": "bellSets",
+          "heading": "Seturi",
+          "sets": [
+            {"title": "Set pentru 2 clopote", "weightsKg": [42, 85], "description": "Controler, motor liniar, modem, 2 telecomenzi și ciocan extern."},
+            {"title": "Set pentru 2 clopote", "weightsKg": [85, 170], "description": "Controler, motor liniar, modem, 2 telecomenzi și ciocan extern."},
+            {"title": "Set pentru 3 clopote", "weightsKg": [42, 85, 170], "description": "Controler, motor liniar, modem, 2 telecomenzi și ciocan extern."},
+            {"title": "Set pentru 3 clopote", "weightsKg": [64, 128, 250], "description": "Controler, motor liniar, modem, 2 telecomenzi și ciocan extern."},
+            {"title": "Set pentru 3 clopote", "weightsKg": [170, 310, 620], "description": "Controler, motor liniar, modem, 2 telecomenzi și ciocan extern."}
+          ]
+        },
+        {"type": "gallery", "heading": "Fotografii", "images": ["/services/automatizari-cover-1.jpg", "/services/automatizari-cover-2.jpg", "/services/automatizari-cover-3.jpg"]}
+      ]
+    },
+    {
+      "path": "/servicii/iconostase",
+      "status": "active",
+      "displayOrder": 70,
+      "title": "Iconostase",
+      "cardLabel": "Marmură, lemn, bronz",
+      "summary": "Iconostase din marmură cu porți din alamă, cupru sau aurite, din lemn sculptat cu aur și din bronz, executate după proiect.",
+      "cover": "data/servicePages.js#[7].imageUrl",
+      "coverAlt": "Iconostas realizat la comandă.",
+      "body": [
+        "Executăm iconostase din marmură cu porți din alamă, cupru sau aurite; din lemn sculptat unic, acoperit cu aur; și din lemn cu bronz. Fiecare iconostas se realizează după un proiect."
+      ],
+      "sections": []
+    },
+    {
+      "path": "/servicii/iconostase/marmura",
+      "status": "active",
+      "displayOrder": 10,
+      "title": "Iconostase din marmură",
+      "cardLabel": "Marmură grecească",
+      "summary": "Iconostase din marmură grecească, cu porți din alamă, cupru sau aurite.",
+      "cover": "pages/servicii/iconostase.js#iconostaseCovers[0].imageSrc",
+      "coverAlt": "Iconostas din marmură.",
+      "body": ["Iconostase din marmură grecească, cu porți din alamă, cupru sau aurite, realizate după proiect."],
+      "sections": [
+        {"type": "gallery", "heading": "Exemple", "images": "pages/servicii/iconostase/marmura.jsx#features[*].imageSrc", "captions": "pages/servicii/iconostase/marmura.jsx#features[*].description"}
+      ]
+    },
+    {
+      "path": "/servicii/iconostase/lemn-aur",
+      "status": "active",
+      "displayOrder": 20,
+      "title": "Iconostase din lemn sculptat cu aur",
+      "cardLabel": "Sculptate unic",
+      "summary": "Iconostase sculptate unic din lemn, acoperite cu foiță de aur.",
+      "cover": "pages/servicii/iconostase.js#iconostaseCovers[1].imageSrc",
+      "coverAlt": "Iconostas sculptat din lemn, aurit.",
+      "body": ["Iconostase sculptate, unice în execuție, acoperite cu foiță de aur."],
+      "sections": [
+        {
+          "type": "models",
+          "heading": "Exemple",
+          "models": [
+            {"title": "Iconostas sculptat, Saransk", "cover": "pages/servicii/iconostase/lemn-aur.jsx#features[0].imageSrc", "gallery": "pages/servicii/iconostase/lemn-aur.jsx#features[1:11].imageSrc"},
+            {"title": "Iconostas sculptat, Pahomov", "cover": "pages/servicii/iconostase/lemn-aur.jsx#features[11].imageSrc", "gallery": "pages/servicii/iconostase/lemn-aur.jsx#features[12:21].imageSrc"}
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/servicii/iconostase/iconostas-bronz",
+      "status": "active",
+      "displayOrder": 30,
+      "title": "Iconostase din bronz",
+      "cardLabel": "Bronz integral",
+      "summary": "Iconostase sculptate integral din bronz, aurite prin galvanizare chimică.",
+      "cover": "pages/servicii/iconostase.js#iconostaseCovers[2].imageSrc",
+      "coverAlt": "Iconostas din bronz.",
+      "body": [
+        "Părțile laterale, ușile împărătești și ușile diaconești sunt din elemente de alamă și cupru, iar tot ce se vede este aurit prin galvanizare chimică. Pentru interior, garanția depășește 100 de ani."
+      ],
+      "sections": [
+        {"type": "gallery", "heading": "Exemple", "images": "pages/servicii/iconostase/iconostas-bronz.jsx#iconostaseBronz[*].imageSrc"}
+      ]
+    },
+    {
+      "path": "/servicii/iconostase/pristol-marmura",
+      "status": "active",
+      "displayOrder": 40,
+      "title": "Pristoale și jertfelnice din marmură",
+      "cardLabel": "Sculptate manual",
+      "summary": "Pristoale și jertfelnice din marmură grecească, sculptate manual, cu riză din cupru și elemente din bronz aurite.",
+      "cover": "pages/servicii/iconostase.js#iconostaseCovers[3].imageSrc",
+      "coverAlt": "Pristol din marmură.",
+      "body": ["Din marmură grecească, sculptate manual, cu riză din cupru și elemente turnate din bronz, aurite. Pentru interior și exterior."],
+      "sections": [
+        {
+          "type": "models",
+          "heading": "Modele",
+          "models": [
+            {"title": "Pristol nr. 1", "cover": "pages/servicii/iconostase/pristol-marmura.jsx#features[0].imageSrc", "description": "Pristol din trei tipuri de marmură: greacă, chineză și egipteană, cu toate elementele sculptate manual. Dimensiune 1 × 1 m; disponibil și 1,1 × 1,1 m."},
+            {"title": "Pristol nr. 2", "cover": "pages/servicii/iconostase/pristol-marmura.jsx#features[1].imageSrc", "description": "Pristol din marmură grecească, sculptat manual. Dimensiune 1 × 1 m."},
+            {"title": "Jertfelnic nr. 3", "cover": "pages/servicii/iconostase/pristol-marmura.jsx#features[2].imageSrc", "gallery": "pages/servicii/iconostase/pristol-marmura.jsx#features[3:4].imageSrc", "description": "Jertfelnic din marmură grecească și chinezească, sculptat manual. Dimensiune 0,8 × 0,8 m."},
+            {"title": "Pristol și jertfelnic de dimensiuni mari nr. 4", "cover": "pages/servicii/iconostase/pristol-marmura.jsx#features[4].imageSrc", "description": "Pentru catedrale și mănăstiri cu altar mare. Dimensiuni individuale, din marmură grecească și chinezească, sculptate manual, cu elemente turnate din alamă, placate cu argint și patinate. Elementele turnate pot fi aurite, argintate, nichelate sau lăcuite."},
+            {"title": "Pristol și jertfelnic de dimensiuni mari nr. 5", "cover": "pages/servicii/iconostase/pristol-marmura.jsx#features[5].imageSrc", "description": "Pentru catedrale și mănăstiri cu altar mare. Dimensiuni individuale, din marmură grecească și chinezească, sculptate manual, cu elemente turnate din alamă, placate cu argint și patinate. Elementele turnate pot fi aurite, argintate, nichelate sau lăcuite."},
+            {"title": "Jertfelnic nr. 6", "cover": "pages/servicii/iconostase/pristol-marmura.jsx#features[6].imageSrc", "description": "Jertfelnic din marmură grecească și chinezească, sculptat manual. Dimensiune 0,8 × 0,8 m."},
+            {"title": "Jertfelnic nr. 7", "cover": "pages/servicii/iconostase/pristol-marmura.jsx#features[7].imageSrc", "description": "Jertfelnic din marmură grecească și chinezească, sculptat manual. Dimensiune 0,8 × 0,8 m."},
+            {"title": "Pristol nr. 8", "cover": "pages/servicii/iconostase/pristol-marmura.jsx#features[8].imageSrc", "description": "Pristol din marmură grecească, sculptat manual. Dimensiune 1 × 1 m."},
+            {"title": "Pristol nr. 9", "cover": "pages/servicii/iconostase/pristol-marmura.jsx#features[9].imageSrc", "gallery": "pages/servicii/iconostase/pristol-marmura.jsx#features[10:12].imageSrc", "description": "Pristol din marmură grecească, sculptat manual. Dimensiune 1 × 1 m."},
+            {"title": "Pristol nr. 10", "cover": "pages/servicii/iconostase/pristol-marmura.jsx#features[12].imageSrc", "description": "Pristol din marmură grecească, sculptat manual. Dimensiune 1 × 3 m."}
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/servicii/usi",
+      "status": "active",
+      "displayOrder": 80,
+      "title": "Uși din cupru, bronz și stejar",
+      "cardLabel": "La comandă",
+      "summary": "Uși bisericești din cupru, bronz și stejar, executate la comandă după proiect, cu icoane individuale.",
+      "cover": "data/servicePages.js#[8].imageUrl",
+      "coverAlt": "Uși bisericești din cupru, bronz și stejar.",
+      "body": ["Uși din cupru, stejar și bronz, executate după proiect."],
+      "relatedCategory": "usi",
+      "sections": [
+        {
+          "type": "models",
+          "heading": "Modele",
+          "models": [
+            {"title": "Uși din cupru", "cover": "data/services.js#usi[0].imageSrc", "gallery": "data/services.js#usi[0].gallery", "description": "Se execută doar pe bază de proiect, cu icoane individuale. Complexitatea, înălțimea și lățimea se stabilesc pentru fiecare biserică."},
+            {"title": "Uși din stejar (A)", "cover": "data/services.js#usi[1].imageSrc", "gallery": "data/services.js#usi[1].gallery", "description": "Se execută doar pe bază de proiect, cu icoane individuale. Complexitatea, înălțimea și lățimea se stabilesc pentru fiecare biserică."},
+            {"title": "Uși din stejar sau cireș roșu", "cover": "data/services.js#usi[2].imageSrc", "gallery": "data/services.js#usi[2].gallery", "description": "Se execută doar pe bază de proiect, cu icoane individuale. Complexitatea, înălțimea și lățimea se stabilesc pentru fiecare biserică."},
+            {"title": "Uși din stejar cu elemente din bronz", "cover": "data/services.js#usi[3].imageSrc", "gallery": "data/services.js#usi[3].gallery", "description": "Complexitatea lucrării și elementele din alamă se stabilesc după proiect. Exemple: ușă de 250 × 150 cm, în semicerc; ușă din stejar sau tei cu elemente din bronz, 190 × 75 cm."},
+            {"title": "Uși din stejar (B)", "cover": "data/services.js#usi[4].imageSrc", "gallery": "data/services.js#usi[4].gallery", "description": "Se execută doar pe bază de proiect, cu icoane individuale. Complexitatea, înălțimea și lățimea se stabilesc pentru fiecare biserică."},
+            {"title": "Uși din bronz (A)", "cover": "data/services.js#usi[5].imageSrc", "gallery": "data/services.js#usi[5].gallery", "description": "Se execută doar pe bază de proiect, cu icoane individuale. Complexitatea, înălțimea și lățimea se stabilesc pentru fiecare biserică."},
+            {"title": "Uși din bronz (B)", "cover": "data/services.js#usi[6].imageSrc", "gallery": "data/services.js#usi[6].gallery"},
+            {"title": "Uși din lemn cu bronz", "cover": "data/services.js#usi[7].imageSrc", "gallery": "data/services.js#usi[7].gallery"}
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/servicii/clopote-suvenire",
+      "status": "hidden",
+      "displayOrder": 90,
+      "title": "Clopote suvenire",
+      "cardLabel": "Cadouri",
+      "summary": "Cel mai bun cadou pentru un ctitor din partea unei biserici sau a unei mănăstiri.",
+      "cover": "data/servicePages.js#[9].imageUrl",
+      "coverAlt": "Clopot suvenir.",
+      "body": [],
+      "sections": [
+        {"type": "gallery", "heading": "Fotografii", "images": "data/services.js#clopoteSuvenireLinks"}
+      ]
+    },
+    {
+      "path": "/servicii/cupole",
+      "status": "hidden",
+      "displayOrder": 100,
+      "title": "Cupole",
+      "cardLabel": "Inox aurit, cupru, compozit",
+      "summary": "Cupole din inox aurit, cupru și compozit.",
+      "cover": "data/servicePages.js#[10].imageUrl",
+      "coverAlt": "Cupolă din inox aurit.",
+      "body": [],
+      "sections": [
+        {"type": "gallery", "heading": "Inox aurit", "images": "data/services.js#cupole.inoxAurite"},
+        {"type": "gallery", "heading": "Cupru", "images": "data/services.js#cupole.cupru"},
+        {"type": "gallery", "heading": "Compozit", "images": "data/services.js#cupole.compozit"},
+        {"type": "gallery", "heading": "Compozit aurit", "images": "data/services.js#cupole.compozitAurite"}
+      ]
+    },
+    {
+      "path": "/servicii/analog-sfesnice-chivot",
+      "status": "hidden",
+      "displayOrder": 110,
+      "title": "Analoghii, sfeșnice și chivoturi",
+      "cardLabel": "Catalog",
+      "summary": "Analoghii, chivoturi, pupitre, sfeșnice și aplice turnate la Iaroslavl.",
+      "cover": "data/servicePages.js#[11].imageUrl",
+      "coverAlt": "Sfeșnice și obiecte bisericești.",
+      "body": [],
+      "sections": [
+        {"type": "catalogue", "heading": "Catalog", "families": ["analoghii-chivoturi", "sfesnice", "aplice"]}
+      ]
+    }
+  ]
+}

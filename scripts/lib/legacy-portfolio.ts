@@ -92,7 +92,10 @@ export interface MappingIssue {
 /** An image the project needs, identified by its manifest canonical reference. */
 export interface ImageNeed {
   canonical: string;
-  role: "cover" | "gallery";
+  /** Where the media is used, for reports (cover, gallery, a service section…). */
+  role: string;
+  /** Uploaded as an image asset (default) or as a file asset (MP3). */
+  kind?: "image" | "file";
   /** Local file (legacy public folder) or remote URL to read the original from. */
   localFile?: string;
   resolvedUrl?: string;

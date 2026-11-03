@@ -539,6 +539,12 @@
       "origin": "gcs",
       "reason": "Returned HTTP 404 during the audited legacy-media check and was explicitly excluded from migration by user decision.",
       "decisionDate": "2026-09-20"
+    },
+    {
+      "canonical": "local-public:/services/automatizari-set.jpg",
+      "origin": "local-public",
+      "reason": "Conține prețuri (lista de prețuri a seturilor de automatizare); înlocuită de secțiunea Seturi fără prețuri, decizia 2 din Phase 6.",
+      "decisionDate": "2026-11-03"
     }
   ]
 }

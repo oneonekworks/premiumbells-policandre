@@ -63,12 +63,14 @@ test("loads the explicit media exclusion registry", () => {
   const canonicalReferences = registry.exclusions.map((entry) => entry.canonical);
 
   assert.equal(registry.schemaVersion, 1);
-  assert.equal(registry.exclusions.length, 77);
-  assert.equal(new Set(canonicalReferences).size, 77);
+  assert.equal(registry.exclusions.length, 78);
+  assert.equal(new Set(canonicalReferences).size, 78);
   assert.equal(registry.exclusions.filter((entry) => entry.origin === "cloudinary").length, 46);
   assert.equal(registry.exclusions.filter((entry) => entry.origin === "gcs").length, 28);
   assert.equal(registry.exclusions.filter((entry) => entry.origin === "external").length, 3);
-  assert.ok(registry.exclusions.every((entry) => entry.decisionDate === "2026-09-20"));
+  // The Phase 6 price-list image (decision 2, 2026-11-03).
+  assert.equal(registry.exclusions.filter((entry) => entry.origin === "local-public").length, 1);
+  assert.ok(registry.exclusions.every((entry) => ["2026-09-20", "2026-11-03"].includes(entry.decisionDate)));
 });
 
 test("builds the known legacy portfolio baseline", { skip: !existsSync(legacyRoot) }, async () => {
@@ -86,7 +88,7 @@ test("builds the known legacy portfolio baseline", { skip: !existsSync(legacyRoo
   assert.equal(manifest.summary.referencedAssets, 2_429);
   assert.equal(manifest.summary.byOrigin.gcs, 2_242);
   assert.equal(manifest.summary.missingLocalAssets, 1);
-  assert.equal(manifest.summary.excludedAssets, 77);
+  assert.equal(manifest.summary.excludedAssets, 78);
   assert.equal(manifest.summary.includedUnavailableRemoteAssets, 0);
   assert.equal(manifest.source.publicFiles, 207);
   assert.deepEqual(

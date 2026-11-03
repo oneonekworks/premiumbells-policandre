@@ -1,10 +1,14 @@
 import { COLLECTION_CATEGORIES, stableStringify, type MappingIssue, type ProjectPlan } from "./lib/legacy-portfolio";
+import type { DocumentPlan } from "./lib/legacy-documents";
 import {
+  buildDocumentPlans,
   buildPlans,
   createWriteClient,
+  isDocumentCollection,
   loadAssetCheckpoint,
   parseImportArgs,
   writeReport,
+  type ImportOptions,
 } from "./lib/import-run";
 
 // Creates or updates Sanity `project` drafts for the selected legacy records.
@@ -39,6 +43,7 @@ const comparable = (document: Record<string, unknown>) => {
 
 async function main() {
   const options = parseImportArgs();
+  if (isDocumentCollection(options.collection)) return importDocuments(options);
   const client = createWriteClient();
   const checkpoint = loadAssetCheckpoint();
 
@@ -171,6 +176,117 @@ function renderReport(
     if (compact.length) lines.push(`## ${result.key}`, "", ...compact, "");
   }
   return lines.join("\n");
+}
+
+// Phase 6: services (from the reviewed seed) and catalogue items. Same rules
+// as projects: drafts only, published documents left alone, unchanged drafts
+// not rewritten, and a record with any error (price text included) blocked.
+// Parents are written before their variants.
+async function importDocuments(options: ImportOptions) {
+  const client = createWriteClient();
+  const checkpoint = loadAssetCheckpoint();
+  const { plans, skipped } = buildDocumentPlans(options, (canonical) => checkpoint[canonical]?.assetId);
+  console.log(`${options.write ? "WRITE" : "DRY RUN"}: ${plans.length} documents from ${options.collection}.`);
+
+  const categorySlugs = [...new Set(plans.flatMap((plan) => (plan.relatedCategorySlug ? [plan.relatedCategorySlug] : [])))];
+  const categories = Object.fromEntries((await client.fetch<Array<{ _id: string; slug: string }>>(
+    '*[_type == "workCategory" && slug.ro.current in $slugs && !(_id in path("drafts.**"))]{_id, "slug": slug.ro.current}',
+    { slugs: categorySlugs },
+  )).map(({ _id, slug }) => [slug, _id]));
+  const planned = new Set(plans.map((plan) => plan.document._id));
+
+  const results: DocumentResult[] = [];
+  for (const plan of [...plans].sort((a, b) => Number(Boolean(a.parentId)) - Number(Boolean(b.parentId)))) {
+    results.push(await processDocument(plan, { client, write: options.write, categories, planned }));
+  }
+  results.sort((a, b) => plans.findIndex((plan) => plan.key === a.key) - plans.findIndex((plan) => plan.key === b.key));
+
+  const lines = [
+    `# Content import — ${options.write ? "write" : "dry-run"}`,
+    "",
+    `Collection \`${options.collection}\`. Documents are written as drafts (\`drafts.<id>\`) for review in the Studio.`,
+    "",
+    "| Record | Document ID | Media (to upload) | Status |",
+    "| --- | --- | ---: | --- |",
+    ...results.map((result) => `| ${result.key} | \`${result.id}\` | ${result.media} (${result.pending}) | **${result.status}** |`),
+    "",
+    ...(skipped.length ? ["## Skipped", "", ...skipped.map(({ key, reason }) => `- ${key}: ${reason}`), ""] : []),
+  ];
+  for (const result of results) {
+    const notes = [
+      ...result.issues.filter((issue) => issue.code !== "asset-not-uploaded")
+        .map((issue) => `- ${issue.severity === "error" ? "**Error**" : "Warning"} \`${issue.code}\`: ${issue.message}`),
+      ...result.review.map((note) => `- Review: ${note}`),
+      ...(result.error ? [`- **Failed:** ${result.error}`] : []),
+    ];
+    if (notes.length) lines.push(`## ${result.key}`, "", ...notes, "");
+  }
+  const markdown = lines.join("\n");
+  const files = writeReport(`content-${options.collection}`, { mode: options.write ? "write" : "dry-run", skipped, results }, markdown);
+  console.log(markdown);
+  console.log(`Report: ${files.md}`);
+  if (results.some((result) => result.status === "failed" || result.status === "blocked")) process.exitCode = 1;
+}
+
+interface DocumentResult {
+  key: string;
+  id: string;
+  status: Status;
+  media: number;
+  pending: number;
+  issues: MappingIssue[];
+  review: string[];
+  error?: string;
+}
+
+async function processDocument(
+  plan: DocumentPlan,
+  { client, write, categories, planned }: {
+    client: ReturnType<typeof createWriteClient>; write: boolean; categories: Record<string, string>; planned: Set<string>;
+  },
+): Promise<DocumentResult> {
+  const document = structuredClone(plan.document);
+  const draftId = `drafts.${document._id}`;
+  const issues = [...plan.issues];
+  if (plan.relatedCategorySlug) {
+    const categoryId = categories[plan.relatedCategorySlug];
+    if (categoryId) document.relatedCategory = { _type: "reference", _ref: categoryId };
+    else issues.push({ severity: "error", code: "missing-category", message: `No published workCategory "${plan.relatedCategorySlug}".` });
+  }
+  const slug = (document.slug as { ro?: { current?: string } } | undefined)?.ro?.current;
+  const remote = await client.fetch<{ published: string | null; draft: Record<string, unknown> | null; slugTakenBy: string[]; parent: string | null }>(
+    `{
+      "published": *[_id == $id][0]._id,
+      "draft": *[_id == $draftId][0],
+      "slugTakenBy": *[_type == "service" && defined($slug) && slug.ro.current == $slug && !(_id in [$id, $draftId])]._id,
+      "parent": *[_id in [$parent, "drafts." + $parent]][0]._id
+    }`,
+    { id: document._id, draftId, slug: slug ?? null, parent: plan.parentId ?? "" },
+  );
+  for (const id of remote.slugTakenBy) issues.push({ severity: "error", code: "slug-taken", message: `Slug "${slug}" is used by ${id}.` });
+  if (plan.parentId && !remote.parent && !planned.has(plan.parentId)) {
+    issues.push({ severity: "error", code: "missing-parent", message: `Parent ${plan.parentId} does not exist and is not in this run.` });
+  }
+  const pending = JSON.stringify(document).match(/"_ref":"pending-/g)?.length ?? 0;
+  if (write && pending) issues.push({ severity: "error", code: "assets-pending", message: `${pending} media are not uploaded; run migrate-assets --write first.` });
+
+  const result: DocumentResult = { key: plan.key, id: document._id, status: "create", media: plan.images.length, pending, issues, review: plan.review };
+  if (issues.some((issue) => issue.severity === "error")) return { ...result, status: "blocked" };
+  if (remote.published) return { ...result, status: "published-exists" };
+  if (remote.draft) {
+    if (comparable(remote.draft) === comparable(document)) return { ...result, status: "unchanged" };
+    result.status = "update";
+  }
+  if (!write) return result;
+  try {
+    await client.createOrReplace(
+      { ...document, _id: draftId, legacy: { ...(document.legacy as object), migratedAt: new Date().toISOString() } },
+      { visibility: "sync" },
+    );
+    return { ...result, status: result.status === "update" ? "updated" : "created" };
+  } catch (error) {
+    return { ...result, status: "failed", error: error instanceof Error ? error.message : String(error) };
+  }
 }
 
 main().catch((error: unknown) => {
