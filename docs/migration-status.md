@@ -87,7 +87,7 @@ sessions are in [the session handoff](handoff.md). In short:
    closed 2026-11-03.
 9. Phase 6 — services and catalogue: plan accepted 2026-11-03
    ([phase6-services-plan.md](phase6-services-plan.md)); steps 2 (price-text
-   detector), 3 (Studio schema, committed, not deployed), 4 (website data
+   detector), 3 (Studio schema, deployed 2026-11-03), 4 (website data
    layer) and 5 (routes and components; content tests wait for the test
    documents) done 2026-11-03.
 
@@ -173,8 +173,10 @@ These items do not block completing the rest of Phase 0.
   typecheck, lint, build, `sanity schema validate` (0 errors, 0 warnings) and
   19 unit tests pass, including "no field named or titled as a price" and
   "validator wired on both types". Schema extracted and website types
-  regenerated. Not deployed: waits for the user (`npx sanity deploy -y`, then
-  the phone check). Details in [content-model.md](content-model.md).
+  regenerated. Deployed with `npx sanity deploy -y` at the user's request
+  (2026-11-03; the hosted Studio auto-updates to Sanity 6.22, the local
+  packages are 6.20). Phone check by the user still open. Details in
+  [content-model.md](content-model.md).
 - Phase 6 step 2: price-text detector in the Studio (`lib/priceText.ts`) and a
   copy for the importer (`scripts/lib/price-text.ts`). Errors (block
   publishing): `€`, euro/EUR, uppercase RON, TVA, an amount next to a currency,

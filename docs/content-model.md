@@ -267,7 +267,7 @@ Validation rules should require at least one cover/gallery image, ensure the
 cover has alt text, and reject duplicate slugs. Empty legacy specification
 values should not create rows.
 
-### `service` (implemented 2026-11-03, Phase 6 step 3; not deployed yet)
+### `service` (implemented and deployed 2026-11-03, Phase 6 step 3)
 
 One document type for services and their variants ("Serviciu"); a variant is
 a service with a `parent`. Studio file `schemaTypes/service.ts`, sections in
@@ -305,7 +305,7 @@ Sections (each has an optional localeString `heading`):
 - `sectionCta` Contact: `text`, `label` (default "Cereți o ofertă"),
   `contact` (`phoneEmail` / `phone` / `email` / `link`) and `href` for links.
 
-### `catalogItem` (implemented 2026-11-03, not deployed yet)
+### `catalogItem` (implemented and deployed 2026-11-03)
 
 "Produs din catalog", `schemaTypes/catalogItem.ts`. No page of its own; cards
 render inside a service's catalogue section.
