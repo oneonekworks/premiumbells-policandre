@@ -111,6 +111,7 @@ test.describe('with the test documents', () => {
   test('a catalogue card opens from the keyboard, Back closes it and focus returns', async ({page}) => {
     await page.goto(hub);
     const card = page.getByRole('button', {name: 'Vezi detaliile: Policandru de test nr. 1'});
+    await expect(card).toContainText('1 nivel ·');
     await card.focus();
     await page.keyboard.press('Enter');
     const dialog = page.getByRole('dialog', {name: 'Policandru de test nr. 1'});

@@ -64,7 +64,7 @@ const ro = {
     bellSizes: {weight: 'Greutate', diameter: 'Diametru', height: 'Înălțime', note: 'Notă', scroll: 'Glisați tabelul pentru toate coloanele.'},
     bellSets: {withRinger: 'Cu clopotar electronic', listen: 'Ascultați setul', bells: ['clopot', 'clopote', 'de clopote']},
     catalogue: {
-      levels: 'Nivele', candles: 'Lumânări', height: 'Înălțime', diameter: 'Diametru', width: 'Lățime', depth: 'Adâncime',
+      levels: 'Nivele', levelCount: ['nivel', 'nivele', 'de nivele'], candles: 'Lumânări', height: 'Înălțime', diameter: 'Diametru', width: 'Lățime', depth: 'Adâncime',
       weight: 'Greutate', madeToOrder: 'Se execută la comandă', finishes: 'Finisaje și coduri', code: 'cod',
       finish: {varnished: 'Lăcuit', gilded: 'Aurit', silvered: 'Argintat', patinated: 'Patinat'} as Record<string, string>,
       empty: 'Produsele din catalog vor fi publicate în curând.',
@@ -173,7 +173,7 @@ const en: Dictionary = {
     bellSizes: {weight: 'Weight', diameter: 'Diameter', height: 'Height', note: 'Note', scroll: 'Swipe the table to see every column.'},
     bellSets: {withRinger: 'With electronic ringer', listen: 'Listen to the set', bells: ['bell', 'bells', 'bells']},
     catalogue: {
-      levels: 'Tiers', candles: 'Candles', height: 'Height', diameter: 'Diameter', width: 'Width', depth: 'Depth',
+      levels: 'Tiers', levelCount: ['tier', 'tiers', 'tiers'], candles: 'Candles', height: 'Height', diameter: 'Diameter', width: 'Width', depth: 'Depth',
       weight: 'Weight', madeToOrder: 'Made to order', finishes: 'Finishes and codes', code: 'code',
       finish: {varnished: 'Lacquered', gilded: 'Gilded', silvered: 'Silvered', patinated: 'Patinated'} as Record<string, string>,
       empty: 'Catalogue items will be published soon.',

@@ -1,5 +1,6 @@
 import {Gallery} from '@/components/portfolio/gallery';
 import type {Dictionary} from '@/lib/i18n/dictionaries';
+import {plural} from '@/lib/i18n/format';
 import type {Lang} from '@/lib/i18n/routing';
 import {catalogAnchors, catalogKey, formatLength} from '@/lib/services';
 import {getCatalogItems, type CatalogItem, type ServiceSection} from '@/sanity/services';
@@ -41,7 +42,7 @@ export async function CatalogueSection({section, lang, dictionary}: {
     const title = item.title ?? '';
     const rows = details(item, lang, labels);
     const images = describedImages([...(item.image ? [{...item.image, _key: `${item._id}-image`}] : []), ...(item.gallery ?? [])], title, portfolio.photoOf);
-    const summary = [item.levels != null && `${item.levels} ${labels.levels.toLowerCase()}`, item.heightCm != null && formatLength(item.heightCm, numberLocale(lang))]
+    const summary = [item.levels != null && plural(lang, item.levels, labels.levelCount), item.heightCm != null && formatLength(item.heightCm, numberLocale(lang))]
       .filter(Boolean).join(' · ');
     return {
       key: item._id,

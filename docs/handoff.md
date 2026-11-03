@@ -46,7 +46,7 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   to the Netlify preview and a publish shows there within seconds. Settings are in `docs/architecture.md`; the secret is
   `SANITY_REVALIDATE_SECRET` in `.env.local`.
 - **Checks:** website lint, typecheck, build, 39 unit tests, 26 migration tests,
-  browser 29 passed and 17 skipped (16 wait for the Phase 6 test documents); Studio typecheck, lint, build, 19 unit tests.
+  browser 45 passed and 1 skipped with the Phase 6 test documents written (without them, 16 service tests skip); Studio typecheck, lint, build, 19 unit tests.
 
 ## Gotchas for the next session
 
@@ -62,7 +62,10 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   so TypeGen infers strings; interpolated queries need explicit
   `client.fetch<*_RESULT>()`. Regenerate types with `npm run sanity:typegen`.
 - Reads are cached now: on `npm run dev` use a hard refresh to see a publish;
-  a production build needs the webhook or `npm run revalidate:test`.
+  a production build needs the webhook or `npm run revalidate:test`. The data
+  cache (`.next/cache/fetch-cache`) survives rebuilds, so a local build can
+  keep an empty result cached before content existed; revalidate the tag or
+  delete that folder before building.
 - Browser tests: run against a production build on another port (see the
   scratch config pattern used in the change log) so a running dev server is
   not reused. Playwright must resolve `@playwright/test` from the repo, so put
@@ -172,10 +175,10 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    data layer, routes and components): follow the steps and decisions in
    [phase6-services-plan.md](phase6-services-plan.md). Waiting on the user:
    the phone check of a test service and item, the
-   webhook filter/projection change (architecture, "Publish webhook"), and a
-   go-ahead to write the test documents (`npm run services:test-docs --
-   --write` after an export) so the 16 skipped service browser tests run;
-   then step 6 (importer). The user changes the
+   webhook filter/projection change (architecture, "Publish webhook"); then
+   step 6 (importer). Service browser tests need the test documents
+   (`npm run services:test-docs -- --write` after an export, `--delete`
+   afterwards); otherwise 16 of them skip. The user changes the
    webhook filter/projection and checks the Studio on the phone.
 10. **Parked:** Studio tab/Publish styling — see [backlog](backlog.md).
 

@@ -88,8 +88,8 @@ sessions are in [the session handoff](handoff.md). In short:
 9. Phase 6 — services and catalogue: plan accepted 2026-11-03
    ([phase6-services-plan.md](phase6-services-plan.md)); steps 2 (price-text
    detector), 3 (Studio schema, deployed 2026-11-03), 4 (website data
-   layer) and 5 (routes and components; content tests wait for the test
-   documents) done 2026-11-03.
+   layer) and 5 (routes and components, checked with test documents) done
+   2026-11-03.
 
 ## Remaining prototype acceptance inputs
 
@@ -135,6 +135,20 @@ These items do not block completing the rest of Phase 0.
 
 ### 2026-11-03
 
+- Phase 6 step 5 checked with test content at the user's request: dataset
+  exported (`production-2026-11-03-before-phase6-test-docs.tar.gz`), the five
+  `test-phase6-*` documents written and published with
+  `npm run services:test-docs -- --write`, then deleted with `--delete` (0
+  services, 0 catalogue items, 0 test documents left). On a production build
+  (port 3100) all 45 browser runs passed (1 skipped as before), desktop and
+  mobile, including the overview tree, hub and variant, 404s and the
+  wrong-language 308, `#Policandru-7`, keyboard/Back/focus, model lightbox,
+  YouTube and the price crawl. Screenshots looked right; fixed "1 nivele" →
+  "1 nivel" on catalogue cards (plural forms; test added). Note: Next's data
+  cache in `.next/cache/fetch-cache` survives rebuilds, so an empty result
+  cached before the documents existed stayed until a signed
+  `revalidate:test --type service` (which cleared it, as the webhook will) or
+  deleting that folder before the build.
 - Phase 6 step 5: `/servicii` overview (active top-level services in order,
   variants as links), `/servicii/[service]` and `/servicii/[service]/[variant]`
   (`components/services/`: hero, body, variant cards, the eight sections,
