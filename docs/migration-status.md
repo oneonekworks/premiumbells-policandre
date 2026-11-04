@@ -92,9 +92,11 @@ sessions are in [the session handoff](handoff.md). In short:
    (importer, dry runs clean) done 2026-11-03; step 7 (media review, asset
    dry runs) done 2026-11-04 with no price images found (bronze cover fixed);
    step 8 (export, assets, drafts) done 2026-11-04: 17 service and 52
-   catalogue drafts, 0 price errors, counts match. Next: the user reviews
-   the drafts in the Studio, then step 9 (publish after a fresh export,
-   hubs Clopote and Iconostase before their variants) at the user's request.
+   catalogue drafts, 0 price errors, counts match; step 9 publishing done
+   2026-11-04 (17 services, 52 catalogue items; a Phase 5 project price
+   found and removed). Next: the user changes the webhook filter/projection
+   and checks the hosted preview after an approved push; then step 10
+   (close-out).
 
 ## Remaining prototype acceptance inputs
 
@@ -138,7 +140,37 @@ These items do not block completing the rest of Phase 0.
 
 ## Change log
 
-### 2026-11-04
+### 2026-11-04 (step 9)
+
+- Phase 6 step 9 (publish), at the user's request after they reviewed the
+  drafts in the Studio. Export `production-2026-11-04-before-phase6-publish.tar.gz`
+  (135 documents). Published with the import token as the Studio does (weak
+  `parent` references made strong, drafts removed), hubs Clopote and
+  Iconostase first: 17 services and 52 catalogue items published, no drafts
+  left. Studio validation: 135 documents, 0 errors. `verify-migration`
+  17/17 and 52/52. The 22 analog, sfeșnice and aplice items are published but
+  only shown by the hidden `analog-sfesnice-chivot` service.
+- The browser price crawl (moved out of the test-documents group so it runs
+  on published services) found "1573 €" on `/servicii/policandre`. Source:
+  the Phase 5 project `legacy-policandre-manastirea-faget-3` (related works),
+  whose summary kept the legacy price line and "În preț sunt incluse:";
+  public since the Phase 5 publish on 2026-11-02. With the user's approval,
+  after an export (`production-2026-11-04-before-project-price-fix.tar.gz`):
+  the amount removed and the heading changed to "Lucrarea a inclus:"; on
+  `legacy-usi-usi-cupru-drobeta-turnu-severin` "In preț este inclus" became
+  "Lucrarea a inclus". Both texts are now `summary` overrides in
+  `legacy-overrides.json`, so a re-import keeps them.
+- `verify-no-prices` now also checks projects and work categories: 0 errors
+  over 17 services, 52 items, 60 projects, 5 categories and 2,288 assets
+  (the five Phase 5 "pret" filenames remain warnings).
+- Local production build (port 3100), after a signed revalidation of both
+  projects: services, shell and portfolio specs 23 passed, 15 skipped (test
+  documents absent); both project pages have no price wording.
+- Data for the user: two catalogue titles repeat as on the old site
+  (policandre 02 and 08 "Policandru 2 nivele, nr. 2"; aplice 08 and 09
+  "Aplică cu 2 lumânări").
+
+### 2026-11-04 (step 8)
 
 - Phase 6 step 8 (write), with the user's go-ahead. Export
   `production-2026-11-04-before-phase6.tar.gz` (66 documents, no assets).

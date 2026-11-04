@@ -182,9 +182,10 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    step 7 (done 2026-11-04: asset
    dry runs clean, no price images, bronze cover fixed, other flags kept; see the migration-status change
    log); step 8 done 2026-11-04 (17 service and 52 catalogue drafts, no
-   price errors, counts match; see the change log). Next: the user reviews
-   the drafts in the Studio, then step 9 publishes at the user's request
-   after a fresh export, hubs before variants. Service browser tests need the test documents
+   price errors, counts match); step 9 published them 2026-11-04 and removed
+   a Phase 5 price from the Făget and Drobeta project texts (see the change
+   log). Next: the user's webhook change and a check of the hosted preview
+   after an approved push, then step 10 (close-out). Service browser tests need the test documents
    (`npm run services:test-docs -- --write` after an export, `--delete`
    afterwards); otherwise 16 of them skip. The user changes the
    webhook filter/projection and checks the Studio on the phone.

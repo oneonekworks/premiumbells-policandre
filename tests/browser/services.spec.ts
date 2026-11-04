@@ -151,15 +151,16 @@ test.describe('with the test documents', () => {
     await play.click();
     await expect(page.locator('iframe[src*="youtube-nocookie.com"]')).toHaveCount(1);
   });
+});
 
-  test('no prices in the HTML or visible text of any service page or dialog', async ({page}) => {
-    await page.goto('/servicii');
-    const links = await page.locator('main a[href^="/servicii/"]').evaluateAll((anchors) =>
-      [...new Set(anchors.map((anchor) => anchor.getAttribute('href')!))]);
-    expect(links.length).toBeGreaterThan(0);
-    for (const path of ['/servicii', ...links]) await expectNoPrices(page, path);
-    await page.goto(`${hub}#Policandru-7`);
-    await expect(page.getByRole('dialog')).toBeVisible();
-    expect(findPriceText(await page.content()).filter(({level}) => level === 'error')).toEqual([]);
-  });
+// Runs on the published services (and the test documents when present).
+test('no prices in the HTML or visible text of any service page or dialog', async ({page}) => {
+  await page.goto('/servicii');
+  const links = await page.locator('main a[href^="/servicii/"]').evaluateAll((anchors) =>
+    [...new Set(anchors.map((anchor) => anchor.getAttribute('href')!))]);
+  test.skip(links.length === 0, 'No published services');
+  for (const path of ['/servicii', ...links]) await expectNoPrices(page, path);
+  await page.goto('/servicii/policandre#Policandru-7');
+  await expect(page.getByRole('dialog')).toBeVisible();
+  expect(findPriceText(await page.content()).filter(({level}) => level === 'error')).toEqual([]);
 });
