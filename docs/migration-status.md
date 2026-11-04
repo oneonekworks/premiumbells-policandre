@@ -100,8 +100,8 @@ sessions are in [the session handoff](handoff.md). In short:
    hosted preview 2026-11-04. Phase 6 done.
 10. Phase 7 — homepage, blog and global content: plan accepted 2026-11-04
     with the recommended defaults ([phase7-plan.md](phase7-plan.md));
-    step 1 (decisions recorded) done; step 2 (Studio schema) written and
-    checked 2026-11-04, waiting for the deploy approval and a phone check.
+    step 1 (decisions recorded) done; step 2 (Studio schema) deployed
+    2026-11-04 with the user's approval, waiting for the phone check.
 
 ## Remaining prototype acceptance inputs
 
@@ -162,6 +162,10 @@ These items do not block completing the rest of Phase 0.
 - Studio typecheck, lint, build, 20 unit tests and `sanity schema validate`
   (0 errors, 0 warnings) pass. The detector does not flag the Putna "costul
   clopotelor" sentence at all; the reworded Raport sentence is clean.
+- Deployed to <https://premiumbells.sanity.studio> with the user's approval
+  (`npx sanity deploy -y`, schema manifest updated). Next: the user checks
+  the new lists on the phone (create, validate, publish and unpublish a test
+  article; singletons cannot be deleted).
 
 ### 2026-11-04 (Phase 7 plan)
 
