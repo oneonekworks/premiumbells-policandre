@@ -130,7 +130,8 @@ only paths that bring visits, e.g. catalogue PDFs.
   rows and `/_lucrarile-noastre`. The two blog rows wait for the blog.
   The service targets have content since the Phase 6 publish (2026-11-04;
   all four 308s and every service row checked on the production build).
-  `proxy.ts` keeps handling only language prefixes.
+  `proxy.ts` applies the same table before its language rewrite, because on
+  Netlify it runs first at the edge (2026-11-04).
 - The services routes keep the nested legacy paths:
   `app/[lang]/servicii/[service]/[variant]` (built 2026-11-03).
 - Generate `sitemap.ts` and `robots.ts` from published content and submit the

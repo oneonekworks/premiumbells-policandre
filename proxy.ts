@@ -1,5 +1,11 @@
 import {NextResponse, type NextRequest} from 'next/server';
 import {resolveEnglishPath} from '@/lib/i18n/routing';
+import {legacyRedirects} from '@/lib/redirects';
+
+// next.config redirects run before this proxy under `next start`, but on
+// Netlify the proxy runs first at the edge and its rewrite hides the public
+// path from them, so the legacy table is applied here as well.
+const legacyTargets = new Map(legacyRedirects.map(({source, destination}) => [source, destination]));
 
 // Marks requests this proxy already rewrote. Prerendered routes run the proxy
 // again on the internal /ro or /en path, which must pass through unchanged.
@@ -9,6 +15,8 @@ type Resolved = {internal: string} | {redirect: string};
 
 /** Public pathname -> internal app/[lang] pathname, or a canonical redirect. */
 function resolve(pathname: string): Resolved {
+  const legacy = legacyTargets.get(pathname);
+  if (legacy) return {redirect: legacy};
   if (pathname === '/ro' || pathname.startsWith('/ro/')) return {redirect: pathname.slice(3) || '/'};
   if (pathname === '/en' || pathname.startsWith('/en/')) {
     const resolved = resolveEnglishPath(pathname.slice(3) || '/');

@@ -185,9 +185,9 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    price errors, counts match); step 9 published them 2026-11-04 and removed
    a Phase 5 price from the Făget and Drobeta project texts (see the change
    log); webhook updated by the user; step 10 (close-out) done 2026-11-04.
-   Open: the user pushes `prototype/mobile-publishing` (approved; the
-   session has no SSH key), then run the services price crawl against the
-   hosted preview. Service browser tests need the test documents
+   Pushed and checked on the hosted preview (price crawl passed). Open: the
+   user pushes the proxy fix for the legacy redirects (404 on Netlify), then
+   recheck them there. Service browser tests need the test documents
    (`npm run services:test-docs -- --write` after an export, `--delete`
    afterwards); otherwise 16 of them skip. The user changes the
    webhook filter/projection and checks the Studio on the phone.

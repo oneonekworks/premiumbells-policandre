@@ -95,9 +95,9 @@ sessions are in [the session handoff](handoff.md). In short:
    catalogue drafts, 0 price errors, counts match; step 9 publishing done
    2026-11-04 (17 services, 52 catalogue items; a Phase 5 project price
    found and removed); webhook filter/projection updated by the user and
-   step 10 (close-out) done 2026-11-04. Next: the user pushes
-   `prototype/mobile-publishing` (approved; the push from the session had no
-   SSH key), then the price crawl and page checks on the hosted preview.
+   step 10 (close-out) done 2026-11-04; pushed by the user and the hosted
+   price crawl passed. Next: the user pushes the proxy redirect fix, then
+   recheck the five legacy redirects on the hosted preview.
 
 ## Remaining prototype acceptance inputs
 
@@ -140,6 +140,22 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-04 (hosted preview)
+
+- The user pushed `27fba2a` (after a GitHub Git Operations incident made SSH
+  fail); Netlify deployed it. Hosted preview: services, shell and portfolio
+  specs 21 passed, 15 skipped (test documents absent), 2 failed. The price
+  crawl passed (overview, every service page, the `#Policandru-7` dialog);
+  the Făget project page shows "Lucrarea a inclus" and no price.
+- Failed on Netlify only: all five legacy redirects were 404. On Netlify the
+  proxy runs first at the edge and rewrites `/servicii/…` to `/ro/servicii/…`,
+  so the `next.config.ts` redirects never see the public path (`next start`
+  applies them before the proxy, which is why the local build passed).
+  `proxy.ts` now applies the same `lib/redirects.ts` table before the
+  language rewrite; checked by calling the proxy directly (five 308s, normal
+  pages still rewritten), unit tests, typecheck, lint and build. Needs a push
+  and a recheck on the hosted preview.
 
 ### 2026-11-04 (step 10)
 
