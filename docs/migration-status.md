@@ -90,9 +90,11 @@ sessions are in [the session handoff](handoff.md). In short:
    detector), 3 (Studio schema, deployed 2026-11-03), 4 (website data
    layer), 5 (routes and components, checked with test documents) and 6
    (importer, dry runs clean) done 2026-11-03; step 7 (media review, asset
-   dry runs) done 2026-11-04 with no price images found (bronze cover fixed); next:
-   step 8 (export, assets, drafts) with
-   the user's go-ahead.
+   dry runs) done 2026-11-04 with no price images found (bronze cover fixed);
+   step 8 (export, assets, drafts) done 2026-11-04: 17 service and 52
+   catalogue drafts, 0 price errors, counts match. Next: the user reviews
+   the drafts in the Studio, then step 9 (publish after a fresh export,
+   hubs Clopote and Iconostase before their variants) at the user's request.
 
 ## Remaining prototype acceptance inputs
 
@@ -137,6 +139,31 @@ These items do not block completing the rest of Phase 0.
 ## Change log
 
 ### 2026-11-04
+
+- Phase 6 step 8 (write), with the user's go-ahead. Export
+  `production-2026-11-04-before-phase6.tar.gz` (66 documents, no assets).
+  `migrate:assets --write`: services 368 (367 uploaded, 1 already in Sanity
+  as the second copy of an identical pair), catalogue 55 uploaded, 0 failed;
+  280.6 MB → 170.6 MB and 18.4 MB → 17.5 MB. `migrate:content --write`:
+  17 `service` and 52 `catalogItem` drafts; nothing published.
+- The first content write failed for the six variant pages: a strong
+  `parent` reference to a draft-only hub is refused. The importer now writes
+  it as the Studio does (`_weak` with `_strengthenOnPublish`); the rerun
+  created the six and left the other eleven unchanged.
+- New `scripts/verify-no-prices.ts` (plan section 5.5; read-only, live
+  dataset with drafts, or `--export <tar.gz>`): 0 errors over 17 services,
+  52 items and 2,288 assets. Five warnings, all on Phase 5 photos of
+  `legacy-clopote-2016-ialoveni` whose original filenames contain "pret"
+  (`clopote_bisericesti_la_comanda_pret_ortodoxe-*.jpg`); import timestamps
+  (`legacy.migratedAt`) are skipped.
+- `verify-migration`: services 17/17 and catalogue 52/52 match (media
+  compared by field name, since Sanity returns keys in its own order).
+- Studio `sanity documents validate`: six errors "Referenced document must
+  be published" on the variant pages, which clear once the Clopote and
+  Iconostase hubs are published first; one warning on catalogue horos #24
+  (a specification value that looks like several details in one row).
+
+### 2026-11-04 (step 7)
 
 - Phase 6 step 7 (media review), with the user's go-ahead. Asset dry runs
   (nothing uploaded): services 368 media (362 photos, 6 MP3), 0 failed, 0

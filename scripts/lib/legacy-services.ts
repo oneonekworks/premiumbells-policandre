@@ -199,7 +199,11 @@ function mapService(service: SeedService, context: ServicesContext, paths: Set<s
     publishedLanguages: ["ro"],
     title: localeString(service.title),
     slug: { _type: "localeSlug", ro: { _type: "slug", current: slug } },
-    ...(parentPath ? { parent: { _type: "reference", _ref: serviceDocumentId(parentPath) } } : {}),
+    // Weak until published, as the Studio stores a reference to a draft-only
+    // parent; publishing in the Studio makes it a normal reference.
+    ...(parentPath
+      ? { parent: { _type: "reference", _ref: serviceDocumentId(parentPath), _weak: true, _strengthenOnPublish: { type: "service" } } }
+      : {}),
     status: service.status,
     ...(service.cardLabel ? { cardLabel: localeString(service.cardLabel) } : {}),
     summary: localeText(service.summary),

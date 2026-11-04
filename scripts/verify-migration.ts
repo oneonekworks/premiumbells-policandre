@@ -6,11 +6,14 @@ import { buildDocumentPlans, createWriteClient, isDocumentCollection, loadAssetC
 //
 //   npx tsx scripts/verify-migration.ts --collection services
 
-/** Asset references in document order (covers, galleries, sections, audio). */
+/**
+ * Asset references in document order (covers, galleries, sections, audio).
+ * Fields are walked by name, since Sanity returns them in its own key order.
+ */
 const assetRefs = (value: unknown): string[] =>
   Array.isArray(value) ? value.flatMap(assetRefs)
     : value && typeof value === "object"
-      ? Object.entries(value).flatMap(([key, item]) => (key === "asset" ? [(item as { _ref?: string })?._ref ?? "?"] : key === "legacy" ? [] : assetRefs(item)))
+      ? Object.entries(value).sort(([a], [b]) => a.localeCompare(b)).flatMap(([key, item]) => (key === "asset" ? [(item as { _ref?: string })?._ref ?? "?"] : key === "legacy" ? [] : assetRefs(item)))
       : [];
 
 async function main() {
