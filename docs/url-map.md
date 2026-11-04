@@ -54,10 +54,14 @@ Live = HTTP status on 2026-11-02. Sitemap = listed in a legacy sitemap
 | `/servicii/iconostase/iconostas-bronz` | 200 | yes | same | keep | built, published 2026-11-04 (nested) |
 | `/servicii/iconostase/pristol-marmura` | 200 | yes | same | keep | built, published 2026-11-04 (nested) |
 | `/servicii/usi` | 200 | typo | same | keep | built, published 2026-11-04 |
-| `/blog` | 200 | — | `/blog` | keep | built (placeholder) |
-| `/blog/clopotele-manastirii-putna` | 200 | yes | same | keep | blog not built |
-| `/blog/clopotar-electronic-pt-clopote-fixe` | 200 | — | same | keep | blog not built |
-| `/blog/raport-18-ianuarie-2023` | 200 | — | same | keep | blog not built |
+| `/blog` | 200 | — | `/blog` | keep | built (placeholder); Phase 7 |
+| `/blog/clopotele-manastirii-putna` | 200 | yes | same | keep | Phase 7 (plan accepted 2026-11-04) |
+| `/blog/clopotar-electronic-pt-clopote-fixe` | 200 | — | same | keep | Phase 7 |
+| `/blog/raport-18-ianuarie-2023` | 200 | — | same | keep | Phase 7 |
+
+The home page anchor `/#about-us-section` (linked from the legacy footer)
+becomes `/#despre-noi` (Phase 7 decision 1); fragments never reach the
+server, so old links simply land at the top of the home page.
 
 ## Redirects (308)
 

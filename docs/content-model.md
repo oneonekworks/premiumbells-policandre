@@ -181,6 +181,15 @@ stable after publication in every language.
 
 ## Document types
 
+### Phase 7 types (accepted 2026-11-04, not built yet)
+
+The fields of `siteSettings`, `navigation`, `homePage`, `catalogDownload`,
+`testimonial`, `audioFeature`, `person`, `blogPost` and its plain-language
+`articleBody` are specified in [the Phase 7 plan](phase7-plan.md), section 2.
+They replace the suggestions below. Singletons use fixed IDs and cannot be
+deleted; every new type runs the price check; `catalogDownload` publishes only
+with "Verificat pagină cu pagină" on.
+
 ### `siteSettings` — singleton
 
 Global content that should not be duplicated across pages:

@@ -190,6 +190,9 @@ preview (Netlify) after the user's push, including the legacy redirects.
 
 ## Phase 7 — Homepage, blog, and global content
 
+Plan accepted 2026-11-04 with the recommended defaults:
+[phase7-plan.md](phase7-plan.md).
+
 - [ ] Rebuild the homepage using named, typed sections.
 - [ ] Import global company, navigation, footer, and contact information.
 - [ ] Import only reviewed price-free catalogue PDF records.

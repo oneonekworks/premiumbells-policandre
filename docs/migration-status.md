@@ -2,7 +2,7 @@
 
 **Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy importer built; all 39 Clopote works imported and published
 **Current phase:** Preview hosted on Netlify with the publish webhook live; category search and filters built; next: SEO baseline — see [handoff](handoff.md)
-**Last updated:** 2026-11-02
+**Last updated:** 2026-11-04
 
 ## Accepted decisions
 
@@ -98,6 +98,9 @@ sessions are in [the session handoff](handoff.md). In short:
    step 10 (close-out) done 2026-11-04; pushed by the user and the hosted
    price crawl passed; the proxy redirect fix pushed and checked on the
    hosted preview 2026-11-04. Phase 6 done.
+10. Phase 7 — homepage, blog and global content: plan accepted 2026-11-04
+    with the recommended defaults ([phase7-plan.md](phase7-plan.md));
+    step 1 (decisions recorded) done; next: step 2, Studio schema.
 
 ## Remaining prototype acceptance inputs
 
@@ -140,6 +143,18 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-04 (Phase 7 plan)
+
+- Researched the legacy homepage, header, footer, catalogue section, blog
+  data and the three hard-coded articles; wrote `docs/phase7-plan.md`. The
+  user accepted all twelve recommended defaults: automatic header dropdowns
+  and a footer without "Prețuri"; the about and clopotar videos on YouTube
+  behind a poster; the catalogue section hidden until price-free PDFs exist;
+  the legacy section order; the Raport price sentence reworded; Romanian
+  only in this phase.
+- Recorded in the content model (Phase 7 types), the URL map (blog rows,
+  `#despre-noi` anchor) and the migration plan.
 
 ### 2026-11-04 (hosted preview)
 
