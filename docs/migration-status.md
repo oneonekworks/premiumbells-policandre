@@ -96,8 +96,8 @@ sessions are in [the session handoff](handoff.md). In short:
    2026-11-04 (17 services, 52 catalogue items; a Phase 5 project price
    found and removed); webhook filter/projection updated by the user and
    step 10 (close-out) done 2026-11-04; pushed by the user and the hosted
-   price crawl passed. Next: the user pushes the proxy redirect fix, then
-   recheck the five legacy redirects on the hosted preview.
+   price crawl passed; the proxy redirect fix pushed and checked on the
+   hosted preview 2026-11-04. Phase 6 done.
 
 ## Remaining prototype acceptance inputs
 
@@ -154,8 +154,9 @@ These items do not block completing the rest of Phase 0.
   applies them before the proxy, which is why the local build passed).
   `proxy.ts` now applies the same `lib/redirects.ts` table before the
   language rewrite; checked by calling the proxy directly (five 308s, normal
-  pages still rewritten), unit tests, typecheck, lint and build. Needs a push
-  and a recheck on the hosted preview.
+  pages still rewritten), unit tests, typecheck, lint and build. Pushed by
+  the user (`0c3b6ea`); hosted preview: all five redirects 308 to their
+  targets, services, shell and portfolio specs 23 passed, 15 skipped.
 
 ### 2026-11-04 (step 10)
 

@@ -185,8 +185,8 @@ the public site contains no price information.
 **Done 2026-11-04** on the local production build: 17 services (14 active, 3
 hidden) and 52 catalogue items published; no price errors in the dataset or
 the rendered service pages. A legacy price in the Phase 5 Făget project was
-found by the crawl and removed. Open: the same check on the hosted preview
-after the user pushes.
+found by the crawl and removed. The same checks passed on the hosted
+preview (Netlify) after the user's push, including the legacy redirects.
 
 ## Phase 7 — Homepage, blog, and global content
 
