@@ -103,8 +103,8 @@ sessions are in [the session handoff](handoff.md). In short:
     step 1 (decisions recorded) done; step 2 (Studio schema) deployed and
     checked on the phone by the user 2026-11-04; step 3 (website data layer)
     done 2026-11-04; webhook filter updated by the user 2026-11-04; step 4
-    (shell from Sanity) code done with the fallback checked, waiting for the
-    real `siteSettings`/`navigation` documents.
+    (shell from Sanity) done 2026-11-04: `siteSettings` and `navigation`
+    published with the user's approval; next: step 5, the homepage.
 
 ## Remaining prototype acceptance inputs
 
@@ -147,6 +147,30 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-04 (Phase 7 step 4, part 2)
+
+- With the user's approval: export
+  `production-2026-11-04-before-phase7-global.tar.gz` (135 documents), then
+  published `siteSettings` (company facts, phone, email, Facebook,
+  Instagram, footer text, default SEO with the legacy share image
+  `policandre-1.jpg`, uploaded from the GCS archive and checked: no prices)
+  and `navigation` (header Servicii · Lucrările noastre · Blog with
+  submenus; footer Soluții: Policandre, Clopote, Iconostase, Uși; Companie:
+  Despre noi, Blog; Romanian only). The default SEO title was shortened to
+  fit 70 characters ("Policandre, clopote și iconostase, produse în lumea
+  ortodoxă").
+- Checked in the browser on desktop and mobile: dropdown (one line per
+  service after widening it; Escape closes and returns focus), footer
+  columns, mobile submenu. The legal footer heading is now "Date firmă" so
+  it no longer repeats "Companie".
+- Browser tests on the local production build (port 3101): new dropdown
+  and footer tests pass; the whole suite 34 passed, 16 skipped (service
+  test documents absent), 0 failed. The dev server times out on some shell
+  tests while compiling; they pass on the production build.
+- Noticed, not changed: the published `portfolioPage` (edited 2026-10-25)
+  titles `/lucrarile-noastre` "Policandre" with the intro "Policandre si
+  candelabre lucrari".
 
 ### 2026-11-04 (Phase 7 step 4, part 1)
 

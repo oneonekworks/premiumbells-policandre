@@ -71,14 +71,14 @@ function Dropdown({item, active, toggleLabel}: {item: NavItem; active: boolean; 
         onBlur={(event) => {
           if (!root.current?.contains(event.relatedTarget as Node)) setOpen(false);
         }}
-        className="absolute left-0 top-full z-50 mt-1 w-72 rounded-lg border border-line bg-white p-2 shadow-xl shadow-teal-950/10"
+        className="absolute left-0 top-full z-50 mt-1 w-80 rounded-lg border border-line bg-white p-2 shadow-xl shadow-teal-950/10"
       >
         {item.children!.map((child) => (
           <li key={child.href}>
             <Link
               href={child.href}
               onClick={() => setOpen(false)}
-              className="flex min-h-11 items-center rounded-md px-3 text-[0.95rem] text-ink hover:bg-stone hover:text-teal-700"
+              className="flex min-h-11 items-center rounded-md px-3 py-2 text-[0.95rem] leading-snug text-ink hover:bg-stone hover:text-teal-700"
             >
               {child.label}
             </Link>

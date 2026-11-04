@@ -80,7 +80,7 @@ const ro = {
   footer: {
     tagline: 'Policandre, clopote și iconostase pentru biserici ortodoxe, alese și montate cu grijă.',
     navigation: 'Navigare',
-    company: 'Companie',
+    company: 'Date firmă',
     social: 'Urmăriți-ne',
     registration: 'Reg. Com.',
     rights: 'Toate drepturile rezervate.',
@@ -190,7 +190,7 @@ const en: Dictionary = {
   footer: {
     tagline: 'Chandeliers, bells and iconostases for Orthodox churches, carefully chosen and installed.',
     navigation: 'Navigation',
-    company: 'Company',
+    company: 'Company details',
     social: 'Follow us',
     registration: 'Trade Reg.',
     rights: 'All rights reserved.',

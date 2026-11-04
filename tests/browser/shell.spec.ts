@@ -56,3 +56,43 @@ test('mobile menu opens, closes with Escape, and closes after navigation', async
   await expect(dialog).toBeHidden();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
+
+// Needs the published `navigation` singleton (submenus on, footer columns);
+// skips while the shell runs on the lib/site.ts fallback.
+test('service dropdown opens by button, closes with Escape, outside clicks and navigation', async ({page, isMobile}) => {
+  test.skip(isMobile, 'Desktop header only');
+  await page.goto('/');
+  const toggle = page.getByRole('button', {name: 'Lista Servicii'});
+  test.skip(!(await toggle.count()), 'navigation singleton not published');
+
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await toggle.click();
+  const list = page.locator(`#${await toggle.getAttribute('aria-controls')}`.replace(/:/g, '\\:'));
+  await expect(list.getByRole('link', {name: 'Policandre', exact: true})).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(list).toBeHidden();
+  await expect(toggle).toBeFocused();
+
+  await toggle.click();
+  await page.locator('main').click({position: {x: 5, y: 5}});
+  await expect(list).toBeHidden();
+
+  await toggle.click();
+  await list.getByRole('link', {name: 'Clopote', exact: true}).click();
+  await expect(page).toHaveURL(/\/servicii\/clopote$/);
+  await expect(list).toBeHidden();
+});
+
+test('footer columns and the mobile submenu come from the menu document', async ({page, isMobile}) => {
+  await page.goto('/');
+  const solutions = page.getByRole('navigation', {name: 'Soluții'});
+  test.skip(!(await solutions.count()), 'navigation singleton not published');
+  await expect(solutions.getByRole('link', {name: 'Clopote'})).toHaveAttribute('href', '/servicii/clopote');
+  await expect(page.getByRole('navigation', {name: 'Companie'}).getByRole('link', {name: 'Despre noi'})).toHaveAttribute('href', '/#despre-noi');
+  if (isMobile) {
+    await page.getByRole('button', {name: 'Deschide meniul'}).click();
+    const dialog = page.getByRole('dialog', {name: 'Meniu'});
+    await dialog.getByRole('link', {name: 'Iconostase'}).click();
+    await expect(page).toHaveURL(/\/servicii\/iconostase$/);
+  }
+});
