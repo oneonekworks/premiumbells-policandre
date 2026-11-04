@@ -179,8 +179,8 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    the phone check of a test service and item, the
    webhook filter/projection change (architecture, "Publish webhook"); the
    user's review of the seed texts in `scripts/config/legacy-services.json`;
-   the user's answers on the photos flagged in step 7 (done 2026-11-04: asset
-   dry runs clean, no price images, flags in the migration-status change
+   step 7 (done 2026-11-04: asset
+   dry runs clean, no price images, bronze cover fixed, other flags kept; see the migration-status change
    log); then step 8 (export, `migrate:assets --write`, drafts) with the
    user's go-ahead. Service browser tests need the test documents
    (`npm run services:test-docs -- --write` after an export, `--delete`

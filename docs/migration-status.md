@@ -90,8 +90,8 @@ sessions are in [the session handoff](handoff.md). In short:
    detector), 3 (Studio schema, deployed 2026-11-03), 4 (website data
    layer), 5 (routes and components, checked with test documents) and 6
    (importer, dry runs clean) done 2026-11-03; step 7 (media review, asset
-   dry runs) done 2026-11-04 with no price images found; next: the user's
-   answers on the flagged photos, then step 8 (export, assets, drafts) with
+   dry runs) done 2026-11-04 with no price images found (bronze cover fixed); next:
+   step 8 (export, assets, drafts) with
    the user's go-ahead.
 
 ## Remaining prototype acceptance inputs
@@ -152,8 +152,12 @@ These items do not block completing the rest of Phase 0.
   catalogue family, reviewed one by one (the three automation set covers at
   full size): no prices, price lists, currency or TVA in any image. No new
   exclusions; `automatizari-set.jpg` remains the only price exclusion.
-- Flagged for the user (nothing excluded): the bronze iconostasis cover is
-  the wooden Pahomov iconostasis (`iconostas-lemn-pahomov.jpg`); third-party
+- Bronze iconostasis cover fixed at the user's request: the legacy cover was
+  the wooden Pahomov iconostasis (`iconostas-lemn-pahomov.jpg`); the seed now
+  uses the unused legacy `/services/iconostase/cover/iconostas-bronz-1.jpg`
+  (the same bronze iconostasis as the gallery). Rerun dry runs: services 17
+  create, none blocked; assets 368, 0 failed, 280.8 MB → 170.8 MB.
+- Flagged for the user, kept as they are at the user's choice: third-party
   watermarks or frames on Saransk (3), Pahomov (3) and one gilded dome photo;
   "Policandre la comandă" CAD sheets photographed off a screen with a phone
   camera stamp (4); low-resolution catalogue photos (sfeșnice 2, 3, 5; chivot
