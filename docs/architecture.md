@@ -185,8 +185,8 @@ Sanity needs a public URL, so the webhook goes live with hosting (handoff step
 
 - Name: `Revalidare site`; URL: `https://<host>/api/revalidate`; dataset
   `production`; trigger on Create, Update, Delete; drafts and versions off.
-- Filter (Phase 7 adds the last eight types; until the user widens the live
-  webhook, their publishes show on the preview after the hourly refresh):
+- Filter (Phase 7 added the last eight types; the user updated the live
+  webhook on 2026-11-04):
 
   ```groq
   _type in ["project", "workCategory", "portfolioPage", "service", "catalogItem",

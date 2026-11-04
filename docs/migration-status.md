@@ -102,7 +102,9 @@ sessions are in [the session handoff](handoff.md). In short:
     with the recommended defaults ([phase7-plan.md](phase7-plan.md));
     step 1 (decisions recorded) done; step 2 (Studio schema) deployed and
     checked on the phone by the user 2026-11-04; step 3 (website data layer)
-    done 2026-11-04; the webhook filter change waits for the user.
+    done 2026-11-04; webhook filter updated by the user 2026-11-04; step 4
+    (shell from Sanity) code done with the fallback checked, waiting for the
+    real `siteSettings`/`navigation` documents.
 
 ## Remaining prototype acceptance inputs
 
@@ -145,6 +147,22 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-04 (Phase 7 step 4, part 1)
+
+- The user updated the "Revalidare site" webhook filter with the Phase 7
+  types.
+- Header, footer and mobile menu now come from `lib/shell.ts`, which reads
+  `siteSettings` and `navigation` and falls back to `lib/site.ts` and the
+  dictionary labels when they are not published (or the menu is not
+  published in the page language). Links are built by `lib/site-links.ts`
+  (unit-tested; links to hidden or unpublished targets are dropped).
+  Services and Lucrările noastre get a dropdown (separate toggle button,
+  Escape, click outside and navigation close it) listing the active
+  services and categories; the mobile menu lists them under their section.
+  Footer columns come from the menu document; legal details, address and
+  social links (now with YouTube) from the settings. Checked in the browser
+  with the fallback: unchanged header and footer, no console errors.
 
 ### 2026-11-04 (Phase 7 step 3)
 

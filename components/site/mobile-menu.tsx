@@ -65,6 +65,24 @@ export function MobileMenu({items, labels, footer}: {
                     >
                       {item.label}
                     </Link>
+                    {item.children?.length ? (
+                      <ul className="mb-3 ml-[1.125rem] border-l border-line pl-4">
+                        {item.children.map((child) => (
+                          <li key={child.href}>
+                            <Link
+                              href={child.href}
+                              aria-current={pathname === child.href ? 'page' : undefined}
+                              onClick={() => dialog.current?.close()}
+                              className={`flex min-h-11 items-center text-base ${
+                                pathname === child.href ? 'font-semibold text-teal-700' : 'text-ink-soft hover:text-teal-700'
+                              }`}
+                            >
+                              {child.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
                   </li>
                 );
               })}

@@ -5,6 +5,7 @@ import {SiteFooter} from '@/components/site/footer';
 import {SiteHeader} from '@/components/site/header';
 import {getDictionary} from '@/lib/i18n/dictionaries';
 import {isLang, languages} from '@/lib/i18n/routing';
+import {getShell} from '@/lib/shell';
 import {site} from '@/lib/site';
 import '../globals.css';
 
@@ -33,6 +34,7 @@ export default async function RootLayout({children, params}: LayoutProps<'/[lang
   const {lang} = await params;
   if (!isLang(lang)) notFound();
   const dictionary = getDictionary(lang);
+  const shell = await getShell(lang, dictionary);
 
   return (
     <html lang={lang} className={`${inter.variable} ${cormorant.variable} antialiased`}>
@@ -43,9 +45,9 @@ export default async function RootLayout({children, params}: LayoutProps<'/[lang
         >
           {dictionary.skipToContent}
         </a>
-        <SiteHeader lang={lang} dictionary={dictionary} />
+        <SiteHeader lang={lang} dictionary={dictionary} shell={shell} />
         <main id="continut" className="flex-1">{children}</main>
-        <SiteFooter lang={lang} dictionary={dictionary} />
+        <SiteFooter lang={lang} dictionary={dictionary} shell={shell} />
       </body>
     </html>
   );
