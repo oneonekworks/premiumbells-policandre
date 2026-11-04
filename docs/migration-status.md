@@ -100,7 +100,8 @@ sessions are in [the session handoff](handoff.md). In short:
    hosted preview 2026-11-04. Phase 6 done.
 10. Phase 7 — homepage, blog and global content: plan accepted 2026-11-04
     with the recommended defaults ([phase7-plan.md](phase7-plan.md));
-    step 1 (decisions recorded) done; next: step 2, Studio schema.
+    step 1 (decisions recorded) done; step 2 (Studio schema) written and
+    checked 2026-11-04, waiting for the deploy approval and a phone check.
 
 ## Remaining prototype acceptance inputs
 
@@ -143,6 +144,24 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-04 (Phase 7 step 2)
+
+- Studio `e07a95f`: singletons `siteSettings`, `navigation`, `homePage`
+  (fixed IDs, no create/delete/duplicate/unpublish, top of the desk);
+  `siteLink` (page, document, external, phone or email); `catalogDownload`
+  (PDF only, publishes only with "Verificat pagină cu pagină"),
+  `testimonial`, `audioFeature`, `person`; `blogPost` (one per language,
+  language fixed at creation through the "Articole în română/engleză"
+  lists, slug unique per language, `translationOf` for English) with
+  `articleBody` (H2/H3, quote, lists, external and internal links, photo,
+  gallery, video, audio). Every new type has the document price check; the
+  wiring test now covers every document type since Phase 6. The hero has
+  no on/off switch (a home page without it is broken); the catalogue
+  section starts hidden.
+- Studio typecheck, lint, build, 20 unit tests and `sanity schema validate`
+  (0 errors, 0 warnings) pass. The detector does not flag the Putna "costul
+  clopotelor" sentence at all; the reworded Raport sentence is clean.
 
 ### 2026-11-04 (Phase 7 plan)
 
