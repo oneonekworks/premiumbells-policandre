@@ -89,7 +89,10 @@ sessions are in [the session handoff](handoff.md). In short:
    ([phase6-services-plan.md](phase6-services-plan.md)); steps 2 (price-text
    detector), 3 (Studio schema, deployed 2026-11-03), 4 (website data
    layer), 5 (routes and components, checked with test documents) and 6
-   (importer, dry runs clean) done 2026-11-03; next: step 7, media review.
+   (importer, dry runs clean) done 2026-11-03; step 7 (media review, asset
+   dry runs) done 2026-11-04 with no price images found; next: the user's
+   answers on the flagged photos, then step 8 (export, assets, drafts) with
+   the user's go-ahead.
 
 ## Remaining prototype acceptance inputs
 
@@ -132,6 +135,31 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-04
+
+- Phase 6 step 7 (media review), with the user's go-ahead. Asset dry runs
+  (nothing uploaded): services 368 media (362 photos, 6 MP3), 0 failed, 0
+  already in Sanity, 279.6 MB → 170.7 MB (kept 61, unchanged 174, compressed
+  20, resized 113); catalogue 55 photos (52 items plus three for #29), 0
+  failed, 0 existing, 18.4 MB → 17.5 MB. Five identical-bytes pairs, all on
+  services (they upload once): two `clopote_suvenire` "… 2.JPG" copies,
+  `cupole-aurite-din-compozit/b0.webp` = `cupola-compozit-aurita-0.webp`,
+  and the GCS/local copies of `clopotar-electronic-8.jpg` and
+  `policandre-la-comanda/5.jpg`. The three gallery pairs show the same photo
+  twice.
+- Contact sheets of all 417 photos, numbered and grouped by service or
+  catalogue family, reviewed one by one (the three automation set covers at
+  full size): no prices, price lists, currency or TVA in any image. No new
+  exclusions; `automatizari-set.jpg` remains the only price exclusion.
+- Flagged for the user (nothing excluded): the bronze iconostasis cover is
+  the wooden Pahomov iconostasis (`iconostas-lemn-pahomov.jpg`); third-party
+  watermarks or frames on Saransk (3), Pahomov (3) and one gilded dome photo;
+  "Policandre la comandă" CAD sheets photographed off a screen with a phone
+  camera stamp (4); low-resolution catalogue photos (sfeșnice 2, 3, 5; chivot
+  400×395) and small service covers (Policandre 673×410, Clopote 653×435,
+  Cupole 905×487); the duplicate gallery photos above and #29's main photo
+  repeated as gallery 1.
 
 ### 2026-11-03
 

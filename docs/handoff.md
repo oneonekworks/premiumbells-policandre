@@ -1,6 +1,6 @@
 # Session handoff
 
-**Updated:** 2026-11-03 · Start a new session with the kickoff prompt below; it
+**Updated:** 2026-11-04 · Start a new session with the kickoff prompt below; it
 is cheaper than continuing a long conversation, and these docs carry the state.
 
 ## Where we are
@@ -179,7 +179,10 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    the phone check of a test service and item, the
    webhook filter/projection change (architecture, "Publish webhook"); the
    user's review of the seed texts in `scripts/config/legacy-services.json`;
-   then step 7 (media review and asset dry run) with the user's go-ahead. Service browser tests need the test documents
+   the user's answers on the photos flagged in step 7 (done 2026-11-04: asset
+   dry runs clean, no price images, flags in the migration-status change
+   log); then step 8 (export, `migrate:assets --write`, drafts) with the
+   user's go-ahead. Service browser tests need the test documents
    (`npm run services:test-docs -- --write` after an export, `--delete`
    afterwards); otherwise 16 of them skip. The user changes the
    webhook filter/projection and checks the Studio on the phone.
