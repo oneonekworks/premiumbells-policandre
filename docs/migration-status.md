@@ -94,9 +94,10 @@ sessions are in [the session handoff](handoff.md). In short:
    step 8 (export, assets, drafts) done 2026-11-04: 17 service and 52
    catalogue drafts, 0 price errors, counts match; step 9 publishing done
    2026-11-04 (17 services, 52 catalogue items; a Phase 5 project price
-   found and removed). Next: the user changes the webhook filter/projection
-   and checks the hosted preview after an approved push; then step 10
-   (close-out).
+   found and removed); webhook filter/projection updated by the user and
+   step 10 (close-out) done 2026-11-04. Next: the user pushes
+   `prototype/mobile-publishing` (approved; the push from the session had no
+   SSH key), then the price crawl and page checks on the hosted preview.
 
 ## Remaining prototype acceptance inputs
 
@@ -139,6 +140,19 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-04 (step 10)
+
+- Phase 6 close-out. The user updated the publish webhook filter and
+  projection for `service` and `catalogItem` and approved a push; the push
+  from the session failed (no SSH key in the agent, `gh` not logged in), so
+  the user pushes.
+- Production build (port 3100): `/servicii`, `/en/services` and the 14
+  active service URLs 200; the three hidden ones 404; the four legacy
+  service redirects 308 to their targets.
+- `url-map.md`: service rows marked built and published, hidden services
+  and the `#Policandru-N` anchors updated. `migration-plan.md`: Phase 6
+  checklist ticked; open is the price crawl on the hosted preview.
 
 ### 2026-11-04 (step 9)
 

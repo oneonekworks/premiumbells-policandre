@@ -38,22 +38,22 @@ Live = HTTP status on 2026-11-02. Sitemap = listed in a legacy sitemap
 | `/lucrarile-noastre/reconditionari-policandre` | 200 | — | same | keep | Phase 5 import |
 | `/lucrarile-noastre/usi` | 200 | — | same | keep | Phase 5 import |
 | `/_lucrarile-noastre` | 200 | — | `/lucrarile-noastre` | 308 | unused template page |
-| `/servicii` | 404 | — | `/servicii` | new page | built (placeholder) |
-| `/servicii/policandre` | 200 | yes | same | keep | services not built |
-| `/servicii/policandre-la-comanda` | 200 | yes | same | keep | services not built |
-| `/servicii/reconditionare-policandre` | 200 | yes | same | keep | services not built |
-| `/servicii/clopote` | 404 | — | `/servicii/clopote` | new page | hub for the two bell services (decided 2026-11-02) |
-| `/servicii/clopote/cu-jug` | 200 | yes | same | keep | services not built (nested) |
-| `/servicii/clopote/fara-balans` | 200 | yes | same | keep | services not built (nested) |
-| `/servicii/automatizari-clopote-cu-balans` | 200 | — | same | keep | services not built |
-| `/servicii/clopotar-electronic` | 200 | — | same | keep | services not built |
-| `/servicii/iconostase` | 200 | typo | same | keep | services not built |
-| `/servicii/iconostase/marmura` | 200 | yes | same | keep | services not built (nested) |
+| `/servicii` | 404 | — | `/servicii` | new page | built, published 2026-11-04 |
+| `/servicii/policandre` | 200 | yes | same | keep | built, published 2026-11-04 |
+| `/servicii/policandre-la-comanda` | 200 | yes | same | keep | built, published 2026-11-04 |
+| `/servicii/reconditionare-policandre` | 200 | yes | same | keep | built, published 2026-11-04 |
+| `/servicii/clopote` | 404 | — | `/servicii/clopote` | new page | hub for the two bell services (decided 2026-11-02), published 2026-11-04 |
+| `/servicii/clopote/cu-jug` | 200 | yes | same | keep | built, published 2026-11-04 (nested) |
+| `/servicii/clopote/fara-balans` | 200 | yes | same | keep | built, published 2026-11-04 (nested) |
+| `/servicii/automatizari-clopote-cu-balans` | 200 | — | same | keep | built, published 2026-11-04 |
+| `/servicii/clopotar-electronic` | 200 | — | same | keep | built, published 2026-11-04 |
+| `/servicii/iconostase` | 200 | typo | same | keep | built, published 2026-11-04 |
+| `/servicii/iconostase/marmura` | 200 | yes | same | keep | built, published 2026-11-04 (nested) |
 | `/servicii/iconostase/lemn` | 200 | — | `/servicii/iconostase` | 308 | copy of the pristol page (decided 2026-11-03) |
-| `/servicii/iconostase/lemn-aur` | 200 | yes | same | keep | services not built (nested) |
-| `/servicii/iconostase/iconostas-bronz` | 200 | yes | same | keep | services not built (nested) |
-| `/servicii/iconostase/pristol-marmura` | 200 | yes | same | keep | services not built (nested) |
-| `/servicii/usi` | 200 | typo | same | keep | services not built |
+| `/servicii/iconostase/lemn-aur` | 200 | yes | same | keep | built, published 2026-11-04 (nested) |
+| `/servicii/iconostase/iconostas-bronz` | 200 | yes | same | keep | built, published 2026-11-04 (nested) |
+| `/servicii/iconostase/pristol-marmura` | 200 | yes | same | keep | built, published 2026-11-04 (nested) |
+| `/servicii/usi` | 200 | typo | same | keep | built, published 2026-11-04 |
 | `/blog` | 200 | — | `/blog` | keep | built (placeholder) |
 | `/blog/clopotele-manastirii-putna` | 200 | yes | same | keep | blog not built |
 | `/blog/clopotar-electronic-pt-clopote-fixe` | 200 | — | same | keep | blog not built |
@@ -76,8 +76,9 @@ Live = HTTP status on 2026-11-02. Sitemap = listed in a legacy sitemap
 - `/api/hello` (create-next-app boilerplate, live 200).
 - `/servicii/clopote-suvenire`, `/servicii/cupole`,
   `/servicii/analog-sfesnice-chivot`: announced as "in maintenance", never
-  built (404 today). Decided 2026-11-03: imported as hidden drafts; each
-  gets its page (same path) only when the user publishes it. The
+  built (404 today). Decided 2026-11-03: imported with status "hidden"
+  (published 2026-11-04, still 404); each gets its page (same path) when
+  the user sets it to active. The
   analog/chivot/sfeșnice page will hold that catalogue plus the aplice.
 
 ## Fragments and catalogue anchors
@@ -90,6 +91,8 @@ page never rendered these IDs, `products.xml` is malformed (`<xml`), and N is
 the 1-based position in `catalog.json` `policandre` (29 records); the new page
 opens the entry for the hash. Records 9 and 10 are identical and merge into
 one item carrying both anchors.
+Built and published 2026-11-04: `/servicii/policandre#Policandru-N` opens
+that item (checked with `#Policandru-7` on the production build).
 
 ## Projects
 
@@ -125,7 +128,8 @@ only paths that bring visits, e.g. catalogue PDFs.
 - Redirects (308) in `next.config.ts` `redirects()` from `lib/redirects.ts`,
   unit-tested in `tests/redirects.test.ts` (2026-11-03): the four service
   rows and `/_lucrarile-noastre`. The two blog rows wait for the blog.
-  The service targets show content once Phase 6 is imported and published.
+  The service targets have content since the Phase 6 publish (2026-11-04;
+  all four 308s and every service row checked on the production build).
   `proxy.ts` keeps handling only language prefixes.
 - The services routes keep the nested legacy paths:
   `app/[lang]/servicii/[service]/[variant]` (built 2026-11-03).

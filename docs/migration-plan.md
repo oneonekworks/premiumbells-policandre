@@ -167,17 +167,26 @@ collection; Orologii and Sonorizări not imported (no photos). The automated
 
 ## Phase 6 — Services and catalogue
 
-- [ ] Build service overview and dynamic service routes.
-- [ ] Convert repeated service layouts to structured reusable sections.
-- [ ] Import active services and their galleries.
-- [ ] Decide whether maintenance services launch, remain hidden, or are removed.
-- [ ] Import informational catalogue items and technical specifications.
-- [ ] Verify that no legacy prices appear in documents, queries, rendered HTML,
-  metadata, exports, or search indexes.
-- [ ] Replace incorrect legacy service links.
+- [x] Build service overview and dynamic service routes.
+- [x] Convert repeated service layouts to structured reusable sections.
+- [x] Import active services and their galleries.
+- [x] Decide whether maintenance services launch, remain hidden, or are removed
+  (hidden: Clopote suvenire, Cupole, Analog/sfeșnice/chivot).
+- [x] Import informational catalogue items and technical specifications.
+- [x] Verify that no legacy prices appear in documents, queries, rendered HTML,
+  metadata, exports, or search indexes (`verify-no-prices`, query guard test,
+  browser price crawl; there is no search index yet, and the sitemap comes at
+  cutover).
+- [x] Replace incorrect legacy service links (308 redirects).
 
 **Exit criteria:** Editors can create and update services/catalogue entries, and
 the public site contains no price information.
+
+**Done 2026-11-04** on the local production build: 17 services (14 active, 3
+hidden) and 52 catalogue items published; no price errors in the dataset or
+the rendered service pages. A legacy price in the Phase 5 Făget project was
+found by the crawl and removed. Open: the same check on the hosted preview
+after the user pushes.
 
 ## Phase 7 — Homepage, blog, and global content
 

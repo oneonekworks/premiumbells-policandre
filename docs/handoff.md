@@ -184,8 +184,10 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    log); step 8 done 2026-11-04 (17 service and 52 catalogue drafts, no
    price errors, counts match); step 9 published them 2026-11-04 and removed
    a Phase 5 price from the Făget and Drobeta project texts (see the change
-   log). Next: the user's webhook change and a check of the hosted preview
-   after an approved push, then step 10 (close-out). Service browser tests need the test documents
+   log); webhook updated by the user; step 10 (close-out) done 2026-11-04.
+   Open: the user pushes `prototype/mobile-publishing` (approved; the
+   session has no SSH key), then run the services price crawl against the
+   hosted preview. Service browser tests need the test documents
    (`npm run services:test-docs -- --write` after an export, `--delete`
    afterwards); otherwise 16 of them skip. The user changes the
    webhook filter/projection and checks the Studio on the phone.
