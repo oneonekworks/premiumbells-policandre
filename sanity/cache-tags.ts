@@ -13,6 +13,23 @@ export const cacheTags = {
   project: (slug: string) => `sanity:project:${slug}`,
   services: 'sanity:service',
   catalog: (family: string) => `sanity:catalog:${family}`,
+  // Phase 7. Few documents each, so one tag per group is the smallest useful
+  // scope; the blog tag also clears cached 404s for new post slugs.
+  global: 'sanity:global',
+  homePage: 'sanity:homePage',
+  homeMedia: 'sanity:home-media',
+  blog: 'sanity:blog',
+};
+
+const groupTags: Record<string, string> = {
+  siteSettings: cacheTags.global,
+  navigation: cacheTags.global,
+  homePage: cacheTags.homePage,
+  catalogDownload: cacheTags.homeMedia,
+  testimonial: cacheTags.homeMedia,
+  audioFeature: cacheTags.homeMedia,
+  blogPost: cacheTags.blog,
+  person: cacheTags.blog,
 };
 
 /**
@@ -70,6 +87,6 @@ export function revalidationTags(payload: PublishPayload): string[] {
       return families.length ? [...new Set(families.map(cacheTags.catalog))] : [SANITY_TAG];
     }
     default:
-      return [SANITY_TAG];
+      return payload._type && groupTags[payload._type] ? [groupTags[payload._type]] : [SANITY_TAG];
   }
 }

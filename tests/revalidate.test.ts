@@ -51,7 +51,7 @@ test('publishing, unpublishing and language changes revalidate category counts',
 test('other document types map to their tag or to everything', () => {
   assert.deepEqual(revalidationTags({_type: 'workCategory'}), [cacheTags.categories]);
   assert.deepEqual(revalidationTags({_type: 'portfolioPage'}), [cacheTags.portfolioPage]);
-  assert.deepEqual(revalidationTags({_type: 'blogPost'}), [SANITY_TAG]);
+  assert.deepEqual(revalidationTags({_type: 'unknownType'}), [SANITY_TAG]);
   assert.deepEqual(revalidationTags({_type: 'project', operation: 'update'}), [SANITY_TAG]);
 });
 
@@ -112,4 +112,14 @@ test('a signed service webhook revalidates the service tag', async () => {
   const result = await run(await signedRequest(body));
   assert.equal(result.status, 200);
   assert.deepEqual(result.revalidated, [cacheTags.services]);
+});
+
+test('Phase 7 types revalidate their group tag', () => {
+  const tagsFor = (_type: string) => revalidationTags({_type, operation: 'update'});
+  assert.deepEqual(tagsFor('siteSettings'), [cacheTags.global]);
+  assert.deepEqual(tagsFor('navigation'), [cacheTags.global]);
+  assert.deepEqual(tagsFor('homePage'), [cacheTags.homePage]);
+  for (const type of ['catalogDownload', 'testimonial', 'audioFeature']) assert.deepEqual(tagsFor(type), [cacheTags.homeMedia]);
+  for (const type of ['blogPost', 'person']) assert.deepEqual(tagsFor(type), [cacheTags.blog]);
+  assert.deepEqual(tagsFor('somethingNew'), [SANITY_TAG]);
 });

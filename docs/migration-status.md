@@ -100,8 +100,9 @@ sessions are in [the session handoff](handoff.md). In short:
    hosted preview 2026-11-04. Phase 6 done.
 10. Phase 7 — homepage, blog and global content: plan accepted 2026-11-04
     with the recommended defaults ([phase7-plan.md](phase7-plan.md));
-    step 1 (decisions recorded) done; step 2 (Studio schema) deployed
-    2026-11-04 with the user's approval, waiting for the phone check.
+    step 1 (decisions recorded) done; step 2 (Studio schema) deployed and
+    checked on the phone by the user 2026-11-04; step 3 (website data layer)
+    done 2026-11-04; the webhook filter change waits for the user.
 
 ## Remaining prototype acceptance inputs
 
@@ -144,6 +145,21 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-04 (Phase 7 step 3)
+
+- The user checked the new Studio lists on the phone ("looks good").
+- Website data layer: queries `SITE_QUERY`, `HOME_QUERY`,
+  `CATALOG_DOWNLOADS_QUERY` (only `reviewed` files), `BLOG_POSTS_QUERY`,
+  `BLOG_POST_QUERY` (body projected block by block, internal-link targets,
+  translations both ways, `pt::text` length for reading time, public related
+  projects and services) and `POSTS_REFERENCING_QUERY` ("Din blog");
+  TypeGen; loaders `sanity/site.ts`, `home.ts`, `blog.ts`; cache tags
+  `sanity:global`, `sanity:homePage`, `sanity:home-media`, `sanity:blog`
+  and their webhook mapping. 42 unit tests (new: tags per type, blog
+  language and translations); the query guard covers the new queries.
+- The webhook filter text for the user is in `docs/architecture.md`
+  ("Publish webhook"); the projection needs no change.
 
 ### 2026-11-04 (Phase 7 step 2)
 

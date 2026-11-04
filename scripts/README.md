@@ -114,7 +114,8 @@ holding several facts flagged for an override; YouTube embeds → watch URLs;
 
 `npm run revalidate:test -- --url <origin> --type project --slug <slug>
 --category <categoryId>` (or `--type workCategory` / `portfolioPage` /
-`service`, or `--type catalogItem --family <family>`) sends a request to
+`service`, `--type catalogItem --family <family>`, or a Phase 7 type such
+as `blogPost`, `homePage`, `navigation`) sends a request to
 `/api/revalidate` signed like the Sanity publish webhook, using
 `SANITY_REVALIDATE_SECRET` from `.env.local` (never printed).
 

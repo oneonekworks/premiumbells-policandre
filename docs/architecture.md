@@ -185,10 +185,19 @@ Sanity needs a public URL, so the webhook goes live with hosting (handoff step
 
 - Name: `Revalidare site`; URL: `https://<host>/api/revalidate`; dataset
   `production`; trigger on Create, Update, Delete; drafts and versions off.
-- Filter: `_type in ["project", "workCategory", "portfolioPage", "service", "catalogItem"]`
-  (widen it when new public types are added; unknown types clear everything).
-  Until the user widens the live webhook (Phase 6), service and catalogue
-  publishes show on the preview after the hourly refresh.
+- Filter (Phase 7 adds the last eight types; until the user widens the live
+  webhook, their publishes show on the preview after the hourly refresh):
+
+  ```groq
+  _type in ["project", "workCategory", "portfolioPage", "service", "catalogItem",
+    "siteSettings", "navigation", "homePage", "catalogDownload", "testimonial",
+    "audioFeature", "person", "blogPost"]
+  ```
+
+  Widen it when new public types are added; unknown types clear everything.
+  Phase 7 tags: `siteSettings`/`navigation` → `sanity:global`, `homePage` →
+  `sanity:homePage`, catalogue downloads, testimonials and audio →
+  `sanity:home-media`, posts and people → `sanity:blog`.
 - Projection (Phase 6 adds `"family": family`; the live webhook still has the
   previous projection without it until the user updates it):
 
@@ -203,8 +212,8 @@ Sanity needs a public URL, so the webhook goes live with hosting (handoff step
   environment variables). Never paste it in chat.
 
 Check it with `npm run revalidate:test -- --url https://<host> --type
-workCategory` (signs a request with the local secret; also `--type service`
-and `--type catalogItem --family policandre`) and Sanity's webhook attempt
+workCategory` (signs a request with the local secret; also `--type service`,
+`--type catalogItem --family policandre` and any Phase 7 type, e.g. `--type blogPost`) and Sanity's webhook attempt
 log.
 
 #### Draft Mode preview (designed, not built)

@@ -28,6 +28,320 @@ export type Audio = {
   _type: "file";
 };
 
+export type CatalogDownload = {
+  _id: string;
+  _type: "catalogDownload";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: LocaleString;
+  cover?: ImageWithMetadata;
+  file?: {
+    asset: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  edition?: string;
+  language?: "ro" | "en" | "ru" | "multi";
+  displayOrder?: number;
+  reviewed?: boolean;
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type ImageWithMetadata = {
+  _type: "imageWithMetadata";
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt?: LocaleString;
+  caption?: LocaleString;
+  credit?: string;
+};
+
+export type LocaleString = {
+  _type: "localeString";
+  ro?: string;
+  en?: string;
+};
+
+export type ServiceReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "service";
+};
+
+export type TestimonialReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "testimonial";
+};
+
+export type AudioFeatureReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "audioFeature";
+};
+
+export type BlogPostReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "blogPost";
+};
+
+export type HomePage = {
+  _id: string;
+  _type: "homePage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  publishedLanguages?: Array<string>;
+  hero?: {
+    badge?: SiteLink;
+    title?: LocaleString;
+    highlight?: LocaleString;
+    lead?: LocaleText;
+    tagline?: LocaleString;
+    image?: ImageWithMetadata;
+    primaryCta?: SiteLink;
+    secondaryCta?: SiteLink;
+  };
+  services?: {
+    enabled?: boolean;
+    eyebrow?: LocaleString;
+    heading?: LocaleString;
+    intro?: LocaleBlockContent;
+    services?: Array<
+      {
+        _key: string;
+      } & ServiceReference
+    >;
+  };
+  catalogues?: {
+    enabled?: boolean;
+    heading?: LocaleString;
+    intro?: LocaleText;
+  };
+  testimonial?: {
+    enabled?: boolean;
+    testimonial?: TestimonialReference;
+  };
+  audio?: {
+    enabled?: boolean;
+    eyebrow?: LocaleString;
+    recording?: AudioFeatureReference;
+  };
+  blog?: {
+    enabled?: boolean;
+    heading?: LocaleString;
+    intro?: LocaleText;
+    posts?: Array<
+      {
+        _key: string;
+      } & BlogPostReference
+    >;
+  };
+  about?: {
+    enabled?: boolean;
+    heading?: LocaleString;
+    body?: LocaleBlockContent;
+    poster?: ImageWithMetadata;
+    video?: Video;
+    cta?: SiteLink;
+  };
+  seo?: Seo;
+};
+
+export type Seo = {
+  _type: "seo";
+  metaTitle?: LocaleString;
+  metaDescription?: LocaleText;
+  shareImage?: ImageWithMetadata;
+  noIndex?: boolean;
+};
+
+export type WorkCategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "workCategory";
+};
+
+export type ProjectReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "project";
+};
+
+export type SiteLink = {
+  _type: "siteLink";
+  label?: LocaleString;
+  kind?: "page" | "document" | "external" | "phone" | "email";
+  page?: "home" | "services" | "works" | "blog" | "about";
+  document?:
+    | ServiceReference
+    | WorkCategoryReference
+    | ProjectReference
+    | BlogPostReference;
+  url?: string;
+};
+
+export type Video = {
+  _type: "video";
+  provider?: "youtube" | "file";
+  url?: string;
+  file?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  title?: LocaleString;
+  poster?: ImageWithMetadata;
+};
+
+export type LocaleBlockContent = {
+  _type: "localeBlockContent";
+  ro?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h3";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  en?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h3";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type LocaleText = {
+  _type: "localeText";
+  ro?: string;
+  en?: string;
+};
+
+export type AudioFeature = {
+  _id: string;
+  _type: "audioFeature";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: LocaleString;
+  audio?: {
+    asset: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  durationSeconds?: number;
+  artwork?: ImageWithMetadata;
+  context?: LocaleText;
+  transcript?: LocaleText;
+  relatedProject?: ProjectReference;
+};
+
+export type Testimonial = {
+  _id: string;
+  _type: "testimonial";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  quote?: LocaleText;
+  name?: string;
+  role?: LocaleString;
+  portrait?: ImageWithMetadata;
+  context?: LocaleString;
+  date?: string;
+  relatedProject?: ProjectReference;
+};
+
+export type Navigation = {
+  _id: string;
+  _type: "navigation";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  publishedLanguages?: Array<string>;
+  header?: Array<
+    {
+      _key: string;
+    } & SiteLink
+  >;
+  showSubmenus?: boolean;
+  footerGroups?: Array<{
+    heading?: LocaleString;
+    links?: Array<
+      {
+        _key: string;
+      } & SiteLink
+    >;
+    _type: "footerGroup";
+    _key: string;
+  }>;
+};
+
+export type SiteSettings = {
+  _id: string;
+  _type: "siteSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  legalName?: string;
+  cui?: string;
+  registration?: string;
+  registryUrl?: string;
+  phone?: {
+    display?: string;
+    e164?: string;
+  };
+  email?: string;
+  address?: LocaleText;
+  social?: Array<{
+    network?: "facebook" | "instagram" | "youtube";
+    url?: string;
+    _type: "socialLink";
+    _key: string;
+  }>;
+  tagline?: LocaleText;
+  defaultSeo?: Seo;
+};
+
 export type CatalogItem = {
   _id: string;
   _type: "catalogItem";
@@ -92,48 +406,169 @@ export type Slug = {
   source?: string;
 };
 
-export type SanityImageAssetReference = {
+export type PortfolioPage = {
+  _id: string;
+  _type: "portfolioPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  publishedLanguages?: Array<string>;
+  title?: LocaleString;
+  intro?: LocaleText;
+  seo?: Seo;
+};
+
+export type ArticleBody = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h2" | "h3" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<
+        | {
+            href?: string;
+            _type: "link";
+            _key: string;
+          }
+        | {
+            reference?: ProjectReference | ServiceReference | BlogPostReference;
+            _type: "internalLink";
+            _key: string;
+          }
+      >;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | ({
+      _key: string;
+    } & ImageWithMetadata)
+  | ({
+      _key: string;
+    } & ArticleGallery)
+  | ({
+      _key: string;
+    } & Video)
+  | ({
+      _key: string;
+    } & ArticleAudio)
+>;
+
+export type ArticleAudio = {
+  _type: "articleAudio";
+  title?: string;
+  file?: {
+    asset: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+};
+
+export type ArticleGallery = {
+  _type: "articleGallery";
+  images?: Array<
+    {
+      _key: string;
+    } & ImageWithMetadata
+  >;
+};
+
+export type PersonReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  [internalGroqTypeReferenceTo]?: "person";
 };
 
-export type ImageWithMetadata = {
-  _type: "imageWithMetadata";
-  asset?: SanityImageAssetReference;
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  alt?: LocaleString;
-  caption?: LocaleString;
-  credit?: string;
+export type BlogPost = {
+  _id: string;
+  _type: "blogPost";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: "ro" | "en";
+  translationOf?: BlogPostReference;
+  title?: string;
+  slug?: Slug;
+  kind?: "article" | "report" | "video";
+  publishedAt?: string;
+  excerpt?: string;
+  cover?: ImageWithMetadata;
+  author?: PersonReference;
+  source?: {
+    text?: string;
+    url?: string;
+  };
+  body?: ArticleBody;
+  relatedProjects?: Array<
+    {
+      _key: string;
+    } & ProjectReference
+  >;
+  relatedServices?: Array<
+    {
+      _key: string;
+    } & ServiceReference
+  >;
+  seo?: Seo;
+  legacy?: LegacySource;
 };
 
-export type LocaleText = {
-  _type: "localeText";
-  ro?: string;
-  en?: string;
+export type Person = {
+  _id: string;
+  _type: "person";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  role?: LocaleString;
+  portrait?: ImageWithMetadata;
+  bio?: LocaleText;
 };
 
-export type LocaleString = {
-  _type: "localeString";
-  ro?: string;
-  en?: string;
-};
-
-export type ServiceReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "service";
-};
-
-export type WorkCategoryReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "workCategory";
+export type Project = {
+  _id: string;
+  _type: "project";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  publishedLanguages?: Array<string>;
+  title?: LocaleString;
+  slug?: Slug;
+  category?: WorkCategoryReference;
+  location?: {
+    locality?: string;
+    county?: string;
+    country?: "RO" | "MD" | "ES";
+  };
+  year?: number;
+  displayDate?: LocaleString;
+  summary?: LocaleText;
+  coverImage?: ImageWithMetadata;
+  gallery?: Array<
+    {
+      _key: string;
+    } & ImageWithMetadata
+  >;
+  videos?: Array<
+    {
+      _key: string;
+    } & Video
+  >;
+  body?: LocaleBlockContent;
+  specifications?: Array<
+    {
+      _key: string;
+    } & Specification
+  >;
+  featured?: boolean;
+  displayOrder?: number;
+  seo?: Seo;
+  legacy?: LegacySource;
 };
 
 export type Service = {
@@ -183,113 +618,6 @@ export type Service = {
   legacy?: LegacySource;
 };
 
-export type Seo = {
-  _type: "seo";
-  metaTitle?: LocaleString;
-  metaDescription?: LocaleText;
-  shareImage?: ImageWithMetadata;
-  noIndex?: boolean;
-};
-
-export type LocaleBlockContent = {
-  _type: "localeBlockContent";
-  ro?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h3";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  en?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h3";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-};
-
-export type LocaleSlug = {
-  _type: "localeSlug";
-  ro?: Slug;
-  en?: Slug;
-};
-
-export type PortfolioPage = {
-  _id: string;
-  _type: "portfolioPage";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  publishedLanguages?: Array<string>;
-  title?: LocaleString;
-  intro?: LocaleText;
-  seo?: Seo;
-};
-
-export type Project = {
-  _id: string;
-  _type: "project";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  publishedLanguages?: Array<string>;
-  title?: LocaleString;
-  slug?: Slug;
-  category?: WorkCategoryReference;
-  location?: {
-    locality?: string;
-    county?: string;
-    country?: "RO" | "MD" | "ES";
-  };
-  year?: number;
-  displayDate?: LocaleString;
-  summary?: LocaleText;
-  coverImage?: ImageWithMetadata;
-  gallery?: Array<
-    {
-      _key: string;
-    } & ImageWithMetadata
-  >;
-  videos?: Array<
-    {
-      _key: string;
-    } & Video
-  >;
-  body?: LocaleBlockContent;
-  specifications?: Array<
-    {
-      _key: string;
-    } & Specification
-  >;
-  featured?: boolean;
-  displayOrder?: number;
-  seo?: Seo;
-  legacy?: LegacySource;
-};
-
 export type WorkCategory = {
   _id: string;
   _type: "workCategory";
@@ -310,6 +638,12 @@ export type WorkCategory = {
   >;
   seo?: Seo;
   legacy?: LegacySource;
+};
+
+export type LocaleSlug = {
+  _type: "localeSlug";
+  ro?: Slug;
+  en?: Slug;
 };
 
 export type SectionCta = {
@@ -425,19 +759,6 @@ export type Specification = {
   label?: LocaleString;
   value?: string;
   unit?: string;
-};
-
-export type Video = {
-  _type: "video";
-  provider?: "youtube" | "file";
-  url?: string;
-  file?: {
-    asset?: SanityFileAssetReference;
-    media?: unknown;
-    _type: "file";
-  };
-  title?: LocaleString;
-  poster?: ImageWithMetadata;
 };
 
 export type SanityImageCrop = {
@@ -556,22 +877,40 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | SanityFileAssetReference
   | Audio
+  | CatalogDownload
+  | SanityImageAssetReference
+  | ImageWithMetadata
+  | LocaleString
+  | ServiceReference
+  | TestimonialReference
+  | AudioFeatureReference
+  | BlogPostReference
+  | HomePage
+  | Seo
+  | WorkCategoryReference
+  | ProjectReference
+  | SiteLink
+  | Video
+  | LocaleBlockContent
+  | LocaleText
+  | AudioFeature
+  | Testimonial
+  | Navigation
+  | SiteSettings
   | CatalogItem
   | LegacySource
   | Slug
-  | SanityImageAssetReference
-  | ImageWithMetadata
-  | LocaleText
-  | LocaleString
-  | ServiceReference
-  | WorkCategoryReference
-  | Service
-  | Seo
-  | LocaleBlockContent
-  | LocaleSlug
   | PortfolioPage
+  | ArticleBody
+  | ArticleAudio
+  | ArticleGallery
+  | PersonReference
+  | BlogPost
+  | Person
   | Project
+  | Service
   | WorkCategory
+  | LocaleSlug
   | SectionCta
   | SectionCatalogue
   | SectionVideos
@@ -582,7 +921,6 @@ export type AllSanitySchemaTypes =
   | SectionGallery
   | SpecificationSuggestion
   | Specification
-  | Video
   | SanityImageCrop
   | SanityImageHotspot
   | SanityImagePaletteSwatch
@@ -1088,6 +1426,872 @@ export type CATALOG_QUERY_RESULT = Array<{
   }> | null;
 }>;
 
+// Source: ../rbells_policandre/sanity/queries.ts
+// Variable: SITE_QUERY
+// Query: {  "settings": *[_id == "siteSettings"][0]{    name, legalName, cui, registration, registryUrl, email, "phone": phone{display, e164},    "address": select($lang == "en" => address.en, address.ro), "tagline": select($lang == "en" => coalesce(tagline.en, tagline.ro), tagline.ro),    "social": social[]{_key, network, url},    "seo": defaultSeo{"title": select($lang == "en" => metaTitle.en, metaTitle.ro), "description": select($lang == "en" => metaDescription.en, metaDescription.ro), shareImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}}  },  "navigation": *[_id == "navigation" && $lang in coalesce(publishedLanguages, ["ro"])][0]{    "header": header[]{_key, kind, page, url, "label": select($lang == "en" => coalesce(label.en, label.ro), label.ro),  "target": document->{    _type, status, language, publishedLanguages,    "slug": select(_type in ["service", "workCategory"] => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),    "parentStatus": parent->status,    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)  }},    showSubmenus,    "footerGroups": footerGroups[]{_key, "heading": select($lang == "en" => heading.en, heading.ro), "links": links[]{_key, kind, page, url, "label": select($lang == "en" => coalesce(label.en, label.ro), label.ro),  "target": document->{    _type, status, language, publishedLanguages,    "slug": select(_type in ["service", "workCategory"] => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),    "parentStatus": parent->status,    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)  }}}  }}
+export type SITE_QUERY_RESULT = {
+  settings:
+    | {
+        name: null;
+        legalName: null;
+        cui: null;
+        registration: null;
+        registryUrl: null;
+        email: null;
+        phone: null;
+        address: null;
+        tagline: null;
+        social: null;
+        seo: null;
+      }
+    | {
+        name: string | null;
+        legalName: null;
+        cui: null;
+        registration: null;
+        registryUrl: null;
+        email: null;
+        phone: null;
+        address: null;
+        tagline: null;
+        social: null;
+        seo: null;
+      }
+    | {
+        name: string | null;
+        legalName: string | null;
+        cui: string | null;
+        registration: string | null;
+        registryUrl: string | null;
+        email: string | null;
+        phone: {
+          display: string | null;
+          e164: string | null;
+        } | null;
+        address: string | null;
+        tagline: string | null;
+        social: Array<{
+          _key: string;
+          network: "facebook" | "instagram" | "youtube" | null;
+          url: string | null;
+        }> | null;
+        seo: {
+          title: string | null;
+          description: string | null;
+          shareImage: {
+            asset: SanityImageAssetReference | null;
+            crop: SanityImageCrop | null;
+            hotspot: SanityImageHotspot | null;
+            alt: string | null;
+            caption: string | null;
+            lqip: string | null;
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      }
+    | null;
+  navigation:
+    | {
+        header: null;
+        showSubmenus: null;
+        footerGroups: null;
+      }
+    | {
+        header: Array<{
+          _key: string;
+          kind: "document" | "email" | "external" | "page" | "phone" | null;
+          page: "about" | "blog" | "home" | "services" | "works" | null;
+          url: string | null;
+          label: string | null;
+          target:
+            | {
+                _type: "blogPost";
+                status: null;
+                language: "en" | "ro" | null;
+                publishedLanguages: null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: null;
+              }
+            | {
+                _type: "project";
+                status: null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: string | null;
+              }
+            | {
+                _type: "service";
+                status: "active" | "hidden" | null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: string | null;
+                parentStatus: "active" | "hidden" | null;
+                categorySlug: null;
+              }
+            | {
+                _type: "workCategory";
+                status: null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: null;
+              }
+            | null;
+        }> | null;
+        showSubmenus: boolean | null;
+        footerGroups: Array<{
+          _key: string;
+          heading: string | null;
+          links: Array<{
+            _key: string;
+            kind: "document" | "email" | "external" | "page" | "phone" | null;
+            page: "about" | "blog" | "home" | "services" | "works" | null;
+            url: string | null;
+            label: string | null;
+            target:
+              | {
+                  _type: "blogPost";
+                  status: null;
+                  language: "en" | "ro" | null;
+                  publishedLanguages: null;
+                  slug: string | null;
+                  parentSlug: null;
+                  parentStatus: null;
+                  categorySlug: null;
+                }
+              | {
+                  _type: "project";
+                  status: null;
+                  language: null;
+                  publishedLanguages: Array<string> | null;
+                  slug: string | null;
+                  parentSlug: null;
+                  parentStatus: null;
+                  categorySlug: string | null;
+                }
+              | {
+                  _type: "service";
+                  status: "active" | "hidden" | null;
+                  language: null;
+                  publishedLanguages: Array<string> | null;
+                  slug: string | null;
+                  parentSlug: string | null;
+                  parentStatus: "active" | "hidden" | null;
+                  categorySlug: null;
+                }
+              | {
+                  _type: "workCategory";
+                  status: null;
+                  language: null;
+                  publishedLanguages: Array<string> | null;
+                  slug: string | null;
+                  parentSlug: null;
+                  parentStatus: null;
+                  categorySlug: null;
+                }
+              | null;
+          }> | null;
+        }> | null;
+      }
+    | null;
+};
+
+// Source: ../rbells_policandre/sanity/queries.ts
+// Variable: HOME_QUERY
+// Query: *[_id == "homePage" && $lang in coalesce(publishedLanguages, ["ro"])][0]{    hero{      "badge": badge{_key, kind, page, url, "label": select($lang == "en" => coalesce(label.en, label.ro), label.ro),  "target": document->{    _type, status, language, publishedLanguages,    "slug": select(_type in ["service", "workCategory"] => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),    "parentStatus": parent->status,    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)  }},      "title": select($lang == "en" => title.en, title.ro), "highlight": select($lang == "en" => highlight.en, highlight.ro),      "lead": select($lang == "en" => lead.en, lead.ro), "tagline": select($lang == "en" => tagline.en, tagline.ro),      image{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},      "primaryCta": primaryCta{_key, kind, page, url, "label": select($lang == "en" => coalesce(label.en, label.ro), label.ro),  "target": document->{    _type, status, language, publishedLanguages,    "slug": select(_type in ["service", "workCategory"] => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),    "parentStatus": parent->status,    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)  }}, "secondaryCta": secondaryCta{_key, kind, page, url, "label": select($lang == "en" => coalesce(label.en, label.ro), label.ro),  "target": document->{    _type, status, language, publishedLanguages,    "slug": select(_type in ["service", "workCategory"] => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),    "parentStatus": parent->status,    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)  }}    },    services{enabled, "eyebrow": select($lang == "en" => eyebrow.en, eyebrow.ro), "heading": select($lang == "en" => heading.en, heading.ro), "intro": select($lang == "en" => intro.en, intro.ro), "serviceIds": services[]._ref},    catalogues{enabled, "heading": select($lang == "en" => heading.en, heading.ro), "intro": select($lang == "en" => intro.en, intro.ro)},    testimonial{enabled, "testimonial": testimonial->{      _id, "quote": select($lang == "en" => coalesce(quote.en, quote.ro), quote.ro), name, "role": select($lang == "en" => coalesce(role.en, role.ro), role.ro), "context": select($lang == "en" => coalesce(context.en, context.ro), context.ro), date,      portrait{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}    }},    audio{enabled, "eyebrow": select($lang == "en" => eyebrow.en, eyebrow.ro), "recording": recording->{      _id, "title": select($lang == "en" => coalesce(title.en, title.ro), title.ro), "context": select($lang == "en" => coalesce(context.en, context.ro), context.ro), "transcript": select($lang == "en" => transcript.en, transcript.ro),      durationSeconds, "url": audio.asset->url, "mimeType": audio.asset->mimeType, artwork{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}    }},    blog{enabled, "heading": select($lang == "en" => heading.en, heading.ro), "intro": select($lang == "en" => intro.en, intro.ro), "postIds": posts[]._ref},    about{      enabled, "heading": select($lang == "en" => heading.en, heading.ro), "body": select($lang == "en" => body.en, body.ro),      poster{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}, video{_key, provider, url, "file": file.asset->url, "title": select($lang == "en" => title.en, title.ro), poster{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}}, "cta": cta{_key, kind, page, url, "label": select($lang == "en" => coalesce(label.en, label.ro), label.ro),  "target": document->{    _type, status, language, publishedLanguages,    "slug": select(_type in ["service", "workCategory"] => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),    "parentStatus": parent->status,    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)  }}    },    seo{"title": select($lang == "en" => metaTitle.en, metaTitle.ro), "description": select($lang == "en" => metaDescription.en, metaDescription.ro), noIndex, shareImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}}  }
+export type HOME_QUERY_RESULT =
+  | {
+      hero: null;
+      services: null;
+      catalogues: null;
+      testimonial: null;
+      audio: null;
+      blog: null;
+      about: null;
+      seo: null;
+    }
+  | {
+      hero: null;
+      services: null;
+      catalogues: null;
+      testimonial: null;
+      audio: null;
+      blog: null;
+      about: null;
+      seo: {
+        title: string | null;
+        description: string | null;
+        noIndex: boolean | null;
+        shareImage: {
+          asset: SanityImageAssetReference | null;
+          crop: SanityImageCrop | null;
+          hotspot: SanityImageHotspot | null;
+          alt: string | null;
+          caption: string | null;
+          lqip: string | null;
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    }
+  | {
+      hero: null;
+      services: null;
+      catalogues: null;
+      testimonial: null;
+      audio: {
+        enabled: null;
+        eyebrow: null;
+        recording: null;
+      } | null;
+      blog: null;
+      about: null;
+      seo: null;
+    }
+  | {
+      hero: {
+        badge: {
+          _key: null;
+          kind: "document" | "email" | "external" | "page" | "phone" | null;
+          page: "about" | "blog" | "home" | "services" | "works" | null;
+          url: string | null;
+          label: string | null;
+          target:
+            | {
+                _type: "blogPost";
+                status: null;
+                language: "en" | "ro" | null;
+                publishedLanguages: null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: null;
+              }
+            | {
+                _type: "project";
+                status: null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: string | null;
+              }
+            | {
+                _type: "service";
+                status: "active" | "hidden" | null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: string | null;
+                parentStatus: "active" | "hidden" | null;
+                categorySlug: null;
+              }
+            | {
+                _type: "workCategory";
+                status: null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: null;
+              }
+            | null;
+        } | null;
+        title: string | null;
+        highlight: string | null;
+        lead: string | null;
+        tagline: string | null;
+        image: {
+          asset: SanityImageAssetReference | null;
+          crop: SanityImageCrop | null;
+          hotspot: SanityImageHotspot | null;
+          alt: string | null;
+          caption: string | null;
+          lqip: string | null;
+          width: number | null;
+          height: number | null;
+        } | null;
+        primaryCta: {
+          _key: null;
+          kind: "document" | "email" | "external" | "page" | "phone" | null;
+          page: "about" | "blog" | "home" | "services" | "works" | null;
+          url: string | null;
+          label: string | null;
+          target:
+            | {
+                _type: "blogPost";
+                status: null;
+                language: "en" | "ro" | null;
+                publishedLanguages: null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: null;
+              }
+            | {
+                _type: "project";
+                status: null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: string | null;
+              }
+            | {
+                _type: "service";
+                status: "active" | "hidden" | null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: string | null;
+                parentStatus: "active" | "hidden" | null;
+                categorySlug: null;
+              }
+            | {
+                _type: "workCategory";
+                status: null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: null;
+              }
+            | null;
+        } | null;
+        secondaryCta: {
+          _key: null;
+          kind: "document" | "email" | "external" | "page" | "phone" | null;
+          page: "about" | "blog" | "home" | "services" | "works" | null;
+          url: string | null;
+          label: string | null;
+          target:
+            | {
+                _type: "blogPost";
+                status: null;
+                language: "en" | "ro" | null;
+                publishedLanguages: null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: null;
+              }
+            | {
+                _type: "project";
+                status: null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: string | null;
+              }
+            | {
+                _type: "service";
+                status: "active" | "hidden" | null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: string | null;
+                parentStatus: "active" | "hidden" | null;
+                categorySlug: null;
+              }
+            | {
+                _type: "workCategory";
+                status: null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: null;
+              }
+            | null;
+        } | null;
+      } | null;
+      services: {
+        enabled: boolean | null;
+        eyebrow: string | null;
+        heading: string | null;
+        intro: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "h3" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }>;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        serviceIds: Array<string> | null;
+      } | null;
+      catalogues: {
+        enabled: boolean | null;
+        heading: string | null;
+        intro: string | null;
+      } | null;
+      testimonial: {
+        enabled: boolean | null;
+        testimonial: {
+          _id: string;
+          quote: string | null;
+          name: string | null;
+          role: string | null;
+          context: string | null;
+          date: string | null;
+          portrait: {
+            asset: SanityImageAssetReference | null;
+            crop: SanityImageCrop | null;
+            hotspot: SanityImageHotspot | null;
+            alt: string | null;
+            caption: string | null;
+            lqip: string | null;
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      audio: {
+        enabled: boolean | null;
+        eyebrow: string | null;
+        recording: {
+          _id: string;
+          title: string | null;
+          context: string | null;
+          transcript: string | null;
+          durationSeconds: number | null;
+          url: string | null;
+          mimeType: string | null;
+          artwork: {
+            asset: SanityImageAssetReference | null;
+            crop: SanityImageCrop | null;
+            hotspot: SanityImageHotspot | null;
+            alt: string | null;
+            caption: string | null;
+            lqip: string | null;
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      blog: {
+        enabled: boolean | null;
+        heading: string | null;
+        intro: string | null;
+        postIds: Array<string> | null;
+      } | null;
+      about: {
+        enabled: boolean | null;
+        heading: string | null;
+        body: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "h3" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }>;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        poster: {
+          asset: SanityImageAssetReference | null;
+          crop: SanityImageCrop | null;
+          hotspot: SanityImageHotspot | null;
+          alt: string | null;
+          caption: string | null;
+          lqip: string | null;
+          width: number | null;
+          height: number | null;
+        } | null;
+        video: {
+          _key: null;
+          provider: "file" | "youtube" | null;
+          url: string | null;
+          file: string | null;
+          title: string | null;
+          poster: {
+            asset: SanityImageAssetReference | null;
+            crop: SanityImageCrop | null;
+            hotspot: SanityImageHotspot | null;
+            alt: string | null;
+            caption: string | null;
+            lqip: string | null;
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+        cta: {
+          _key: null;
+          kind: "document" | "email" | "external" | "page" | "phone" | null;
+          page: "about" | "blog" | "home" | "services" | "works" | null;
+          url: string | null;
+          label: string | null;
+          target:
+            | {
+                _type: "blogPost";
+                status: null;
+                language: "en" | "ro" | null;
+                publishedLanguages: null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: null;
+              }
+            | {
+                _type: "project";
+                status: null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: string | null;
+              }
+            | {
+                _type: "service";
+                status: "active" | "hidden" | null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: string | null;
+                parentStatus: "active" | "hidden" | null;
+                categorySlug: null;
+              }
+            | {
+                _type: "workCategory";
+                status: null;
+                language: null;
+                publishedLanguages: Array<string> | null;
+                slug: string | null;
+                parentSlug: null;
+                parentStatus: null;
+                categorySlug: null;
+              }
+            | null;
+        } | null;
+      } | null;
+      seo: {
+        title: string | null;
+        description: string | null;
+        noIndex: boolean | null;
+        shareImage: {
+          asset: SanityImageAssetReference | null;
+          crop: SanityImageCrop | null;
+          hotspot: SanityImageHotspot | null;
+          alt: string | null;
+          caption: string | null;
+          lqip: string | null;
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    }
+  | null;
+
+// Source: ../rbells_policandre/sanity/queries.ts
+// Variable: CATALOG_DOWNLOADS_QUERY
+// Query: *[_type == "catalogDownload" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && reviewed == true && defined(file.asset)] | order(displayOrder asc, _id asc){    _id, "title": select($lang == "en" => coalesce(title.en, title.ro), title.ro), edition, language, cover{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},    "url": file.asset->url, "size": file.asset->size  }
+export type CATALOG_DOWNLOADS_QUERY_RESULT = Array<{
+  _id: string;
+  title: string | null;
+  edition: string | null;
+  language: "en" | "multi" | "ro" | "ru" | null;
+  cover: {
+    asset: SanityImageAssetReference | null;
+    crop: SanityImageCrop | null;
+    hotspot: SanityImageHotspot | null;
+    alt: string | null;
+    caption: string | null;
+    lqip: string | null;
+    width: number | null;
+    height: number | null;
+  } | null;
+  url: string | null;
+  size: number | null;
+}>;
+
+// Source: ../rbells_policandre/sanity/queries.ts
+// Variable: BLOG_POSTS_QUERY
+// Query: *[_type == "blogPost" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && language == $lang && defined(slug.current) && defined(publishedAt)] | order(publishedAt desc, _id asc){_id, title, "slug": slug.current, kind, publishedAt, excerpt, cover{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}, "author": author->{name, "role": select($lang == "en" => coalesce(role.en, role.ro), role.ro)}}
+export type BLOG_POSTS_QUERY_RESULT = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  kind: "article" | "report" | "video" | null;
+  publishedAt: string | null;
+  excerpt: string | null;
+  cover: {
+    asset: SanityImageAssetReference | null;
+    crop: SanityImageCrop | null;
+    hotspot: SanityImageHotspot | null;
+    alt: string | null;
+    caption: string | null;
+    lqip: string | null;
+    width: number | null;
+    height: number | null;
+  } | null;
+  author: {
+    name: string | null;
+    role: string | null;
+  } | null;
+}>;
+
+// Source: ../rbells_policandre/sanity/queries.ts
+// Variable: BLOG_POST_QUERY
+// Query: *[_type == "blogPost" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && language == $lang && defined(slug.current) && defined(publishedAt) && slug.current == $slug][0]{    _id, title, "slug": slug.current, kind, publishedAt, excerpt, cover{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},    "textLength": length(pt::text(body)),    "author": author->{name, "role": select($lang == "en" => coalesce(role.en, role.ro), role.ro), portrait{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}},    "source": source{text, url},    "body": body[]{      _key, _type,      _type == "block" => {        style, listItem, level,        "children": children[]{_key, _type, text, marks},        "markDefs": markDefs[]{_key, _type, href, "target": reference->{          _type, status, language, publishedLanguages, "slug": select(_type == "service" => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),          "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),          "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)        }}      },      _type == "imageWithMetadata" => {asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},      _type == "articleGallery" => {"images": images[]{_key, asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}},      _type == "video" => {provider, url, "file": file.asset->url, "title": select($lang == "en" => title.en, title.ro), poster{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}},      _type == "articleAudio" => {title, "url": file.asset->url}    },    "translations": *[_type == "blogPost" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && defined(slug.current)      && (_id == ^.translationOf._ref || translationOf._ref == ^._id)]{language, "slug": slug.current},    "relatedProjects": *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current) && _id in ^.relatedProjects[]._ref] | order(year desc, _id asc){      _id, "title": select($lang == "en" => title.en, title.ro), "slug": slug.current, year,      "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current),      coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}    },    "relatedServices": *[_type == "service" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && status == "active" && defined(select($lang == "en" => slug.en.current, slug.ro.current))  && (!defined(parent) || (parent->status == "active" && $lang in coalesce(parent->publishedLanguages, ["ro"]))) && _id in ^.relatedServices[]._ref] | order(displayOrder asc, _id asc){      _id, "title": select($lang == "en" => title.en, title.ro), "slug": select($lang == "en" => slug.en.current, slug.ro.current),      "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),      "summary": select($lang == "en" => summary.en, summary.ro), coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}    },    seo{"title": select($lang == "en" => metaTitle.en, metaTitle.ro), "description": select($lang == "en" => metaDescription.en, metaDescription.ro), noIndex, shareImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}}  }
+export type BLOG_POST_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  kind: "article" | "report" | "video" | null;
+  publishedAt: string | null;
+  excerpt: string | null;
+  cover: {
+    asset: SanityImageAssetReference | null;
+    crop: SanityImageCrop | null;
+    hotspot: SanityImageHotspot | null;
+    alt: string | null;
+    caption: string | null;
+    lqip: string | null;
+    width: number | null;
+    height: number | null;
+  } | null;
+  textLength: number;
+  author: {
+    name: string | null;
+    role: string | null;
+    portrait: {
+      asset: SanityImageAssetReference | null;
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+      alt: string | null;
+      caption: string | null;
+      lqip: string | null;
+      width: number | null;
+      height: number | null;
+    } | null;
+  } | null;
+  source: {
+    text: string | null;
+    url: string | null;
+  } | null;
+  body: Array<
+    | {
+        _key: string;
+        _type: "articleAudio";
+        title: string | null;
+        url: string | null;
+      }
+    | {
+        _key: string;
+        _type: "articleGallery";
+        images: Array<{
+          _key: string;
+          asset: SanityImageAssetReference | null;
+          crop: SanityImageCrop | null;
+          hotspot: SanityImageHotspot | null;
+          alt: string | null;
+          caption: string | null;
+          lqip: string | null;
+          width: number | null;
+          height: number | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "block";
+        style: "blockquote" | "h2" | "h3" | "normal" | null;
+        listItem: "bullet" | "number" | null;
+        level: number | null;
+        children: Array<{
+          _key: string;
+          _type: "span";
+          text: string | null;
+          marks: Array<string> | null;
+        }> | null;
+        markDefs: Array<
+          | {
+              _key: string;
+              _type: "internalLink";
+              href: null;
+              target:
+                | {
+                    _type: "blogPost";
+                    status: null;
+                    language: "en" | "ro" | null;
+                    publishedLanguages: null;
+                    slug: string | null;
+                    parentSlug: null;
+                    categorySlug: null;
+                  }
+                | {
+                    _type: "project";
+                    status: null;
+                    language: null;
+                    publishedLanguages: Array<string> | null;
+                    slug: string | null;
+                    parentSlug: null;
+                    categorySlug: string | null;
+                  }
+                | {
+                    _type: "service";
+                    status: "active" | "hidden" | null;
+                    language: null;
+                    publishedLanguages: Array<string> | null;
+                    slug: string | null;
+                    parentSlug: string | null;
+                    categorySlug: null;
+                  }
+                | null;
+            }
+          | {
+              _key: string;
+              _type: "link";
+              href: string | null;
+              target: null;
+            }
+        > | null;
+      }
+    | {
+        _key: string;
+        _type: "imageWithMetadata";
+        asset: SanityImageAssetReference | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
+        alt: string | null;
+        caption: string | null;
+        lqip: string | null;
+        width: number | null;
+        height: number | null;
+      }
+    | {
+        _key: string;
+        _type: "video";
+        provider: "file" | "youtube" | null;
+        url: string | null;
+        file: string | null;
+        title: string | null;
+        poster: {
+          asset: SanityImageAssetReference | null;
+          crop: SanityImageCrop | null;
+          hotspot: SanityImageHotspot | null;
+          alt: string | null;
+          caption: string | null;
+          lqip: string | null;
+          width: number | null;
+          height: number | null;
+        } | null;
+      }
+  > | null;
+  translations: Array<{
+    language: "en" | "ro" | null;
+    slug: string | null;
+  }>;
+  relatedProjects: Array<{
+    _id: string;
+    title: string | null;
+    slug: string | null;
+    year: number | null;
+    categorySlug: string | null;
+    coverImage: {
+      asset: SanityImageAssetReference | null;
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+      alt: string | null;
+      caption: string | null;
+      lqip: string | null;
+      width: number | null;
+      height: number | null;
+    } | null;
+  }>;
+  relatedServices: Array<{
+    _id: string;
+    title: string | null;
+    slug: string | null;
+    parentSlug: string | null;
+    summary: string | null;
+    coverImage: {
+      asset: SanityImageAssetReference | null;
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+      alt: string | null;
+      caption: string | null;
+      lqip: string | null;
+      width: number | null;
+      height: number | null;
+    } | null;
+  }>;
+  seo: {
+    title: string | null;
+    description: string | null;
+    noIndex: boolean | null;
+    shareImage: {
+      asset: SanityImageAssetReference | null;
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+      alt: string | null;
+      caption: string | null;
+      lqip: string | null;
+      width: number | null;
+      height: number | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: ../rbells_policandre/sanity/queries.ts
+// Variable: POSTS_REFERENCING_QUERY
+// Query: *[_type == "blogPost" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && language == $lang && defined(slug.current) && defined(publishedAt) && references($id)] | order(publishedAt desc, _id asc)[0...3]{_id, title, "slug": slug.current, kind, publishedAt, excerpt, cover{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}, "author": author->{name, "role": select($lang == "en" => coalesce(role.en, role.ro), role.ro)}}
+export type POSTS_REFERENCING_QUERY_RESULT = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  kind: "article" | "report" | "video" | null;
+  publishedAt: string | null;
+  excerpt: string | null;
+  cover: {
+    asset: SanityImageAssetReference | null;
+    crop: SanityImageCrop | null;
+    hotspot: SanityImageHotspot | null;
+    alt: string | null;
+    caption: string | null;
+    lqip: string | null;
+    width: number | null;
+    height: number | null;
+  } | null;
+  author: {
+    name: string | null;
+    role: string | null;
+  } | null;
+}>;
+
 // Query TypeMap
 declare global {
   interface SanityQueries {
@@ -1099,6 +2303,12 @@ declare global {
     '\n  *[_type == "service" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && status == "active" && defined(select($lang == "en" => slug.en.current, slug.ro.current))\n  && (!defined(parent) || (parent->status == "active" && $lang in coalesce(parent->publishedLanguages, ["ro"])))] | order(displayOrder asc, _id asc){\n    _id, "title": select($lang == "en" => title.en, title.ro), "slug": select($lang == "en" => slug.en.current, slug.ro.current), "parentId": parent._ref,\n    "cardLabel": select($lang == "en" => cardLabel.en, cardLabel.ro), "summary": select($lang == "en" => summary.en, summary.ro),\n    coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}\n  }\n': SERVICES_QUERY_RESULT;
     '\n  *[_type == "service" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && status == "active" && defined(select($lang == "en" => slug.en.current, slug.ro.current))\n  && (!defined(parent) || (parent->status == "active" && $lang in coalesce(parent->publishedLanguages, ["ro"]))) && $slug in [slug.ro.current, slug.en.current]\n    && select(defined($parentSlug) => $parentSlug in [parent->slug.ro.current, parent->slug.en.current], !defined(parent))][0]{\n    _id, "title": select($lang == "en" => title.en, title.ro), "slug": select($lang == "en" => slug.en.current, slug.ro.current), "slugs": {"ro": slug.ro.current, "en": select("en" in publishedLanguages => slug.en.current)}, publishedLanguages,\n    "cardLabel": select($lang == "en" => cardLabel.en, cardLabel.ro), "summary": select($lang == "en" => summary.en, summary.ro), "body": select($lang == "en" => body.en, body.ro),\n    coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},\n    "parent": parent->{_id, "title": select($lang == "en" => title.en, title.ro), "slug": select($lang == "en" => slug.en.current, slug.ro.current), "slugs": {"ro": slug.ro.current, "en": select("en" in publishedLanguages => slug.en.current)}},\n    "variants": *[_type == "service" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && status == "active" && defined(select($lang == "en" => slug.en.current, slug.ro.current))\n  && (!defined(parent) || (parent->status == "active" && $lang in coalesce(parent->publishedLanguages, ["ro"]))) && parent._ref == ^._id] | order(displayOrder asc, _id asc){\n      _id, "title": select($lang == "en" => title.en, title.ro), "slug": select($lang == "en" => slug.en.current, slug.ro.current), "slugs": {"ro": slug.ro.current, "en": select("en" in publishedLanguages => slug.en.current)},\n      "cardLabel": select($lang == "en" => cardLabel.en, cardLabel.ro), "summary": select($lang == "en" => summary.en, summary.ro), coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}\n    },\n    "relatedCategory": *[_type == "workCategory" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && enabled != false && _id == ^.relatedCategory._ref][0]{_id, "title": select($lang == "en" => title.en, title.ro), "slug": select($lang == "en" => slug.en.current, slug.ro.current)},\n    "sections": sections[]{\n      _key, _type, "heading": select($lang == "en" => heading.en, heading.ro),\n      _type == "sectionGallery" => {"images": images[]{_key, asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}},\n      _type == "sectionSteps" => {"steps": steps[]{\n        _key, "title": select($lang == "en" => title.en, title.ro), "text": select($lang == "en" => text.en, text.ro), "images": images[]{_key, asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}\n      }},\n      _type == "sectionModels" => {"models": models[]{\n        _key, "title": select($lang == "en" => title.en, title.ro), "description": select($lang == "en" => description.en, description.ro), anchorId,\n        cover{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}, "gallery": gallery[]{_key, asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},\n        "specifications": specifications[]{_key, "label": select($lang == "en" => label.en, label.ro), value, unit}\n      }},\n      _type == "sectionBellSizes" => {\n        "rows": rows[]{_key, weightKg, diameterCm, heightCm, note}, "footnote": select($lang == "en" => note.en, note.ro)\n      },\n      _type == "sectionBellSets" => {"sets": sets[]{\n        _key, "title": select($lang == "en" => title.en, title.ro), weightsKg, withElectronicRinger,\n        "description": select($lang == "en" => description.en, description.ro), "audio": audio.asset->url\n      }},\n      _type == "sectionVideos" => {"videos": videos[]{_key, provider, url, "file": file.asset->url, "title": select($lang == "en" => title.en, title.ro), poster{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}}},\n      _type == "sectionCatalogue" => {families},\n      _type == "sectionCta" => {"text": select($lang == "en" => text.en, text.ro), "label": select($lang == "en" => label.en, label.ro), contact, href}\n    },\n    seo{"title": select($lang == "en" => metaTitle.en, metaTitle.ro), "description": select($lang == "en" => metaDescription.en, metaDescription.ro), noIndex, shareImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}}\n  }\n': SERVICE_QUERY_RESULT;
     '\n  *[_type == "catalogItem" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && family in $families && defined(image.asset)]\n    | order(displayOrder asc, _id asc){\n      _id, family, "title": select($lang == "en" => title.en, title.ro), "number": number, "summary": select($lang == "en" => summary.en, summary.ro),\n      levels, candles, heightCm, diameterCm, widthCm, depthCm, weightKg, madeToOrder, anchorIds, "slug": slug.current,\n      image{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}, "gallery": gallery[]{_key, asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},\n      "variants": variants[]{_key, finish, referenceCode},\n      "specifications": specifications[]{_key, "label": select($lang == "en" => label.en, label.ro), value, unit}\n    }\n': CATALOG_QUERY_RESULT;
+    '{\n  "settings": *[_id == "siteSettings"][0]{\n    name, legalName, cui, registration, registryUrl, email, "phone": phone{display, e164},\n    "address": select($lang == "en" => address.en, address.ro), "tagline": select($lang == "en" => coalesce(tagline.en, tagline.ro), tagline.ro),\n    "social": social[]{_key, network, url},\n    "seo": defaultSeo{"title": select($lang == "en" => metaTitle.en, metaTitle.ro), "description": select($lang == "en" => metaDescription.en, metaDescription.ro), shareImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}}\n  },\n  "navigation": *[_id == "navigation" && $lang in coalesce(publishedLanguages, ["ro"])][0]{\n    "header": header[]{_key, kind, page, url, "label": select($lang == "en" => coalesce(label.en, label.ro), label.ro),\n  "target": document->{\n    _type, status, language, publishedLanguages,\n    "slug": select(_type in ["service", "workCategory"] => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),\n    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),\n    "parentStatus": parent->status,\n    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)\n  }},\n    showSubmenus,\n    "footerGroups": footerGroups[]{_key, "heading": select($lang == "en" => heading.en, heading.ro), "links": links[]{_key, kind, page, url, "label": select($lang == "en" => coalesce(label.en, label.ro), label.ro),\n  "target": document->{\n    _type, status, language, publishedLanguages,\n    "slug": select(_type in ["service", "workCategory"] => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),\n    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),\n    "parentStatus": parent->status,\n    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)\n  }}}\n  }\n}': SITE_QUERY_RESULT;
+    '\n  *[_id == "homePage" && $lang in coalesce(publishedLanguages, ["ro"])][0]{\n    hero{\n      "badge": badge{_key, kind, page, url, "label": select($lang == "en" => coalesce(label.en, label.ro), label.ro),\n  "target": document->{\n    _type, status, language, publishedLanguages,\n    "slug": select(_type in ["service", "workCategory"] => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),\n    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),\n    "parentStatus": parent->status,\n    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)\n  }},\n      "title": select($lang == "en" => title.en, title.ro), "highlight": select($lang == "en" => highlight.en, highlight.ro),\n      "lead": select($lang == "en" => lead.en, lead.ro), "tagline": select($lang == "en" => tagline.en, tagline.ro),\n      image{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},\n      "primaryCta": primaryCta{_key, kind, page, url, "label": select($lang == "en" => coalesce(label.en, label.ro), label.ro),\n  "target": document->{\n    _type, status, language, publishedLanguages,\n    "slug": select(_type in ["service", "workCategory"] => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),\n    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),\n    "parentStatus": parent->status,\n    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)\n  }}, "secondaryCta": secondaryCta{_key, kind, page, url, "label": select($lang == "en" => coalesce(label.en, label.ro), label.ro),\n  "target": document->{\n    _type, status, language, publishedLanguages,\n    "slug": select(_type in ["service", "workCategory"] => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),\n    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),\n    "parentStatus": parent->status,\n    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)\n  }}\n    },\n    services{enabled, "eyebrow": select($lang == "en" => eyebrow.en, eyebrow.ro), "heading": select($lang == "en" => heading.en, heading.ro), "intro": select($lang == "en" => intro.en, intro.ro), "serviceIds": services[]._ref},\n    catalogues{enabled, "heading": select($lang == "en" => heading.en, heading.ro), "intro": select($lang == "en" => intro.en, intro.ro)},\n    testimonial{enabled, "testimonial": testimonial->{\n      _id, "quote": select($lang == "en" => coalesce(quote.en, quote.ro), quote.ro), name, "role": select($lang == "en" => coalesce(role.en, role.ro), role.ro), "context": select($lang == "en" => coalesce(context.en, context.ro), context.ro), date,\n      portrait{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}\n    }},\n    audio{enabled, "eyebrow": select($lang == "en" => eyebrow.en, eyebrow.ro), "recording": recording->{\n      _id, "title": select($lang == "en" => coalesce(title.en, title.ro), title.ro), "context": select($lang == "en" => coalesce(context.en, context.ro), context.ro), "transcript": select($lang == "en" => transcript.en, transcript.ro),\n      durationSeconds, "url": audio.asset->url, "mimeType": audio.asset->mimeType, artwork{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}\n    }},\n    blog{enabled, "heading": select($lang == "en" => heading.en, heading.ro), "intro": select($lang == "en" => intro.en, intro.ro), "postIds": posts[]._ref},\n    about{\n      enabled, "heading": select($lang == "en" => heading.en, heading.ro), "body": select($lang == "en" => body.en, body.ro),\n      poster{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}, video{_key, provider, url, "file": file.asset->url, "title": select($lang == "en" => title.en, title.ro), poster{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}}, "cta": cta{_key, kind, page, url, "label": select($lang == "en" => coalesce(label.en, label.ro), label.ro),\n  "target": document->{\n    _type, status, language, publishedLanguages,\n    "slug": select(_type in ["service", "workCategory"] => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),\n    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),\n    "parentStatus": parent->status,\n    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)\n  }}\n    },\n    seo{"title": select($lang == "en" => metaTitle.en, metaTitle.ro), "description": select($lang == "en" => metaDescription.en, metaDescription.ro), noIndex, shareImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}}\n  }\n': HOME_QUERY_RESULT;
+    '\n  *[_type == "catalogDownload" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && reviewed == true && defined(file.asset)] | order(displayOrder asc, _id asc){\n    _id, "title": select($lang == "en" => coalesce(title.en, title.ro), title.ro), edition, language, cover{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},\n    "url": file.asset->url, "size": file.asset->size\n  }\n': CATALOG_DOWNLOADS_QUERY_RESULT;
+    '\n  *[_type == "blogPost" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && language == $lang && defined(slug.current) && defined(publishedAt)] | order(publishedAt desc, _id asc){_id, title, "slug": slug.current, kind, publishedAt, excerpt, cover{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}, "author": author->{name, "role": select($lang == "en" => coalesce(role.en, role.ro), role.ro)}}\n': BLOG_POSTS_QUERY_RESULT;
+    '\n  *[_type == "blogPost" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && language == $lang && defined(slug.current) && defined(publishedAt) && slug.current == $slug][0]{\n    _id, title, "slug": slug.current, kind, publishedAt, excerpt, cover{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},\n    "textLength": length(pt::text(body)),\n    "author": author->{name, "role": select($lang == "en" => coalesce(role.en, role.ro), role.ro), portrait{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}},\n    "source": source{text, url},\n    "body": body[]{\n      _key, _type,\n      _type == "block" => {\n        style, listItem, level,\n        "children": children[]{_key, _type, text, marks},\n        "markDefs": markDefs[]{_key, _type, href, "target": reference->{\n          _type, status, language, publishedLanguages, "slug": select(_type == "service" => select($lang == "en" => slug.en.current, slug.ro.current), slug.current),\n          "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),\n          "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)\n        }}\n      },\n      _type == "imageWithMetadata" => {asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},\n      _type == "articleGallery" => {"images": images[]{_key, asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}},\n      _type == "video" => {provider, url, "file": file.asset->url, "title": select($lang == "en" => title.en, title.ro), poster{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}},\n      _type == "articleAudio" => {title, "url": file.asset->url}\n    },\n    "translations": *[_type == "blogPost" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && defined(slug.current)\n      && (_id == ^.translationOf._ref || translationOf._ref == ^._id)]{language, "slug": slug.current},\n    "relatedProjects": *[_type == "project" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && defined(slug.current) && _id in ^.relatedProjects[]._ref] | order(year desc, _id asc){\n      _id, "title": select($lang == "en" => title.en, title.ro), "slug": slug.current, year,\n      "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current),\n      coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}\n    },\n    "relatedServices": *[_type == "service" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && $lang in coalesce(publishedLanguages, ["ro"]) && status == "active" && defined(select($lang == "en" => slug.en.current, slug.ro.current))\n  && (!defined(parent) || (parent->status == "active" && $lang in coalesce(parent->publishedLanguages, ["ro"]))) && _id in ^.relatedServices[]._ref] | order(displayOrder asc, _id asc){\n      _id, "title": select($lang == "en" => title.en, title.ro), "slug": select($lang == "en" => slug.en.current, slug.ro.current),\n      "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),\n      "summary": select($lang == "en" => summary.en, summary.ro), coverImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}\n    },\n    seo{"title": select($lang == "en" => metaTitle.en, metaTitle.ro), "description": select($lang == "en" => metaDescription.en, metaDescription.ro), noIndex, shareImage{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}}\n  }\n': BLOG_POST_QUERY_RESULT;
+    '\n  *[_type == "blogPost" && !(_id in path("drafts.**")) && !(_id in path("versions.**")) && language == $lang && defined(slug.current) && defined(publishedAt) && references($id)] | order(publishedAt desc, _id asc)[0...3]{_id, title, "slug": slug.current, kind, publishedAt, excerpt, cover{asset, crop, hotspot, "alt": select($lang == "en" => coalesce(alt.en, alt.ro), alt.ro), "caption": select($lang == "en" => caption.en, caption.ro),\n  "lqip": asset->metadata.lqip, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}, "author": author->{name, "role": select($lang == "en" => coalesce(role.en, role.ro), role.ro)}}\n': POSTS_REFERENCING_QUERY_RESULT;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too
