@@ -3,8 +3,10 @@ import { createWriteClient, writeReport } from "./lib/import-run";
 import { findPriceText, findPriceTextInValue, type PriceFinding } from "./lib/price-text";
 
 // Read-only price check over the dataset: every string of every service,
-// catalogue item, project and work category (drafts included) and the original
-// filename of every asset.
+// catalogue item, project, work category and Phase 7 document (drafts
+// included) and the original filename of every asset. Catalogue PDFs need a
+// person as well (`reviewed`); their text layer is checked here once a
+// price-free PDF exists (decision 3: none yet).
 // Currency or amounts are errors and fail the run; pricing words are listed
 // for review. With `--export <file.tar.gz>` it checks a dataset export
 // instead of the live dataset.
@@ -15,7 +17,10 @@ import { findPriceText, findPriceTextInValue, type PriceFinding } from "./lib/pr
 type Document = Record<string, unknown> & { _id: string; _type: string; originalFilename?: string };
 
 // Projects too: their texts appear as related works on service pages.
-const CONTENT_TYPES = ["service", "catalogItem", "project", "workCategory"];
+const CONTENT_TYPES = [
+  "service", "catalogItem", "project", "workCategory",
+  "siteSettings", "navigation", "homePage", "catalogDownload", "testimonial", "audioFeature", "person", "blogPost",
+];
 const ASSET_TYPES = ["sanity.imageAsset", "sanity.fileAsset"];
 
 async function loadDocuments(exportFile: string | undefined): Promise<{ source: string; documents: Document[] }> {

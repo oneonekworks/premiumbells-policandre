@@ -1,10 +1,24 @@
 import { buildDocumentPlans, createWriteClient, isDocumentCollection, loadAssetCheckpoint, parseImportArgs, writeReport } from "./lib/import-run";
+import { countBlocks } from "./lib/legacy-article";
 
-// Read-only reconciliation for the Phase 6 collections: every planned
-// `services` or `catalog` document must exist in Sanity (draft or published)
-// with the same media in the same order and its required fields.
+// Read-only reconciliation for the Phase 6 and 7 collections: every planned
+// document must exist in Sanity (draft or published) with the same media in
+// the same order and its required fields. Blog posts also compare their body
+// block by block: paragraphs, headings, quotes, list items, figures and
+// embeds of the converted legacy article against the stored Portable Text.
 //
 //   npx tsx scripts/verify-migration.ts --collection services
+//   npx tsx scripts/verify-migration.ts --collection blog
+
+const REQUIRED: Record<string, string[]> = {
+  services: ["title", "slug", "coverImage", "summary"],
+  catalog: ["title", "family", "image"],
+  global: ["_type"],
+  home: ["hero", "publishedLanguages"],
+  blog: ["title", "slug", "kind", "publishedAt", "excerpt", "cover", "author", "body"],
+};
+// Per type for the global collection (person, testimonial, audioFeature).
+const REQUIRED_BY_TYPE: Record<string, string[]> = { person: ["name"], testimonial: ["quote", "name"], audioFeature: ["title", "audio"] };
 
 /**
  * Asset references in document order (covers, galleries, sections, audio).
@@ -18,7 +32,7 @@ const assetRefs = (value: unknown): string[] =>
 
 async function main() {
   const options = parseImportArgs();
-  if (!isDocumentCollection(options.collection)) throw new Error("Use --collection services or --collection catalog.");
+  if (!isDocumentCollection(options.collection)) throw new Error("Use --collection services, catalog, global, home or blog.");
   const checkpoint = loadAssetCheckpoint();
   const { plans } = buildDocumentPlans(options, (canonical) => checkpoint[canonical]?.assetId);
   const client = createWriteClient();
@@ -38,8 +52,16 @@ async function main() {
       else if (expected.some((ref, index) => !ref.startsWith("pending-") && ref !== actual[index])) problems.push("media order differs");
       const sections = (plan.document.sections as unknown[] | undefined)?.length;
       if (sections !== undefined && (found.sections as unknown[] | undefined)?.length !== sections) problems.push("section count differs");
-      for (const field of plan.collection === "services" ? ["title", "slug", "coverImage", "summary"] : ["title", "family", "image"]) {
+      for (const field of [...REQUIRED[plan.collection], ...(REQUIRED_BY_TYPE[plan.document._type] ?? [])]) {
         if (!found[field]) problems.push(`no ${field}`);
+      }
+      if (plan.collection === "blog") {
+        const expectedCounts = countBlocks(plan.document.body as Array<{ _type: string }>);
+        const actualCounts = countBlocks((found.body as Array<{ _type: string }> | undefined) ?? []);
+        for (const [kind, count] of Object.entries(expectedCounts)) {
+          const actual = actualCounts[kind as keyof typeof actualCounts];
+          if (actual !== count) problems.push(`${kind} ${actual}/${count}`);
+        }
       }
     }
     return { key: plan.key, id, state: found ? (found._id.startsWith("drafts.") ? "draft" : "published") : "—", problems };

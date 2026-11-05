@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "about": "Reviewed seed for the Phase 7 import (docs/phase7-plan.md, sections 4 and 7). Home page, testimonial, audio and author texts are written here from the legacy wording (components/landing.jsx, components/shared/blogPosts.jsx, catalogsSection.jsx) with typos and diacritics fixed; claims are kept as the legacy states them and listed for the user to confirm in Studio. Article bodies are converted from pages/blog/*.js by the importer; this file only holds their reviewed corrections. Media are legacy references (local /public paths or GCS URLs). HTML strings accept <strong>, <em>, <i> and <br> only. siteSettings and navigation were published by hand in step 4 and are not imported.",
+  "person": {
+    "id": "legacy-person-denis-latisev",
+    "name": "Denis Latisev",
+    "role": "Director",
+    "portrait": "/img/denis_play.webp",
+    "portraitAlt": "Denis Latisev, directorul Premium Bells"
+  },
+  "testimonial": {
+    "id": "legacy-testimonial-putna",
+    "quote": "Cu fiască smerenie, am primit binecuvântarea ÎPS Pimen, Arhiepiscopul Sucevei și Rădăuților, pentru importul și promovarea artei clopotelor în parohiile și mănăstirile României, precum și oriunde va fi nevoie, în urma contribuției, proiectării și ajustării celor 13 clopote noi, cu o masă totală de 11 tone, cel mai mare cântărind 5200 kg, turnate la Iaroslavl în 2016 pentru ctitoria lui Ștefan cel Mare, Mănăstirea Putna, și sfințite pe 10 iulie 2016.",
+    "name": "Denis Latisev",
+    "role": "Director, Premium Bells SRL",
+    "context": "Mănăstirea Putna, 2016",
+    "date": "2016-07-10",
+    "portrait": "/img/denis_play.webp",
+    "portraitAlt": "Denis Latisev, directorul Premium Bells",
+    "relatedProject": "legacy-clopote-2016-putna",
+    "review": [
+      "Claim to confirm: the quote says 13 new bells; the Putna article says 11.",
+      "Legacy wording „în orașul Iaroslavl – lumea ortodoxă în 2016” rewritten as „turnate la Iaroslavl în 2016”."
+    ]
+  },
+  "audio": {
+    "id": "legacy-audio-dangat-pascal",
+    "title": "Dăngăt pascal",
+    "audio": "https://storage.googleapis.com/rbells/assets/audio/pascal.mp3",
+    "artwork": "/img/audio_bg.jpg",
+    "durationSeconds": 222,
+    "relatedProject": "legacy-clopote-2016-putna",
+    "review": [
+      "Duration measured from public/audio/pascal.mp3 (221.7 s), the same file as on GCS.",
+      "relatedProject Putna is assumed; remove it in Studio if the recording is from elsewhere."
+    ]
+  },
+  "home": {
+    "hero": {
+      "title": "Policandre, clopote și iconostase",
+      "highlight": "produse în lumea ortodoxă, clasa Premium",
+      "tagline": "Confecționate de către ortodocși pentru ortodocși",
+      "lead": "S.C. Premium Bells SRL este compania care reprezintă 12 dintre cele mai mari și mai cotate turnătorii de clopote și policandre din lumea ortodoxă.",
+      "image": "https://storage.googleapis.com/rbells/policandre_ro/img/policandre_1.jpg",
+      "primaryCta": { "label": "Vezi lucrările", "kind": "page", "page": "works" },
+      "secondaryCta": { "label": "Cereți o ofertă", "kind": "phone" }
+    },
+    "services": {
+      "eyebrow": "Descoperă",
+      "heading": "Serviciile noastre",
+      "intro": "Compania noastră reprezintă două dintre cele mai bune firme din <strong>Moscova</strong> și <strong>Iaroslavl</strong>, specializate în producerea <strong>policandrelor</strong> în stil clasic, brad și tip horă, turnate masiv – clasa premium, dar și o companie din Grecia care toarnă în stil bizantin, des solicitat în România."
+    },
+    "catalogues": { "enabled": false, "heading": "Descarcă cataloagele noastre" },
+    "audio": { "eyebrow": "Audio" },
+    "blog": { "heading": "De pe blog", "intro": "Articole, rapoarte și video" },
+    "about": {
+      "heading": "Despre noi",
+      "body": "S.C. Premium Bells SRL este compania ce reprezintă cele mai mari și mai cotate turnătorii de clopote din <strong>lumea ortodoxă</strong> – din Iaroslavl și Kamensk-Uralsky –, dar și compania Belltron din Italia, promovând astfel cele mai tradiționale clopote, până la <strong>16 tone</strong>, clopote fără balans trase de sfoară, după tradiția de pe <strong>Sfântul Munte Athos</strong>, dar și stilul occidental prin balansare, cu complexitate ornamentală tradițională și icoane canonice ortodoxe.",
+      "poster": "https://storage.googleapis.com/rbells/assets/img/despre-noi-poster.webp",
+      "posterAlt": "Clopote ortodoxe în clopotniță",
+      "cta": { "label": "Vizitați lucrările noastre", "kind": "page", "page": "works" }
+    },
+    "review": [
+      "Claim to confirm: „12 dintre cele mai mari… turnătorii” (hero) versus the about text (Iaroslavl, Kamensk-Uralsky, Belltron).",
+      "Badge „Nou – Vizitați pagina Iconostase” dropped (decision 5).",
+      "About button: legacy went to /lucrarile-noastre/policandre; it now goes to /lucrarile-noastre, like the hero button.",
+      "About video (93 MB MP4) not imported (decision 2): the section shows the poster until the YouTube upload; the poster alt is a placeholder to check.",
+      "Hero photo alt left empty: the photo sits behind the title as a background."
+    ]
+  },
+  "posts": [
+    {
+      "file": "pages/blog/clopotele-manastirii-putna.js",
+      "legacyId": 1,
+      "slug": "clopotele-manastirii-putna",
+      "title": "De la clopotul Buga al lui Ștefan cel Mare la noile clopote ale Mănăstirii Putna",
+      "excerpt": "Sfântul Ștefan cel Mare a avut grijă, printre altele, să înzestreze ctitoria sa cea iubită cu mai multe clopote, dintre care două au ajuns până la noi.",
+      "source": { "text": "Ieromonah Gherasim Soca, Mănăstirea Putna" },
+      "relatedProjects": ["legacy-clopote-2016-putna"],
+      "relatedServices": ["legacy-service-clopote"],
+      "replacements": [
+        { "find": " Ieromonah Gherasim Soca, Mănăstirea Putna.", "replace": "", "reason": "the signature moves to `source` (decision 8)" },
+        { "find": "Toată suflarea să laude pe Domnul!” (Psalmi 150, 6)", "replace": "„Toată suflarea să laude pe Domnul!” (Psalmi 150, 6)", "reason": "opening quotation mark was missing" },
+        { "find": "domnul moldovei", "replace": "domnul Moldovei", "reason": "capital letter" },
+        { "find": "După ce fost refăcut", "replace": "După ce a fost refăcut", "reason": "missing word" }
+      ],
+      "alts": {
+        "https://storage.googleapis.com/rbells/lucrarile-noastre/clopote/1-manastirea-putna/suportul_de_lemn/_MPD800_123077.jpg": "Structura de susținere din lemn de stejar a clopotelor Mănăstirii Putna",
+        "https://storage.googleapis.com/rbells/lucrarile-noastre/clopote/1-manastirea-putna/binecuvantare/_MPD750(IA)_005020.jpg": "Sfințirea noilor clopote ale Mănăstirii Putna"
+      }
+    },
+    {
+      "file": "pages/blog/raport-18-ianuarie-2023.js",
+      "legacyId": 2,
+      "slug": "raport-18-ianuarie-2023",
+      "title": "Raport 18 ianuarie 2023",
+      "excerpt": "În luna mai a anului 2021, la o întâlnire cu PS Nicodim, Episcopul Severinului și Strehaiei, am discutat despre confecționarea ușilor de intrare ale Catedralei Învierea Domnului din orașul Drobeta-Turnu Severin.",
+      "relatedProjects": ["legacy-usi-usi-cupru-drobeta-turnu-severin"],
+      "relatedServices": ["legacy-service-usi"],
+      "replacements": [
+        { "find": "In preț a fost inclus și proiectul ușilor pe exterior si proiectul ornamentele de interior", "replace": "Lucrarea a inclus și proiectul ușilor pe exterior și proiectul ornamentelor de interior", "reason": "price wording removed (decision 9)" },
+        { "find": "Episcopul Severunului si Strehaiei", "replace": "Episcopul Severinului și Strehaiei", "reason": "typo" },
+        { "find": "sfinții soloicitati de PS Nicodim", "replace": "sfinții solicitați de PS Nicodim", "reason": "typo" },
+        { "find": "În luna mai al anului 2021, la o întalnire", "replace": "În luna mai a anului 2021, la o întâlnire", "reason": "grammar and diacritics" }
+      ],
+      "alts": {
+        "https://storage.googleapis.com/rbells/lucrarile-noastre/Usi/Drobeta-Turnu-Severin/03-Usile006.jpg": "Ușile din cupru ale Catedralei Învierea Domnului din Drobeta-Turnu Severin",
+        "https://storage.googleapis.com/rbells/lucrarile-noastre/Usi/Drobeta-Turnu-Severin/03-Usile034.jpg": "Sfinții Apostoli Petru și Pavel pe ușile centrale din cupru",
+        "*03-Usile": "Detaliu al ușilor din cupru ale Catedralei Învierea Domnului",
+        "*01-Montareausilor": "Montajul ușilor din cupru la Catedrala Învierea Domnului",
+        "*02-Vizita": "Predarea ușilor din cupru la Catedrala Învierea Domnului, 22 decembrie 2022"
+      },
+      "review": ["Photo descriptions after the first two are written from the legacy file names (doors, installation, hand-over visit); check them against the photos in step 10."]
+    },
+    {
+      "file": "pages/blog/clopotar-electronic-pt-clopote-fixe.js",
+      "legacyId": 3,
+      "slug": "clopotar-electronic-pt-clopote-fixe",
+      "title": "Clopotar electronic pentru clopote fixe – mai performant!",
+      "excerpt": "Noul sistem de ciocane pentru clopotele ortodoxe a fost creat de Belltron în urmă cu câteva luni, în urma necesității create de extinderea continuă a pieței bisericești ortodoxe în țările vecine din Europa de Est.",
+      "relatedProjects": ["legacy-clopote-2022-rosu-chiajna-sfintire"],
+      "relatedServices": ["legacy-service-clopotar-electronic"],
+      "replacements": [
+        { "find": "clopoteilor", "replace": "clopotelor", "reason": "typo" }
+      ],
+      "alts": {},
+      "review": [
+        "The three photos had the title as their description; they are imported without one, so the site describes them from the title. Write real descriptions in Studio.",
+        "The P.S. is kept as written, in capitals, signed „DENIS LATISHEV mai 2023” although the post is dated February 2023 (decision 10)."
+      ]
+    }
+  ]
+}

@@ -21,7 +21,7 @@ export type SanityDocumentPlan = { _id: string; _type: string } & Record<string,
 
 export interface DocumentPlan {
   key: string;
-  collection: "services" | "catalog";
+  collection: "services" | "catalog" | "global" | "home" | "blog";
   document: SanityDocumentPlan;
   images: ImageNeed[];
   issues: MappingIssue[];

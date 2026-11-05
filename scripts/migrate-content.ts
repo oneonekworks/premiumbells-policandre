@@ -178,7 +178,8 @@ function renderReport(
   return lines.join("\n");
 }
 
-// Phase 6: services (from the reviewed seed) and catalogue items. Same rules
+// Phase 6: services (from the reviewed seed) and catalogue items; Phase 7:
+// global (person, testimonial, audio), home and blog. Same rules
 // as projects: drafts only, published documents left alone, unchanged drafts
 // not rewritten, and a record with any error (price text included) blocked.
 // Parents are written before their variants.
@@ -228,6 +229,19 @@ async function importDocuments(options: ImportOptions) {
   if (results.some((result) => result.status === "failed" || result.status === "blocked")) process.exitCode = 1;
 }
 
+/** Document references (not assets) split by kind; weak ones may point at drafts. */
+function documentReferences(value: unknown, found = { strong: [] as string[], weak: [] as string[] }) {
+  if (Array.isArray(value)) value.forEach((item) => documentReferences(item, found));
+  else if (value && typeof value === "object") {
+    const object = value as Record<string, unknown>;
+    if (object._type === "reference" && typeof object._ref === "string" && !object._ref.startsWith("pending-") && !/^(image|file)-/.test(object._ref)) {
+      (object._weak ? found.weak : found.strong).push(object._ref);
+    }
+    for (const [key, item] of Object.entries(object)) if (key !== "asset") documentReferences(item, found);
+  }
+  return found;
+}
+
 interface DocumentResult {
   key: string;
   id: string;
@@ -253,17 +267,43 @@ async function processDocument(
     if (categoryId) document.relatedCategory = { _type: "reference", _ref: categoryId };
     else issues.push({ severity: "error", code: "missing-category", message: `No published workCategory "${plan.relatedCategorySlug}".` });
   }
-  const slug = (document.slug as { ro?: { current?: string } } | undefined)?.ro?.current;
-  const remote = await client.fetch<{ published: string | null; draft: Record<string, unknown> | null; slugTakenBy: string[]; parent: string | null }>(
+  // Services have a slug per language; posts one slug, unique within their language.
+  const post = document._type === "blogPost";
+  const slug = post
+    ? (document.slug as { current?: string } | undefined)?.current
+    : (document.slug as { ro?: { current?: string } } | undefined)?.ro?.current;
+  const slugFilter = post
+    ? `_type == "blogPost" && slug.current == $slug && language == $language`
+    : `_type == "service" && slug.ro.current == $slug`;
+  const references = documentReferences(document);
+  const remote = await client.fetch<{
+    published: string | null; draft: Record<string, unknown> | null; slugTakenBy: string[]; parent: string | null;
+    publishedTargets: string[]; anyTargets: string[];
+  }>(
     `{
       "published": *[_id == $id][0]._id,
       "draft": *[_id == $draftId][0],
-      "slugTakenBy": *[_type == "service" && defined($slug) && slug.ro.current == $slug && !(_id in [$id, $draftId])]._id,
-      "parent": *[_id in [$parent, "drafts." + $parent]][0]._id
+      "slugTakenBy": *[defined($slug) && ${slugFilter} && !(_id in [$id, $draftId])]._id,
+      "parent": *[_id in [$parent, "drafts." + $parent]][0]._id,
+      "publishedTargets": *[_id in $strong]._id,
+      "anyTargets": *[_id in $weak || _id in $weakDrafts]._id
     }`,
-    { id: document._id, draftId, slug: slug ?? null, parent: plan.parentId ?? "" },
+    {
+      id: document._id, draftId, slug: slug ?? null, language: document.language ?? "ro", parent: plan.parentId ?? "",
+      strong: references.strong, weak: references.weak, weakDrafts: references.weak.map((id) => `drafts.${id}`),
+    },
   );
   for (const id of remote.slugTakenBy) issues.push({ severity: "error", code: "slug-taken", message: `Slug "${slug}" is used by ${id}.` });
+  for (const id of references.strong.filter((target) => !remote.publishedTargets.includes(target))) {
+    issues.push({ severity: "error", code: "missing-reference", message: `References ${id}, which is not published.` });
+  }
+  // Weak references point at documents another Phase 7 collection writes (global before home and blog).
+  const found = new Set(remote.anyTargets.map((target) => target.replace(/^drafts\./, "")));
+  for (const id of references.weak.filter((target) => !found.has(target) && !planned.has(target))) {
+    issues.push(write
+      ? { severity: "error", code: "missing-reference", message: `References ${id}, which does not exist yet; import its collection first.` }
+      : { severity: "warning", code: "reference-pending", message: `References ${id}, written by another collection (import global first).` });
+  }
   if (plan.parentId && !remote.parent && !planned.has(plan.parentId)) {
     issues.push({ severity: "error", code: "missing-parent", message: `Parent ${plan.parentId} does not exist and is not in this run.` });
   }

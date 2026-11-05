@@ -128,7 +128,8 @@ function components(lang: Lang, title: string, dictionary: Dictionary): Portable
 export function ArticleBody({post, lang, dictionary}: {post: BlogPost; lang: Lang; dictionary: Dictionary}) {
   if (!post.body?.length) return null;
   return (
-    <div className="text-lg leading-[1.8] text-ink [&>:first-child]:mt-0">
+    // The excerpt is the card text; on the page the first paragraph is the lead.
+    <div className="text-lg leading-[1.8] text-ink [&>:first-child]:mt-0 [&>p:first-child]:text-xl [&>p:first-child]:leading-relaxed [&>p:first-child]:text-ink-soft sm:[&>p:first-child]:text-2xl">
       <PortableText value={post.body} components={components(lang, post.title ?? '', dictionary)} />
     </div>
   );

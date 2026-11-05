@@ -105,7 +105,8 @@ sessions are in [the session handoff](handoff.md). In short:
     done 2026-11-04; webhook filter updated by the user 2026-11-04; step 4
     (shell from Sanity) done 2026-11-04: `siteSettings` and `navigation`
     published with the user's approval; step 5 (homepage) and step 6 (blog)
-    done 2026-11-05 with test documents; next: step 7, the importer.
+    done 2026-11-05 with test documents; step 7 (importer, dry runs clean)
+    done 2026-11-05; next: step 8, media and files.
 
 ## Remaining prototype acceptance inputs
 
@@ -148,6 +149,42 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-05 (Phase 7 step 7)
+
+- Importer for Phase 7 (dry run only; nothing written): `migrate-content`
+  and `migrate-assets` take `--collection global` (person, testimonial,
+  audio), `home` (`homePage`) and `blog` (3 posts). Texts for the first two
+  come from the reviewed seed `scripts/config/legacy-home.json`; article
+  bodies are converted from `pages/blog/*.js` by `scripts/lib/legacy-article.ts`
+  (JSX read with the TypeScript parser, `{post.x}` and blog.json HTML
+  resolved, any unknown element blocks the article). `siteSettings` and
+  `navigation` are not imported (published by hand in step 4).
+- Corrections in the seed, each listed in the report: the Raport price
+  sentence („Lucrarea a inclus și proiectul…”), typos (Severinului,
+  solicitați, „a fost refăcut”, „clopotelor”), the missing „ in the Putna
+  psalm quote, the Putna signature moved to `source`, titles in sentence
+  case, excerpts without the trailing „...”, Raport photo descriptions from
+  the file names (to check in step 10). Clopotar: the MP4 and its „Video”
+  heading wait for YouTube; its 3 photos get descriptions in Studio.
+- "preț" and "negociabil" now block a Phase 7 record (they would reach a
+  public page); references to the importer's own drafts are weak with
+  `_strengthenOnPublish`; other references must be published.
+  `verify-migration` covers the new collections (blog: block counts per
+  kind and image order); `verify-no-prices` checks the 8 Phase 7 types
+  (0 errors; the 5 known Phase 5 "pret" filenames stay warnings). PDF text
+  checking is left until a price-free catalogue PDF exists (decision 3).
+- Dry runs: 0 errors. global 3 to create; blog 3 to create; home
+  `published-exists` while the test `homePage` is published (deleted before
+  step 9). Media: Putna's 6 photos are already in Sanity; about 11 files are
+  new (step 8). Block counts match the live legacy pages exactly (Putna 13
+  paragraphs, 2 headings, 1 quote, 3 list items, 6 photos, 1 YouTube;
+  Raport 9, 5, 0, 2, 15, 0; Clopotar 10, 3, 1, 0, 3 and 1 MP4, of which the
+  MP4 and its heading wait). Side-by-side views shown to the user.
+- Article page: the excerpt is no longer repeated under the title (all three
+  posts start with it); the first paragraph is styled as the lead.
+- Checks: 34 migration tests (4 new), 43 unit, lint, typecheck; browser
+  suite on the production build 60 passed, 16 skipped.
 
 ### 2026-11-05 (Phase 7 step 6)
 

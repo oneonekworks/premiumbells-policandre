@@ -181,7 +181,6 @@ export default async function BlogPostPage({params}: Props) {
           <header>
             <PostMeta post={post} lang={lang} dictionary={dictionary} />
             <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.1] text-teal-900 sm:text-5xl lg:text-6xl">{title}</h1>
-            {post.excerpt && <p className="mt-6 text-xl leading-relaxed text-ink-soft">{post.excerpt}</p>}
             <Byline post={post} dictionary={dictionary} />
           </header>
         </div>

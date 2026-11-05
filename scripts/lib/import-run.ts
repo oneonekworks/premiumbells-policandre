@@ -17,6 +17,7 @@ import {
 import { mapLegacyCatalog, type CatalogOverride } from "./legacy-catalog";
 import { createSourceLoader, type DocumentPlan } from "./legacy-documents";
 import { loadServicesSeed, mapServices } from "./legacy-services";
+import { PHASE7_COLLECTIONS, loadHomeSeed, mapPhase7, type Phase7Collection } from "./legacy-home";
 
 // Shared plumbing for migrate-assets and migrate-content: arguments, the
 // write client, the asset checkpoint, and reports. Everything generated stays
@@ -141,8 +142,8 @@ export function buildPlans(
   return { plans, conflicts: findPlanConflicts(plans), skipped };
 }
 
-/** Phase 6 collections: `services` (from the reviewed seed) and `catalog`. */
-export const DOCUMENT_COLLECTIONS = ["services", "catalog"] as const;
+/** Phase 6 `services` (reviewed seed) and `catalog`; Phase 7 `global`, `home` and `blog`. */
+export const DOCUMENT_COLLECTIONS = ["services", "catalog", ...PHASE7_COLLECTIONS] as const;
 export const isDocumentCollection = (collection: string) => (DOCUMENT_COLLECTIONS as readonly string[]).includes(collection);
 
 /** Maps the services seed or the catalogue; `--project` selects keys (`services:/servicii/usi`, `catalog:policandre#7`) or paths. */
@@ -154,7 +155,10 @@ export function buildDocumentPlans(
   const manifest = indexManifest(loadManifest(options.manifestFile));
   const load = createSourceLoader(options.legacyRoot, transform);
   const context = { load, legacyRoot: options.legacyRoot, manifest, resolveAsset };
-  const result = options.collection === "services"
+  const phase7 = (PHASE7_COLLECTIONS as readonly string[]).includes(options.collection);
+  const result = phase7
+    ? { plans: mapPhase7(options.collection as Phase7Collection, { ...context, seed: loadHomeSeed() }), skipped: [] }
+    : options.collection === "services"
     ? { plans: mapServices({ ...context, seed: loadServicesSeed() }), skipped: [] }
     : mapLegacyCatalog({ ...context, overrides: (loadOverrides() as { catalog?: Record<string, CatalogOverride> }).catalog ?? {} });
   const selected = options.projects.length

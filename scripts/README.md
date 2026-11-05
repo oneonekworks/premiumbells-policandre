@@ -181,3 +181,38 @@ resume. They must never modify or delete `rbells-tw` files or GCS source objects
 
 Tokens and credentials are supplied through ignored environment files. Generated
 reports and checkpoints stay under the ignored `.migration/` directory.
+
+## Phase 7 import: global, home and blog (implemented 2026-11-05)
+
+`migrate-content` and `migrate-assets` take three more collections, in this
+order: `global` (person `legacy-person-denis-latisev`, testimonial
+`legacy-testimonial-putna`, audio `legacy-audio-dangat-pascal`), `home` (the
+`homePage` singleton) and `blog` (`legacy-blog-<slug>`). Same rules as
+before: dry run by default, drafts only, published documents left alone,
+unchanged drafts not rewritten, reports in `.migration/reports/`.
+
+```bash
+npm run migrate:content -- --collection global
+npm run migrate:content -- --collection blog
+npx tsx scripts/verify-migration.ts --collection blog
+```
+
+- Texts for the person, testimonial, audio and home page come from the
+  reviewed seed `config/legacy-home.json`. `siteSettings` and `navigation`
+  were published by hand in step 4 and are not imported.
+- Article bodies are converted from `pages/blog/*.js` by
+  `lib/legacy-article.ts` (TypeScript parser, nothing executed): `p`, `h2`,
+  `h3`, `ul/ol > li`, `blockquote > p`, `figure > img`, YouTube `iframe`,
+  `strong/b/em/i/br`; `{post.x}` resolves against `blog.json` and its HTML
+  strings go through the same inline converter. Whitespace follows the
+  browser, so spaces the JSX rule would drop are kept. Any other element
+  blocks the article. Owned `<video>` files are left out until they are on
+  YouTube (decision 2), with a heading that only introduced them.
+- The seed's per-post `replacements` fix typos and the Raport price sentence;
+  one that matches nothing is an error. `alts` set photo descriptions by URL
+  or `*filename-prefix`; otherwise the page's own alt is kept unless it only
+  repeats the title.
+- References to documents this importer writes (author, testimonial, audio)
+  are weak with `_strengthenOnPublish`, so drafts can point at drafts; other
+  references must be published. "preț" and "negociabil" block a Phase 7
+  record (they would reach a public page).
