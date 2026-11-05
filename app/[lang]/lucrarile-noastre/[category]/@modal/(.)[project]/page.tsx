@@ -1,4 +1,5 @@
 import type {Metadata} from 'next';
+import {FromBlog} from '@/components/blog/from-blog';
 import {ProjectDetails} from '@/components/portfolio/project-details';
 import {ProjectModal} from '@/components/portfolio/project-modal';
 import {getProject} from '@/sanity/portfolio';
@@ -21,12 +22,15 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 // Intercepted soft navigation from the category grid: the same project content
 // as the full page, inside a slide-over that keeps the grid underneath.
 export default async function ProjectModalPage({params}: Props) {
-  const {category, dictionary, project} = await load(params);
+  const {lang, category, dictionary, project} = await load(params);
   if (!project) return null;
 
   return (
     <ProjectModal title={project.title ?? ''} closeLabel={dictionary.portfolio.close}>
       <ProjectDetails project={project} category={category.title ?? ''} dictionary={dictionary} headingLevel="h2" />
+      <div className="mt-12">
+        <FromBlog id={project._id} lang={lang} dictionary={dictionary} columns={2} />
+      </div>
     </ProjectModal>
   );
 }

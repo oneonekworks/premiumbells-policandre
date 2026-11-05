@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import Link from 'next/link';
 import {notFound} from 'next/navigation';
+import {FromBlog} from '@/components/blog/from-blog';
 import {ProjectDetails} from '@/components/portfolio/project-details';
 import {photoAlt, subject} from '@/lib/alt';
 import {sanityImageUrl} from '@/sanity/image';
@@ -59,6 +60,9 @@ export default async function ProjectPage({params}: Props) {
         </ol>
       </nav>
       <ProjectDetails project={project} category={category.title ?? ''} dictionary={dictionary} headingLevel="h1" />
+      <div className="mt-14">
+        <FromBlog id={project._id} lang={lang} dictionary={dictionary} />
+      </div>
       <p className="mt-14">
         <Link href={categoryHref} className="btn btn-secondary">
           {dictionary.portfolio.backTo} {category.title}

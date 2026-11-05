@@ -10,7 +10,7 @@ import {NavLinks} from './nav-links';
 export function SiteHeader({lang, dictionary, shell}: {lang: Lang; dictionary: Dictionary; shell: Shell}) {
   const {phone, email} = shell.company;
   const switcher = (
-    <LanguageSwitcher current={lang} label={dictionary.language.label} names={dictionary.language} />
+    <LanguageSwitcher current={lang} label={dictionary.language.label} names={dictionary.language} missing={shell.missingPaths} />
   );
 
   return (

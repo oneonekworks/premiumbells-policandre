@@ -10,4 +10,7 @@ export const legacyRedirects = [
   // Copy of the pristol page (decided 2026-11-03).
   {source: '/servicii/iconostase/lemn', destination: '/servicii/iconostase'},
   {source: '/_lucrarile-noastre', destination: '/lucrarile-noastre'},
+  // Wrong href in the legacy blog.json, and the older duplicate listing.
+  {source: '/blog/raport-18-ianuarie-23', destination: '/blog/raport-18-ianuarie-2023'},
+  {source: '/blog2', destination: '/blog'},
 ].map((redirect) => ({...redirect, permanent: true as const}));

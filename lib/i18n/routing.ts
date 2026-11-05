@@ -47,10 +47,14 @@ export function resolveEnglishPath(path: string): {internal: string} | {redirect
 // alternates once translations are published; until then switch to home.
 const bilingualPaths = new Set(['/', '/servicii', '/lucrarile-noastre', '/blog']);
 
-/** Equivalent public URL in `target`, or that language's home page. */
-export function alternateHref(pathname: string, target: Lang): string {
+/**
+ * Equivalent public URL in `target`, or that language's home page. `missing`
+ * lists internal paths that do not exist in `target` (the blog of a language
+ * with no posts yet).
+ */
+export function alternateHref(pathname: string, target: Lang, missing: readonly string[] = []): string {
   const {internal} = parsePublicPath(pathname);
-  return localizedHref(target, bilingualPaths.has(internal) ? internal : '/');
+  return localizedHref(target, bilingualPaths.has(internal) && !missing.includes(internal) ? internal : '/');
 }
 
 /** Split a public pathname into its language and internal path. */

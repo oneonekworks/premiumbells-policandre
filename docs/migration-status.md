@@ -104,7 +104,8 @@ sessions are in [the session handoff](handoff.md). In short:
     checked on the phone by the user 2026-11-04; step 3 (website data layer)
     done 2026-11-04; webhook filter updated by the user 2026-11-04; step 4
     (shell from Sanity) done 2026-11-04: `siteSettings` and `navigation`
-    published with the user's approval; next: step 5, the homepage.
+    published with the user's approval; step 5 (homepage) and step 6 (blog)
+    done 2026-11-05 with test documents; next: step 7, the importer.
 
 ## Remaining prototype acceptance inputs
 
@@ -147,6 +148,43 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-05 (Phase 7 step 6)
+
+- Blog built from Sanity. `/blog` lists the posts in the page language,
+  newest first: the newest as a wide featured card, the rest as cards (two
+  columns when there are only two). `/blog/<slug>` has a breadcrumb, kind,
+  date, reading time, title, summary, a byline (author photo, name, role)
+  and the text source, the cover, then renderers for every `articleBody`
+  block: H2/H3, quote, lists, bold/italic, external links, internal links
+  to projects, services and posts (plain text when the target is not
+  public), figures with captions, galleries with the lightbox, video behind
+  the poster facade (or the YouTube thumbnail without a poster) and native
+  audio. Then "Lucrări legate", "Servicii legate" and "Alte articole" (the
+  2 newest others). Metadata from `seo`, then `excerpt`; og image the cover;
+  hreflang only through `translationOf`; `BlogPosting` JSON-LD.
+- "Din blog" on project pages (full page and slide-over) and service pages.
+  The post card is shared with the home teaser (`components/blog/`).
+- A language with no posts has no blog: `/en/blog` and `/en/blog/<slug>`
+  are 404s, header and footer drop the Blog link in that language, and the
+  language switcher on `/blog` points to `/en`.
+- Redirects (308): `/blog/raport-18-ianuarie-23` →
+  `/blog/raport-18-ianuarie-2023`, `/blog2` → `/blog` (rows in
+  `tests/redirects.test.ts`).
+- With the user's approval: export
+  `production-2026-11-05-before-blog-test-docs.tar.gz` (144 documents), then
+  `npm run home:test-docs -- --write`. Test post 1 now holds every body
+  block, a source, 2 related projects and 1 related service; post 2 links to
+  the first project. Existing assets reused, nothing uploaded. Still to be
+  removed with `--delete` before step 9.
+- Checks on the local production build (port 3102): `blog.spec.ts` 14
+  passed (desktop and mobile: listing order, every article block, gallery
+  lightbox, video facade, audio, related items, "Din blog", metadata and
+  JSON-LD, English 404s and menus, both redirects, no prices, no horizontal
+  scroll); whole suite 60 passed, 16 skipped (service test documents
+  absent). Lint, typecheck, 43 unit and 30 migration tests pass.
+  Screenshots of the listing and an article at 390 and 1440 px shown to the
+  user.
 
 ### 2026-11-05 (Phase 7 step 5)
 

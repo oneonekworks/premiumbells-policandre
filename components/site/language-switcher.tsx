@@ -4,10 +4,12 @@ import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {alternateHref, languages, type Lang} from '@/lib/i18n/routing';
 
-export function LanguageSwitcher({current, label, names}: {
+export function LanguageSwitcher({current, label, names, missing}: {
   current: Lang;
   label: string;
   names: Record<Lang, string>;
+  /** Internal paths each language does not have (see alternateHref). */
+  missing: Partial<Record<Lang, string[]>>;
 }) {
   const pathname = usePathname();
   return (
@@ -23,7 +25,7 @@ export function LanguageSwitcher({current, label, names}: {
               </span>
             ) : (
               <Link
-                href={alternateHref(pathname, lang)}
+                href={alternateHref(pathname, lang, missing[lang])}
                 hrefLang={lang}
                 lang={lang}
                 className="inline-flex min-h-11 min-w-9 items-center justify-center text-ink-soft hover:text-teal-700"

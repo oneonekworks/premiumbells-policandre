@@ -1,9 +1,10 @@
 import 'server-only';
 import type {Dictionary} from '@/lib/i18n/dictionaries';
-import {localizedHref, type Lang} from '@/lib/i18n/routing';
+import {languages, localizedHref, type Lang} from '@/lib/i18n/routing';
 import {servicePath, servicesPath} from '@/lib/services';
 import {site} from '@/lib/site';
 import {linkHref, submenuPage, type Contact} from '@/lib/site-links';
+import {getBlogPosts} from '@/sanity/blog';
 import {getCategories} from '@/sanity/portfolio';
 import {getServices} from '@/sanity/services';
 import {getSiteContent, type SiteLink} from '@/sanity/site';
@@ -32,6 +33,8 @@ export type Shell = {
   header: ShellLink[];
   /** Null: the footer shows one "Navigare" column with the header links. */
   footerGroups: {heading: string; links: ShellLink[]}[] | null;
+  /** Internal paths a language does not have yet, for the language switcher. */
+  missingPaths: Partial<Record<Lang, string[]>>;
 };
 
 const networks: SocialNetwork[] = ['facebook', 'instagram', 'youtube'];
@@ -63,7 +66,15 @@ function resolveLinks(links: SiteLink[] | null | undefined, lang: Lang, contact:
 }
 
 export async function getShell(lang: Lang, dictionary: Dictionary): Promise<Shell> {
-  const {settings, navigation} = await getSiteContent(lang);
+  const [{settings, navigation}, blogLanguages] = await Promise.all([
+    getSiteContent(lang),
+    Promise.all(languages.map(async (code) => [code, (await getBlogPosts(code)).length > 0] as const)),
+  ]);
+  // A language without posts has no blog page, so menus do not link to it.
+  const missingPaths = Object.fromEntries(blogLanguages.filter(([, has]) => !has).map(([code]) => [code, ['/blog']]));
+  const blogHref = localizedHref(lang, '/blog');
+  const hasBlog = !missingPaths[lang];
+  const withBlog = <T extends {href: string}>(links: T[]) => (hasBlog ? links : links.filter((link) => link.href !== blogHref));
 
   const phone = settings?.phone?.display && settings.phone.e164
     ? {display: settings.phone.display, href: `tel:${settings.phone.e164}`}
@@ -83,7 +94,7 @@ export async function getShell(lang: Lang, dictionary: Dictionary): Promise<Shel
     : fallbackHeader(lang, dictionary);
 
   const groups = (navigation?.footerGroups ?? []).flatMap((group) => {
-    const links = resolveLinks(group.links, lang, contact).map(({label, href}) => ({label, href}));
+    const links = withBlog(resolveLinks(group.links, lang, contact).map(({label, href}) => ({label, href})));
     return group.heading && links.length ? [{heading: group.heading, links}] : [];
   });
   const footerGroups = groups.length ? groups : null;
@@ -101,7 +112,8 @@ export async function getShell(lang: Lang, dictionary: Dictionary): Promise<Shel
       tagline: settings?.tagline ?? dictionary.footer.tagline,
       social,
     },
-    header,
+    header: withBlog(header),
     footerGroups,
+    missingPaths,
   };
 }

@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import Link from 'next/link';
 import {PortableText} from 'next-sanity';
+import {FromBlog} from '@/components/blog/from-blog';
 import {portableText} from '@/components/portfolio/project-details';
 import {ProjectCard} from '@/components/portfolio/project-card';
 import {SanityImage} from '@/components/sanity-image';
@@ -137,6 +138,8 @@ export function ServicePage({lang, service, dictionary}: {lang: Lang; service: S
       <ServiceSections sections={sections} lang={lang} dictionary={dictionary} subject={title} />
 
       {service.relatedCategory && <RelatedWorks lang={lang} category={service.relatedCategory} dictionary={dictionary} />}
+
+      <FromBlog id={service._id} lang={lang} dictionary={dictionary} />
 
       {!sections.some((section) => section._type === 'sectionCta') && <ContactSection dictionary={dictionary} />}
     </div>

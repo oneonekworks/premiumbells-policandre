@@ -14,6 +14,8 @@ test('next.config serves the legacy redirect table as 308s', async () => {
       '/servicii/iconostase/lemn-bronz': '/servicii/iconostase',
       '/servicii/iconostase/lemn': '/servicii/iconostase',
       '/_lucrarile-noastre': '/lucrarile-noastre',
+      '/blog/raport-18-ianuarie-23': '/blog/raport-18-ianuarie-2023',
+      '/blog2': '/blog',
     },
   );
   for (const redirect of redirects) assert.equal(redirect.permanent, true, redirect.source);

@@ -7,7 +7,9 @@
 //   npm run home:test-docs -- --delete              # remove them (homePage only while it is the test one)
 //
 // Export the dataset first. Photos and the MP3 reuse existing assets; no
-// uploads. IDs start with `test-phase7-`, except the `homePage` singleton,
+// uploads. Post 1 carries every article block (headings, quote, lists,
+// marks, external and internal links, figure, gallery, video, audio) and the
+// related project and service for the blog checks (tests/browser/blog.spec.ts). IDs start with `test-phase7-`, except the `homePage` singleton,
 // which the importer replaces in step 9. Romanian only.
 import { parseArgs } from "node:util";
 import { createClient } from "@sanity/client";
@@ -48,9 +50,46 @@ const block = (key: string, text: string, style = "normal") => ({
 const link = (label: string, fields: Record<string, unknown>) => ({ _type: "siteLink", label: ro(label), ...fields });
 
 type TestDocument = { _id: string; _type: string } & Record<string, unknown>;
-type Inputs = { photos: string[]; mp3: string; youtube: string };
+type Inputs = { photos: string[]; mp3: string; youtube: string; projects: string[]; service: string };
 
-function plan({ photos, mp3, youtube }: Inputs, hide?: string): TestDocument[] {
+const span = (key: string, text: string, marks: string[] = []) => ({ _type: "span", _key: key, marks, text });
+const listItem = (key: string, text: string, listItem: "bullet" | "number") => ({ ...block(key, text), listItem, level: 1 });
+
+/** Every `articleBody` block type once, for the article page checks. */
+function richBody({ photos, mp3, youtube, projects, service }: Inputs, photo: (index: number) => string) {
+  return [
+    block("lead", "Primul paragraf al articolului de test. Textul are suficiente cuvinte pentru un timp de citire realist. ".repeat(3)),
+    block("h2a", "Un subtitlu de test", "h2"),
+    {
+      _type: "block", _key: "marks", style: "normal",
+      markDefs: [
+        { _type: "link", _key: "ext", href: "https://www.putna.ro" },
+        { _type: "internalLink", _key: "proj", reference: ref(projects[0]) },
+        { _type: "internalLink", _key: "serv", reference: ref(service) },
+        { _type: "internalLink", _key: "post", reference: ref(testIds.posts[1]) },
+      ],
+      children: [
+        span("m1", "Un paragraf cu "), span("m2", "text îngroșat", ["strong"]), span("m3", ", "),
+        span("m4", "text cursiv", ["em"]), span("m5", ", o "), span("m6", "legătură externă", ["ext"]),
+        span("m7", ", o "), span("m8", "lucrare din portofoliu", ["proj"]), span("m9", ", un "),
+        span("m10", "serviciu", ["serv"]), span("m11", " și un "), span("m12", "alt articol", ["post"]), span("m13", "."),
+      ],
+    },
+    { _type: "imageWithMetadata", _key: "fig", asset: ref(photo(4)), alt: ro("Clopote montate în turn, fotografie de test"), caption: ro("Legendă de test pentru fotografie.") },
+    block("h3a", "Un subtitlu de nivel trei", "h3"),
+    listItem("ul1", "Primul punct al listei", "bullet"), listItem("ul2", "Al doilea punct al listei", "bullet"),
+    listItem("ol1", "Primul pas", "number"), listItem("ol2", "Al doilea pas", "number"),
+    block("quote", "Tot ce suflă să laude pe Domnul.", "blockquote"),
+    { _type: "articleGallery", _key: "gal", images: photos.slice(0, 6).map((asset, index) => ({ _type: "imageWithMetadata", _key: `g${index}`, asset: ref(asset) })) },
+    block("before-video", "Paragraf de test înainte de videoclip. ".repeat(4)),
+    { _type: "video", _key: "vid", provider: "youtube", url: youtube, title: ro("Videoclip de test în articol"), poster: image(photo(5)) },
+    { _type: "articleAudio", _key: "aud", title: "Înregistrare de test în articol", file: { _type: "file", asset: ref(mp3) } },
+    block("end", "Ultimul paragraf al articolului de test. ".repeat(5)),
+  ];
+}
+
+function plan(inputs: Inputs, hide?: string): TestDocument[] {
+  const { photos, mp3, youtube, projects, service } = inputs;
   const photo = (index: number) => photos[index % photos.length];
   const enabled = (name: string) => name !== hide;
 
@@ -74,7 +113,14 @@ function plan({ photos, mp3, youtube }: Inputs, hide?: string): TestDocument[] {
     publishedAt: `2023-02-${17 + index}`,
     excerpt: "Rezumat de test pentru cardul de pe prima pagină. Se șterge după verificare.",
     cover: image(photo(3 + index)), author: ref(testIds.person),
-    body: Array.from({ length: 6 * (index + 1) }, (_, n) => block(`p${n}`, "Paragraf de test pentru calculul timpului de citire. ".repeat(6))),
+    body: index === 0 ? richBody(inputs, photo)
+      : Array.from({ length: 6 * (index + 1) }, (_, n) => block(`p${n}`, "Paragraf de test pentru calculul timpului de citire. ".repeat(6))),
+    // Post 1 links to both projects and the service; post 2 to the first project, so its "Din blog" lists two posts.
+    ...(index === 0 ? {
+      source: { text: "Text de test: Mănăstire de test", url: "https://www.putna.ro" },
+      relatedProjects: projects.map((id, n) => ({ ...ref(id), _key: `rp${n}` })),
+      relatedServices: [{ ...ref(service), _key: "rs0" }],
+    } : index === 1 ? { relatedProjects: [{ ...ref(projects[0]), _key: "rp0" }] } : {}),
   }));
   const homePage = {
     _id: "homePage", _type: "homePage", publishedLanguages: ["ro"],
@@ -123,16 +169,24 @@ async function main() {
     `*[_type == "project" && defined(coverImage.asset)] | order(_id asc)[0...8].coverImage.asset._ref`);
   const mp3 = await readClient.fetch<string | null>(`*[_type == "sanity.fileAsset" && mimeType == "audio/mpeg"] | order(originalFilename asc)[0]._id`);
   const youtube = await readClient.fetch<string | null>(`*[_type == "project" && defined(videos[provider == "youtube"][0].url)] | order(_id asc)[0].videos[provider == "youtube"][0].url`);
+  // Two public projects with a category, and one active top-level service.
+  const projects = await readClient.fetch<string[]>(
+    `*[_type == "project" && defined(slug.current) && defined(category->slug.ro.current) && "ro" in coalesce(publishedLanguages, ["ro"])] | order(_id asc)[0...2]._id`);
+  const service = await readClient.fetch<string | null>(
+    `*[_type == "service" && status == "active" && !defined(parent) && defined(slug.ro.current)] | order(displayOrder asc, _id asc)[0]._id`);
   const existingHome = await readClient.fetch<string | null>(`*[_id == "homePage"][0].hero.title.ro`);
-  if (photos.length < 4 || !mp3 || !youtube) throw new Error("Not enough existing assets to reuse (photos, an MP3, a YouTube link).");
+  if (photos.length < 6 || !mp3 || !youtube || projects.length < 2 || !service) {
+    throw new Error("Not enough existing content to reuse (6 photos, an MP3, a YouTube link, 2 projects, a service).");
+  }
   if (existingHome && existingHome !== testHomeTitle) throw new Error("A real homePage is published; refusing to replace it.");
-  const documents = plan({ photos, mp3, youtube }, values.hide);
+  const documents = plan({ photos, mp3, youtube, projects, service }, values.hide);
 
   const hits = documents.flatMap((document) => findPriceTextInValue(document).map((hit) => `${document._id}: ${hit.path} „${hit.match}”`));
   if (hits.length) throw new Error(`Price text in the test documents:\n${hits.join("\n")}`);
 
   console.log(`${documents.length} test documents: ${documents.map(({ _id }) => _id).join(", ")}`);
   console.log(`Reusing ${photos.length} photos, 1 MP3 and 1 YouTube link; hidden section: ${values.hide ?? "none (catalogues stay off)"}.`);
+  console.log(`Post 1 links to projects ${projects.join(", ")} and service ${service}.`);
   if (!values.write) {
     console.log("Dry run. Pass --write to create them (published) or --delete to remove them.");
     return;

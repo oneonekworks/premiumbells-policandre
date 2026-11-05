@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import {PortableText} from 'next-sanity';
+import {PostGrid} from '@/components/blog/post-card';
 import type {ReactNode} from 'react';
 import {portableText} from '@/components/portfolio/project-details';
 import {SanityImage} from '@/components/sanity-image';
@@ -11,7 +12,7 @@ import {localizedHref, type Lang} from '@/lib/i18n/routing';
 import {servicePath, servicesPath} from '@/lib/services';
 import {aboutAnchor, linkHref, type Contact, type LinkValue} from '@/lib/site-links';
 import {youtubeId} from '@/lib/video';
-import {readingMinutes, type BlogCard} from '@/sanity/blog';
+import type {BlogCard} from '@/sanity/blog';
 import type {CatalogDownload, HomeContent} from '@/sanity/home';
 import type {ServiceListItem} from '@/sanity/services';
 import {VideoFacade, type FacadeVideo} from './video-facade';
@@ -253,9 +254,6 @@ export function HomeAudio({section, dictionary}: {section: Section<'audio'>; dic
   );
 }
 
-const longDate = (date: string, lang: Lang) =>
-  new Intl.DateTimeFormat(numberLocale(lang), {day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'}).format(new Date(date));
-
 export function HomeBlog({section, posts, lang, dictionary}: Base & {section: Section<'blog'>; posts: BlogCard[]}) {
   if (section.enabled === false || !section.heading || !posts.length) return null;
   const {homeSections: t} = dictionary;
@@ -265,26 +263,7 @@ export function HomeBlog({section, posts, lang, dictionary}: Base & {section: Se
         <SectionIntro id="home-blog" heading={section.heading} intro={section.intro ? <p>{section.intro}</p> : null} />
         <MoreLink href={localizedHref(lang, '/blog')}>{t.allPosts}</MoreLink>
       </div>
-      <ul className="mt-12 grid gap-x-6 gap-y-12 md:grid-cols-3">
-        {posts.map((post) => (
-          <li key={post._id} className="group relative flex flex-col">
-            <div className="relative aspect-[3/2] overflow-hidden rounded-lg bg-stone">
-              <SanityImage image={post.cover && {...post.cover, alt: photoAlt(post.cover, post.title ?? '')}} ratio={3 / 2}
-                sizes="(max-width: 768px) 100vw, 33vw" className="transition-transform duration-700 group-hover:scale-[1.03]" />
-            </div>
-            <p className="mt-5 flex flex-wrap gap-x-2 text-sm text-ink-soft">
-              {post.kind && <span className="font-semibold uppercase tracking-[0.14em] text-teal-700">{t.kinds[post.kind]}</span>}
-              {post.publishedAt && <time dateTime={post.publishedAt}>{longDate(post.publishedAt, lang)}</time>}
-              {post.textLength ? <span>· {t.readingTime.replace('{minutes}', String(readingMinutes(post.textLength)))}</span> : null}
-            </p>
-            <h3 className="mt-2 font-display text-2xl font-semibold leading-snug text-teal-900">
-              <Link href={localizedHref(lang, `/blog/${post.slug}`)} className="after:absolute after:inset-0 group-hover:text-teal-700">{post.title}</Link>
-            </h3>
-            {post.excerpt && <p className="mt-2 line-clamp-3 leading-relaxed text-ink-soft">{post.excerpt}</p>}
-            {post.author?.name && <p className="mt-4 text-sm text-ink">{post.author.name}</p>}
-          </li>
-        ))}
-      </ul>
+      <div className="mt-12"><PostGrid posts={posts} lang={lang} dictionary={dictionary} /></div>
     </section>
   );
 }

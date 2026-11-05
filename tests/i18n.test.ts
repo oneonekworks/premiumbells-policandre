@@ -26,6 +26,8 @@ test('section names translate in English URLs and back', () => {
   assert.deepEqual(parsePublicPath('/en/services'), {lang: 'en', internal: '/servicii'});
   assert.equal(alternateHref('/lucrarile-noastre', 'en'), '/en/our-work');
   assert.equal(alternateHref('/lucrarile-noastre/clopote/schitul-duca', 'en'), '/en');
+  assert.equal(alternateHref('/blog', 'en'), '/en/blog');
+  assert.equal(alternateHref('/blog', 'en', ['/blog']), '/en');
 });
 
 test('hreflang alternates list only published languages with Romanian as x-default', () => {
