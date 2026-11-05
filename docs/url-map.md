@@ -30,7 +30,7 @@ Live = HTTP status on 2026-11-02. Sitemap = listed in a legacy sitemap
 
 | Old URL | Live | Sitemap | New URL | Action | Status in rebuild |
 | --- | --- | --- | --- | --- | --- |
-| `/` | 200 | yes | `/` | keep | built (placeholder copy) |
+| `/` | 200 | yes | `/` | keep | built from `homePage`, published 2026-11-05 (`/en` keeps the placeholder) |
 | `/lucrarile-noastre` | 404 | — | `/lucrarile-noastre` | new page | built |
 | `/lucrarile-noastre/clopote` | 200 | yes | same | keep | built, 40 works |
 | `/lucrarile-noastre/policandre` | 200 | yes | same | keep | category exists, works not imported |
@@ -54,10 +54,10 @@ Live = HTTP status on 2026-11-02. Sitemap = listed in a legacy sitemap
 | `/servicii/iconostase/iconostas-bronz` | 200 | yes | same | keep | built, published 2026-11-04 (nested) |
 | `/servicii/iconostase/pristol-marmura` | 200 | yes | same | keep | built, published 2026-11-04 (nested) |
 | `/servicii/usi` | 200 | typo | same | keep | built, published 2026-11-04 |
-| `/blog` | 200 | — | `/blog` | keep | built (placeholder); Phase 7 |
-| `/blog/clopotele-manastirii-putna` | 200 | yes | same | keep | Phase 7 (plan accepted 2026-11-04) |
-| `/blog/clopotar-electronic-pt-clopote-fixe` | 200 | — | same | keep | Phase 7 |
-| `/blog/raport-18-ianuarie-2023` | 200 | — | same | keep | Phase 7 |
+| `/blog` | 200 | — | `/blog` | keep | built, published 2026-11-05 (`/en/blog` 404 until an English post) |
+| `/blog/clopotele-manastirii-putna` | 200 | yes | same | keep | built, published 2026-11-05 |
+| `/blog/clopotar-electronic-pt-clopote-fixe` | 200 | — | same | keep | built, published 2026-11-05 |
+| `/blog/raport-18-ianuarie-2023` | 200 | — | same | keep | built, published 2026-11-05 |
 
 The home page anchor `/#about-us-section` (linked from the legacy footer)
 becomes `/#despre-noi` (Phase 7 decision 1); fragments never reach the
@@ -131,7 +131,8 @@ only paths that bring visits, e.g. catalogue PDFs.
 
 - Redirects (308) in `next.config.ts` `redirects()` from `lib/redirects.ts`,
   unit-tested in `tests/redirects.test.ts` (2026-11-03): the four service
-  rows and `/_lucrarile-noastre`. The two blog rows wait for the blog.
+  rows, `/_lucrarile-noastre` and the two blog rows (Phase 7; both 308 on
+  the hosted preview 2026-11-05).
   The service targets have content since the Phase 6 publish (2026-11-04;
   all four 308s and every service row checked on the production build).
   `proxy.ts` applies the same table before its language rewrite, because on

@@ -1,6 +1,6 @@
 # Session handoff
 
-**Updated:** 2026-11-04 · Start a new session with the kickoff prompt below; it
+**Updated:** 2026-11-05 · Start a new session with the kickoff prompt below; it
 is cheaper than continuing a long conversation, and these docs carry the state.
 
 ## Where we are
@@ -12,8 +12,10 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   with sidebar and grid, project slide-over (intercepted route), full project
   pages, gallery with fullscreen lightbox, YouTube, rich text, specifications,
   canonical/hreflang/Open Graph metadata, generated alt text, URL-based search
-  and year/county filters on category grids. Services, blog and
-  home content are placeholders. The whole site is noindex.
+  and year/county filters on category grids. Services (Phase 6),
+  the homepage, blog and global content (Phase 7) come from Sanity; `/en`
+  keeps a placeholder home page and has no blog until English content
+  exists. The whole site is noindex.
 - **Hosting** (2026-11-02): Netlify Free, project `premiumbells-preview`,
   <https://premiumbells-preview.netlify.app>, public visibility (the team-login
   wall also blocks the webhook), deploys on push to `prototype/mobile-publishing`;
@@ -47,8 +49,11 @@ is cheaper than continuing a long conversation, and these docs carry the state.
   `SANITY_REVALIDATE_SECRET` in `.env.local`.
 - **Tests:** keep unit tests to the essentials (user, 2026-11-03); design
   matters more.
-- **Checks:** website lint, typecheck, build, 39 unit tests, 30 migration tests,
-  browser 45 passed and 1 skipped with the Phase 6 test documents written (without them, 16 service tests skip); Studio typecheck, lint, build, 19 unit tests.
+- **Checks (2026-11-05):** website lint, typecheck, build, 43 unit tests, 34
+  migration tests; browser 54 passed, 22 skipped (service and article-block
+  tests need the test documents: `npm run services:test-docs` /
+  `home:test-docs -- --write` after an export, `--delete` afterwards); Studio
+  typecheck, lint, build, 19 unit tests.
 
 ## Gotchas for the next session
 
@@ -190,7 +195,19 @@ is cheaper than continuing a long conversation, and these docs carry the state.
    (`npm run services:test-docs -- --write` after an export, `--delete`
    afterwards); otherwise 16 of them skip. The user changes the
    webhook filter/projection and checks the Studio on the phone.
-10. **Parked:** Studio tab/Publish styling — see [backlog](backlog.md).
+10. **Phase 7 — homepage, blog and global content** (plan accepted
+    2026-11-04, [phase7-plan.md](phase7-plan.md); done 2026-11-05): homePage,
+    3 posts, author, testimonial and audio published; header, footer and
+    contact details from `siteSettings`/`navigation`; reviewed at four
+    widths and checked on the hosted preview. Waiting on the user:
+    price-free catalogue PDFs (section off until then), the about and
+    Clopotar videos on YouTube (then add the links in the Studio), English
+    copy. Close-out notes: the `legacy` field on `siteSettings` and
+    `navigation` (a Studio warning) — see the migration-status change log.
+11. **Next: Phase 8** — final SEO, accessibility and production readiness
+    (migration plan); includes `robots.txt`, sitemaps and the noindex switch
+    at cutover (the user's Lighthouse SEO 66 on the preview comes from these).
+12. **Parked:** Studio tab/Publish styling — see [backlog](backlog.md).
 
 ## Kickoff prompt
 

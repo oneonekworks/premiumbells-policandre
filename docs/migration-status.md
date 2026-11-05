@@ -1,8 +1,8 @@
 # Migration Status
 
-**Overall status:** Bilingual shell, portfolio slice, and hosted Studio with optimised phone uploads working locally; legacy importer built; all 39 Clopote works imported and published
-**Current phase:** Preview hosted on Netlify with the publish webhook live; category search and filters built; next: SEO baseline — see [handoff](handoff.md)
-**Last updated:** 2026-11-04
+**Overall status:** Portfolio (60 works), services and catalogue, homepage, blog and global content managed in Sanity and live on the hosted preview; no prices anywhere
+**Current phase:** Phase 7 done 2026-11-05; next: Phase 8 (SEO, accessibility, production readiness) — see [handoff](handoff.md)
+**Last updated:** 2026-11-05
 
 ## Accepted decisions
 
@@ -108,8 +108,10 @@ sessions are in [the session handoff](handoff.md). In short:
     done 2026-11-05 with test documents; step 7 (importer, dry runs clean)
     done 2026-11-05; step 8 (media dry run) done 2026-11-05; step 9 started: export
     and test documents deleted, assets uploaded and 7 drafts written and 5 rewritten after the importer fix
-    2026-11-05 (step 9 done); next: step 10, review and publish (author,
-    testimonial and audio first).
+    2026-11-05 (step 9 done); step 10 (published, reviewed at four widths,
+    pushed and checked on the hosted preview) and step 11 (close-out) done
+    2026-11-05. Phase 7 done; open for the user: price-free catalogue PDFs,
+    the two YouTube uploads, English copy.
 
 ## Remaining prototype acceptance inputs
 
@@ -152,6 +154,27 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-05 (Phase 7 step 11, close-out)
+
+- `lib/site.ts` keeps only the canonical `url`. The header, footer, logo
+  text, home metadata and the service contact box ("Cereți o ofertă")
+  read company facts from `siteSettings` through `getShell` (now cached per
+  request). Before, the service contact box and the logo read the
+  constants, so a phone or e-mail change in the Studio would not have
+  reached them. A missing `siteSettings` or empty required field now stops
+  the render with a message naming the field (the Studio cannot delete or
+  unpublish the singleton).
+- The `home.*` dictionary strings and `HomePlaceholder` stay: they are the
+  `/en` home page until English copy exists (decision 12, which the plan's
+  close-out line did not account for). Comments say when to remove them.
+- Docs: URL map (home and blog rows built and published; blog redirects),
+  content model, design foundations, handoff (Phase 7 done, Phase 8 next),
+  migration plan (Phase 7 checklist; catalogue PDFs and the YouTube play
+  buttons wait for the user), this file's header.
+- Lint, typecheck, 43 unit and 34 migration tests, build; browser suite on
+  the production build: 54 passed, 22 skipped, 0 failed; the service
+  contact box shows the phone and e-mail from Sanity.
 
 ### 2026-11-05 (Phase 7 step 10, export)
 

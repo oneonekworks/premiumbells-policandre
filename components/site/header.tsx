@@ -16,7 +16,7 @@ export function SiteHeader({lang, dictionary, shell}: {lang: Lang; dictionary: D
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur-md">
       <div className="container-site flex h-header items-center justify-between gap-4">
-        <Logo href={localizedHref(lang, '/')} />
+        <Logo href={localizedHref(lang, '/')} name={shell.company.name} />
 
         <nav aria-label={dictionary.nav.label} className="hidden md:block">
           <NavLinks items={shell.header} toggleLabel={dictionary.nav.submenu} />

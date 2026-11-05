@@ -1,7 +1,9 @@
 import type {Lang} from './routing';
 
-// Fixed interface strings only. Navigation labels and marketing copy move to
-// Sanity (navigation, siteSettings, homePage) during schema expansion.
+// Fixed interface strings. Menus, company facts and page copy come from
+// Sanity; `nav.*` labels back the header when the navigation is not published
+// in a language, and `home.*` is the placeholder home page for a language
+// without a published `homePage` (English, decision 12 of Phase 7).
 const ro = {
   skipToContent: 'Sari la conținut',
   nav: {

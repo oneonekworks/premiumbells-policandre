@@ -193,16 +193,34 @@ preview (Netlify) after the user's push, including the legacy redirects.
 Plan accepted 2026-11-04 with the recommended defaults:
 [phase7-plan.md](phase7-plan.md).
 
-- [ ] Rebuild the homepage using named, typed sections.
-- [ ] Import global company, navigation, footer, and contact information.
-- [ ] Import only reviewed price-free catalogue PDF records.
-- [ ] Migrate testimonial and audio content.
-- [ ] Migrate blog metadata and hard-coded article bodies to Portable Text.
-- [ ] Migrate about video with a valid poster and interactive controls.
-- [ ] Add blog listing, article routes, and related-content links.
+- [x] Rebuild the homepage using named, typed sections.
+- [x] Import global company, navigation, footer, and contact information.
+- [ ] Import only reviewed price-free catalogue PDF records. The
+      `catalogDownload` type, its review gate and the home section exist;
+      the section stays off until the user sends price-free PDFs
+      (decision 3). Each PDF then goes through the review in the Phase 7
+      plan, section 5.
+- [x] Migrate testimonial and audio content.
+- [x] Migrate blog metadata and hard-coded article bodies to Portable Text.
+- [x] Migrate about video with a valid poster and interactive controls. The
+      poster is live; the play button (YouTube facade, keyboard tested)
+      appears once the user uploads the video to YouTube and adds the link
+      in the Studio (decision 2). The same applies to the Clopotar article
+      video.
+- [x] Add blog listing, article routes, and related-content links.
 
 **Exit criteria:** All primary old-site sections are CMS-managed and visually
 reviewed across supported breakpoints.
+
+Done 2026-11-05: the homepage, blog (3 articles), author, testimonial and
+audio were published after an export; the header, footer and contact
+details come from `siteSettings` and `navigation`. Reviewed by the user at
+390, 768, 1280 and 1440 px on the local production build; `verify-no-prices`
+and the browser suite (price crawl included) passed locally, and the pages,
+the price check and the two blog redirects passed on the hosted preview
+after the user's push. Open for the user: the price-free catalogue PDFs and
+the two YouTube uploads. English home copy and posts wait for translations
+(decision 12).
 
 ## Phase 8 — Final SEO, accessibility, and production-readiness verification
 

@@ -4,7 +4,8 @@ import type {Dictionary} from '@/lib/i18n/dictionaries';
 import {localizedHref, type Lang} from '@/lib/i18n/routing';
 
 // Shown while the `homePage` singleton is not published in this language
-// (English for now, decision 12). Removed at close-out with `home.*`.
+// (English for now, decision 12). Remove it, with `home.*`, once the English
+// home page is published.
 export function HomePlaceholder({lang, dictionary, phoneHref}: {lang: Lang; dictionary: Dictionary; phoneHref: string}) {
   const {home} = dictionary;
 

@@ -1,10 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import {site} from '@/lib/site';
 
 // The legacy monogram is only available as a 72×49 PNG; replace with a vector
 // source when the business supplies one.
-export function Logo({href, inverted = false}: {href: string; inverted?: boolean}) {
+export function Logo({href, name, inverted = false}: {href: string; name: string; inverted?: boolean}) {
   return (
     <Link href={href} className="flex shrink-0 items-center gap-2.5">
       <Image
@@ -18,7 +17,7 @@ export function Logo({href, inverted = false}: {href: string; inverted?: boolean
       <span
         className={`font-display text-2xl font-semibold leading-none tracking-tight ${inverted ? 'text-paper' : 'text-teal-900'}`}
       >
-        {site.name}
+        {name}
       </span>
     </Link>
   );

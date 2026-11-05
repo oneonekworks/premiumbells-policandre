@@ -31,16 +31,16 @@ export async function generateMetadata({params}: PageProps<'/[lang]'>): Promise<
     alternates: languageAlternates(lang, {ro: published.includes('ro') ? '/' : null, en: published.includes('en') ? '/' : null}),
     openGraph: {
       type: 'website',
-      siteName: settings?.name ?? site.name,
+      siteName: settings?.name ?? undefined,
       title: title ?? undefined,
       description,
-      images: image && share ? [{url: image, width: 1200, height: 630, alt: photoAlt(share, title ?? site.name)}] : undefined,
+      images: image && share ? [{url: image, width: 1200, height: 630, alt: photoAlt(share, title ?? settings?.name ?? '')}] : undefined,
     },
     ...(home?.seo?.noIndex ? {robots: {index: false}} : {}),
   };
 }
 
-/** schema.org Organization from the site settings (lib/site.ts until they are published). */
+/** schema.org Organization from the site settings. */
 function organization({company}: Shell, description: string | undefined) {
   return {
     '@context': 'https://schema.org',

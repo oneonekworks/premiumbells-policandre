@@ -1,8 +1,8 @@
 import 'server-only';
+import {cache} from 'react';
 import type {Dictionary} from '@/lib/i18n/dictionaries';
 import {languages, localizedHref, type Lang} from '@/lib/i18n/routing';
 import {servicePath, servicesPath} from '@/lib/services';
-import {site} from '@/lib/site';
 import {linkHref, submenuPage, type Contact} from '@/lib/site-links';
 import {getBlogPosts} from '@/sanity/blog';
 import {getCategories} from '@/sanity/portfolio';
@@ -10,9 +10,9 @@ import {getServices} from '@/sanity/services';
 import {getSiteContent, type SiteLink} from '@/sanity/site';
 
 // What the header, footer and mobile menu show, from the `siteSettings` and
-// `navigation` singletons. Until they are published (or when the navigation
-// is not published in this language) the constants in lib/site.ts and the
-// dictionary labels keep the shell complete.
+// `navigation` singletons. The settings are required (the Studio cannot
+// delete or unpublish them); when the navigation is not published in a
+// language, the dictionary labels keep the header complete.
 
 export type ShellLink = {label: string; href: string; children?: ShellLink[]};
 export type SocialNetwork = 'facebook' | 'instagram' | 'youtube';
@@ -65,7 +65,15 @@ function resolveLinks(links: SiteLink[] | null | undefined, lang: Lang, contact:
   });
 }
 
-export async function getShell(lang: Lang, dictionary: Dictionary): Promise<Shell> {
+function required<T>(value: T | null | undefined, field: string): T {
+  if (value === null || value === undefined || value === '') {
+    throw new Error(`siteSettings.${field} is empty; fill it in and publish the site settings in the Studio.`);
+  }
+  return value;
+}
+
+/** Cached per request: the layout and the service contact boxes share it. */
+export const getShell = cache(async (lang: Lang, dictionary: Dictionary): Promise<Shell> => {
   const [{settings, navigation}, blogLanguages] = await Promise.all([
     getSiteContent(lang),
     Promise.all(languages.map(async (code) => [code, (await getBlogPosts(code)).length > 0] as const)),
@@ -76,15 +84,15 @@ export async function getShell(lang: Lang, dictionary: Dictionary): Promise<Shel
   const hasBlog = !missingPaths[lang];
   const withBlog = <T extends {href: string}>(links: T[]) => (hasBlog ? links : links.filter((link) => link.href !== blogHref));
 
-  const phone = settings?.phone?.display && settings.phone.e164
-    ? {display: settings.phone.display, href: `tel:${settings.phone.e164}`}
-    : site.phone;
-  const email = settings?.email ?? site.email;
+  if (!settings) throw new Error('The siteSettings document is not published; the header and footer need it.');
+  const phone = {
+    display: required(settings.phone?.display, 'phone.display'),
+    href: `tel:${required(settings.phone?.e164, 'phone.e164')}`,
+  };
+  const email = required(settings.email, 'email');
   const contact = {phoneHref: phone.href, email};
-  const social = settings?.social
-    ? settings.social.flatMap((item) =>
-      item.url && networks.includes(item.network as SocialNetwork) ? [{network: item.network as SocialNetwork, href: item.url}] : [])
-    : site.social.map((item) => ({network: item.name.toLowerCase() as SocialNetwork, href: item.href}));
+  const social = (settings.social ?? []).flatMap((item) =>
+    item.url && networks.includes(item.network as SocialNetwork) ? [{network: item.network as SocialNetwork, href: item.url}] : []);
 
   const header = navigation?.header?.length
     ? await Promise.all(resolveLinks(navigation.header, lang, contact).map(async ({source, ...link}) => {
@@ -101,19 +109,19 @@ export async function getShell(lang: Lang, dictionary: Dictionary): Promise<Shel
 
   return {
     company: {
-      name: settings?.name ?? site.name,
-      legalName: settings?.legalName ?? site.legalName,
-      cui: settings?.cui ?? site.cui,
-      registration: settings ? settings.registration ?? null : site.registration,
-      registryUrl: settings?.registryUrl ?? null,
+      name: required(settings.name, 'name'),
+      legalName: required(settings.legalName, 'legalName'),
+      cui: required(settings.cui, 'cui'),
+      registration: settings.registration ?? null,
+      registryUrl: settings.registryUrl ?? null,
       phone,
       email,
-      address: settings?.address ?? null,
-      tagline: settings?.tagline ?? dictionary.footer.tagline,
+      address: settings.address ?? null,
+      tagline: settings.tagline ?? dictionary.footer.tagline,
       social,
     },
     header: withBlog(header),
     footerGroups,
     missingPaths,
   };
-}
+});

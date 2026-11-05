@@ -39,7 +39,7 @@ export function SiteFooter({lang, dictionary, shell}: {lang: Lang; dictionary: D
     <footer className="border-t-2 border-gold-500 bg-teal-950 text-paper">
       <div className="container-site grid gap-10 py-14 md:grid-cols-12 md:gap-8">
         <div className="md:col-span-4">
-          <Logo href={localizedHref(lang, '/')} inverted />
+          <Logo href={localizedHref(lang, '/')} name={company.name} inverted />
           <p className="mt-5 max-w-sm leading-relaxed text-paper/75">{company.tagline}</p>
           {company.social.length ? (
             <ul aria-label={footer.social} className="mt-6 flex gap-2">

@@ -5,7 +5,7 @@ import {MailIcon, PhoneIcon} from '@/components/site/icons';
 import type {Dictionary} from '@/lib/i18n/dictionaries';
 import {plural} from '@/lib/i18n/format';
 import type {Lang} from '@/lib/i18n/routing';
-import {site} from '@/lib/site';
+import {getShell} from '@/lib/shell';
 import type {ServiceSection} from '@/sanity/services';
 import {CatalogueSection} from './catalogue-section';
 import {DialogGrid} from './dialog-grid';
@@ -178,11 +178,14 @@ function VideosSection({section, context}: {section: Section<'sectionVideos'>; c
 }
 
 /** Contact box; also the default call to action at the end of every service page. */
-export function ContactSection({section, dictionary}: {
+// Phone and e-mail come from the site settings, like the header and footer.
+export async function ContactSection({section, lang, dictionary}: {
   section?: Pick<Section<'sectionCta'>, 'heading' | 'text' | 'label' | 'contact' | 'href'>;
+  lang: Lang;
   dictionary: Dictionary;
 }) {
   const {cta} = dictionary.services;
+  const {phone, email} = (await getShell(lang, dictionary)).company;
   const contact = section?.contact ?? 'phoneEmail';
   const label = section?.label ?? cta.label;
   return (
@@ -195,13 +198,13 @@ export function ContactSection({section, dictionary}: {
         ) : (
           <>
             {(contact === 'phoneEmail' || contact === 'phone') && (
-              <a href={site.phone.href} className="btn bg-white text-teal-900 hover:bg-stone">
-                <PhoneIcon className="size-5" /> {contact === 'phone' ? label : `${label}: ${site.phone.display}`}
+              <a href={phone.href} className="btn bg-white text-teal-900 hover:bg-stone">
+                <PhoneIcon className="size-5" /> {contact === 'phone' ? label : `${label}: ${phone.display}`}
               </a>
             )}
             {(contact === 'phoneEmail' || contact === 'email') && (
-              <a href={`mailto:${site.email}`} className="btn border border-white/60 text-white hover:bg-white/10">
-                <MailIcon className="size-5" /> {contact === 'email' ? label : site.email}
+              <a href={`mailto:${email}`} className="btn border border-white/60 text-white hover:bg-white/10">
+                <MailIcon className="size-5" /> {contact === 'email' ? label : email}
               </a>
             )}
           </>
@@ -227,7 +230,7 @@ export function ServiceSections({sections, lang, dictionary, subject}: {
       case 'sectionBellSets': return <BellSetsSection key={section._key} section={section} context={context} />;
       case 'sectionVideos': return <VideosSection key={section._key} section={section} context={context} />;
       case 'sectionCatalogue': return <CatalogueSection key={section._key} section={section} lang={lang} dictionary={dictionary} />;
-      case 'sectionCta': return <ContactSection key={section._key} section={section} dictionary={dictionary} />;
+      case 'sectionCta': return <ContactSection key={section._key} section={section} lang={lang} dictionary={dictionary} />;
       default: return null;
     }
   });

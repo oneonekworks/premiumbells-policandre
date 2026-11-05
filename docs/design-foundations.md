@@ -63,11 +63,11 @@ buttons, and cards; it moves to the Sanity `homePage` singleton.
 - A vector logo. The legacy monogram is a 72×49 PNG and is slightly soft on
   high-density screens.
 - A postal address, if it should appear in the footer.
-- Services and works flyout menus (the legacy mega menus) once services and
-  categories exist in Sanity.
-- Contact details and company identifiers currently live in `lib/site.ts` and
-  move to `siteSettings`; navigation labels move to `navigation`.
-- Review the home copy claims before publication.
+- Services and works dropdowns: built in Phase 7 (automatic from the active
+  services and categories).
+- Contact details and company identifiers come from `siteSettings`, menus
+  from `navigation` (Phase 7, 2026-11-05).
+- Home copy claims were reviewed by the user before publication (2026-11-05).
 
 ## Development note
 

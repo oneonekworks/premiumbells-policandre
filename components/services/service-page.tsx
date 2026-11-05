@@ -141,7 +141,7 @@ export function ServicePage({lang, service, dictionary}: {lang: Lang; service: S
 
       <FromBlog id={service._id} lang={lang} dictionary={dictionary} />
 
-      {!sections.some((section) => section._type === 'sectionCta') && <ContactSection dictionary={dictionary} />}
+      {!sections.some((section) => section._type === 'sectionCta') && <ContactSection lang={lang} dictionary={dictionary} />}
     </div>
   );
 }
