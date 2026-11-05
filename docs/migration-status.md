@@ -106,7 +106,8 @@ sessions are in [the session handoff](handoff.md). In short:
     (shell from Sanity) done 2026-11-04: `siteSettings` and `navigation`
     published with the user's approval; step 5 (homepage) and step 6 (blog)
     done 2026-11-05 with test documents; step 7 (importer, dry runs clean)
-    done 2026-11-05; next: step 8, media and files.
+    done 2026-11-05; step 8 (media dry run) done 2026-11-05; next: step 9,
+    write (after deleting the test documents).
 
 ## Remaining prototype acceptance inputs
 
@@ -149,6 +150,25 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-05 (Phase 7 step 8)
+
+- Asset dry runs (`migrate:assets --collection global|home|blog`), nothing
+  uploaded. 9 files to upload, 10.5 MB in all: `pascal.mp3` (8.9 MB, as it
+  is), the portrait (84 KB, shared by author and testimonial), the audio
+  artwork (82 KB), the hero `policandre_1.jpg` (3000×1326, 1.2 MB), the about
+  poster (52 KB) and the 3 Clopotar photos (49–98 KB; the local cover has
+  the same bytes as photo 1, so Sanity stores it once). Already in Sanity:
+  the 6 Putna and 15 Drobeta photos (checkpoint) and the Drobeta cover.
+  No image needs resizing; no new filename contains a pricing word.
+- Not imported: both MP4s (decision 2, wait for YouTube), the unused
+  `de-intampinare.mp3`, catalogue PDFs and covers (decision 3, section off).
+- Contact sheet of the new photos shown to the user. From it, the seed's
+  about poster alt is now „Clopote proaspăt turnate în turnătorie” (it shows
+  a foundry, not a bell tower) and the 3 Clopotar photos have descriptions
+  written from the photos (to check in step 10).
+- Checks: 34 migration tests pass; content dry runs 0 errors;
+  `verify-no-prices` 0 errors (the 5 known "pret" filenames stay warnings).
 
 ### 2026-11-05 (Phase 7 step 7)
 

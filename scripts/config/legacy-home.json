@@ -57,14 +57,14 @@
       "heading": "Despre noi",
       "body": "S.C. Premium Bells SRL este compania ce reprezintă cele mai mari și mai cotate turnătorii de clopote din <strong>lumea ortodoxă</strong> – din Iaroslavl și Kamensk-Uralsky –, dar și compania Belltron din Italia, promovând astfel cele mai tradiționale clopote, până la <strong>16 tone</strong>, clopote fără balans trase de sfoară, după tradiția de pe <strong>Sfântul Munte Athos</strong>, dar și stilul occidental prin balansare, cu complexitate ornamentală tradițională și icoane canonice ortodoxe.",
       "poster": "https://storage.googleapis.com/rbells/assets/img/despre-noi-poster.webp",
-      "posterAlt": "Clopote ortodoxe în clopotniță",
+      "posterAlt": "Clopote proaspăt turnate în turnătorie",
       "cta": { "label": "Vizitați lucrările noastre", "kind": "page", "page": "works" }
     },
     "review": [
       "Claim to confirm: „12 dintre cele mai mari… turnătorii” (hero) versus the about text (Iaroslavl, Kamensk-Uralsky, Belltron).",
       "Badge „Nou – Vizitați pagina Iconostase” dropped (decision 5).",
       "About button: legacy went to /lucrarile-noastre/policandre; it now goes to /lucrarile-noastre, like the hero button.",
-      "About video (93 MB MP4) not imported (decision 2): the section shows the poster until the YouTube upload; the poster alt is a placeholder to check.",
+      "About video (93 MB MP4) not imported (decision 2): the section shows the poster until the YouTube upload.",
       "Hero photo alt left empty: the photo sits behind the title as a background."
     ]
   },
@@ -123,9 +123,13 @@
       "replacements": [
         { "find": "clopoteilor", "replace": "clopotelor", "reason": "typo" }
       ],
-      "alts": {},
+      "alts": {
+        "https://storage.googleapis.com/rbells/policandre_ro/blog/3-clopotar%20electronic/clopotar-electronic-1.jpg": "Ciocane electronice montate la două clopote fixe",
+        "https://storage.googleapis.com/rbells/policandre_ro/blog/3-clopotar%20electronic/clopotar-electronic.jpg": "Clopote fixe cu ciocane electronice, prinse de grinda clopotniței",
+        "https://storage.googleapis.com/rbells/policandre_ro/blog/3-clopotar%20electronic/clopotar-electronic-2.jpg": "Montajul clopotelor fixe și al clopotarului electronic în clopotniță"
+      },
       "review": [
-        "The three photos had the title as their description; they are imported without one, so the site describes them from the title. Write real descriptions in Studio.",
+        "The legacy alts only repeated the title; the three descriptions were written from the photos in step 8. Check them in step 10.",
         "The P.S. is kept as written, in capitals, signed „DENIS LATISHEV mai 2023” although the post is dated February 2023 (decision 10)."
       ]
     }
