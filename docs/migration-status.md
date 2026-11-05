@@ -107,7 +107,7 @@ sessions are in [the session handoff](handoff.md). In short:
     published with the user's approval; step 5 (homepage) and step 6 (blog)
     done 2026-11-05 with test documents; step 7 (importer, dry runs clean)
     done 2026-11-05; step 8 (media dry run) done 2026-11-05; step 9 started: export
-    and test documents deleted 2026-11-05; next: assets, then drafts.
+    and test documents deleted, assets uploaded 2026-11-05; next: drafts.
 
 ## Remaining prototype acceptance inputs
 
@@ -150,6 +150,17 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-05 (Phase 7 step 9, assets)
+
+- With the user's go-ahead: `migrate:assets --collection global|home|blog
+  --write`. Uploaded 9 files with no failure: `pascal.mp3`, the portrait,
+  the audio artwork, the hero, the about poster and the 3 Clopotar photos
+  (the local Clopotar cover has the same bytes as photo 1, so it is one
+  asset). The Putna and Drobeta photos and the Drobeta cover were reused. A
+  second dry run finds every file in the checkpoint and 0 left to upload;
+  the content dry runs plan 7 documents to create with no missing media.
+  `verify-no-prices`: 0 errors.
 
 ### 2026-11-05 (Phase 7 step 9, first action)
 
