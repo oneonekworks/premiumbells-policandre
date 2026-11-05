@@ -1,8 +1,10 @@
 import {expect, test, type Page} from '@playwright/test';
 import {findPriceText} from '../../scripts/lib/price-text';
 
-// Blog listing and articles (Phase 7 step 6). Needs the hand-made test posts
-// (`npm run home:test-docs -- --write`); post 1 holds every article block.
+// Blog listing and articles (Phase 7 step 6). The listing and price crawl run
+// on the published posts; the article-block tests need the hand-made test
+// posts (`npm run home:test-docs -- --write`, post 1 holds every block) and
+// skip without them.
 // The English blog has no posts, so it must be a 404.
 
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
@@ -28,11 +30,11 @@ test('the listing shows the posts newest first, the first one featured', async (
   const errors = await open(page, '/blog');
   const main = page.locator('main');
   await expect(main.locator('h1')).toHaveText('Articole, rapoarte și video');
-  const titles = await main.locator('article h2').allInnerTexts();
-  expect(titles.slice(0, 3)).toEqual([3, 2, 1].map((n) => `Articol de test numărul ${n} despre clopote și policandre`));
+  expect(await main.locator('article h2').count()).toBeGreaterThan(0);
+  const dates = await main.locator('article time').evaluateAll((times) => times.map((time) => time.getAttribute('datetime')!));
+  expect(dates).toEqual([...dates].sort().reverse());
   await expect(main.locator('article').first()).toContainText('Citește articolul');
-  await expect(main.locator('article').first()).toContainText('19 februarie 2023');
-  await expect(main.getByRole('link', {name: /numărul 1/})).toHaveAttribute('href', rich);
+  await expect(main.locator('article').first().getByRole('link').first()).toHaveAttribute('href', /^\/blog\/[\w-]+$/);
   expect(await noOverflow(page)).toBe(true);
   expect(errors).toEqual([]);
 });

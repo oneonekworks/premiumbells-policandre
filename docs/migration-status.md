@@ -172,6 +172,20 @@ These items do not block completing the rest of Phase 0.
   and three "split the specification" hints from Phase 5/6).
   `verify-migration`: global 3/3, home 1/1, blog 3/3 published and ok.
   `verify-no-prices`: 0 errors (the 5 known "pret" filenames).
+- Local production build (port 3101): lint, typecheck, 43 unit tests and
+  build pass; signed revalidation sent for `blogPost`, `homePage`,
+  `person`, `testimonial` and `audioFeature`. The home and blog specs
+  asserted the deleted test documents' wording; they now check the
+  published content by shape (section order with „Dăngăt pascal”, posts
+  newest first, metadata present, the about poster without a play button
+  until the video is on YouTube). Full browser suite: 54 passed, 22
+  skipped (the service and article-block tests that need test documents,
+  the mobile menu on desktop), 0 failed; the price crawl passed on `/blog`,
+  each article and every service page, desktop and mobile.
+- Screenshots of `/`, `/blog` and the 3 articles at 390, 768, 1280 and
+  1440 px shown to the user with the review items (all 200, no horizontal
+  scroll). Noticed: the Putna cover and the first body photo are two
+  near-identical shots of the same bells (different assets); left as is.
 
 ### 2026-11-05 (Phase 7 step 9, drafts)
 

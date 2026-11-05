@@ -1,10 +1,10 @@
 import {expect, test, type Page} from '@playwright/test';
 import {findPriceText} from '../../scripts/lib/price-text';
 
-// Home page (Phase 7). Needs the hand-made test documents
-// (`npm run home:test-docs -- --write`) and skips without them. Run once more
-// after `--write --hide <section>` with HOME_HIDDEN=<section> to check that a
-// switched-off section disappears.
+// Home page (Phase 7). Runs against the published `homePage` and skips while
+// only the placeholder renders. Checks shape rather than wording, so editors
+// can change the copy in Studio. Set HOME_HIDDEN=<section> after switching a
+// section off to check that it disappears.
 
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
 const hidden = process.env.HOME_HIDDEN;
@@ -14,8 +14,7 @@ async function openHome(page: Page) {
   page.on('pageerror', (error) => errors.push(error.message));
   const response = await page.goto('/');
   expect(response?.status()).toBe(200);
-  const title = await page.locator('main h1').innerText();
-  test.skip(!title.includes('Policandre, clopote și iconostase'), 'Test home page is not published (npm run home:test-docs -- --write)');
+  test.skip(await page.locator('#despre-noi').count() === 0 && hidden !== 'about', 'The home page is not published');
   return errors;
 }
 
@@ -29,7 +28,7 @@ test('every home section renders in order, without prices or horizontal scroll',
   const expected = [
     ['services', 'Serviciile noastre'],
     ['testimonial', 'Mărturie'],
-    ['audio', 'Înregistrare de test'],
+    ['audio', 'Dăngăt pascal'],
     ['blog', 'De pe blog'],
     ['about', 'Despre noi'],
   ].filter(([name]) => name !== hidden).map(([, heading]) => heading);
@@ -43,20 +42,20 @@ test('every home section renders in order, without prices or horizontal scroll',
   if (hidden !== 'blog') {
     const blog = main.getByRole('region', {name: 'De pe blog'});
     await expect(blog.getByRole('listitem')).toHaveCount(3);
-    // Newest first, with kind, date and computed reading time.
-    await expect(blog.getByRole('listitem').first()).toContainText('Video');
-    await expect(blog.getByRole('listitem').first()).toContainText('19 februarie 2023');
+    // Newest first, with date and computed reading time.
+    const dates = await blog.locator('time').evaluateAll((times) => times.map((time) => time.getAttribute('datetime')!));
+    expect(dates).toEqual([...dates].sort().reverse());
     await expect(blog.getByRole('listitem').first()).toContainText('min de citit');
-    await expect(blog.getByRole('link', {name: /Articol de test numărul 3/})).toHaveAttribute('href', '/blog/test-articol-3');
+    await expect(blog.getByRole('listitem').first().getByRole('link').first()).toHaveAttribute('href', /^\/blog\/[\w-]+$/);
   }
   if (hidden !== 'testimonial') {
-    await expect(main.locator('figure blockquote')).toContainText('Text de test pentru mărturie');
+    await expect(main.locator('figure blockquote')).not.toBeEmpty();
   }
   if (hidden !== 'about') {
     await expect(page.locator('#despre-noi')).toBeVisible();
   }
 
-  // The catalogue section is off in the test data; it must not render at all.
+  // The catalogue section is off until price-free PDFs exist (decision 3).
   await expect(main.getByText('Descarcă cataloagele noastre')).toHaveCount(0);
 
   const html = await page.content();
@@ -68,8 +67,8 @@ test('every home section renders in order, without prices or horizontal scroll',
 
 test('metadata and Organization JSON-LD come from Sanity', async ({page}) => {
   await openHome(page);
-  await expect(page).toHaveTitle('Premium Bells – pagină de test');
-  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', 'Descriere de test pentru prima pagină.');
+  await expect(page).toHaveTitle(/\S/);
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.{20}/);
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /cdn\.sanity\.io/);
   const data = JSON.parse(await page.locator('script[type="application/ld+json"]').innerText());
   expect(data).toMatchObject({'@type': 'Organization', name: 'Premium Bells', taxID: expect.any(String)});
@@ -98,10 +97,15 @@ test('the about video stays a poster until played from the keyboard', async ({pa
   await expect(about.locator('iframe, video')).toHaveCount(0);
   expect(await page.locator('iframe[src*="youtube"]').count()).toBe(0);
 
+  // Until the video is on YouTube the poster has no play button (decision 2).
+  const play = about.getByRole('button', {name: /Redă videoclipul/});
+  if (await play.count() === 0) {
+    await expect(about.locator('img')).toHaveCount(1);
+    return;
+  }
   // The play button follows the section's button in the tab order.
   await about.getByRole('link', {name: 'Vizitați lucrările noastre'}).focus();
   await page.keyboard.press('Tab');
-  const play = about.getByRole('button', {name: /Redă videoclipul/});
   await expect(play).toBeFocused();
   await page.keyboard.press('Enter');
 
