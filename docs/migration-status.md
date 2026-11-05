@@ -106,8 +106,8 @@ sessions are in [the session handoff](handoff.md). In short:
     (shell from Sanity) done 2026-11-04: `siteSettings` and `navigation`
     published with the user's approval; step 5 (homepage) and step 6 (blog)
     done 2026-11-05 with test documents; step 7 (importer, dry runs clean)
-    done 2026-11-05; step 8 (media dry run) done 2026-11-05; next: step 9,
-    write (after deleting the test documents).
+    done 2026-11-05; step 8 (media dry run) done 2026-11-05; step 9 started: export
+    and test documents deleted 2026-11-05; next: assets, then drafts.
 
 ## Remaining prototype acceptance inputs
 
@@ -150,6 +150,15 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-05 (Phase 7 step 9, first action)
+
+- With the user's go-ahead: export
+  `.migration/backups/production-2026-11-05-before-phase7.tar.gz` (144
+  documents, no assets), then `home:test-docs --delete`: the test
+  `homePage`, the 3 `test-phase7-post-*` posts and the test person,
+  testimonial and audio, with their drafts. None remain. The `home` dry run
+  now reports `homePage` as **create**.
 
 ### 2026-11-05 (Phase 7 step 8)
 
