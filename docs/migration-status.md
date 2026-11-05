@@ -107,8 +107,9 @@ sessions are in [the session handoff](handoff.md). In short:
     published with the user's approval; step 5 (homepage) and step 6 (blog)
     done 2026-11-05 with test documents; step 7 (importer, dry runs clean)
     done 2026-11-05; step 8 (media dry run) done 2026-11-05; step 9 started: export
-    and test documents deleted, assets uploaded and 7 drafts written 2026-11-05; next: rewrite 5 drafts
-    after the importer fix (Studio warnings), then step 10.
+    and test documents deleted, assets uploaded and 7 drafts written and 5 rewritten after the importer fix
+    2026-11-05 (step 9 done); next: step 10, review and publish (author,
+    testimonial and audio first).
 
 ## Remaining prototype acceptance inputs
 
@@ -171,6 +172,10 @@ These items do not block completing the rest of Phase 0.
      from the YouTube title; other videos default to „<title> – video”.
 - After the fix the dry run plans 5 updates (author, testimonial, audio,
   homePage, Putna) and 2 unchanged posts.
+- With the user's go-ahead the 5 drafts were rewritten (2 posts unchanged).
+  Studio validation now reports only item 2 on homePage and the 3 posts;
+  the author, testimonial and audio are clean. `verify-migration` 7/7,
+  `verify-no-prices` 0 errors.
 
 ### 2026-11-05 (Phase 7 step 9, assets)
 
