@@ -163,6 +163,15 @@ These items do not block completing the rest of Phase 0.
 - With the user's go-ahead: export
   `.migration/backups/production-2026-11-05-before-phase7-publish.tar.gz`
   (144 documents, no assets, the 7 drafts included).
+- With the user's go-ahead: published as the Studio does (references with
+  `_strengthenOnPublish` made strong, drafts removed), in two transactions:
+  author, testimonial and audio first, then `homePage` and the 3 posts. No
+  drafts left in the dataset.
+- `sanity documents validate`: 0 errors; 7 warnings, all known (the
+  `legacy` field on `siteSettings` and `navigation`, left for close-out,
+  and three "split the specification" hints from Phase 5/6).
+  `verify-migration`: global 3/3, home 1/1, blog 3/3 published and ok.
+  `verify-no-prices`: 0 errors (the 5 known "pret" filenames).
 
 ### 2026-11-05 (Phase 7 step 9, drafts)
 
