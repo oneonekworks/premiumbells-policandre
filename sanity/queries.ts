@@ -169,11 +169,12 @@ export const SITE_QUERY = defineQuery(`{
 }`);
 
 const blogPostFields = `_id, title, "slug": slug.current, kind, publishedAt, excerpt, cover{${imageFields}}`;
-const blogCardFields = `${blogPostFields}, "author": author->{name, "role": ${fallback('role')}}`;
+const blogCardFields = `${blogPostFields}, "textLength": length(pt::text(body)), "author": author->{name, "role": ${fallback('role')}}`;
 const publicPost = `_type == "blogPost" && ${notDraft} && language == $lang && defined(slug.current) && defined(publishedAt)`;
 
 export const HOME_QUERY = defineQuery(`
-  *[_id == "homePage" && ${published}][0]{
+  *[_id == "homePage" && _type == "homePage" && ${published}][0]{
+    publishedLanguages,
     hero{
       "badge": badge{${linkFields}},
       "title": ${localized('title')}, "highlight": ${localized('highlight')},

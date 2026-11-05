@@ -3,13 +3,11 @@
 import {useState} from 'react';
 import {sanityImageUrl} from '@/sanity/image';
 import type {ProjectDetail} from '@/sanity/portfolio';
+import {youtubeId} from '@/lib/video';
 
 type Video = NonNullable<ProjectDetail['videos']>[number];
 
-export function youtubeId(url: string | null | undefined): string | null {
-  const match = url?.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/))([\w-]{11})/);
-  return match?.[1] ?? null;
-}
+export {youtubeId};
 
 // YouTube loads only after a click (privacy-enhanced domain), so a project
 // with several videos does not pull in several players up front.

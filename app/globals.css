@@ -110,3 +110,23 @@
     background: var(--color-stone);
   }
 }
+
+/* Buttons on dark photography and dark bands. */
+@utility btn-light {
+  background: var(--color-paper);
+  color: var(--color-teal-900);
+
+  &:hover {
+    background: var(--color-gold-200);
+  }
+}
+
+@utility btn-outline-light {
+  border-color: color-mix(in srgb, var(--color-paper) 55%, transparent);
+  color: var(--color-paper);
+
+  &:hover {
+    border-color: var(--color-paper);
+    background: color-mix(in srgb, var(--color-paper) 10%, transparent);
+  }
+}

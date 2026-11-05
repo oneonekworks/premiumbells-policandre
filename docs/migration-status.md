@@ -148,6 +148,44 @@ These items do not block completing the rest of Phase 0.
 
 ## Change log
 
+### 2026-11-05 (Phase 7 step 5)
+
+- Homepage built from Sanity (`app/[lang]/page.tsx`,
+  `components/home/`): hero over a full photo with a gradient for legible
+  text, services (the chosen ones or every active top-level service; two
+  columns on phones), catalogue downloads (only `enabled` and reviewed
+  PDFs, so hidden for now), testimonial, audio (native
+  `<audio controls preload="none">`, duration, optional transcript), blog
+  teaser (the chosen or 3 newest posts, with kind, date and reading time)
+  and about (`#despre-noi`, a poster that loads the privacy-enhanced YouTube
+  player or the owned `<video>` only after play, then focuses it; poster
+  only without a video). A section that is off or empty is not rendered.
+  All buttons go through `linkHref`. Metadata: `homePage.seo`, then
+  `siteSettings.defaultSeo`, then the hero; `Organization` JSON-LD from the
+  settings (constants as fallback). Until the home page is published in a
+  language (English now), that language keeps the placeholder.
+- Query changes: `HOME_QUERY` also filters on `_type` (TypeGen now gives one
+  shape) and returns `publishedLanguages` (hreflang); blog cards return the
+  text length for the reading time. `youtubeId` moved to `lib/video.ts` so
+  server code can use it. `SanityImage` has a `cover` mode (fills a box of
+  any shape, centred on the hotspot).
+- With the user's approval: export
+  `production-2026-11-05-before-home-test-docs.tar.gz` (137 documents), then
+  `npm run home:test-docs -- --write` published `homePage` (test copy,
+  Romanian, catalogues off) and `test-phase7-person`, `-testimonial`,
+  `-audio`, `-post-1..3`. Existing photos, `set1.mp3` and a project YouTube
+  link are reused; nothing uploaded. Then one approved cycle: `--hide
+  audio` (the audio section disappeared, the others stayed), then audio on
+  again. Delete them with `--delete` before step 9 (the importer must find
+  no published `homePage`).
+- Checks on the local production build (port 3101): `home.spec.ts` 12
+  passed (desktop and mobile: every section in order, no prices, no
+  horizontal scroll, metadata and JSON-LD, audio play/pause from the
+  keyboard, video facade by Tab and Enter, `#despre-noi` anchor, English
+  placeholder); whole suite 46 passed, 16 skipped (service test documents
+  absent). Lint, typecheck, 43 unit and 30 migration tests pass.
+  Screenshots at 390, 768, 1280 and 1440 px shown to the user.
+
 ### 2026-11-04 (Phase 7 step 4, part 2)
 
 - With the user's approval: export

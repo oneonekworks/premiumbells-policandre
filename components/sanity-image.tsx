@@ -5,13 +5,16 @@ import {imageBuilder, imageSource, type SanityImageValue} from '@/sanity/image';
 
 /**
  * Fills its positioned parent. With `ratio` (width/height) the Sanity CDN crops
- * around the editor's hotspot; without it the whole image is scaled to fit.
- * Every width is a CDN transform, so originals are never downloaded.
+ * around the editor's hotspot; with `cover` the image fills a box whose shape
+ * changes with the screen, centred on the hotspot; otherwise the whole image
+ * is scaled to fit. Every width is a CDN transform, so originals are never
+ * downloaded.
  */
-export function SanityImage({image, sizes, ratio, priority = false, className = ''}: {
+export function SanityImage({image, sizes, ratio, cover = false, priority = false, className = ''}: {
   image: SanityImageValue | null | undefined;
   sizes: string;
   ratio?: number;
+  cover?: boolean;
   priority?: boolean;
   className?: string;
 }) {
@@ -32,7 +35,8 @@ export function SanityImage({image, sizes, ratio, priority = false, className = 
       // to that box; letterboxed (contain) images would show a stretched blur.
       placeholder={ratio && image.lqip ? 'blur' : 'empty'}
       blurDataURL={ratio ? image.lqip ?? undefined : undefined}
-      className={`${ratio ? 'object-cover' : 'object-contain'} ${className}`}
+      style={cover && image.hotspot ? {objectPosition: `${(image.hotspot.x ?? 0.5) * 100}% ${(image.hotspot.y ?? 0.5) * 100}%`} : undefined}
+      className={`${ratio || cover ? 'object-cover' : 'object-contain'} ${className}`}
     />
   );
 }
