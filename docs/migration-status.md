@@ -153,6 +153,17 @@ These items do not block completing the rest of Phase 0.
 
 ## Change log
 
+### 2026-11-05 (Phase 7 step 10, export)
+
+- Review route: the site has no draft mode (published perspective, no
+  token), and the hosted preview (`0c3b6ea`) does not query `homePage`,
+  `blogPost`, `person`, `testimonial` or `audioFeature`. So the drafts are
+  published first and reviewed on the local production build; nothing
+  changes on the hosted preview until a push.
+- With the user's go-ahead: export
+  `.migration/backups/production-2026-11-05-before-phase7-publish.tar.gz`
+  (144 documents, no assets, the 7 drafts included).
+
 ### 2026-11-05 (Phase 7 step 9, drafts)
 
 - With the user's go-ahead: `migrate-content --collection global`, `home`,
