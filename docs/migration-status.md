@@ -186,6 +186,15 @@ These items do not block completing the rest of Phase 0.
   1440 px shown to the user with the review items (all 200, no horizontal
   scroll). Noticed: the Putna cover and the first body photo are two
   near-identical shots of the same bells (different assets); left as is.
+- The user reviewed the screenshots ("all looks fine"), confirmed the review
+  items as they are, and pushed `5d2fea7`; Netlify deployed it. Hosted
+  preview, light check at the user's request (no browser suite): `/`,
+  `/blog`, the 3 articles and `/en` 200 with no price in the HTML, `/en/blog`
+  404, `/blog2` and `/blog/raport-18-ianuarie-23` 308 to their targets. The
+  user's Lighthouse run on `/`: performance 97, accessibility 100, best
+  practices 100, SEO 66 (the preview is `noindex, nofollow` on purpose and
+  has no `robots.txt`; that belongs to the SEO baseline). Step 10 done; next:
+  step 11 (close-out).
 
 ### 2026-11-05 (Phase 7 step 9, drafts)
 
