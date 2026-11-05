@@ -175,6 +175,12 @@ These items do not block completing the rest of Phase 0.
 - Lint, typecheck, 43 unit and 34 migration tests, build; browser suite on
   the production build: 54 passed, 22 skipped, 0 failed; the service
   contact box shows the phone and e-mail from Sanity.
+- With the user's go-ahead: export
+  `production-2026-11-05-before-legacy-unset.tar.gz` (144 documents), then
+  the unused `legacy` field unset on the published `siteSettings` and
+  `navigation`. Studio validation: 0 errors; 3 warnings left, all
+  "split the specification" hints on Phase 5/6 records. A signed
+  revalidation of `sanity:global` was sent to the hosted preview (200).
 
 ### 2026-11-05 (Phase 7 step 10, export)
 

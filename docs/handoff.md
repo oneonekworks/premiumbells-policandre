@@ -202,8 +202,8 @@ is cheaper than continuing a long conversation, and these docs carry the state.
     widths and checked on the hosted preview. Waiting on the user:
     price-free catalogue PDFs (section off until then), the about and
     Clopotar videos on YouTube (then add the links in the Studio), English
-    copy. Close-out notes: the `legacy` field on `siteSettings` and
-    `navigation` (a Studio warning) — see the migration-status change log.
+    copy. Studio validation is clean apart from three "split the
+    specification" hints on older records.
 11. **Next: Phase 8** — final SEO, accessibility and production readiness
     (migration plan); includes `robots.txt`, sitemaps and the noindex switch
     at cutover (the user's Lighthouse SEO 66 on the preview comes from these).
