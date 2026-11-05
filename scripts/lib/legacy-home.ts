@@ -32,6 +32,8 @@ type SeedLink = { label: string; kind: "page" | "phone" | "email" | "external"; 
 type Replacement = { find: string; replace: string; reason: string };
 export interface SeedPost {
   file: string; legacyId: number; slug: string; title: string; excerpt: string;
+  /** Title of the article's YouTube video (required by the Studio). */
+  videoTitle?: string;
   source?: { text: string; url?: string };
   relatedProjects: string[]; relatedServices: string[];
   replacements: Replacement[];
@@ -125,7 +127,6 @@ function mapGlobal(context: Phase7Context): DocumentPlan[] {
       role: localeString(testimonial.role), context: localeString(testimonial.context), date: testimonial.date,
       portrait: media.image(testimonial.portrait, SEED_SOURCE, "portrait", { alt: localeString(testimonial.portraitAlt) }),
       relatedProject: ref(testimonial.relatedProject),
-      legacy: legacyOf("global", "components/landing.jsx#testimonial", SEED_SOURCE, testimonial),
     }, { issues, images: media.needs, review: testimonial.review }));
   }
   {
@@ -137,7 +138,6 @@ function mapGlobal(context: Phase7Context): DocumentPlan[] {
       // Decorative: no description.
       artwork: media.image(audio.artwork, SEED_SOURCE, "artwork"),
       durationSeconds: audio.durationSeconds, relatedProject: ref(audio.relatedProject),
-      legacy: legacyOf("global", "components/landing.jsx#audio", SEED_SOURCE, audio),
     }, { issues, images: media.needs, review: audio.review }));
   }
   return plans;
@@ -240,7 +240,7 @@ function mapBlog(context: Phase7Context): DocumentPlan[] {
     const title = post.title;
     const body = blocks.flatMap((block): Array<Record<string, unknown>> => {
       if (block._type === "block") return [block];
-      if (block._type === "video") return [block];
+      if (block._type === "video") return [{ ...block, title: localeString(post.videoTitle ?? `${title} – video`) }];
       if (block._type === "droppedVideo") {
         review.push(`Video ${decodeURIComponent(block.src)} not imported until it is on YouTube (decision 2).`);
         return [];

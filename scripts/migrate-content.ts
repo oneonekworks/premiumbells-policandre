@@ -320,7 +320,10 @@ async function processDocument(
   if (!write) return result;
   try {
     await client.createOrReplace(
-      { ...document, _id: draftId, legacy: { ...(document.legacy as object), migratedAt: new Date().toISOString() } },
+      // Only types with a `legacy` field carry provenance (projects, services, catalogue, blog).
+      document.legacy
+        ? { ...document, _id: draftId, legacy: { ...(document.legacy as object), migratedAt: new Date().toISOString() } }
+        : { ...document, _id: draftId },
       { visibility: "sync" },
     );
     return { ...result, status: result.status === "update" ? "updated" : "created" };

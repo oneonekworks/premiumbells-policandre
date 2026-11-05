@@ -107,7 +107,8 @@ sessions are in [the session handoff](handoff.md). In short:
     published with the user's approval; step 5 (homepage) and step 6 (blog)
     done 2026-11-05 with test documents; step 7 (importer, dry runs clean)
     done 2026-11-05; step 8 (media dry run) done 2026-11-05; step 9 started: export
-    and test documents deleted, assets uploaded 2026-11-05; next: drafts.
+    and test documents deleted, assets uploaded and 7 drafts written 2026-11-05; next: rewrite 5 drafts
+    after the importer fix (Studio warnings), then step 10.
 
 ## Remaining prototype acceptance inputs
 
@@ -150,6 +151,26 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-05 (Phase 7 step 9, drafts)
+
+- With the user's go-ahead: `migrate-content --collection global`, `home`,
+  `blog` with `--write`: 7 drafts created (author, testimonial, audio,
+  homePage, 3 posts). `verify-migration` 7/7 match (blog block counts and
+  image order); `verify-no-prices` 0 errors.
+- `sanity documents validate` found, in the new drafts:
+  1. `legacy` on person, testimonial, audioFeature and homePage, which have
+     no such field (warning). Cause: the write step added `legacy` to every
+     document. Fixed: only documents that carry provenance get it, and the
+     testimonial and audio no longer set it. (siteSettings and navigation,
+     published in step 4, have the same warning; left for close-out.)
+  2. „Referenced document must be published” on homePage and the 3 posts:
+     they point at the author, testimonial and audio drafts. Clears when
+     those are published first in step 10.
+  3. The Putna video had no title (warning). The seed now gives it one,
+     from the YouTube title; other videos default to „<title> – video”.
+- After the fix the dry run plans 5 updates (author, testimonial, audio,
+  homePage, Putna) and 2 unchanged posts.
 
 ### 2026-11-05 (Phase 7 step 9, assets)
 
