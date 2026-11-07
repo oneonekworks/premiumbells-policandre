@@ -1,0 +1,343 @@
+{
+  "_note": "All homepage copy for v5.10, Romanian. [brackets] = placeholder to fill from the CMS. Image keys refer to reference/assets/.",
+  "header": {
+    "brand": "Premium Bells",
+    "nav": [
+      "Servicii",
+      "Lucrările noastre",
+      "Blog"
+    ],
+    "lang": "RO / EN",
+    "phone": "+40 722 790 776"
+  },
+  "hero": {
+    "announcement": {
+      "badge": "Nou",
+      "text": "Pagina Iconostase →",
+      "href": "/servicii/iconostase",
+      "optional": true
+    },
+    "headline": [
+      {
+        "word": "Policandre",
+        "href": "/servicii/policandre"
+      },
+      {
+        "text": ", "
+      },
+      {
+        "word": "clopote",
+        "href": "/servicii/clopote"
+      },
+      {
+        "text": " și "
+      },
+      {
+        "word": "iconostase",
+        "href": "/servicii/iconostase"
+      }
+    ],
+    "claim": "Confecționate de către ortodocși pentru ortodocși",
+    "buttons": [
+      {
+        "label": "Vezi lucrările",
+        "href": "/lucrarile-noastre",
+        "variant": "primary"
+      },
+      {
+        "label": "Cereți o ofertă",
+        "href": "#s7",
+        "variant": "secondary"
+      }
+    ],
+    "figures": [
+      {
+        "value": 60,
+        "label": "lucrări"
+      },
+      {
+        "value": 3,
+        "label": "țări"
+      },
+      {
+        "value": 12,
+        "label": "turnătorii"
+      }
+    ],
+    "slices": [
+      {
+        "name": "Policandre",
+        "line": "1–7 nivele · turnate masiv, lăcuite sau aurite",
+        "cta": "Vedeți policandrele →",
+        "image": "hero-policandre.jpg",
+        "alt": "Policandru turnat, glob cizelat și lumânări"
+      },
+      {
+        "name": "Clopote",
+        "line": "Până la 16 tone · cu jug sau fără balans",
+        "cta": "Vedeți clopotele →",
+        "image": "hero-clopote.jpg",
+        "alt": "Clopot cu jug în turnătorie, inscripție și icoane în relief"
+      },
+      {
+        "name": "Iconostase",
+        "line": "Marmură, lemn cu aur, bronz",
+        "cta": "Vedeți iconostasele →",
+        "image": "hero-iconostase.jpg",
+        "alt": "Iconostas sculptat din lemn cu aur"
+      }
+    ],
+    "pause": {
+      "pause": "Opriți derularea automată",
+      "play": "Porniți derularea automată"
+    }
+  },
+  "services": {
+    "title": "Serviciile noastre",
+    "bands": [
+      {
+        "craft": "Policandre",
+        "facts": [
+          "**Moscova și Iaroslavl**: turnate masiv, clasa premium",
+          "Stil clasic **„brad”** și **„horă”**",
+          "**Grecia**: stil bizantin, des solicitat în România"
+        ],
+        "cards": [
+          {
+            "name": "Policandre",
+            "hint": "Turnate masiv, clasa premium",
+            "image": "svc-policandre.jpg",
+            "cols": 4
+          },
+          {
+            "name": "Proiecte la comandă",
+            "hint": "Policandre la comandă",
+            "image": "svc-proiecte-desen.jpg",
+            "cols": 3
+          },
+          {
+            "name": "Recondiționare",
+            "hint": "Policandre și clopote",
+            "image": "svc-reconditionare.jpg",
+            "cols": 3
+          }
+        ]
+      },
+      {
+        "craft": "Clopote",
+        "facts": [
+          "Cu jug sau **fără balans**",
+          "Până la **16 tone**"
+        ],
+        "cards": [
+          {
+            "name": "Clopote cu jug",
+            "hint": "Până la 16 tone",
+            "image": "svc-clopote-cu-jug.jpg",
+            "cols": 3
+          },
+          {
+            "name": "Clopote fără balans",
+            "hint": "Trase de sfoară",
+            "image": "svc-clopote-fara-balans.jpg",
+            "cols": 3
+          },
+          {
+            "name": "Clopotar electronic",
+            "hint": "Pentru clopote fixe",
+            "image": "svc-clopotar-electronic.jpg",
+            "cols": 2
+          },
+          {
+            "name": "Automatizări",
+            "hint": "Pentru clopote cu balans",
+            "image": "svc-automatizari.jpg",
+            "cols": 2
+          }
+        ]
+      },
+      {
+        "craft": "Iconostase și uși",
+        "facts": [
+          "**Marmură**, **lemn cu aur**, **bronz**"
+        ],
+        "cards": [
+          {
+            "name": "Iconostase",
+            "hint": "Marmură, lemn cu aur, bronz",
+            "image": "svc-iconostase.jpg",
+            "cols": 5
+          },
+          {
+            "name": "Uși",
+            "hint": "Cupru, bronz, stejar",
+            "image": "svc-usi.jpg",
+            "cols": 5
+          }
+        ]
+      }
+    ],
+    "catalogues": {
+      "title": "Cataloage",
+      "items": [
+        {
+          "title": "Policandre Clasa Premium",
+          "read": "Citiți online →",
+          "download": "Descărcați Policandre Clasa Premium (PDF, [mărime])",
+          "cover": "catalog-policandre-cover.jpg"
+        },
+        {
+          "title": "Clopote Premium",
+          "read": "Citiți online →",
+          "download": "Descărcați Clopote Premium (PDF, [mărime])",
+          "cover": "catalog-clopote-cover.jpg"
+        }
+      ]
+    }
+  },
+  "works": {
+    "title": "Lucrările noastre",
+    "chips": [
+      [
+        "Toate",
+        60
+      ],
+      [
+        "Policandre",
+        11
+      ],
+      [
+        "Clopote",
+        39
+      ],
+      [
+        "Recondiționări",
+        7
+      ],
+      [
+        "Automatizări",
+        2
+      ],
+      [
+        "Uși",
+        1
+      ]
+    ],
+    "mapTile": {
+      "title": "60 lucrări în 3 țări",
+      "link": "Deschideți harta →"
+    },
+    "button": "Toate cele 60 de lucrări"
+  },
+  "about": {
+    "title": "Despre noi",
+    "lead": "S.C. Premium Bells SRL este compania ce reprezintă cele mai mari și mai cotate turnătorii de clopote din lumea ortodoxă — din **Iaroslavl** și **Kamensk-Uralsky**, dar și compania **Belltron** din Italia, astfel promovând:",
+    "points": [
+      {
+        "key": "16 tone",
+        "text": "cele mai tradiționale clopote, până la 16 tone,"
+      },
+      {
+        "key": "Athos",
+        "text": "clopote fără balans, trase de sfoară, asemeni tradiției de pe Sfântul Munte Athos,"
+      },
+      {
+        "key": "Balans",
+        "text": "dar și stilul occidental prin balansare, complexitate ornamentală tradițională și icoane canonice ortodoxe."
+      }
+    ],
+    "video": {
+      "title": "În turnătorie",
+      "meta": "[locul] · [durata]",
+      "poster": "about-foundry-video-poster.jpg",
+      "youtubeId": "[din CMS]"
+    },
+    "director": {
+      "image": "about-director-ringing.jpg",
+      "alt": "Denis Latisev trăgând de funiile clopotelor",
+      "quote": "„Cu fiască smerenie, am primit binecuvântare de la IPS Pimen, Arhiepiscopul Sucevei și Rădăuților — pentru importul și promovarea artei clopotelor în parohiile și mănăstirile României.”",
+      "quoteFull": "Cu fiască smerenie, am primit binecuvântare de la IPS Pimen, Arhiepiscopul Sucevei și Rădăuților — pentru importul și promovarea artei clopotelor în parohiile și mănăstirile României, precum și oriunde va fi nevoie, în urma contribuției, proiectării și ajustării a 13 clopote noi în masă de 11 tone, cel mai mare fiind 5 200 kg, turnate pentru ctitoria lui Ștefan cel Mare — Mănăstirea Putna — în orașul Iaroslavl în 2016, sfințite pe 10 iulie 2016.",
+      "factLine": "13 clopote, 11 tone, turnate la Iaroslavl pentru Mănăstirea Putna · sfințite pe 10 iulie 2016",
+      "name": "Denis Latisev",
+      "role": "Director, S.C. Premium Bells SRL",
+      "_approval": "shortened quote needs his approval"
+    }
+  },
+  "listen": {
+    "title": "Dăngăt pascal",
+    "meta": "Ascultați · [locul și clopotele]",
+    "play": "Ascultă Dăngăt pascal",
+    "time": "0:00 / [durata]",
+    "link": "Seturi de clopote după note →"
+  },
+  "journal": {
+    "title": "Din jurnal",
+    "titleWithTestimonial": "Mărturie și jurnal",
+    "all": "Toate articolele",
+    "more": "Citiți articolul →",
+    "posts": [
+      {
+        "type": "Articol",
+        "date": "17 feb. 2023",
+        "readingTime": "6 min de citit",
+        "title": "De la clopotul Buga al lui Ștefan cel Mare la noile clopote ale Mănăstirii Putna",
+        "excerpt": "Sfântul Ștefan cel Mare a avut grijă, printre altele, să înzestreze ctitoria sa cea iubită cu mai multe clopote, dintre care două au ajuns până la noi.",
+        "image": "post-putna.jpg"
+      },
+      {
+        "type": "Raport",
+        "date": "18 feb. 2023",
+        "readingTime": "5 min de citit",
+        "title": "Raport 18 ianuarie 2023",
+        "excerpt": "La o întâlnire cu PS Nicodim, Episcopul Severinului și Strehaiei, am discutat despre ușile de intrare ale Catedralei Învierea Domnului din Drobeta-Turnu Severin.",
+        "image": "post-raport-usi.jpg"
+      },
+      {
+        "type": "Articol",
+        "date": "18 feb. 2023",
+        "readingTime": "5 min de citit",
+        "title": "Clopotar electronic pentru clopote fixe — mai performant",
+        "excerpt": "Noul sistem de ciocane pentru clopotele ortodoxe a fost creat de Belltron pentru piața bisericească ortodoxă, în continuă creștere în Europa de Est.",
+        "image": "post-belltron.jpg"
+      }
+    ]
+  },
+  "footer": {
+    "offerTitle": "Cereți o ofertă",
+    "offerText": "Spuneți-ne despre biserica dumneavoastră. Vă răspundem cu un proiect și o ofertă.",
+    "call": "Sunați: +40 722 790 776",
+    "email": "sau scrieți-ne: [email din CMS]",
+    "partners": "Colaborează cu noi →",
+    "social": [
+      "Facebook",
+      "Instagram"
+    ],
+    "columns": {
+      "Servicii": [
+        "Policandre",
+        "Clopote",
+        "Iconostase",
+        "Toate serviciile"
+      ],
+      "Lucrări": [
+        "Lucrări",
+        "Harta",
+        "Blog"
+      ]
+    },
+    "legal": "S.C. Premium Bells SRL · CUI 36422758 · Reg. Com. J40/10836/12.08.2016 · [adresa] · © 2026"
+  },
+  "mobileBar": {
+    "offer": "Cereți o ofertă",
+    "call": "Sunați"
+  },
+  "rail": [
+    "Policandre, clopote, iconostase",
+    "Serviciile noastre",
+    "Lucrările noastre",
+    "Despre noi",
+    "Ascultați",
+    "Din jurnal",
+    "Cereți o ofertă"
+  ]
+}

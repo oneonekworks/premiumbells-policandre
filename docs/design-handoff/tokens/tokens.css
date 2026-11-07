@@ -1,0 +1,242 @@
+/* Premium Bells · design tokens · v4 "Patina" palette + v5.10 homepage additions · Tailwind CSS v4
+   Final source of truth. Where earlier versions differ, these values win.
+   Contrast ratios (WCAG 2.x) are noted on every colour used for text. */
+
+@import "tailwindcss";
+
+@theme {
+  /* ---------- Colour · light ground ---------- */
+  --color-ground: #f7f6f2;            /* page background */
+  --color-surface: #ffffff;           /* cards, panels, table */
+  --color-sunk: #eef1ef;              /* table stripes, image placeholders */
+  --color-hairline: rgb(22 32 31 / 0.10); /* 1px borders, dividers */
+  --color-ink: #16201f;               /* text · 15.41 on ground · 16.66 on surface · 14.23 on tint */
+  --color-ink-soft: #56605e;          /* meta, hints · 6.01 ground · 6.50 surface · 5.55 tint */
+
+  /* ---------- Colour · Patina (brand) ---------- */
+  --color-teal-tint: #e6efed;         /* hover / active backgrounds only (nav, chips, menu rows) */
+  --color-teal-700: #0f6b63;          /* links, active menu word, icons · 5.88 ground · 6.36 surface · 5.43 tint */
+  --color-teal-900: #0e3a36;          /* primary button, phone pill, active chip · white text 12.52 · as text on tint 10.69 */
+  --color-teal-950: #0b2523;          /* dark areas, max 3 per page · v5.10 homepage uses ONE: the footer (offer on top) */
+  --color-on-dark: #eef3f1;           /* text on teal-950 · 14.37 */
+  --color-on-dark-soft: #a9bdb8;      /* meta on teal-950 · 8.18 */
+  --color-chip-count-on: #b9d0cb;     /* count inside active chip · 7.72 on teal-900 */
+
+  /* ---------- Colour · gold (never text, never decoration) ---------- */
+  --color-focus: #9a783e;             /* 3px focus ring on light · 3.79 ground · 4.09 surface */
+  --color-focus-on-dark: #c9a467;     /* focus ring on teal-950 / lightbox · 6.90 on teal-950 */
+  --color-ornament: #b8955a;          /* the one bell ornament (footer) · 5.74 on teal-950 */
+
+  /* ---------- Colour · lightbox & zoom (warm dark, unchanged from v2) ---------- */
+  --color-lightbox: #121110;
+  --color-lightbox-text: #efe8da;     /* 15.5 on lightbox */
+  --color-lightbox-soft: #a89f90;     /* 7.2 on lightbox */
+  --color-photo-veil: rgb(10 18 17 / 0.34); /* legacy flat veil; v5 uses the bottom gradient recipe .photo-gradient instead */
+
+  /* ---------- Fonts ---------- */
+  --font-display: "Cormorant Garamond", Garamond, "Times New Roman", serif; /* 400 only; never below 24px */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* ---------- Type scale (desktop value; mobile in comment / via md: variants) ---------- */
+  --text-hero: clamp(4rem, 10.6vw, 9.5rem);          /* 152 desktop · 64 mobile */
+  --text-hero--line-height: 0.88;
+  --text-hero--letter-spacing: -0.02em;
+  --text-hero--font-weight: 400;
+
+  --text-page: clamp(4rem, 13vw, 11.5rem);           /* 184 desktop · 64 mobile (service, project titles) */
+  --text-page--line-height: 0.84;
+  --text-page--letter-spacing: -0.02em;
+  --text-page--font-weight: 400;
+
+  --text-section: clamp(2.75rem, 6vw, 5.5rem);       /* 88 desktop · 44–52 mobile */
+  --text-section--line-height: 0.92;
+  --text-section--letter-spacing: -0.02em;
+  --text-section--font-weight: 400;
+
+  --text-statement: clamp(2.25rem, 4.2vw, 3.75rem);  /* 60 desktop · 36 mobile */
+  --text-statement--line-height: 1.06;
+  --text-statement--letter-spacing: -0.015em;
+
+  --text-figure: clamp(2.5rem, 6vw, 6rem);           /* counters 96 desktop · 40–64 mobile */
+  --text-figure--line-height: 0.8;
+
+  --text-card-lg: 1.375rem;                          /* 22 · Inter 600 · mobile 20 */
+  --text-card-lg--line-height: 1.2;
+  --text-card-lg--letter-spacing: -0.01em;
+  --text-card-lg--font-weight: 600;
+
+  --text-card: 1.0625rem;                            /* 17–18 · Inter 600 · mobile 15–16 */
+  --text-card--line-height: 1.25;
+  --text-card--letter-spacing: -0.01em;
+  --text-card--font-weight: 600;
+
+  --text-lead: 1.125rem;                             /* 18 · mobile 17 */
+  --text-lead--line-height: 1.55;
+  --text-body: 0.9375rem;                            /* 15 */
+  --text-body--line-height: 1.6;
+  --text-article: 1.0625rem;                         /* 17 · articles, 68ch max */
+  --text-article--line-height: 1.7;
+  --text-ui: 0.9375rem;                              /* 15 · nav, buttons (500/600) */
+  --text-ui--line-height: 1;
+  --text-chip: 0.875rem;                             /* 14 · 500 */
+  --text-caption: 0.8125rem;                         /* 13 */
+  --text-caption--line-height: 1.5;
+  --text-micro: 0.75rem;                             /* 12 · wall captions on phones */
+  --text-micro--line-height: 1.35;
+
+  /* ---------- Spacing (4px base) ---------- */
+  --spacing: 0.25rem;
+  --spacing-card-inset: 0.5rem;      /* 8 · padding around the image inside a card */
+  --spacing-gap-wall: 0.5rem;        /* 8 */
+  --spacing-gap-grid: 1.25rem;       /* 20 · bento, card grids (12 on phones) */
+  --spacing-gap-pair: 1.5rem;        /* 24 */
+  --spacing-gutter: 3.5rem;          /* 56 page side padding desktop · 20 phones · 32 tablet */
+  --spacing-section: 10rem;          /* 160 between sections desktop · 72 phones · 120 tablet */
+  --spacing-header-offset: 1rem;     /* 16 · floating pill distance from top (12 phones) */
+
+  /* ---------- Breakpoints & containers ---------- */
+  --breakpoint-sm: 30rem;            /* 480 */
+  --breakpoint-md: 48rem;            /* 768 · tablet */
+  --breakpoint-lg: 64rem;            /* 1024 · desktop layouts, mega menu */
+  --breakpoint-xl: 75rem;            /* 1200 · 6-column wall */
+  --breakpoint-2xl: 90rem;           /* 1440 · design width */
+  --container-page: 90rem;           /* 1440 max, content 1328 inside gutters */
+  --container-header: 70rem;         /* 1120 pill + mega menu */
+  --container-text: 42.5rem;         /* 680 · reading measure */
+
+  /* ---------- Radius ---------- */
+  --radius-tile: 0.75rem;            /* 12 · wall tiles, small thumbs */
+  --radius-caption: 0.625rem;        /* 10 · glass captions, menu thumbs */
+  --radius-image: 1rem;              /* 16 · image inside a card */
+  --radius-card: 1.25rem;            /* 20 · cards */
+  --radius-menu: 1.5rem;             /* 24 · mega menu panel, mobile cards */
+  --radius-panel: 1.75rem;           /* 28 · large cards, crafts panels, footer, immersive section */
+  --radius-pill: 999px;              /* buttons, chips, header pill, bottom bar */
+  /* arch mask: border-radius: 9999px 9999px 0 0 (semicircle top at any width) — see .arch below */
+
+  /* ---------- Shadow (teal-ink tinted) ---------- */
+  --shadow-e0: none;
+  --shadow-e1: 0 1px 2px rgb(11 37 35 / 0.06), 0 4px 12px rgb(11 37 35 / 0.06);
+  --shadow-e2: 0 2px 4px rgb(11 37 35 / 0.08), 0 16px 32px rgb(11 37 35 / 0.08);
+  --shadow-e3: 0 24px 64px rgb(11 37 35 / 0.14);
+
+  /* ---------- Motion ---------- */
+  --ease-light: cubic-bezier(0.22, 0.61, 0.36, 1);  /* the only curve; no spring, no overshoot */
+  --duration-press: 120ms;
+  --duration-out: 160ms;
+  --duration-line: 180ms;            /* underline, tint, chip fill */
+  --duration-fade: 240ms;            /* captions, menus, header, card lift */
+  --duration-close: 280ms;
+  --duration-open: 320ms;            /* lightbox, grid reflow, header hide */
+  --duration-page: 480ms;            /* tile-to-page, hub-to-hero */
+  --duration-text: 700ms;
+  --duration-reveal: 900ms;
+  --duration-shimmer: 1200ms;
+  --duration-counter: 1200ms;
+  --duration-kenburns: 24s;
+  --stagger-grid: 60ms;              /* max 6 per row, once */
+  --stagger-menu: 30ms;
+  --stagger-text: 100ms;
+
+  /* ---------- v5.10 homepage additions ---------- */
+  --text-hero-line: clamp(3.5rem, 6.1vw, 5.5rem);    /* 88 desktop, ONE line "Policandre, clopote și iconostase" · mobile 42 on 2 lines */
+  --text-hero-line--line-height: 0.9;
+  --text-hero-line--letter-spacing: -0.02em;
+  --text-claim: 1.75rem;                              /* 28 Cormorant italic claim · mobile 22 */
+  --text-claim--line-height: 1.2;
+  --text-slice-name: 3.5rem;                          /* 56 Cormorant, open triptych slice · mobile 48 */
+  --text-craft: 2.25rem;                              /* 36 Cormorant, services band heading · mobile 32 */
+  --text-craft--line-height: 0.95;
+  --text-post-title: 1.875rem;                        /* 30 Cormorant, journal titles (clamp 3 lines) · mobile 26 */
+  --text-post-title--line-height: 1.1;
+  --text-quote: 1.875rem;                             /* 30 Cormorant, director quote · mobile 25 */
+  --text-quote--line-height: 1.22;
+  --text-key: 1.75rem;                                /* 28 Cormorant keys in the Despre noi list (16 tone · Athos · Balans) · mobile 24 */
+
+  --spacing-hero-to-services: 4rem;  /* 64 · keeps "Serviciile noastre" peeking above a 900px fold */
+  --spacing-gap-services: 1rem;      /* 16 · services bento (wall stays 8) */
+  --spacing-triptych-seam: 0.375rem; /* 6 · gap between slices */
+
+  --duration-slice: 480ms;           /* triptych open/close (flex-grow) */
+  --duration-slice-text: 240ms;      /* slice text fade, delay 120ms in / 0 out */
+  --duration-rotate: 6s;             /* auto-rotate per slice; first step after 1.2s */
+  --duration-rotate-first: 1.2s;
+  --duration-photo-zoom: 320ms;      /* service card photo 1.05 */
+}
+
+/* ---------- Recipes that are not single tokens ---------- */
+@layer components {
+  .glass-light {                      /* header pill, mega menu, mobile menu, wall captions, bottom bar */
+    background: rgb(255 255 255 / 0.72);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    backdrop-filter: blur(16px) saturate(1.2);
+    border: 1px solid rgb(255 255 255 / 0.9);
+    box-shadow: var(--shadow-e2);     /* menus: var(--shadow-e3); captions: none */
+  }
+  .glass-dark {                       /* lightbox & zoom controls only */
+    background: rgb(26 22 18 / 0.58);
+    -webkit-backdrop-filter: blur(20px) saturate(1.15);
+    backdrop-filter: blur(20px) saturate(1.15);
+    border: 1px solid rgb(220 198 156 / 0.26);
+    box-shadow: inset 0 1px 0 rgb(220 198 156 / 0.18);
+  }
+  .lightbox-backdrop {
+    background: rgb(18 17 16 / 0.72);
+    -webkit-backdrop-filter: blur(24px) saturate(1.1);
+    backdrop-filter: blur(24px) saturate(1.1);
+    box-shadow: inset 0 0 280px rgb(0 0 0 / 0.7);   /* vignette */
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-light { background: rgb(255 255 255 / 0.96); }
+    .glass-dark { background: rgb(26 22 18 / 0.94); }
+    .lightbox-backdrop { background: rgb(18 17 16 / 0.95); }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .glass-light { background: rgb(255 255 255 / 0.96); backdrop-filter: none; }
+    .glass-dark { background: rgb(26 22 18 / 0.94); backdrop-filter: none; }
+  }
+  .grain::after {                     /* teal-950 areas and lightbox only */
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: url("/img/grain-256.png");   /* 256px monochrome noise, ~11% alpha baked in */
+    opacity: 0.3;                            /* ≈ 3% visible grain */
+  }
+  .vignette::before {                 /* immersive teal-950 section; lightbox uses 280px / .7 */
+    content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+    box-shadow: inset 0 0 200px rgb(0 0 0 / 0.55);
+  }
+  .arch { border-radius: 9999px 9999px 0 0; overflow: hidden; }   /* hero portrait, about photo, testimonial portrait */
+  .shimmer {                          /* gilded photos only, once per hover/focus */
+    position: absolute; top: -20%; bottom: -20%; left: -40%; width: 30%;
+    background: rgb(255 226 170 / 0.28); filter: blur(26px);
+    transform: skewX(-14deg); mix-blend-mode: screen; opacity: 0; pointer-events: none;
+  }
+
+  /* ---------- v5.10 recipes ---------- */
+  .photo-gradient {                   /* behind white text on an open triptych slice — never a full veil */
+    position: absolute; left: 0; right: 0; bottom: 0; height: 46%;     /* 62% on phones */
+    background: linear-gradient(to top, rgb(8 16 15 / 0.82) 0%, rgb(8 16 15 / 0.55) 42%, rgb(8 16 15 / 0) 100%);
+  }
+  .arch-low {                         /* wide 3:2 photo under a shallow arch (director strip) */
+    border-radius: 50% 50% 0 0 / 24% 24% 0 0; overflow: hidden;       /* = 228px/72px at 456×304 */
+  }
+  .triptych {                         /* 3 slices, 10° seams; slice: transform skewX(-10deg); inner image skewX(10deg) and
+                                         left/right -40% so the photo fills; open slice flex-grow 2 (2:1:1 = 50%) */
+    display: flex; gap: var(--spacing-triptych-seam);
+  }
+  .text-clamp-2 { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  .text-clamp-3 { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+  .focus-ring:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+  .dark .focus-ring:focus-visible { outline-color: var(--color-focus-on-dark); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+}
+
+/* Grid columns
+   wall:       6 cols ≥1200 · 4 cols 768–1199 · 2 cols <768 · square row unit clamp(150px, 16vw, 228px) · gap 8
+   services:   12 cols ≥1024, rows 264, gap 16 · 3 bands, each = 2-col heading + cards
+               (Policandre 4·3·3 · Clopote 3·3·2·2 · Iconostase și uși 5·5) · phones: heading + 2-col cards, first card spans 2
+   journal:    3 equal cols ≥1024 · stacked on phones
+   card grids: 4 cols ≥1024 · 2 cols 480–1023 · 2 compact cols on phones · gap 20 / 12
+   mega menu:  3 groups + 240px featured card, ≥1024 only */

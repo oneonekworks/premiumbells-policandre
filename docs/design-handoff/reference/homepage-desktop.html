@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Premium Bells · homepage desktop (reference v5.10)</title>
+<!-- Reference render of the Premium Bells v5.10 design (Claude Design canvas). Layout and values are the spec;
+     the markup is a mock-up, not production code. Images are placeholders/crops — real ones come from Sanity. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+:root{--bg:#f7f6f2;--surface:#ffffff;--sunk:#eef1ef;--ink:#16201f;--ink2:#56605e;--hair:rgba(22,32,31,.10);--teal7:#0f6b63;--teal9:#0e3a36;--night:#0b2523;--tint:#e6efed;--focus:#9a783e;--on:#eef3f1;--onsoft:#a9bdb8;--e1:0 1px 2px rgba(11,37,35,.06),0 4px 12px rgba(11,37,35,.06);--e2:0 2px 4px rgba(11,37,35,.08),0 16px 32px rgba(11,37,35,.08);--e3:0 24px 64px rgba(11,37,35,.14);--ease:cubic-bezier(.22,.61,.36,1)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit}
+img{display:block}
+.d{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-weight:400;line-height:.92;letter-spacing:-.02em;margin:0}
+.nS{font-size:17px;font-weight:600;letter-spacing:-.01em;line-height:1.25;margin:0}
+.s{font-size:15px;line-height:1.6;margin:0}
+.c{font-size:13px;line-height:1.5;margin:0}
+.soft{color:var(--ink2)}
+.wrap{max-width:1440px;margin:0 auto;padding:0 56px}
+.nav{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:999px;background:none;border:0;color:var(--ink);font:500 15px/1 Inter,system-ui,sans-serif;text-decoration:none;cursor:pointer;transition:background .18s}
+.nav:hover{background:var(--tint)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 26px;border-radius:999px;background:var(--teal9);color:#fff;text-decoration:none;font-size:15px;font-weight:600;transition:background .18s,filter .12s}
+.btn:hover{background:var(--night)}.btn:active{filter:brightness(.9)}
+.btn2{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 26px;border-radius:999px;background:var(--surface);color:var(--ink);text-decoration:none;font-size:15px;font-weight:600;box-shadow:var(--e1)}
+.ul{font-size:15px;font-weight:600;color:var(--teal7);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;min-height:44px;display:inline-flex;align-items:center}
+.chip{height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--hair);background:var(--surface);color:var(--ink);font:500 14px Inter,sans-serif;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.chip:hover{background:var(--tint);border-color:transparent}
+.chip-on,.chip-on:hover{background:var(--teal9);color:#fff;border-color:var(--teal9)}
+.chip em{font-style:normal;color:var(--ink2)}.chip-on em{color:#b9d0cb}
+.card{display:flex;flex-direction:column;background:var(--surface);border-radius:20px;box-shadow:var(--e1);padding:8px;text-decoration:none;color:var(--ink);transition:transform .24s var(--ease),box-shadow .24s var(--ease);min-width:0}
+.card .ph{flex:1;border-radius:16px;overflow:hidden;min-height:0}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .24s var(--ease)}
+a.card:hover,a.card:focus-visible{transform:translateY(-4px);box-shadow:var(--e2)}
+a.card:hover .ph img,a.card:focus-visible .ph img{transform:scale(1.03)}
+a.card:active{transform:translateY(-1px);box-shadow:var(--e1);transition-duration:.12s}
+.glassL{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2);border:1px solid rgba(255,255,255,.9)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glassL{background:rgba(255,255,255,.96)}}
+.dark{background:var(--night);color:var(--on);position:relative;isolation:isolate}
+.dark::after{content:'';position:absolute;inset:0;background:url(assets/grain-256.png);opacity:.3;pointer-events:none;border-radius:inherit}
+.dark .soft{color:var(--onsoft)}.dark .ul{color:var(--tint)}.dark :focus-visible{outline-color:#c9a467}
+.arch{border-radius:9999px 9999px 0 0;overflow:hidden}
+/* Triptych */
+.tri{position:absolute;top:0;bottom:0;left:-64px;right:-64px;display:flex;gap:6px;container-type:inline-size}
+.sl{position:relative;flex:1 1 0;min-width:0;overflow:hidden;transform:skewX(-10deg);transition:flex-grow .48s var(--ease);text-decoration:none;color:#fff;display:block;background:var(--night)}
+.sl.on{flex-grow:2}
+.sl .im{position:absolute;top:0;bottom:0;left:-40%;right:-40%;transform:skewX(10deg)}
+.sl .im img{width:100%;height:100%;object-fit:cover;filter:brightness(.78);transition:filter .48s var(--ease)}
+.sl.on .im img{filter:none}
+.sl .vl{position:absolute;left:0;right:0;bottom:0;height:46%;background:linear-gradient(to top,rgba(8,16,15,.82) 0%,rgba(8,16,15,.55) 42%,rgba(8,16,15,0) 100%);opacity:0;transition:opacity .24s var(--ease)}
+.sl.on .vl{opacity:1}
+.sl .tx{position:absolute;left:96px;right:110px;bottom:44px;transform:skewX(10deg);opacity:0;transition:opacity .24s var(--ease) .12s;text-shadow:0 1px 12px rgba(8,16,15,.35)}
+.sl.s0 .tx{left:176px}.sl.s2 .tx{right:96px}
+.sl.on .tx{opacity:1}
+.sl .lb{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) skewX(10deg);padding:10px 16px;border-radius:999px;color:var(--ink);font-size:14px;font-weight:600;white-space:nowrap;transition:opacity .24s var(--ease)}
+.sl.on .lb{opacity:0}
+.sl.s0 .lb{left:auto;right:28px;transform:translateY(-50%) skewX(10deg)}.sl.s2 .lb{left:28px;transform:translateY(-50%) skewX(10deg)}
+@container (max-width: 640px){.sl .lb{display:none}}
+.figs{display:flex;gap:32px;margin-top:32px;padding-top:20px;border-top:1px solid var(--hair);max-width:460px}.figs p{margin:0;font-size:13px;color:var(--ink2)}.figs b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-size:40px;font-weight:400;line-height:.9;color:var(--ink);margin-bottom:6px}
+.sl:focus-visible{outline:3px solid var(--focus);outline-offset:-6px}
+.w{color:inherit;text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:3px;text-underline-offset:12px;transition:text-decoration-color .18s var(--ease)}
+.w:hover,.w.on{text-decoration-color:var(--teal7)}
+.w:focus-visible{outline:3px solid var(--focus);outline-offset:4px;border-radius:6px}
+.fig{display:inline-flex;align-items:baseline;gap:6px;height:44px;padding:0 16px;border-radius:999px;color:var(--ink);font-size:13px}
+.fig b{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400}
+.rail{position:absolute;right:20px;top:1040px;display:flex;flex-direction:column;gap:2px;z-index:20}
+.rail a{width:28px;height:28px;display:flex;align-items:center;justify-content:center;position:relative;text-decoration:none}
+.rail a i{width:8px;height:8px;border-radius:50%;background:rgba(22,32,31,.25);transition:background .18s,transform .18s}
+.rail a.on i{background:var(--teal7);transform:scale(1.25)}
+.rail a span{position:absolute;right:34px;white-space:nowrap;font-size:12px;font-weight:600;padding:6px 10px;border-radius:999px;background:var(--surface);box-shadow:var(--e1);opacity:0;transition:opacity .18s;pointer-events:none}
+.rail a:hover span,.rail a:focus-visible span{opacity:1}
+.wall{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:clamp(150px,16vw,228px);gap:8px}
+.t{position:relative;overflow:hidden;border-radius:12px;background:var(--sunk);display:block;text-decoration:none;color:var(--ink)}
+.t img{width:100%;height:100%;object-fit:cover;transition:transform .24s var(--ease)}
+.t:hover img{transform:scale(1.03)}
+.cap{position:absolute;left:8px;right:8px;bottom:8px;padding:10px 12px;border-radius:10px;opacity:0;transition:opacity .24s var(--ease)}
+.t:hover .cap,.t:focus-visible .cap{opacity:1}
+.cap b{display:block;font-size:14px;font-weight:600}.cap span{display:block;font-size:12px}
+.wave{display:flex;align-items:center;gap:2px;height:56px;flex:1;overflow:hidden}
+.wave span{display:block;width:2px;flex:none;border-radius:1px;background:rgba(230,239,237,.4)}
+.fl{font-size:15px;color:var(--on);text-decoration:none;display:flex;align-items:center;min-height:40px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+
+.nou{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 16px 0 6px;border-radius:999px;background:var(--surface);box-shadow:var(--e1);text-decoration:none;font-size:14px;font-weight:500;color:var(--ink);transition:background .18s}
+.nou:hover{background:var(--tint)}
+.nou span{height:32px;padding:0 12px;border-radius:999px;background:var(--tint);color:var(--teal9);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;display:inline-flex;align-items:center}
+.nou:hover span{background:var(--surface)}
+.dl{display:flex;align-items:center;gap:12px;min-height:60px;padding:10px 14px 10px 10px;border-radius:14px;background:var(--bg);text-decoration:none;color:var(--ink);transition:background .18s}
+.dl:hover{background:var(--tint)}
+.dl i{width:40px;height:40px;flex:none;border-radius:999px;background:var(--teal9);color:#fff;display:flex;align-items:center;justify-content:center}
+.dl b{display:block;font-size:15px;font-weight:600;line-height:1.3}.dl small{display:block;font-size:12px;color:var(--ink2);margin-top:2px}
+.cov{position:absolute;display:block;border-radius:6px;overflow:hidden;box-shadow:var(--e3);transition:transform .24s var(--ease)}
+.cov img{width:100%;height:100%;object-fit:cover}
+.cov:hover{transform:translateY(-4px) rotate(0deg) !important}
+.orig{list-style:none;margin:8px 0 0;padding:0;border-top:1px solid var(--hair)}
+.orig li{display:grid;grid-template-columns:180px minmax(0,1fr);gap:16px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--hair)}
+.orig b{font-family:'Cormorant Garamond',Garamond,serif;font-size:26px;font-weight:400;line-height:1.1}.orig span{font-size:13px;color:var(--ink2)}
+.vid{position:relative;display:block;border-radius:20px;overflow:hidden;box-shadow:var(--e1);text-decoration:none;color:var(--ink);aspect-ratio:16/9}
+.vid img{width:100%;height:100%;object-fit:cover;transition:transform .24s var(--ease)}
+.vid:hover img{transform:scale(1.03)}
+.vid .pl{position:absolute;left:50%;top:50%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:999px;display:flex;align-items:center;justify-content:center}
+.vid .vc{position:absolute;left:16px;bottom:16px;padding:10px 14px;border-radius:12px;font-size:13px}
+.vid .vc b{display:block;font-size:14px;font-weight:600}
+.fact{display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:999px;background:var(--bg);font-size:13px;font-weight:600}
+.meta{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--ink2);margin:0}
+.meta .tp{height:24px;padding:0 10px;border-radius:999px;background:var(--tint);color:var(--teal9);font-weight:600;font-size:12px;display:inline-flex;align-items:center}
+.soc{width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:var(--on);background:rgba(238,243,241,.08);transition:background .18s}
+.soc:hover{background:rgba(238,243,241,.16)}
+.band{display:flex;flex-direction:column;align-items:flex-start}
+.band h1{white-space:nowrap}
+.band .row2{align-self:stretch;display:flex;justify-content:space-between;align-items:center;gap:32px}
+.band .acts{display:flex;align-items:center;gap:28px}
+.figs.in{margin:0;padding:0 0 0 28px;border-top:0;border-left:1px solid var(--hair);gap:24px;max-width:none}
+.figs.in b{font-size:34px}
+.wl span{background:rgba(15,107,99,.26)}
+.wl span.pl{background:var(--teal7)}
+.post{display:block;text-decoration:none;color:var(--ink)}
+.post .pi{display:block;border-radius:16px;overflow:hidden;background:var(--sunk)}
+.post .pi img{width:100%;height:100%;object-fit:cover;transition:transform .24s var(--ease)}
+.post:hover .pi img,.post:focus-visible .pi img{transform:scale(1.03)}
+.post .pt{font-family:'Cormorant Garamond',Garamond,serif;font-weight:400;letter-spacing:-.01em;line-height:1.08;margin:12px 0 0;text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:6px;transition:text-decoration-color .18s var(--ease)}
+.post:hover .pt,.post:focus-visible .pt{text-decoration-color:var(--teal7)}
+.post .ex{color:var(--ink2);margin:10px 0 0;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+.post .more{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-size:14px;font-weight:600;color:var(--teal7)}
+.post .more i{font-style:normal;display:inline-block;transition:transform .18s var(--ease)}
+.post:hover .more i,.post:focus-visible .more i{transform:translateX(4px)}
+.post:focus-visible{outline-offset:8px;border-radius:16px}
+.by{display:flex;align-items:center;gap:10px;font-size:13px}.by img{width:36px;height:36px;border-radius:999px;object-fit:cover;object-position:72% 8%}
+@media (prefers-reduced-motion: reduce){.post .pi img,.post .more i{transition:none}.post:hover .pi img,.post:hover .more i{transform:none}}
+.post3{display:flex;flex-direction:column}
+.post3 .mt{font-size:13px;color:var(--ink2);margin:18px 0 0}.post3 .mt b{color:var(--teal7);font-weight:600}
+.post3 .pt{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;min-height:3.3em;line-height:1.1}
+.post3 .ex{-webkit-line-clamp:3;font-size:15px;line-height:1.6}
+.post3 .more{margin-top:auto;padding-top:10px}
+.lead b{font-weight:600}
+.prom{list-style:none;margin:0;padding:0;border-top:1px solid var(--hair)}
+.prom li{display:grid;grid-template-columns:112px minmax(0,1fr);gap:20px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--hair)}
+.prom b{font-family:'Cormorant Garamond',Garamond,serif;font-size:28px;font-weight:400;line-height:1;color:var(--ink)}
+.prom span{font-size:15px;line-height:1.55;color:var(--ink2)}
+.craft{display:flex;flex-direction:column;min-width:0}
+.craft-h{display:block;text-decoration:none;color:var(--ink)}
+.craft-h .ar{display:block;overflow:hidden;box-shadow:var(--e1);border-radius:9999px 9999px 0 0}
+.craft-h img{width:100%;height:100%;object-fit:cover;transition:transform .24s var(--ease)}
+.craft-h:hover img,.craft-h:focus-visible img{transform:scale(1.03)}
+.craft-h .d{display:inline-block;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:8px;text-decoration-thickness:2px;transition:text-decoration-color .18s var(--ease)}
+.craft-h:hover .d,.craft-h:focus-visible .d{text-decoration-color:var(--teal7)}
+.facts{list-style:none;margin:12px 0 0;padding:0;font-size:14px;line-height:1.55;color:var(--ink2)}
+.facts b{color:var(--ink);font-weight:600}
+.svc{list-style:none;margin:16px 0 0;padding:0;border-top:1px solid var(--hair)}
+.svc li{border-bottom:1px solid var(--hair)}
+.svc a{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:14px;align-items:center;min-height:64px;padding:8px;margin:0 -8px;border-radius:12px;text-decoration:none;color:var(--ink);font-size:16px;font-weight:600;transition:background .18s}
+.svc a:hover{background:var(--tint)}
+.svc img{width:48px;height:48px;border-radius:10px;object-fit:cover}
+.svc i{font-style:normal;color:var(--teal7);transition:transform .18s var(--ease)}
+.svc a:hover i,.svc a:focus-visible i{transform:translateX(4px)}
+@media (prefers-reduced-motion: reduce){.craft-h img,.svc i{transition:none}}
+.sv{display:flex;flex-direction:column;background:var(--surface);border-radius:20px;box-shadow:var(--e1);padding:8px;text-decoration:none;color:var(--ink);min-width:0;transition:transform .24s var(--ease),box-shadow .24s var(--ease)}
+.sv .ph{flex:1;min-height:0;border-radius:14px;overflow:hidden;background:var(--sunk)}
+.sv .ph img{width:100%;height:100%;object-fit:cover;transition:transform .32s var(--ease)}
+.sv .lb2{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:12px;padding:12px 4px 4px 8px;height:64px;box-sizing:border-box}
+.sv .nm{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-size:16px;font-weight:600;line-height:1.25}
+.sv .ph{position:relative}
+.sv .ht{position:absolute;left:10px;bottom:10px;max-width:calc(100% - 20px);padding:6px 11px;border-radius:999px;font-size:12px;font-weight:600;color:var(--ink);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transform:translateY(6px);transition:opacity .24s var(--ease),transform .24s var(--ease)}
+.sv .go{margin-top:-6px;width:36px;height:36px;border-radius:999px;background:var(--tint);color:var(--teal9);display:flex;align-items:center;justify-content:center;transition:background .18s,color .18s,transform .24s var(--ease)}
+.sv:hover,.sv:focus-visible{transform:translateY(-4px) scale(1.01);box-shadow:var(--e2)}
+.sv:hover .ph img,.sv:focus-visible .ph img{transform:scale(1.05)}
+.sv:hover .ht,.sv:focus-visible .ht{opacity:1;transform:none}
+.sv:hover .go,.sv:focus-visible .go{background:var(--teal9);color:#fff;transform:translateX(2px)}
+.sv:active{transform:translateY(-1px);box-shadow:var(--e1);transition-duration:.12s}
+.gt{border-top:2px solid var(--ink);padding:16px 4px 0;display:flex;flex-direction:column;justify-content:flex-start;gap:14px;min-width:0}
+.gt ul{list-style:none;margin:0;padding:0;font-size:14px;line-height:1.5;color:var(--ink2)}.gt li+li{margin-top:6px}.gt b{color:var(--ink);font-weight:600}
+@media (hover: none){.sv .ht{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.sv,.sv .ph img,.sv .ht,.sv .go{transition:none}.sv:hover{transform:none}.sv:hover .ph img{transform:none}}
+.ct{display:grid;grid-template-columns:minmax(0,1fr) 44px;align-items:center;gap:8px;padding:8px 8px 8px 16px;border-radius:14px;background:var(--bg);transition:background .18s}
+.ct:hover{background:var(--tint)}
+.ct .rd{text-decoration:none;color:var(--ink);min-height:44px;display:flex;flex-direction:column;justify-content:center}
+.ct .rd b{font-size:15px;font-weight:600;line-height:1.3}.ct .rd small{font-size:12px;color:var(--teal7);font-weight:600;margin-top:2px}
+.ct .dlb{width:44px;height:44px;border-radius:999px;background:var(--teal9);color:#fff;display:flex;align-items:center;justify-content:center;transition:background .18s}
+.ct .dlb:hover{background:var(--night)}
+.playb{border-radius:999px;border:0;background:var(--teal9);color:#fff;display:flex;align-items:center;justify-content:center;flex:none;cursor:pointer;transition:background .18s}
+.playb:hover{background:var(--night)}
+@media (prefers-reduced-motion: reduce){.sl,.sl .im img,.sl .tx,.card,.card .ph img,.t img{transition:none}a.card:hover{transform:none}}
+@media (max-width: 900px){.band h1{white-space:normal}.band .row2,.band .acts{flex-direction:column;align-items:flex-start}.figs.in{padding:0;border-left:0}.g-stack>*{grid-column:auto !important;grid-row:auto !important}.wrap{padding:0 20px}.g-stack{grid-template-columns:minmax(0,1fr) !important}.hide-s{display:none !important}.wall{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:180px}.wall>*{grid-column:auto !important;grid-row:auto !important}}
+</style>
+</head>
+<body>
+<div style="position: relative; background: var(--bg)">
+
+  <!-- Section rail: position fixed, fades in once the hero has scrolled away (never over the triptych). Drawn here where it first appears, in section 2. -->
+  <nav class="rail hide-s" aria-label="Secțiuni">
+    <a href="#s1"><i></i><span>Policandre, clopote, iconostase</span></a>
+    <a href="#s2" class="on" aria-current="true"><i></i><span>Serviciile noastre</span></a>
+    <a href="#s3"><i></i><span>Lucrările noastre</span></a>
+    <a href="#s4"><i></i><span>Despre noi</span></a>
+    <a href="#s5"><i></i><span>Ascultați</span></a>
+    <a href="#s6"><i></i><span>Din jurnal</span></a>
+    <a href="#s7"><i></i><span>Cereți o ofertă</span></a>
+  </nav>
+  <header style="height: 88px; display: flex; align-items: center; justify-content: space-between; padding: 0 56px">
+    <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none"><img src="assets/logo-ink.png" alt="" style="height: 34px; width: auto"><span class="d" style="font-size: 26px">Premium Bells</span></a>
+    <nav aria-label="Principal" class="hide-s" style="display: flex; gap: 4px"><button class="nav" aria-expanded="false">Servicii <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button><button class="nav" aria-expanded="false">Lucrările noastre <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button><a href="#" class="nav">Blog</a></nav>
+    <div style="display: flex; align-items: center; gap: 8px"><a href="#" class="nav hide-s" style="color: var(--ink2); font-size: 13px">RO / EN</a><a href="tel:+40722790776" class="btn" style="height: 48px; padding: 0 22px">+40 722 790 776</a></div>
+  </header>
+
+  <!--HERO-->
+  <section id="s1" class="band" style="padding: 12px 56px 0">
+      <a href="#" class="nou"><span>Nou</span>Pagina Iconostase →</a>
+      <h1 class="d" style="font-size: clamp(56px, 6.1vw, 88px); line-height: .9; margin-top: 18px"><a href="#" class="w">Policandre</a>, <a href="#" class="w on">clopote</a> și <a href="#" class="w">iconostase</a></h1>
+      <div class="row2 g-stack" style="margin-top: 22px">
+        <p class="d" style="font-size: 28px; line-height: 1.2; font-style: italic">Confecționate de către ortodocși pentru ortodocși</p>
+        <div class="acts"><div style="display: flex; gap: 12px"><a href="#" class="btn">Vezi lucrările</a><a href="#" class="btn2">Cereți o ofertă</a></div><div class="figs in"><p><b>60</b>lucrări</p><p><b>3</b>țări</p><p><b>12</b>turnătorii</p></div></div>
+      </div>
+      <div style="align-self: stretch; position: relative; height: 460px; margin-top: 24px; border-radius: 28px; overflow: hidden; box-shadow: var(--e2); background: var(--bg)">
+      <div class="tri">
+        <a href="#" class="sl s0"><div class="im"><img src="assets/hero-policandre.jpg" alt="Policandru turnat, glob cizelat și lumânări"></div><div class="vl"></div><span class="lb glassL">Policandre</span><div class="tx"><p class="d" style="font-size: 56px">Policandre</p><p class="s" style="margin-top: 10px">1–7 nivele · turnate masiv, lăcuite sau aurite</p><span class="glassL" style="display: inline-flex; margin-top: 18px; height: 44px; padding: 0 18px; border-radius: 999px; align-items: center; color: var(--ink); font-size: 14px; font-weight: 600">Vedeți policandrele →</span></div></a>
+        <a href="#" class="sl s1 on"><div class="im"><img src="assets/hero-clopote.jpg" alt="Clopot cu jug în turnătorie, inscripție și icoane în relief" style="object-position: 58% 45%"></div><div class="vl"></div><span class="lb glassL">Clopote</span><div class="tx"><p class="d" style="font-size: 56px">Clopote</p><p class="s" style="margin-top: 10px">Până la 16 tone · cu jug sau fără balans</p><span class="glassL" style="display: inline-flex; margin-top: 18px; height: 44px; padding: 0 18px; border-radius: 999px; align-items: center; color: var(--ink); font-size: 14px; font-weight: 600">Vedeți clopotele →</span></div></a>
+        <a href="#" class="sl s2"><div class="im"><img src="assets/hero-iconostase.jpg" alt="Iconostas sculptat din lemn cu aur" style="object-position: 50% 35%"></div><div class="vl"></div><span class="lb glassL">Iconostase</span><div class="tx"><p class="d" style="font-size: 56px">Iconostase</p><p class="s" style="margin-top: 10px">Marmură, lemn cu aur, bronz</p><span class="glassL" style="display: inline-flex; margin-top: 18px; height: 44px; padding: 0 18px; border-radius: 999px; align-items: center; color: var(--ink); font-size: 14px; font-weight: 600">Vedeți iconostasele →</span></div></a>
+      </div>
+      <div class="glassL" style="position: absolute; right: 24px; top: 24px; z-index: 3; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 6px 0 14px; border-radius: 999px">
+        <span style="display: flex; gap: 4px" aria-hidden="true"><i style="width: 18px; height: 3px; border-radius: 2px; background: rgba(22,32,31,.25)"></i><i style="width: 18px; height: 3px; border-radius: 2px; background: var(--teal7)"></i><i style="width: 18px; height: 3px; border-radius: 2px; background: rgba(22,32,31,.25)"></i></span>
+        <button aria-label="Opriți derularea automată" style="width: 32px; height: 32px; border-radius: 999px; border: 0; background: var(--surface); color: var(--ink); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 2v8M8.5 2v8" stroke="currentColor" stroke-width="1.8"/></svg></button>
+      </div>
+      </div>
+    </section>
+  <!--/HERO-->
+
+  <section id="s2" class="wrap" style="padding-top: 64px">
+    <h2 class="d" style="font-size: clamp(48px, 5.4vw, 80px)">Serviciile noastre</h2>
+    <div class="g-stack" style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: 264px; gap: 16px; margin-top: 40px">
+      <div class="gt" style="grid-column: span 2"><h3 class="d" style="font-size: 36px">Policandre</h3><ul><li><b>Moscova și Iaroslavl</b>: turnate masiv, clasa premium</li><li>Stil clasic <b>„brad”</b> și <b>„horă”</b></li><li><b>Grecia</b>: stil bizantin, des solicitat în România</li></ul></div>
+      <div style="grid-column: span 4; display: flex"><a href="#" class="sv" style="flex: 1"><span class="ph"><img src="assets/svc-policandre.jpg" alt="Policandru în naosul bisericii din Dej"><span class="ht glassL">Turnate masiv, clasa premium</span></span><span class="lb2"><span style="min-width: 0"><span class="nm">Policandre</span></span><span class="go"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span></a></div>
+      <div style="grid-column: span 3; display: flex"><a href="#" class="sv" style="flex: 1"><span class="ph" style="background: #fff; outline: 1px solid var(--hair); outline-offset: -1px"><img src="assets/svc-proiecte-desen.jpg" alt="Desen tehnic al unui policandru pe două niveluri, vedere laterală și de sus" style="object-position: 30% 40%"><span class="ht glassL">Policandre la comandă</span></span><span class="lb2"><span style="min-width: 0"><span class="nm">Proiecte la comandă</span></span><span class="go"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span></a></div>
+      <div style="grid-column: span 3; display: flex"><a href="#" class="sv" style="flex: 1"><span class="ph"><img src="assets/svc-reconditionare.jpg" alt="Policandru recondiționat"><span class="ht glassL">Policandre și clopote</span></span><span class="lb2"><span style="min-width: 0"><span class="nm">Recondiționare</span></span><span class="go"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span></a></div>
+      <div class="gt" style="grid-column: span 2"><h3 class="d" style="font-size: 36px">Clopote</h3><ul><li>Cu jug sau <b>fără balans</b></li><li>Până la <b>16 tone</b></li></ul></div>
+      <div style="grid-column: span 3; display: flex"><a href="#" class="sv" style="flex: 1"><span class="ph"><img src="assets/svc-clopote-cu-jug.jpg" alt="Clopot cu jug, bandă lustruită și inscripție"><span class="ht glassL">Până la 16 tone</span></span><span class="lb2"><span style="min-width: 0"><span class="nm">Clopote cu jug</span></span><span class="go"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span></a></div>
+      <div style="grid-column: span 3; display: flex"><a href="#" class="sv" style="flex: 1"><span class="ph"><img src="assets/svc-clopote-fara-balans.jpg" alt="Clopote fixe sub acoperiș de lemn"><span class="ht glassL">Trase de sfoară</span></span><span class="lb2"><span style="min-width: 0"><span class="nm">Clopote fără balans</span></span><span class="go"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span></a></div>
+      <div style="grid-column: span 2; display: flex"><a href="#" class="sv" style="flex: 1"><span class="ph"><img src="assets/svc-clopotar-electronic.jpg" alt="Clopot cu mecanism electronic"><span class="ht glassL">Pentru clopote fixe</span></span><span class="lb2"><span style="min-width: 0"><span class="nm">Clopotar electronic</span></span><span class="go"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span></a></div>
+      <div style="grid-column: span 2; display: flex"><a href="#" class="sv" style="flex: 1"><span class="ph"><img src="assets/svc-automatizari.jpg" alt="Automatizare pentru clopot cu balans"><span class="ht glassL">Pentru clopote cu balans</span></span><span class="lb2"><span style="min-width: 0"><span class="nm">Automatizări</span></span><span class="go"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span></a></div>
+      <div class="gt" style="grid-column: span 2"><h3 class="d" style="font-size: 36px">Iconostase și uși</h3><ul><li><b>Marmură</b>, <b>lemn cu aur</b>, <b>bronz</b></li></ul></div>
+      <div style="grid-column: span 5; display: flex"><a href="#" class="sv" style="flex: 1"><span class="ph"><img src="assets/svc-iconostase.jpg" alt="Iconostas din bronz, turnat și aurit"><span class="ht glassL">Marmură, lemn cu aur, bronz</span></span><span class="lb2"><span style="min-width: 0"><span class="nm">Iconostase</span></span><span class="go"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span></a></div>
+      <div style="grid-column: span 5; display: flex"><a href="#" class="sv" style="flex: 1"><span class="ph"><img src="assets/svc-usi.jpg" alt="Uși din bronz cu sfinți în relief"><span class="ht glassL">Cupru, bronz, stejar</span></span><span class="lb2"><span style="min-width: 0"><span class="nm">Uși</span></span><span class="go"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span></a></div>
+    </div>
+    <div class="g-stack" style="width: min(100%, 760px); margin: 40px auto 0; background: var(--surface); border-radius: 24px; box-shadow: var(--e1); padding: 16px 16px 16px 16px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; align-items: center">
+      <div style="position: relative; height: 196px; border-radius: 16px; background: var(--sunk); overflow: hidden">
+        <span class="cov" aria-hidden="true" style="left: 34px; top: 22px; width: 104px; height: 148px; transform: rotate(-4deg)"><img src="assets/catalog-policandre-cover.jpg" alt=""></span>
+        <span class="cov" aria-hidden="true" style="left: 92px; top: 16px; width: 104px; height: 150px; transform: rotate(3deg)"><img src="assets/catalog-clopote-cover.jpg" alt=""></span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px; padding-right: 8px">
+        <h3 class="d" style="font-size: 40px; margin-bottom: 4px">Cataloage</h3>
+        <div class="ct"><a href="#" class="rd" target="_blank"><b>Policandre Clasa Premium</b><small>Citiți online →</small></a><a href="#" class="dlb" download aria-label="Descărcați Policandre Clasa Premium (PDF, [mărime])"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></a></div>
+        <div class="ct"><a href="#" class="rd" target="_blank"><b>Clopote Premium</b><small>Citiți online →</small></a><a href="#" class="dlb" download aria-label="Descărcați Clopote Premium (PDF, [mărime])"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="s3" style="padding-top: 140px">
+    <div class="wrap g-stack" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: flex-end; margin-bottom: 36px">
+      <h2 class="d" style="font-size: clamp(48px, 5.4vw, 80px)">Lucrările noastre</h2>
+      <div role="group" aria-label="Filtru" style="display: flex; gap: 8px; flex-wrap: wrap"><button class="chip chip-on" aria-pressed="true">Toate <em>60</em></button><button class="chip" aria-pressed="false">Policandre <em>11</em></button><button class="chip" aria-pressed="false">Clopote <em>39</em></button><button class="chip" aria-pressed="false">Recondiționări <em>7</em></button><button class="chip" aria-pressed="false">Automatizări <em>2</em></button><button class="chip" aria-pressed="false">Uși <em>1</em></button></div>
+    </div>
+    <div class="wall" style="padding: 0 8px">
+      <a href="#" class="t" style="grid-column: 1 / span 2; grid-row: 1 / span 2"><img src="assets/wall-dej-policandru.jpg" alt="Policandru de 3 nivele aprins, Parohia Dej III"><span class="cap glassL"><b>Parohia Dej III</b><span>Dej, Cluj · Policandru 3 nivele · 2023</span></span></a>
+      <a href="#" class="t" style="grid-column: 3; grid-row: 1 / span 2"><img src="assets/wall-ziua-crucii-clopot.jpg" alt="Clopot în hala turnătoriei"><span class="cap glassL"><b>Parohia Ziua Crucii</b><span>Iași · Clopot 310 kg · 2022</span></span></a>
+      <a href="#" class="t" style="grid-column: 4 / span 2; grid-row: 1"><img src="assets/wall-iconostas-marmura.jpg" alt="Iconostas din marmură"><span class="cap glassL"><b>Iconostas din marmură</b><span>Porți aurite</span></span></a>
+      <a href="#" class="t" style="grid-column: 6; grid-row: 1 / span 2"><img src="assets/svc-iconostase.jpg" alt="Iconostas din bronz"><span class="cap glassL"><b>Iconostas din bronz</b><span>Turnat și aurit</span></span></a>
+      <a href="#" class="t" style="grid-column: 4; grid-row: 2"><img src="assets/wall-dej-detaliu.jpg" alt="Detaliu aurit" style="transform: scale(1.03)"><span class="cap glassL" style="opacity: 1"><b>Parohia Dej III</b><span>Detaliu</span></span></a>
+      <a href="#" class="t" style="grid-column: 5; grid-row: 2" aria-label="Video: montaj, Parohia Dej III"><img src="assets/wall-video-montaj-poster.jpg" alt=""><span class="glassL" style="position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 999px; display: flex; align-items: center; justify-content: center"><svg width="16" height="18" viewBox="0 0 20 22" aria-hidden="true"><path d="M4 2 L18 11 L4 20 Z" fill="#16201f"/></svg></span></a>
+      <a href="#" class="t" style="grid-column: 1; grid-row: 3"><img src="assets/wall-caransebes.jpg" alt="Clopot la sfințire, Caransebeș"><span class="cap glassL"><b>Parohia Caransebeș</b><span>2022</span></span></a>
+      <a href="#" class="t" style="grid-column: 2 / span 2; grid-row: 3"><img src="assets/wall-policandru-cupola.jpg" alt="Policandru sub cupola pictată"><span class="cap glassL"><b>Policandre</b><span>11 lucrări</span></span></a>
+      <a href="#" class="t" style="grid-column: 4; grid-row: 3"><img src="assets/svc-clopote-fara-balans.jpg" alt="Clopote fixe, Adâncata"><span class="cap glassL"><b>Parohia Adâncata</b><span>Suceava · 2022</span></span></a>
+      <a href="#" style="grid-column: 5 / span 2; grid-row: 3; background: var(--surface); border-radius: 12px; box-shadow: var(--e1); display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 16px 24px 16px 16px; text-decoration: none; color: var(--ink)">
+        <svg viewBox="-20 -10 640 430" style="width: 100%; height: 100%; max-height: 190px" role="img" aria-label="Harta lucrărilor"><path d="M14.8 202.5 L45.6 188.6 L68.4 180.4 L85.5 147.6 L108.3 98.4 L131.1 73.8 L165.3 53.3 L199.5 49.2 L239.4 53.3 L279.3 72.2 L313.4 54.9 L347.6 50.8 L376.1 27.9 L410.3 69.7 L433.1 102.5 L455.9 131.2 L467.3 172.2 L464.5 217.3 L467.3 254.2 L495.8 274.7 L535.7 262.4 L552.8 282.9 L547.1 307.5 L507.2 336.2 L490.1 397.7 L450.2 378.8 L398.9 367.4 L347.6 403.4 L284.9 401.8 L228.0 400.2 L171.0 393.6 L142.5 360.8 L153.9 332.1 L114.0 326.4 L79.8 311.6 L85.5 278.8 L45.6 254.2 Z" fill="#f7f6f2" stroke="#16201f" stroke-opacity=".35" stroke-width="1.5"/><path d="M376.1 27.9 L427.4 10.7 L484.4 41.0 L524.3 82.0 L530.0 123.0 L552.8 147.6 L575.6 180.4 L512.9 205.0 L490.1 237.8 L467.3 254.2" fill="none" stroke="#16201f" stroke-opacity=".35" stroke-width="1.5"/><g fill="#0f6b63" stroke="#fff" stroke-width="3"><circle cx="319" cy="60" r="10"/><circle cx="366" cy="70" r="10"/><circle cx="433" cy="118" r="13"/><circle cx="229" cy="90" r="10"/><circle cx="221" cy="120" r="10"/><circle cx="127" cy="261" r="10"/><circle cx="186" cy="292" r="10"/><circle cx="341" cy="340" r="10"/><circle cx="333" cy="361" r="10"/><circle cx="490" cy="123" r="14"/></g></svg>
+        <div><p class="d" style="font-size: 40px; line-height: 1">60 lucrări în 3 țări</p><p class="s" style="color: var(--teal7); font-weight: 600; margin-top: 8px">Deschideți harta →</p></div>
+      </a>
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 36px"><a href="#" class="btn">Toate cele 60 de lucrări</a></div>
+  </section>
+
+  <section id="s4" class="wrap" style="padding-top: 160px">
+    <div class="g-stack" style="display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 72px; align-items: center">
+      <div style="display: flex; flex-direction: column; gap: 24px">
+        <h2 class="d" style="font-size: clamp(48px, 5.4vw, 80px)">Despre noi</h2>
+        <p class="lead" style="margin: 0; font-size: 20px; line-height: 1.5">S.C. Premium Bells SRL este compania ce reprezintă cele mai mari și mai cotate turnătorii de clopote din lumea ortodoxă — din <b>Iaroslavl</b> și <b>Kamensk-Uralsky</b>, dar și compania <b>Belltron</b> din Italia, astfel promovând:</p>
+        <ul class="prom" aria-label="Ce promovăm"><li><b>16 tone</b><span>cele mai tradiționale clopote, până la 16 tone,</span></li><li><b>Athos</b><span>clopote fără balans, trase de sfoară, asemeni tradiției de pe Sfântul Munte Athos,</span></li><li><b>Balans</b><span>dar și stilul occidental prin balansare, complexitate ornamentală tradițională și icoane canonice ortodoxe.</span></li></ul>
+      </div>
+      <a href="#" class="vid" aria-label="Video: în turnătoria de clopote"><img src="assets/about-foundry-video-poster.jpg" alt=""><span class="pl glassL"><svg width="18" height="20" viewBox="0 0 20 22" aria-hidden="true"><path d="M5 2 L18 11 L5 20 Z" fill="#16201f"/></svg></span><span class="vc glassL"><b>În turnătorie</b>[locul] · [durata]</span></a>
+    </div>
+    <figure class="g-stack" style="margin: 80px 0 0; padding-top: 48px; border-top: 1px solid var(--hair); display: grid; grid-template-columns: 456px minmax(0, 1fr); gap: 56px; align-items: center">
+      <div style="height: 304px; border-radius: 228px 228px 0 0 / 72px 72px 0 0; overflow: hidden; box-shadow: var(--e1)"><img src="assets/about-director-ringing.jpg" alt="Denis Latisev trăgând de funiile clopotelor" style="width: 100%; height: 100%; object-fit: cover"></div>
+      <div style="max-width: 980px">
+        <blockquote class="d" style="margin: 0; font-size: 30px; line-height: 1.22">„Cu fiască smerenie, am primit binecuvântare de la IPS Pimen, Arhiepiscopul Sucevei și Rădăuților — pentru importul și promovarea artei clopotelor în parohiile și mănăstirile României.”</blockquote>
+        <p class="s soft" style="margin-top: 16px">13 clopote, 11 tone, turnate la Iaroslavl pentru Mănăstirea Putna · sfințite pe 10 iulie 2016</p>
+        <figcaption class="s" style="margin-top: 16px"><b style="font-weight: 600">Denis Latisev</b> <span class="soft">· Director, S.C. Premium Bells SRL</span></figcaption>
+      </div>
+    </figure>
+  </section>
+
+  <section id="s5" class="wrap" style="padding-top: 120px">
+    <div class="g-stack" style="background: var(--surface); border-radius: 24px; box-shadow: var(--e1); padding: 20px 32px 20px 20px; display: grid; grid-template-columns: 104px 300px minmax(0, 1fr) auto; gap: 32px; align-items: center">
+      <div class="arch" style="height: 136px"><img src="assets/svc-clopote-cu-jug.jpg" alt="Clopot cu bandă lustruită și inscripție" style="width: 100%; height: 100%; object-fit: cover"></div>
+      <div><h2 class="d" style="font-size: 44px">Dăngăt pascal</h2><p class="c soft" style="margin-top: 8px">Ascultați · [locul și clopotele, din CMS]</p></div>
+      <div style="display: flex; align-items: center; gap: 20px; min-width: 0">
+        <button class="playb" aria-label="Ascultă Dăngăt pascal" style="width: 64px; height: 64px"><svg width="18" height="20" viewBox="0 0 20 22" aria-hidden="true"><path d="M5 2 L18 11 L5 20 Z" fill="currentColor"/></svg></button>
+        <div class="wave wl" aria-hidden="true"><span style="height: 40px"></span><span style="height: 41px"></span><span style="height: 27px"></span><span style="height: 33px"></span><span style="height: 28px"></span><span style="height: 22px"></span><span style="height: 26px"></span><span style="height: 21px"></span><span style="height: 19px"></span><span style="height: 21px"></span><span style="height: 16px"></span><span style="height: 17px"></span><span style="height: 17px"></span><span style="height: 14px"></span><span style="height: 15px"></span><span style="height: 14px"></span><span style="height: 13px"></span><span style="height: 14px"></span><span style="height: 12px"></span><span style="height: 12px"></span><span style="height: 13px"></span><span style="height: 11px"></span><span style="height: 12px"></span><span style="height: 12px"></span><span style="height: 32px"></span><span style="height: 41px"></span><span style="height: 32px"></span><span style="height: 27px"></span><span style="height: 32px"></span><span style="height: 23px"></span><span style="height: 23px"></span><span style="height: 24px"></span><span style="height: 18px"></span><span style="height: 20px"></span><span style="height: 18px"></span><span style="height: 15px"></span><span style="height: 17px"></span><span style="height: 15px"></span><span style="height: 14px"></span><span style="height: 15px"></span><span style="height: 13px"></span><span style="height: 13px"></span><span style="height: 13px"></span><span style="height: 12px"></span><span style="height: 12px"></span><span style="height: 12px"></span><span style="height: 11px"></span><span style="height: 12px"></span><span style="height: 36px"></span><span style="height: 33px"></span><span style="height: 38px"></span><span style="height: 26px"></span><span style="height: 28px"></span><span style="height: 27px"></span><span style="height: 20px"></span><span style="height: 24px"></span><span style="height: 20px"></span><span style="height: 17px"></span><span style="height: 20px"></span><span style="height: 16px"></span><span style="height: 16px"></span><span style="height: 16px"></span><span style="height: 14px"></span><span style="height: 14px"></span><span style="height: 14px"></span><span style="height: 12px"></span><span style="height: 13px"></span><span style="height: 12px"></span><span style="height: 12px"></span><span style="height: 12px"></span><span style="height: 11px"></span><span style="height: 11px"></span><span style="height: 45px"></span><span style="height: 30px"></span><span style="height: 36px"></span><span style="height: 31px"></span><span style="height: 23px"></span><span style="height: 29px"></span><span style="height: 22px"></span><span style="height: 20px"></span><span style="height: 23px"></span><span style="height: 17px"></span><span style="height: 18px"></span><span style="height: 18px"></span><span style="height: 15px"></span><span style="height: 16px"></span><span style="height: 15px"></span><span style="height: 13px"></span><span style="height: 14px"></span><span style="height: 13px"></span><span style="height: 12px"></span><span style="height: 13px"></span><span style="height: 12px"></span><span style="height: 12px"></span><span style="height: 12px"></span><span style="height: 11px"></span><span style="height: 45px"></span><span style="height: 36px"></span><span style="height: 29px"></span><span style="height: 35px"></span><span style="height: 25px"></span><span style="height: 25px"></span><span style="height: 26px"></span><span style="height: 19px"></span><span style="height: 21px"></span><span style="height: 20px"></span><span style="height: 16px"></span><span style="height: 18px"></span><span style="height: 16px"></span><span style="height: 14px"></span><span style="height: 16px"></span><span style="height: 13px"></span><span style="height: 14px"></span><span style="height: 14px"></span><span style="height: 12px"></span><span style="height: 13px"></span><span style="height: 12px"></span><span style="height: 11px"></span><span style="height: 12px"></span><span style="height: 11px"></span></div>
+        <span class="c soft" style="font-variant-numeric: tabular-nums; flex: none">0:00 / [durata]</span>
+      </div>
+      <a href="#" class="ul" style="font-size: 14px; white-space: nowrap">Seturi de clopote după note →</a>
+    </div>
+  </section>
+
+  <section id="s6" class="wrap" style="padding-top: 160px">
+    <!-- Client testimonial (abbot or priest): hidden until one exists in the CMS; then it sits above the posts and the title becomes “Mărturie și jurnal”. -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px"><h2 class="d" style="font-size: clamp(48px, 5.4vw, 80px)">Din jurnal</h2><a href="#" class="ul">Toate articolele</a></div>
+    <div class="g-stack" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; margin-top: 40px; align-items: stretch">
+      <a href="#" class="post post3">
+        <span class="pi" style="aspect-ratio: 3 / 2"><img src="assets/post-putna.jpg" alt="Trei clopote noi pentru Mănăstirea Putna, pe iarbă, în fața mănăstirii"></span>
+        <span class="mt"><b>Articol</b> · 17 feb. 2023 · 6 min de citit</span>
+        <span class="pt" style="font-size: 30px; margin-top: 10px">De la clopotul Buga al lui Ștefan cel Mare la noile clopote ale Mănăstirii Putna</span>
+        <span class="ex" style="display: -webkit-box">Sfântul Ștefan cel Mare a avut grijă, printre altele, să înzestreze ctitoria sa cea iubită cu mai multe clopote, dintre care două au ajuns până la noi.</span>
+        <span class="more">Citiți articolul <i aria-hidden="true">→</i></span>
+      </a>
+      <a href="#" class="post post3">
+        <span class="pi" style="aspect-ratio: 3 / 2"><img src="assets/post-raport-usi.jpg" alt="Ușile din bronz ale Catedralei din Drobeta-Turnu Severin, cu PS Nicodim"></span>
+        <span class="mt"><b>Raport</b> · 18 feb. 2023 · 5 min de citit</span>
+        <span class="pt" style="font-size: 30px; margin-top: 10px">Raport 18 ianuarie 2023</span>
+        <span class="ex" style="display: -webkit-box">La o întâlnire cu PS Nicodim, Episcopul Severinului și Strehaiei, am discutat despre ușile de intrare ale Catedralei Învierea Domnului din Drobeta-Turnu Severin.</span>
+        <span class="more">Citiți articolul <i aria-hidden="true">→</i></span>
+      </a>
+      <a href="#" class="post post3">
+        <span class="pi" style="aspect-ratio: 3 / 2"><img src="assets/post-belltron.jpg" alt="Două clopote fixe cu ciocane electronice Belltron"></span>
+        <span class="mt"><b>Articol</b> · 18 feb. 2023 · 5 min de citit</span>
+        <span class="pt" style="font-size: 30px; margin-top: 10px">Clopotar electronic pentru clopote fixe — mai performant</span>
+        <span class="ex" style="display: -webkit-box">Noul sistem de ciocane pentru clopotele ortodoxe a fost creat de Belltron pentru piața bisericească ortodoxă, în continuă creștere în Europa de Est.</span>
+        <span class="more">Citiți articolul <i aria-hidden="true">→</i></span>
+      </a>
+    </div>
+  </section>
+
+  <footer id="s7" class="dark" style="margin: 160px 16px 16px; border-radius: 28px; padding: 72px 56px 40px; overflow: hidden">
+    <div class="g-stack" style="position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: end; padding-bottom: 56px; border-bottom: 1px solid rgba(238,243,241,.14)">
+      <div><h2 class="d" style="font-size: clamp(64px, 8vw, 120px)">Cereți o ofertă</h2><p style="font-size: 18px; line-height: 1.55; margin: 20px 0 0; max-width: 520px; color: var(--onsoft)">Spuneți-ne despre biserica dumneavoastră. Vă răspundem cu un proiect și o ofertă.</p></div>
+      <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end"><a href="tel:+40722790776" style="display: inline-flex; align-items: center; height: 60px; padding: 0 32px; border-radius: 999px; background: #fff; color: var(--night); text-decoration: none; font-size: 17px; font-weight: 600">Sunați: +40 722 790 776</a><a href="mailto:[email]" class="ul">sau scrieți-ne: [email din CMS]</a></div>
+    </div>
+    <div class="g-stack" style="position: relative; z-index: 2; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-top: 48px">
+      <div style="display: flex; flex-direction: column; gap: 16px"><div style="display: flex; align-items: center; gap: 12px"><img src="assets/logo-on-dark.png" alt="" style="height: 34px; width: auto"><span class="d" style="font-size: 26px">Premium Bells</span></div><svg width="18" height="21" viewBox="0 0 24 28" fill="none" stroke="#b8955a" stroke-width="1.1" aria-hidden="true"><path d="M10.4 4.6C10.4 2.4 13.6 2.4 13.6 4.6"/><path d="M12 4.6C8.4 4.6 7.4 7.4 7.2 11C7 15 6.4 18.6 3.6 21.6H20.4C17.6 18.6 17 15 16.8 11C16.6 7.4 15.6 4.6 12 4.6Z"/><path d="M2.6 23.4H21.4"/></svg><a href="#" class="fl">Colaborează cu noi →</a><div style="display: flex; gap: 8px"><a href="#" class="soc" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21z"/></svg></a><a href="#" class="soc" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg></a></div></div>
+      <nav aria-label="Servicii" style="display: flex; flex-direction: column"><a href="#" class="fl">Policandre</a><a href="#" class="fl">Clopote</a><a href="#" class="fl">Iconostase</a><a href="#" class="fl">Toate serviciile</a></nav>
+      <nav aria-label="Lucrări" style="display: flex; flex-direction: column"><a href="#" class="fl">Lucrări</a><a href="#" class="fl">Harta</a><a href="#" class="fl">Blog</a></nav>
+      <div style="display: flex; flex-direction: column"><a href="tel:+40722790776" class="fl" style="font-weight: 600">+40 722 790 776</a><a href="#" class="fl">RO / EN</a></div>
+    </div>
+    <p class="c" style="position: relative; z-index: 2; color: var(--onsoft); margin-top: 48px">S.C. Premium Bells SRL · CUI 36422758 · Reg. Com. J40/10836/12.08.2016 · [adresa] · © 2026</p>
+  </footer>
+</div>
+<script>
+/* Reference behaviour for the hero triptych (spec: spec/components.md › Triptych, motion M36–M42). */
+(function(){
+  var slices=[].slice.call(document.querySelectorAll('#s1 .tri .sl'));
+  var words=[].slice.call(document.querySelectorAll('#s1 h1 .w'));
+  var pill=document.querySelector('#s1 [aria-label="Opriți derularea automată"]');
+  var bars=pill?[].slice.call(pill.parentNode.querySelectorAll('i')):[];
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var active=1, running=!reduce, timer=null;
+  function show(i){active=i;slices.forEach(function(s,k){s.classList.toggle('on',k===i)});words.forEach(function(w,k){w.classList.toggle('on',k===i)});
+    bars.forEach(function(b,k){b.style.background=k===i?'var(--teal7)':'rgba(22,32,31,.25)'})}
+  function tick(){if(!running)return;show((active+1)%3);timer=setTimeout(tick,6000)}
+  function stop(){running=false;clearTimeout(timer);if(pill){pill.setAttribute('aria-label','Porniți derularea automată');pill.innerHTML='<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2.5 10 6 4 9.5Z" fill="currentColor"/></svg>'}}
+  function play(){running=true;if(pill){pill.setAttribute('aria-label','Opriți derularea automată');pill.innerHTML='<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 2v8M8.5 2v8" stroke="currentColor" stroke-width="1.8"/></svg>'}timer=setTimeout(tick,6000)}
+  function bind(el,i){['mouseenter','focus'].forEach(function(ev){el.addEventListener(ev,function(){stop();show(i)})})}
+  slices.forEach(bind);words.forEach(bind);
+  if(pill){pill.addEventListener('click',function(){running?stop():play()})}
+  if(reduce){if(pill)pill.parentNode.style.display='none'}else{timer=setTimeout(tick,6000)}
+  document.addEventListener('visibilitychange',function(){if(document.hidden){clearTimeout(timer)}else if(running){timer=setTimeout(tick,6000)}});
+})();
+</script>
+</body>
+</html>
