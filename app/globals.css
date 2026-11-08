@@ -476,3 +476,9 @@
     pointer-events: none;
   }
 }
+
+/* Triptych pause pill: the active bar fills over one rotation step. */
+@keyframes triptych-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}

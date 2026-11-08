@@ -4,20 +4,49 @@
     {
       "name": "web",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000
     },
     {
       "name": "web-prod",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "start", "--", "-p", "3100"],
+      "runtimeArgs": [
+        "run",
+        "start",
+        "--",
+        "-p",
+        "3100"
+      ],
       "port": 3100
     },
     {
       "name": "studio",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "../studio-premiumbells", "run", "dev"],
+      "runtimeArgs": [
+        "--prefix",
+        "../studio-premiumbells",
+        "run",
+        "dev"
+      ],
       "port": 3333
+    },
+    {
+      "name": "web-prod-drafts",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "start",
+        "--",
+        "-p",
+        "3200"
+      ],
+      "port": 3200,
+      "env": {
+        "SANITY_PREVIEW_DRAFTS": "1"
+      }
     }
   ]
 }

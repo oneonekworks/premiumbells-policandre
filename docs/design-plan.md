@@ -197,6 +197,31 @@ Build in order, checking each against `reference/homepage-desktop.html` and
 
 Then the QA list at the end of `docs/design-handoff/spec/homepage.md`.
 
+**Built 2026-11-08, not yet live.** The page reads the new fields only, so
+it needs the seeded `homePage` draft published: with today's published
+document the home page shows just the title, Despre noi, audio and journal
+(checked on a production build, no errors). **Publish the draft and push
+together.** Local review of drafts: `SANITY_PREVIEW_DRAFTS=1 npm run build`
+and the `web-prod-drafts` preview (port 3200; reads with the token in
+`.env.local`, refuses to run on Netlify or CI). Checked there at 1440 and
+390: lint, typecheck, 43 unit tests, 58 browser tests passed (22 skipped,
+need test documents); the home spec now checks the new shape (section
+order by anchor, linked headline, triptych stop/restart and reduced
+motion, bell player from the keyboard).
+Notes:
+- Service cover photos are small (250–560px wide); the triptych needs the
+  originals (≥ 2000px) in each slice's own photo field.
+- No waveform yet (script and write pending approval): the player shows a
+  progress line instead.
+- The wall uses a fixed 6 × 3 layout (10 tiles + map) at ≥ 1200px;
+  smaller screens flow the same sizes densely. No shimmer yet (phase G).
+- Chips on the home page link to the category pages (no in-place filter).
+- "Harta" has no page; the map tile links to all works.
+- Denis's quote is cut at the last clause break before 200 characters
+  until `shortQuote` is approved and filled.
+- Hero "Cereți o ofertă" still calls the phone (CMS link); the spec allows
+  `#oferta` too, if you want it to scroll to the footer offer instead.
+
 ### D · Service pages and `/servicii`
 
 Hub as the craft bands; service page hero, sections, variants and related

@@ -1,20 +1,21 @@
 import {expect, test, type Page} from '@playwright/test';
 import {findPriceText} from '../../scripts/lib/price-text';
 
-// Home page (Phase 7). Runs against the published `homePage` and skips while
-// only the placeholder renders. Checks shape rather than wording, so editors
-// can change the copy in Studio. Set HOME_HIDDEN=<section> after switching a
-// section off to check that it disappears.
+// Home page (redesign v5.10). Runs against the home page the server reads:
+// the published one, or the draft when the server runs with
+// SANITY_PREVIEW_DRAFTS=1 (local review before publishing). Skips while the
+// redesigned page has no triptych (old data or the placeholder). Checks
+// shape rather than wording, so editors can change the copy in Studio.
 
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
-const hidden = process.env.HOME_HIDDEN;
+const order = ['inceput', 'servicii', 'lucrari', 'despre-noi', 'ascultati', 'jurnal'];
 
 async function openHome(page: Page) {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
   const response = await page.goto('/');
   expect(response?.status()).toBe(200);
-  test.skip(await page.locator('#despre-noi').count() === 0 && hidden !== 'about', 'The home page is not published');
+  test.skip(await page.locator('#inceput a[href^="/servicii/"]').count() < 3, 'The redesigned home page is not published');
   return errors;
 }
 
@@ -22,47 +23,62 @@ test('every home section renders in order, without prices or horizontal scroll',
   const errors = await openHome(page);
   const main = page.locator('main');
 
-  await expect(main.getByRole('link', {name: 'Vezi lucrările'})).toHaveAttribute('href', '/lucrarile-noastre');
-  await expect(main.getByRole('link', {name: 'Cereți o ofertă'})).toHaveAttribute('href', /^tel:\+\d+$/);
+  // The headline's three words link to the three services.
+  await expect(main.locator('h1').getByRole('link')).toHaveCount(3);
+  const hero = page.locator('#inceput');
+  await expect(hero.getByRole('link', {name: 'Vezi lucrările'})).toHaveAttribute('href', '/lucrarile-noastre');
+  await expect(hero.getByRole('link', {name: 'Cereți o ofertă'})).toHaveAttribute('href', /^(tel:\+\d+|#oferta)$/);
 
-  const expected = [
-    ['services', 'Serviciile noastre'],
-    ['testimonial', 'Mărturie'],
-    ['audio', 'Dăngăt pascal'],
-    ['blog', 'De pe blog'],
-    ['about', 'Despre noi'],
-  ].filter(([name]) => name !== hidden).map(([, heading]) => heading);
-  expect(await main.locator('section h2').allInnerTexts()).toEqual(expected);
+  const ids = await main.locator('section[id]').evaluateAll((sections) => sections.map((section) => section.id));
+  expect(ids.filter((id) => order.includes(id))).toEqual(order.filter((id) => ids.includes(id)));
+  expect(ids).toEqual(expect.arrayContaining(['inceput', 'servicii', 'lucrari', 'despre-noi', 'jurnal']));
 
-  if (hidden !== 'services') {
-    const services = main.getByRole('region', {name: 'Serviciile noastre'});
-    expect(await services.getByRole('listitem').count()).toBeGreaterThan(0);
-    await expect(services.getByRole('link', {name: 'Toate serviciile'})).toHaveAttribute('href', '/servicii');
-  }
-  if (hidden !== 'blog') {
-    const blog = main.getByRole('region', {name: 'De pe blog'});
-    await expect(blog.getByRole('listitem')).toHaveCount(3);
-    // Newest first, with date and computed reading time.
-    const dates = await blog.locator('time').evaluateAll((times) => times.map((time) => time.getAttribute('datetime')!));
-    expect(dates).toEqual([...dates].sort().reverse());
-    await expect(blog.getByRole('listitem').first()).toContainText('min de citit');
-    await expect(blog.getByRole('listitem').first().getByRole('link').first()).toHaveAttribute('href', /^\/blog\/[\w-]+$/);
-  }
-  if (hidden !== 'testimonial') {
-    await expect(main.locator('figure blockquote')).not.toBeEmpty();
-  }
-  if (hidden !== 'about') {
-    await expect(page.locator('#despre-noi')).toBeVisible();
-  }
+  expect(await page.locator('#servicii a[href^="/servicii/"]').count()).toBeGreaterThan(3);
+  expect(await page.locator('#lucrari a[href^="/lucrarile-noastre/"]').count()).toBeGreaterThan(3);
 
-  // The catalogue section is off until price-free PDFs exist (decision 3).
-  await expect(main.getByText('Descarcă cataloagele noastre')).toHaveCount(0);
+  const journal = page.locator('#jurnal');
+  await expect(journal.getByRole('listitem')).toHaveCount(3);
+  // Newest first, with type, date and computed reading time.
+  const dates = await journal.locator('time').evaluateAll((times) => times.map((time) => time.getAttribute('datetime')!));
+  expect(dates).toEqual([...dates].sort().reverse());
+  await expect(journal.getByRole('listitem').first()).toContainText('min de citit');
+  await expect(journal.getByRole('listitem').first().getByRole('link')).toHaveAttribute('href', /^\/blog\/[\w-]+$/);
+
+  // The footer carries the offer; the catalogue card stays off until price-free PDFs exist.
+  await expect(page.locator('#oferta h2')).toBeVisible();
+  await expect(page.locator('#servicii a[download]')).toHaveCount(0);
 
   const html = await page.content();
   expect(findPriceText(html).filter(({level}) => level === 'error').map(({match}) => match)).toEqual([]);
   expect(findPriceText(await page.locator('body').innerText()).filter(({rule}) => rule === 'price-word')).toEqual([]);
   expect(await noOverflow(page)).toBe(true);
   expect(errors).toEqual([]);
+});
+
+test('the triptych rotates until a visitor chooses a slice, and can be restarted', async ({page, isMobile}) => {
+  await openHome(page);
+  const toggle = page.locator('#inceput').getByRole('button', {name: 'Opriți derularea automată'});
+  await expect(toggle).toBeVisible();
+
+  // Focus on a headline word opens its slice and stops the rotation for good.
+  await page.locator('h1').getByRole('link').nth(2).focus();
+  const play = page.locator('#inceput').getByRole('button', {name: 'Porniți derularea automată'});
+  await expect(play).toBeVisible();
+  if (!isMobile) {
+    // The open slice takes half the panel once its 480ms transition ends.
+    await expect.poll(() => page.locator('#inceput a[href^="/servicii/"]').evaluateAll((links) =>
+      links.filter((link) => !link.closest('h1')).map((link) => getComputedStyle(link).flexGrow))).toEqual(['1', '1', '2']);
+  }
+  await play.click();
+  await expect(toggle).toBeVisible();
+});
+
+test('reduced motion keeps the triptych still, without the pause control', async ({page}) => {
+  await page.emulateMedia({reducedMotion: 'reduce'});
+  await openHome(page);
+  await expect(page.locator('#inceput').getByRole('button')).toHaveCount(0);
+  await expect.poll(() => page.locator('#inceput a[href^="/servicii/"]').evaluateAll((links) =>
+    links.filter((link) => !link.closest('h1')).map((link) => getComputedStyle(link).flexGrow))).toEqual(['1', '1', '1']);
 });
 
 test('metadata and Organization JSON-LD come from Sanity', async ({page}) => {
@@ -75,15 +91,16 @@ test('metadata and Organization JSON-LD come from Sanity', async ({page}) => {
   expect(data.telephone).toMatch(/^\+\d+$/);
 });
 
-test('the audio player loads nothing up front and plays from the keyboard', async ({page}) => {
-  test.skip(hidden === 'audio', 'Audio is switched off');
+test('the bell player loads nothing up front and plays from the keyboard', async ({page}) => {
   await openHome(page);
-  const audio = page.locator('main audio');
+  const strip = page.locator('#ascultati');
+  test.skip(await strip.count() === 0, 'Audio is switched off');
+  const audio = strip.locator('audio');
   await expect(audio).toHaveAttribute('preload', 'none');
-  await expect(audio).toHaveAttribute('controls', '');
   expect(await audio.evaluate((element: HTMLAudioElement) => element.paused && element.readyState === 0)).toBe(true);
 
-  await audio.focus();
+  const button = strip.getByRole('button', {name: /^Ascultați /});
+  await button.focus();
   await page.keyboard.press('Space');
   await expect.poll(() => audio.evaluate((element: HTMLAudioElement) => !element.paused), {timeout: 15000}).toBe(true);
   await page.keyboard.press('Space');
@@ -91,7 +108,6 @@ test('the audio player loads nothing up front and plays from the keyboard', asyn
 });
 
 test('the about video stays a poster until played from the keyboard', async ({page}) => {
-  test.skip(hidden === 'about', 'About is switched off');
   await openHome(page);
   const about = page.locator('#despre-noi');
   await expect(about.locator('iframe, video')).toHaveCount(0);
@@ -99,24 +115,15 @@ test('the about video stays a poster until played from the keyboard', async ({pa
 
   // Until the video is on YouTube the poster has no play button (decision 2).
   const play = about.getByRole('button', {name: /Redă videoclipul/});
-  if (await play.count() === 0) {
-    await expect(about.locator('img')).toHaveCount(1);
-    return;
-  }
-  // The play button follows the section's button in the tab order.
-  await about.getByRole('link', {name: 'Vizitați lucrările noastre'}).focus();
-  await page.keyboard.press('Tab');
-  await expect(play).toBeFocused();
+  if (await play.count() === 0) return;
+  await play.focus();
   await page.keyboard.press('Enter');
-
   const frame = about.locator('iframe');
   await expect(frame).toHaveAttribute('src', /^https:\/\/www\.youtube-nocookie\.com\/embed\/[\w-]{11}\?/);
   await expect(frame).toBeFocused();
-  await expect(play).toHaveCount(0);
 });
 
 test('the about anchor from the footer lands on the section', async ({page}) => {
-  test.skip(hidden === 'about', 'About is switched off');
   await openHome(page);
   await page.goto('/#despre-noi');
   await expect(page.locator('#despre-noi')).toBeInViewport();

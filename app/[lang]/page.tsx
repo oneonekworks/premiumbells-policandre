@@ -1,5 +1,7 @@
 import type {Metadata} from 'next';
-import {HomeAbout, HomeAudio, HomeBlog, HomeCatalogues, HomeHero, HomeServices, HomeTestimonial} from '@/components/home/home-sections';
+import {homeAnchors, HomeAbout, HomeAudio, HomeCatalogues, HomeHero, HomeJournal, HomeServices, HomeWorks} from '@/components/home/home-sections';
+import {SectionRail} from '@/components/home/section-rail';
+import {offerAnchor} from '@/components/site/footer';
 import {HomePlaceholder} from '@/components/home/home-placeholder';
 import {photoAlt} from '@/lib/alt';
 import {getDictionary} from '@/lib/i18n/dictionaries';
@@ -10,7 +12,7 @@ import {getBlogPosts} from '@/sanity/blog';
 import {getCatalogDownloads, getHomePage} from '@/sanity/home';
 import {sanityImageUrl} from '@/sanity/image';
 import {routeLang} from '@/sanity/portfolio-routes';
-import {getServices} from '@/sanity/services';
+import {getCategories} from '@/sanity/portfolio';
 import {getSiteContent} from '@/sanity/site';
 
 // Title, description and share image: the home page's own SEO fields, then
@@ -18,8 +20,8 @@ import {getSiteContent} from '@/sanity/site';
 export async function generateMetadata({params}: PageProps<'/[lang]'>): Promise<Metadata> {
   const lang = routeLang((await params).lang);
   const [home, {settings}] = await Promise.all([getHomePage(lang), getSiteContent(lang)]);
-  const title = home?.seo?.title ?? settings?.seo?.title ?? home?.hero?.title;
-  const description = home?.seo?.description ?? settings?.seo?.description ?? home?.hero?.lead ?? undefined;
+  const title = home?.seo?.title ?? settings?.seo?.title ?? home?.hero?.title ?? undefined;
+  const description = home?.seo?.description ?? settings?.seo?.description ?? undefined;
   const share = home?.seo?.shareImage?.asset ? home.seo.shareImage
     : settings?.seo?.shareImage?.asset ? settings.seo.shareImage : home?.hero?.image;
   const image = share ? sanityImageUrl(share, 1200, 630) : undefined;
@@ -72,32 +74,44 @@ export default async function HomePage({params}: PageProps<'/[lang]'>) {
     return <>{structuredData}<HomePlaceholder lang={lang} dictionary={dictionary} phoneHref={contact.phoneHref} /></>;
   }
 
-  const {services, catalogues, testimonial, audio, blog, about} = home;
+  const {services, catalogues, works, testimonial, audio, blog, about} = home;
   // Only read what a visible section needs.
-  const [allServices, posts, downloads] = await Promise.all([
-    services && services.enabled !== false ? getServices(lang) : [],
+  const [posts, downloads, categories] = await Promise.all([
     blog && blog.enabled !== false ? getBlogPosts(lang) : [],
     catalogues?.enabled === true ? getCatalogDownloads() : [],
+    works && works.enabled !== false ? getCategories(lang) : [],
   ]);
-  const topServices = allServices.filter((service) => !service.parentId && service.slug && service.title);
-  const chosenServices = services?.serviceIds?.length
-    ? services.serviceIds.flatMap((id) => topServices.filter((service) => service._id === id))
-    : topServices;
   const chosenPosts = blog?.postIds?.length
     ? blog.postIds.flatMap((id) => posts.filter((post) => post._id === id && post.slug))
     : posts.filter((post) => post.slug).slice(0, 3);
+  const chosenWorks = works?.projects?.filter((project) => project?.public).length
+    ? works.projects.flatMap((project) => (project?.public ? [project] : []))
+    : home.latestWorks;
 
   const base = {lang, dictionary};
+  const rail = [
+    {id: homeAnchors.top, label: dictionary.home5.railTop},
+    services?.enabled !== false && services?.heading ? {id: homeAnchors.services, label: services.heading} : null,
+    works?.enabled !== false && works?.heading ? {id: homeAnchors.works, label: works.heading} : null,
+    about?.enabled !== false && about?.heading ? {id: homeAnchors.about, label: about.heading} : null,
+    audio?.enabled !== false && audio?.recording?.title ? {id: homeAnchors.audio, label: audio.recording.title} : null,
+    blog?.enabled !== false && blog?.heading && chosenPosts.length ? {id: homeAnchors.journal, label: blog.heading} : null,
+    {id: offerAnchor, label: dictionary.offer.title},
+  ].filter((item) => item !== null);
+
   return (
     <>
       {structuredData}
-      <HomeHero hero={home.hero} lang={lang} contact={contact} />
-      {services && <HomeServices {...base} section={services} services={chosenServices} />}
-      {catalogues && <HomeCatalogues {...base} section={catalogues} downloads={downloads} />}
-      {testimonial && <HomeTestimonial section={testimonial} dictionary={dictionary} />}
-      {audio && <HomeAudio section={audio} dictionary={dictionary} />}
-      {blog && <HomeBlog {...base} section={blog} posts={chosenPosts} />}
+      <HomeHero {...base} home={home} contact={contact} />
+      {services && (
+        <HomeServices {...base} section={services}
+          catalogues={catalogues && <HomeCatalogues {...base} section={catalogues} downloads={downloads} />} />
+      )}
+      {works && <HomeWorks {...base} section={works} projects={chosenWorks} categories={categories} places={home.places} />}
       {about && <HomeAbout {...base} section={about} contact={contact} />}
+      {audio && <HomeAudio {...base} section={audio} contact={contact} />}
+      {blog && <HomeJournal {...base} section={blog} testimonial={testimonial} posts={chosenPosts} />}
+      <SectionRail sections={rail} label={dictionary.home5.rail} />
     </>
   );
 }

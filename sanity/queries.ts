@@ -172,30 +172,52 @@ const blogPostFields = `_id, title, "slug": slug.current, kind, publishedAt, exc
 const blogCardFields = `${blogPostFields}, "textLength": length(pt::text(body)), "author": author->{name, "role": ${fallback('role')}}`;
 const publicPost = `_type == "blogPost" && ${notDraft} && language == $lang && defined(slug.current) && defined(publishedAt)`;
 
+// The redesigned home page (v5.10). Card services and slice services are
+// projected with `public` so hidden or unpublished ones can be dropped in code
+// without losing the editor's order. Figures and the map read every public
+// project (60 today; small).
+const homeServiceFields = `_id, "public": ${publicService}, "title": ${localized('title')}, "slug": ${serviceSlug},
+  "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current), "cardLabel": ${localized('cardLabel')}, coverImage{${imageFields}}`;
+const homeProjectFields = `_id, "title": ${localized('title')}, "slug": slug.current, location, year,
+  "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current), "keySpec": specifications[0]{value, unit, "label": ${localized('label')}},
+  coverImage{${imageFields}}`;
+
 export const HOME_QUERY = defineQuery(`
   *[_id == "homePage" && _type == "homePage" && ${published}][0]{
     publishedLanguages,
+    "places": *[${publicProject}]{"country": location.country, "county": location.county},
     hero{
       "badge": badge{${linkFields}},
-      "title": ${localized('title')}, "highlight": ${localized('highlight')},
-      "lead": ${localized('lead')}, "tagline": ${localized('tagline')},
+      "title": ${localized('title')}, "tagline": ${localized('tagline')},
       image{${imageFields}},
-      "primaryCta": primaryCta{${linkFields}}, "secondaryCta": secondaryCta{${linkFields}}
+      "primaryCta": primaryCta{${linkFields}}, "secondaryCta": secondaryCta{${linkFields}},
+      "figures": figures[]{_key, source, value, "label": ${localized('label')}},
+      "slices": slices[]{_key, image{${imageFields}}, "line": ${localized('line')}, "service": service->{${homeServiceFields}}}
     },
-    services{enabled, "eyebrow": ${localized('eyebrow')}, "heading": ${localized('heading')}, "intro": ${localized('intro')}, "serviceIds": services[]._ref},
-    catalogues{enabled, "heading": ${localized('heading')}, "intro": ${localized('intro')}},
+    services{enabled, "heading": ${localized('heading')}, "groups": groups[]{
+      _key, "title": ${localized('title')}, "facts": ${localized('facts')}, "services": services[]->{${homeServiceFields}}
+    }},
+    catalogues{enabled, "heading": ${localized('heading')}},
+    works{enabled, "heading": ${localized('heading')}, "projects": projects[]->{"public": ${publicProject}, ${homeProjectFields}}},
+    "latestWorks": *[${publicProject}] | order(coalesce(featured, false) desc, coalesce(year, 0) desc, _createdAt desc)[0...12]{${homeProjectFields}},
     testimonial{enabled, "testimonial": testimonial->{
       _id, "quote": ${fallback('quote')}, name, "role": ${fallback('role')}, "context": ${fallback('context')}, date,
       portrait{${imageFields}}
     }},
-    audio{enabled, "eyebrow": ${localized('eyebrow')}, "recording": recording->{
-      _id, "title": ${fallback('title')}, "context": ${fallback('context')}, "transcript": ${localized('transcript')},
-      durationSeconds, "url": audio.asset->url, "mimeType": audio.asset->mimeType, artwork{${imageFields}}
+    audio{enabled, "link": link{${linkFields}}, "recording": recording->{
+      _id, "title": ${fallback('title')}, "context": ${fallback('context')},
+      durationSeconds, waveform, "url": audio.asset->url, "mimeType": audio.asset->mimeType, artwork{${imageFields}}
     }},
-    blog{enabled, "heading": ${localized('heading')}, "intro": ${localized('intro')}, "postIds": posts[]._ref},
+    blog{enabled, "heading": ${localized('heading')}, "postIds": posts[]._ref},
     about{
-      enabled, "heading": ${localized('heading')}, "body": ${localized('body')},
-      poster{${imageFields}}, video{${videoFields}}, "cta": cta{${linkFields}}
+      enabled, "heading": ${localized('heading')}, "lead": ${localized('lead')},
+      "points": points[]{_key, "key": ${localized('key')}, "text": ${localized('text')}},
+      poster{${imageFields}}, video{${videoFields}}, "videoCaption": ${localized('videoCaption')},
+      "statement": statement->{
+        _id, "quote": ${fallback('quote')}, "shortQuote": ${fallback('shortQuote')}, name, "role": ${fallback('role')},
+        "context": ${fallback('context')}, portrait{${imageFields}}
+      },
+      "cta": cta{${linkFields}}
     },
     ${seoFields}
   }
