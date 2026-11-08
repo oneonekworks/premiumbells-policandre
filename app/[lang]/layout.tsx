@@ -12,9 +12,12 @@ import '../globals.css';
 // Both fonts include latin-ext for Romanian ș/ț and cyrillic for a possible
 // future language.
 const inter = Inter({subsets: ['latin', 'latin-ext'], variable: '--font-inter'});
+// Cormorant 400 (+ italic for the claim) is the redesign; 600 stays until the
+// old pages that use font-semibold on titles are redesigned (docs/design-plan.md).
 const cormorant = Cormorant_Garamond({
   subsets: ['latin', 'latin-ext'],
-  weight: ['500', '600'],
+  weight: ['400', '600'],
+  style: ['normal', 'italic'],
   variable: '--font-cormorant',
 });
 
@@ -41,7 +44,7 @@ export default async function RootLayout({children, params}: LayoutProps<'/[lang
       <body className="flex min-h-dvh flex-col">
         <a
           href="#continut"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-paper focus:px-4 focus:py-2"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-pill focus:bg-surface focus:shadow-e2 focus:px-4 focus:py-2"
         >
           {dictionary.skipToContent}
         </a>

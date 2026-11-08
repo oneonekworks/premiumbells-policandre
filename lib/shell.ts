@@ -2,11 +2,13 @@ import 'server-only';
 import {cache} from 'react';
 import type {Dictionary} from '@/lib/i18n/dictionaries';
 import {languages, localizedHref, type Lang} from '@/lib/i18n/routing';
+import {plural} from '@/lib/i18n/format';
 import {servicePath, servicesPath} from '@/lib/services';
 import {linkHref, submenuPage, type Contact} from '@/lib/site-links';
 import {getBlogPosts} from '@/sanity/blog';
 import {getCategories} from '@/sanity/portfolio';
 import {getServices} from '@/sanity/services';
+import type {SanityImageValue} from '@/sanity/image';
 import {getSiteContent, type SiteLink} from '@/sanity/site';
 
 // What the header, footer and mobile menu show, from the `siteSettings` and
@@ -14,7 +16,14 @@ import {getSiteContent, type SiteLink} from '@/sanity/site';
 // delete or unpublish them); when the navigation is not published in a
 // language, the dictionary labels keep the header complete.
 
-export type ShellLink = {label: string; href: string; children?: ShellLink[]};
+export type ShellLink = {
+  label: string;
+  href: string;
+  children?: ShellLink[];
+  /** Submenu rows: one short line and a thumbnail. */
+  hint?: string | null;
+  image?: SanityImageValue | null;
+};
 export type SocialNetwork = 'facebook' | 'instagram' | 'youtube';
 
 export type Shell = {
@@ -31,6 +40,8 @@ export type Shell = {
     social: {network: SocialNetwork; href: string}[];
   };
   header: ShellLink[];
+  /** The featured card in the menus: all works, their number and a photo. */
+  works: {href: string; count: number; image: SanityImageValue | null};
   /** Null: the footer shows one "Navigare" column with the header links. */
   footerGroups: {heading: string; links: ShellLink[]}[] | null;
   /** Internal paths a language does not have yet, for the language switcher. */
@@ -47,15 +58,22 @@ function fallbackHeader(lang: Lang, dictionary: Dictionary): ShellLink[] {
   ];
 }
 
-async function submenu(page: 'services' | 'works', lang: Lang): Promise<ShellLink[]> {
+async function submenu(page: 'services' | 'works', lang: Lang, dictionary: Dictionary): Promise<ShellLink[]> {
   if (page === 'services') {
     const services = await getServices(lang);
     return services.filter((service) => !service.parentId && service.title && service.slug)
-      .map((service) => ({label: service.title!, href: localizedHref(lang, servicePath(null, service.slug!))}));
+      .map((service) => ({
+        label: service.title!, href: localizedHref(lang, servicePath(null, service.slug!)),
+        hint: service.cardLabel, image: service.coverImage,
+      }));
   }
   const categories = await getCategories(lang);
   return categories.filter((category) => category.title && category.slug)
-    .map((category) => ({label: category.title!, href: localizedHref(lang, `/lucrarile-noastre/${category.slug}`)}));
+    .map((category) => ({
+      label: category.title!, href: localizedHref(lang, `/lucrarile-noastre/${category.slug}`),
+      hint: plural(lang, category.projectCount, dictionary.portfolio.projects),
+      image: category.coverImage,
+    }));
 }
 
 function resolveLinks(links: SiteLink[] | null | undefined, lang: Lang, contact: Contact): (ShellLink & {source: SiteLink})[] {
@@ -74,8 +92,9 @@ function required<T>(value: T | null | undefined, field: string): T {
 
 /** Cached per request: the layout and the service contact boxes share it. */
 export const getShell = cache(async (lang: Lang, dictionary: Dictionary): Promise<Shell> => {
-  const [{settings, navigation}, blogLanguages] = await Promise.all([
+  const [{settings, navigation}, categories, blogLanguages] = await Promise.all([
     getSiteContent(lang),
+    getCategories(lang),
     Promise.all(languages.map(async (code) => [code, (await getBlogPosts(code)).length > 0] as const)),
   ]);
   // A language without posts has no blog page, so menus do not link to it.
@@ -97,7 +116,7 @@ export const getShell = cache(async (lang: Lang, dictionary: Dictionary): Promis
   const header = navigation?.header?.length
     ? await Promise.all(resolveLinks(navigation.header, lang, contact).map(async ({source, ...link}) => {
       const page = navigation.showSubmenus ? submenuPage(source) : null;
-      return page ? {...link, children: await submenu(page, lang)} : link;
+      return page ? {...link, children: await submenu(page, lang, dictionary)} : link;
     }))
     : fallbackHeader(lang, dictionary);
 
@@ -121,6 +140,11 @@ export const getShell = cache(async (lang: Lang, dictionary: Dictionary): Promis
       social,
     },
     header: withBlog(header),
+    works: {
+      href: localizedHref(lang, '/lucrarile-noastre'),
+      count: categories.reduce((sum, category) => sum + category.projectCount, 0),
+      image: [...categories].sort((a, b) => b.projectCount - a.projectCount)[0]?.coverImage ?? null,
+    },
     footerGroups,
     missingPaths,
   };

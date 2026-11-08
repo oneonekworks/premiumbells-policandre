@@ -1,32 +1,151 @@
 @import "tailwindcss";
 
 /*
- * Design tokens. A compact palette refining the legacy identity: warm paper
- * backgrounds, near-black ink with a green cast, deep teal for actions, and
- * gold reserved for ornament and focus. Text colours meet WCAG AA on paper.
+ * Design tokens · "Patina" (v4 palette + v5.10 homepage).
+ * Source: docs/design-handoff/tokens/tokens.css, adapted per docs/design-plan.md:
+ * fonts come from next/font, breakpoints stay at the Tailwind defaults until
+ * every page is redesigned, and the reduced-motion rule below is kept.
+ * Contrast ratios (WCAG 2.x) are noted on every colour used for text.
  */
 @theme {
-  --color-paper: #fbfaf6;
-  --color-stone: #f2efe7;
-  --color-line: #e3ddd0;
-  --color-ink: #16201f;
-  --color-ink-soft: #4a5654;
-  --color-teal-950: #0b2523;
-  --color-teal-900: #0e3a36;
-  --color-teal-700: #0f6b63;
+  /* ---------- Colour · light ground ---------- */
+  --color-ground: #f7f6f2;                 /* page background */
+  --color-surface: #ffffff;                /* cards, panels */
+  --color-sunk: #eef1ef;                   /* placeholders, stripes */
+  --color-hairline: rgb(22 32 31 / 0.10);  /* 1px borders, dividers */
+  --color-ink: #16201f;                    /* 15.41 on ground · 16.66 surface */
+  --color-ink-soft: #56605e;               /* 6.01 on ground · 6.50 surface */
+
+  /* ---------- Colour · Patina (brand) ---------- */
+  --color-teal-tint: #e6efed;              /* hover / active backgrounds only */
+  --color-teal-700: #0f6b63;               /* links, active word, icons · 5.88 on ground */
+  --color-teal-900: #0e3a36;               /* primary button, phone pill, active chip · white 12.52 */
+  --color-teal-950: #0b2523;               /* dark areas, max 3 per page */
+  --color-on-dark: #eef3f1;                /* text on teal-950 · 14.37 */
+  --color-on-dark-soft: #a9bdb8;           /* meta on teal-950 · 8.18 */
+  --color-chip-count-on: #b9d0cb;          /* count inside an active chip · 7.72 on teal-900 */
+
+  /* ---------- Colour · gold (focus ring and the footer ornament only) ---------- */
+  --color-focus: #9a783e;                  /* 3px ring on light · 3.79 ground */
+  --color-focus-on-dark: #c9a467;          /* ring on teal-950 and the lightbox · 6.90 */
+  --color-ornament: #b8955a;               /* the footer bell */
+
+  /* ---------- Colour · lightbox (warm dark) ---------- */
+  --color-lightbox: #121110;
+  --color-lightbox-text: #efe8da;          /* 15.5 on lightbox */
+  --color-lightbox-soft: #a89f90;          /* 7.2 on lightbox */
+
+  /* ---------- Legacy names (remove page by page; gone after phase G) ---------- */
+  --color-paper: var(--color-ground);
+  --color-stone: var(--color-sunk);
+  --color-line: var(--color-hairline);
+  --color-teal-50: var(--color-teal-tint);
   --color-teal-500: #14a394;
-  --color-teal-50: #eaf5f3;
   --color-gold-500: #b38b4d;
   --color-gold-700: #7d5f2e;
   --color-gold-200: #e6d5b5;
+  --container-site: var(--container-page);
 
-  --container-site: 76rem;
-  --spacing-header: 4.5rem;
+  /* ---------- Type scale ---------- */
+  --text-hero: clamp(4rem, 10.6vw, 9.5rem);
+  --text-hero--line-height: 0.88;
+  --text-hero--letter-spacing: -0.02em;
+  --text-hero-line: clamp(2.625rem, 6.1vw, 5.5rem);   /* 88 desktop, one line · 42 phones on two */
+  --text-hero-line--line-height: 0.95;
+  --text-hero-line--letter-spacing: -0.02em;
+  --text-page: clamp(4rem, 13vw, 11.5rem);
+  --text-page--line-height: 0.84;
+  --text-page--letter-spacing: -0.02em;
+  --text-section: clamp(2.75rem, 6vw, 5.5rem);        /* 88 desktop · 44 phones */
+  --text-section--line-height: 0.92;
+  --text-section--letter-spacing: -0.02em;
+  --text-statement: clamp(2.25rem, 4.2vw, 3.75rem);
+  --text-statement--line-height: 1.06;
+  --text-statement--letter-spacing: -0.015em;
+  --text-offer: clamp(4rem, 8.4vw, 7.5rem);           /* footer "Cereți o ofertă" 64–120 */
+  --text-offer--line-height: 0.9;
+  --text-offer--letter-spacing: -0.02em;
+  --text-figure: clamp(2.5rem, 6vw, 6rem);
+  --text-figure--line-height: 0.8;
+  --text-claim: clamp(1.375rem, 2vw, 1.75rem);        /* italic claim 22–28 */
+  --text-claim--line-height: 1.2;
+  --text-slice-name: clamp(3rem, 4vw, 3.5rem);
+  --text-slice-name--line-height: 1;
+  --text-craft: clamp(2rem, 2.6vw, 2.25rem);
+  --text-craft--line-height: 0.95;
+  --text-post-title: clamp(1.625rem, 2.1vw, 1.875rem);
+  --text-post-title--line-height: 1.1;
+  --text-quote: clamp(1.5625rem, 2.1vw, 1.875rem);
+  --text-quote--line-height: 1.22;
+  --text-key: clamp(1.5rem, 2vw, 1.75rem);
+  --text-key--line-height: 1;
+  --text-card-lg: 1.375rem;
+  --text-card-lg--line-height: 1.2;
+  --text-card-lg--letter-spacing: -0.01em;
+  --text-card: 1.0625rem;
+  --text-card--line-height: 1.25;
+  --text-card--letter-spacing: -0.01em;
+  --text-lead: 1.125rem;
+  --text-lead--line-height: 1.55;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.6;
+  --text-article: 1.0625rem;
+  --text-article--line-height: 1.7;
+  --text-ui: 0.9375rem;
+  --text-ui--line-height: 1;
+  --text-chip: 0.875rem;
+  --text-chip--line-height: 1;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.5;
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1.35;
+
+  /* ---------- Spacing (4px base) ---------- */
+  --spacing-header: 5.5rem;                /* 88 · the resting bar; scroll offset for anchors */
+  --spacing-card-inset: 0.5rem;
+  --spacing-gap-wall: 0.5rem;
+  --spacing-gap-grid: 1.25rem;
+  --spacing-gap-pair: 1.5rem;
+  --spacing-gap-services: 1rem;
+  --spacing-triptych-seam: 0.375rem;
+
+  /* ---------- Containers ---------- */
+  --container-page: 90rem;                 /* 1440 max, 1328 content inside 56px gutters */
+  --container-header: 70rem;               /* 1120 pill + mega menu */
+  --container-text: 42.5rem;               /* 680 reading measure */
+
+  /* ---------- Radius ---------- */
+  --radius-tile: 0.75rem;
+  --radius-caption: 0.625rem;
+  --radius-image: 1rem;
+  --radius-card: 1.25rem;
+  --radius-menu: 1.5rem;
+  --radius-panel: 1.75rem;
+  --radius-pill: 999px;
+
+  /* ---------- Shadow (teal-ink tinted) ---------- */
+  --shadow-e1: 0 1px 2px rgb(11 37 35 / 0.06), 0 4px 12px rgb(11 37 35 / 0.06);
+  --shadow-e2: 0 2px 4px rgb(11 37 35 / 0.08), 0 16px 32px rgb(11 37 35 / 0.08);
+  --shadow-e3: 0 24px 64px rgb(11 37 35 / 0.14);
+
+  /* ---------- Motion ---------- */
+  --ease-light: cubic-bezier(0.22, 0.61, 0.36, 1);   /* the only curve */
+  --duration-press: 120ms;
+  --duration-out: 160ms;
+  --duration-line: 180ms;
+  --duration-fade: 240ms;
+  --duration-close: 280ms;
+  --duration-open: 320ms;
+  --duration-slice: 480ms;
+  --duration-page: 480ms;
+  --duration-text: 700ms;
+  --duration-reveal: 900ms;
+  --duration-shimmer: 1200ms;
 }
 
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-display: var(--font-cormorant), Garamond, 'Times New Roman', serif;
 }
 
 @layer base {
@@ -39,14 +158,18 @@
   }
 
   body {
-    background: var(--color-paper);
+    background: var(--color-ground);
     color: var(--color-ink);
     font-family: var(--font-sans);
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-gold-500);
+    outline: 3px solid var(--color-focus);
     outline-offset: 3px;
+  }
+
+  .on-dark :focus-visible {
+    outline-color: var(--color-focus-on-dark);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -58,17 +181,25 @@
   }
 }
 
+/* ---------- Layout ---------- */
+
+/* Page container: 1440 max, gutters 20 phones · 32 tablet · 56 desktop. */
 @utility container-site {
   width: 100%;
-  max-width: var(--container-site);
+  max-width: var(--container-page);
   margin-inline: auto;
   padding-inline: 1.25rem;
 
-  @media (width >= 40rem) {
+  @media (width >= 48rem) {
     padding-inline: 2rem;
+  }
+
+  @media (width >= 64rem) {
+    padding-inline: 3.5rem;
   }
 }
 
+/* Legacy: the redesign has no eyebrows. Remove with the pages that use it. */
 @utility eyebrow {
   font-size: 0.75rem;
   font-weight: 600;
@@ -77,56 +208,271 @@
   color: var(--color-teal-700);
 }
 
+@utility section-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-section);
+  line-height: var(--text-section--line-height);
+  letter-spacing: var(--text-section--letter-spacing);
+  text-wrap: balance;
+}
+
+/* ---------- Buttons: 52px pills; colour and shadow change, never scale ---------- */
+
 @utility btn {
   display: inline-flex;
-  min-height: 2.75rem;
+  min-height: 3.25rem;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
+  padding: 0.75rem 1.625rem;
   border: 1px solid transparent;
-  border-radius: 0.375rem;
-  font-weight: 500;
-  line-height: 1.25;
-  transition: background-color 150ms, border-color 150ms, color 150ms;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-ui);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
   cursor: pointer;
+  transition-property: background-color, border-color, color, box-shadow, filter;
+  transition-duration: var(--duration-line);
+  transition-timing-function: var(--ease-light);
+
+  &:active {
+    filter: brightness(0.9);
+    transition-duration: var(--duration-press);
+  }
+}
+
+@utility btn-sm {
+  min-height: 2.75rem;
+  padding: 0.5rem 1.125rem;
 }
 
 @utility btn-primary {
-  background: var(--color-teal-700);
+  background: var(--color-teal-900);
   color: white;
 
   &:hover {
-    background: var(--color-teal-900);
+    background: var(--color-teal-950);
   }
 }
 
 @utility btn-secondary {
-  border-color: color-mix(in srgb, var(--color-ink) 30%, transparent);
+  background: var(--color-surface);
   color: var(--color-ink);
+  box-shadow: var(--shadow-e1);
 
   &:hover {
-    border-color: var(--color-ink);
-    background: var(--color-stone);
+    box-shadow: var(--shadow-e2);
   }
 }
 
-/* Buttons on dark photography and dark bands. */
+/* On teal-950 and on photographs. */
 @utility btn-light {
-  background: var(--color-paper);
+  background: white;
   color: var(--color-teal-900);
 
   &:hover {
-    background: var(--color-gold-200);
+    background: var(--color-teal-tint);
   }
 }
 
 @utility btn-outline-light {
-  border-color: color-mix(in srgb, var(--color-paper) 55%, transparent);
-  color: var(--color-paper);
+  border-color: color-mix(in srgb, var(--color-on-dark) 45%, transparent);
+  color: var(--color-on-dark);
 
   &:hover {
-    border-color: var(--color-paper);
-    background: color-mix(in srgb, var(--color-paper) 10%, transparent);
+    border-color: var(--color-on-dark);
+    background: color-mix(in srgb, var(--color-on-dark) 10%, transparent);
+  }
+}
+
+/* ---------- Chips ---------- */
+
+@utility chip {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.125rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-e1);
+  color: var(--color-ink);
+  font-size: var(--text-chip);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color var(--duration-line) var(--ease-light), color var(--duration-line) var(--ease-light);
+
+  &:hover {
+    background: var(--color-teal-tint);
+  }
+
+  &[aria-current], &[aria-pressed='true'] {
+    background: var(--color-teal-900);
+    color: white;
+  }
+}
+
+/* ---------- Text helpers ---------- */
+
+@utility text-clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+@utility text-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/* ---------- Recipes that are not single tokens ---------- */
+@layer components {
+  /* v4 Elevation: the one card style. Rest e1; hover/focus lift 4px, e2,
+     photo 1.03; press settles to 1px. Reduced motion: shadow only.
+     Mark the photo frame with .card-photo (overflow hidden). */
+  .card {
+    background: var(--color-surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-e1);
+  }
+
+  .card-lift {
+    transition-property: transform, box-shadow;
+    transition-duration: var(--duration-fade);
+    transition-timing-function: var(--ease-light);
+  }
+
+  .card-photo {
+    overflow: hidden;
+  }
+
+  .card-photo img {
+    transition: transform var(--duration-fade) var(--ease-light);
+  }
+
+  .card-lift:hover, .card-lift:has(:focus-visible), .card-lift:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-e2);
+  }
+
+  .card-lift:hover .card-photo img,
+  .card-lift:has(:focus-visible) .card-photo img,
+  .card-lift:focus-visible .card-photo img {
+    transform: scale(1.03);
+  }
+
+  .card-lift:active {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-e1);
+    transition-duration: var(--duration-press);
+  }
+
+  /* Cards without a white surface (journal posts) lift without the shadow. */
+  .card-lift.card-bare:hover, .card-lift.card-bare:has(:focus-visible) {
+    box-shadow: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-lift:hover, .card-lift:has(:focus-visible), .card-lift:focus-visible, .card-lift:active {
+      transform: none;
+    }
+
+    .card-lift .card-photo img {
+      transform: none !important;
+    }
+  }
+
+  /* Glass: header pill, mega menu, mobile menu, wall captions, bottom bar. */
+  .glass-light {
+    background: rgb(255 255 255 / 0.72);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    backdrop-filter: blur(16px) saturate(1.2);
+    border: 1px solid rgb(255 255 255 / 0.9);
+  }
+
+  /* Lightbox and zoom controls only. */
+  .glass-dark {
+    background: rgb(26 22 18 / 0.58);
+    -webkit-backdrop-filter: blur(20px) saturate(1.15);
+    backdrop-filter: blur(20px) saturate(1.15);
+    border: 1px solid rgb(220 198 156 / 0.26);
+    box-shadow: inset 0 1px 0 rgb(220 198 156 / 0.18);
+  }
+
+  .lightbox-backdrop {
+    background: rgb(18 17 16 / 0.72);
+    -webkit-backdrop-filter: blur(24px) saturate(1.1);
+    backdrop-filter: blur(24px) saturate(1.1);
+    box-shadow: inset 0 0 280px rgb(0 0 0 / 0.7);
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-light { background: rgb(255 255 255 / 0.96); }
+    .glass-dark { background: rgb(26 22 18 / 0.94); }
+    .lightbox-backdrop { background: rgb(18 17 16 / 0.95); }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .glass-light { background: rgb(255 255 255 / 0.96); backdrop-filter: none; }
+    .glass-dark { background: rgb(26 22 18 / 0.94); backdrop-filter: none; }
+  }
+
+  /* Teal-950 areas and the lightbox only: ≈3% visible grain. */
+  .grain { position: relative; isolation: isolate; }
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: url('/img/grain-256.png');
+    opacity: 0.3;
+  }
+
+  .vignette::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    box-shadow: inset 0 0 200px rgb(0 0 0 / 0.55);
+  }
+
+  .arch { border-radius: 9999px 9999px 0 0; overflow: hidden; }
+  /* Wide 3:2 photo under a shallow arch (director strip). */
+  .arch-low { border-radius: 50% 50% 0 0 / 24% 24% 0 0; overflow: hidden; }
+
+  /* Behind white text on a photo — never a full veil. */
+  .photo-gradient {
+    position: absolute;
+    inset: auto 0 0;
+    height: 62%;
+    background: linear-gradient(to top, rgb(8 16 15 / 0.82) 0%, rgb(8 16 15 / 0.55) 42%, rgb(8 16 15 / 0) 100%);
+    pointer-events: none;
+
+    @media (width >= 64rem) {
+      height: 46%;
+    }
+  }
+
+  /* Gilded photos only, once per hover/focus. */
+  .shimmer {
+    position: absolute;
+    top: -20%;
+    bottom: -20%;
+    left: -40%;
+    width: 30%;
+    background: rgb(255 226 170 / 0.28);
+    filter: blur(26px);
+    transform: skewX(-14deg);
+    mix-blend-mode: screen;
+    opacity: 0;
+    pointer-events: none;
   }
 }
