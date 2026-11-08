@@ -152,6 +152,8 @@ and 390 against the reference, and a local commit. Pushes are the user's.
    completely missing is never flagged, because `localeRule` only runs when
    the object exists — required headings and titles can be published empty.
    Backlog.
+   **Deployed 2026-11-08** to https://premiumbells.sanity.studio (approved by
+   the user); the deployed schema was listed afterwards.
 3. Export the dataset; user approves the seed (`content/homepage.ro.json`
    → homePage draft); review the draft; user approves the publish.
 4. Export; waveform script for "Dăngăt pascal"; user approves the write.
