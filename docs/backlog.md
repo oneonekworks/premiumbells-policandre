@@ -39,3 +39,14 @@ and easy to miss in Sanity's minimal design, especially on a phone.
 > desktop and phone (signing in is required, so the user verifies visually).
 > Record the change in `../rbells_policandre/docs/migration-status.md` and
 > remove this item from `docs/backlog.md`.
+
+## Required translated fields can be published empty (found 2026-11-08)
+
+`localeRule` (Studio `i18n.ts`) only runs when the locale object exists, so a
+required title or heading that was never typed (the whole `{ro, en}` object
+missing) passes validation. Seen while validating the 2026-11-05 export
+against the v5.10 home page schema: removing `about.heading` gave no error.
+Fix: add `rule.required()` (or an object-level check) wherever `localeRule`
+is called with `required` other than `none`; then run
+`sanity documents validate` against a fresh export and fix whatever it finds
+(each data change approved, export first).
