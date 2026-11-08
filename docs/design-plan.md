@@ -171,6 +171,12 @@ and 390 against the reference, and a local commit. Pushes are the user's.
    (slice photos empty — they fall back to the service photos).
    **Do not publish before phase C ships:** the current site would lose the
    Denis testimonial section and show "Din jurnal" with the old layout.
+   **Published 2026-11-08** (approved) after a fresh export
+   (`production-2026-11-08-before-v510-home-publish.tar.gz`); draft removed.
+   Price check over the dataset: 0 errors. A normal production build with
+   the published content passes all browser specs (58, 22 skipped). Until
+   the phase C commits are pushed, the hosted preview runs the old home page
+   code on the new content (no Denis section, heading "Din jurnal").
    Hero secondary button stays "Cereți o ofertă" → phone; the design points
    it to the footer offer (`#oferta`) — decide in phase C.
 4. Export; waveform script for "Dăngăt pascal"; user approves the write.
