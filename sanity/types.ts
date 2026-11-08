@@ -78,6 +78,13 @@ export type ServiceReference = {
   [internalGroqTypeReferenceTo]?: "service";
 };
 
+export type ProjectReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "project";
+};
+
 export type TestimonialReference = {
   _ref: string;
   _type: "reference";
@@ -109,17 +116,42 @@ export type HomePage = {
   hero?: {
     badge?: SiteLink;
     title?: LocaleString;
-    highlight?: LocaleString;
-    lead?: LocaleText;
     tagline?: LocaleString;
-    image?: ImageWithMetadata;
     primaryCta?: SiteLink;
     secondaryCta?: SiteLink;
+    figures?: Array<{
+      source?: "projects" | "countries" | "manual";
+      value?: number;
+      label?: LocaleString;
+      _type: "heroFigure";
+      _key: string;
+    }>;
+    slices?: Array<{
+      service?: ServiceReference;
+      image?: ImageWithMetadata;
+      line?: LocaleString;
+      _type: "heroSlice";
+      _key: string;
+    }>;
+    image?: ImageWithMetadata;
+    highlight?: LocaleString;
+    lead?: LocaleText;
   };
   services?: {
     enabled?: boolean;
-    eyebrow?: LocaleString;
     heading?: LocaleString;
+    groups?: Array<{
+      title?: LocaleString;
+      facts?: LocaleBoldText;
+      services?: Array<
+        {
+          _key: string;
+        } & ServiceReference
+      >;
+      _type: "craftGroup";
+      _key: string;
+    }>;
+    eyebrow?: LocaleString;
     intro?: LocaleBlockContent;
     services?: Array<
       {
@@ -132,32 +164,51 @@ export type HomePage = {
     heading?: LocaleString;
     intro?: LocaleText;
   };
-  testimonial?: {
-    enabled?: boolean;
-    testimonial?: TestimonialReference;
-  };
-  audio?: {
-    enabled?: boolean;
-    eyebrow?: LocaleString;
-    recording?: AudioFeatureReference;
-  };
-  blog?: {
+  works?: {
     enabled?: boolean;
     heading?: LocaleString;
-    intro?: LocaleText;
-    posts?: Array<
+    projects?: Array<
       {
         _key: string;
-      } & BlogPostReference
+      } & ProjectReference
     >;
   };
   about?: {
     enabled?: boolean;
     heading?: LocaleString;
-    body?: LocaleBlockContent;
+    lead?: LocaleBoldText;
+    points?: Array<{
+      key?: LocaleString;
+      text?: LocaleString;
+      _type: "aboutPoint";
+      _key: string;
+    }>;
     poster?: ImageWithMetadata;
     video?: Video;
+    videoCaption?: LocaleString;
+    statement?: TestimonialReference;
     cta?: SiteLink;
+    body?: LocaleBlockContent;
+  };
+  audio?: {
+    enabled?: boolean;
+    recording?: AudioFeatureReference;
+    link?: SiteLink;
+    eyebrow?: LocaleString;
+  };
+  blog?: {
+    enabled?: boolean;
+    heading?: LocaleString;
+    posts?: Array<
+      {
+        _key: string;
+      } & BlogPostReference
+    >;
+    intro?: LocaleText;
+  };
+  testimonial?: {
+    enabled?: boolean;
+    testimonial?: TestimonialReference;
   };
   seo?: Seo;
 };
@@ -170,18 +221,17 @@ export type Seo = {
   noIndex?: boolean;
 };
 
+export type LocaleText = {
+  _type: "localeText";
+  ro?: string;
+  en?: string;
+};
+
 export type WorkCategoryReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "workCategory";
-};
-
-export type ProjectReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "project";
 };
 
 export type SiteLink = {
@@ -197,17 +247,24 @@ export type SiteLink = {
   url?: string;
 };
 
-export type Video = {
-  _type: "video";
-  provider?: "youtube" | "file";
-  url?: string;
-  file?: {
-    asset?: SanityFileAssetReference;
+export type AudioFeature = {
+  _id: string;
+  _type: "audioFeature";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: LocaleString;
+  audio?: {
+    asset: SanityFileAssetReference;
     media?: unknown;
     _type: "file";
   };
-  title?: LocaleString;
-  poster?: ImageWithMetadata;
+  durationSeconds?: number;
+  waveform?: Array<number>;
+  artwork?: ImageWithMetadata;
+  context?: LocaleText;
+  transcript?: LocaleText;
+  relatedProject?: ProjectReference;
 };
 
 export type LocaleBlockContent = {
@@ -250,31 +307,6 @@ export type LocaleBlockContent = {
   }>;
 };
 
-export type LocaleText = {
-  _type: "localeText";
-  ro?: string;
-  en?: string;
-};
-
-export type AudioFeature = {
-  _id: string;
-  _type: "audioFeature";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: LocaleString;
-  audio?: {
-    asset: SanityFileAssetReference;
-    media?: unknown;
-    _type: "file";
-  };
-  durationSeconds?: number;
-  artwork?: ImageWithMetadata;
-  context?: LocaleText;
-  transcript?: LocaleText;
-  relatedProject?: ProjectReference;
-};
-
 export type Testimonial = {
   _id: string;
   _type: "testimonial";
@@ -282,12 +314,58 @@ export type Testimonial = {
   _updatedAt: string;
   _rev: string;
   quote?: LocaleText;
+  shortQuote?: LocaleText;
   name?: string;
   role?: LocaleString;
   portrait?: ImageWithMetadata;
   context?: LocaleString;
   date?: string;
   relatedProject?: ProjectReference;
+};
+
+export type Video = {
+  _type: "video";
+  provider?: "youtube" | "file";
+  url?: string;
+  file?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  title?: LocaleString;
+  poster?: ImageWithMetadata;
+};
+
+export type LocaleBoldText = {
+  _type: "localeBoldText";
+  ro?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  en?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
 };
 
 export type Navigation = {
@@ -338,6 +416,7 @@ export type SiteSettings = {
     _type: "socialLink";
     _key: string;
   }>;
+  partnersLink?: SiteLink;
   tagline?: LocaleText;
   defaultSeo?: Seo;
 };
@@ -882,19 +961,20 @@ export type AllSanitySchemaTypes =
   | ImageWithMetadata
   | LocaleString
   | ServiceReference
+  | ProjectReference
   | TestimonialReference
   | AudioFeatureReference
   | BlogPostReference
   | HomePage
   | Seo
-  | WorkCategoryReference
-  | ProjectReference
-  | SiteLink
-  | Video
-  | LocaleBlockContent
   | LocaleText
+  | WorkCategoryReference
+  | SiteLink
   | AudioFeature
+  | LocaleBlockContent
   | Testimonial
+  | Video
+  | LocaleBoldText
   | Navigation
   | SiteSettings
   | CatalogItem

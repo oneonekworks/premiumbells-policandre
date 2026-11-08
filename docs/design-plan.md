@@ -139,6 +139,19 @@ and 390 against the reference, and a local commit. Pushes are the user's.
 
 1. User approves `docs/design-schema-proposal.md`.
 2. Studio change, typecheck, local Studio check; user approves the deploy.
+
+   **Done 2026-11-08:** approved; Studio commit `f293665` (studio repo, not
+   pushed, not deployed). Typecheck, lint, 20 Studio tests, `sanity build`
+   and `sanity schema validate` pass; app types regenerated, app typecheck
+   passes. The local Studio needs the user's Sanity sign-in, so instead the
+   last export (2026-11-05) was validated against the new schema offline:
+   on `homePage` only the two expected errors (`hero.slices` required,
+   `services.groups` needs three), which the seed fixes. Until the seed is
+   published, editors cannot publish the home page with the new Studio.
+   Found on the way (existing, not new): a translated field that is
+   completely missing is never flagged, because `localeRule` only runs when
+   the object exists — required headings and titles can be published empty.
+   Backlog.
 3. Export the dataset; user approves the seed (`content/homepage.ro.json`
    → homePage draft); review the draft; user approves the publish.
 4. Export; waveform script for "Dăngăt pascal"; user approves the write.
