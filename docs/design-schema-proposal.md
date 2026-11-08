@@ -1,7 +1,8 @@
 # Schema proposal for the v5.10 homepage
 
-**Status:** Proposed 2026-11-07, waiting for the user's OK. Nothing is
-changed in the Studio or the dataset yet. Part of phase B in
+**Status:** Approved by the user on 2026-11-08 with the defaults below
+(figures counted automatically, "Nou" pill empty at launch, works wall from
+project covers). Nothing is changed in the Studio or the dataset yet. Part of phase B in
 `docs/design-plan.md`.
 
 Changes are in `studio-premiumbells/schemaTypes/`. Field names are English

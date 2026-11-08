@@ -1,6 +1,7 @@
 # Redesign "Patina" (v4 + v5.10 homepage): implementation plan
 
-**Status:** Written 2026-11-07, not started. Runs before Phase 8 of
+**Status:** Written 2026-11-07. Schema proposal approved 2026-11-08 with
+its defaults; phase A done 2026-11-08; phase B next. Runs before Phase 8 of
 `docs/migration-plan.md`. The schema changes need the user's OK first
 (`docs/design-schema-proposal.md`).
 
@@ -116,6 +117,23 @@ and 390 against the reference, and a local commit. Pushes are the user's.
    card, M09–M11); mobile menu sheet (M12); glass bottom bar on phones (M13).
 6. Footer: teal-950 panel with the offer on top, grain, bell ornament, legal
    line with registration number, social icons, no price links.
+
+**Done 2026-11-08** (`eb2c621`). Notes:
+- Buttons, chips, cards and the section title are utilities in
+  `app/globals.css` (`btn*`, `chip`, `card`, `card-lift`, `card-photo`,
+  `section-title`), like the existing ones, not React components.
+- The new breakpoints (sm 30rem, xl 75rem, 2xl 90rem) are not applied yet:
+  they would reflow every old page. Use `min-[75rem]:` where a new component
+  needs 1200px; switch the breakpoints in phase G.
+- `max-w-header` resolves to `--spacing-header` (88px), not the 1120px
+  container; write `max-w-(--container-header)`.
+- Until `homePage.services.groups` exists, the mega menu lists the active
+  top-level services in display order; its featured card uses the category
+  with the most works.
+- `container-site` is now the 1440 container with 20/32/56 gutters, so every
+  page is a little wider than before.
+- Checked on a production build: lint, typecheck, 43 unit tests, 54 browser
+  tests passed (22 skipped: need test documents), desktop 1440 and phone 375.
 
 ### B · Schema and content (approved steps, Studio repo)
 
