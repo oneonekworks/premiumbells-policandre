@@ -156,6 +156,23 @@ and 390 against the reference, and a local commit. Pushes are the user's.
    the user); the deployed schema was listed afterwards.
 3. Export the dataset; user approves the seed (`content/homepage.ro.json`
    → homePage draft); review the draft; user approves the publish.
+
+   **Draft written 2026-11-08** (approved): export
+   `.migration/backups/production-2026-11-08-before-v510-home-seed.tar.gz`,
+   then `scripts/home-v510-seed.mts --write` created `drafts.homePage`
+   (published `homePage` unchanged, last updated 2026-11-05). It sets the
+   slices (Policandre, Clopote, Iconostase, no own photos yet), figures
+   (projects · countries · 12 turnătorii), the three craft groups and facts,
+   catalogues heading "Cataloage", works section, about lead + points +
+   statement → `legacy-testimonial-putna` + caption "În turnătorie" (about
+   button removed), audio link → Clopote, journal heading "Din jurnal",
+   client testimonial off, hero title and badge empty. Retired fields keep
+   their values. Price check clean; validation: no errors, 3 warnings
+   (slice photos empty — they fall back to the service photos).
+   **Do not publish before phase C ships:** the current site would lose the
+   Denis testimonial section and show "Din jurnal" with the old layout.
+   Hero secondary button stays "Cereți o ofertă" → phone; the design points
+   it to the footer offer (`#oferta`) — decide in phase C.
 4. Export; waveform script for "Dăngăt pascal"; user approves the write.
 5. After the homepage is live: export; unset the retired fields; approved.
 
