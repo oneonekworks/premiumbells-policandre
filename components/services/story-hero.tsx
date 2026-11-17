@@ -77,7 +77,7 @@ function Inset({inset, className}: {inset: HeroInset; className: string}) {
 
 export function StoryHero({
   crumbs, crumbLabel, slot, title, metal, subline, sublineEm = 0.36, titleSize = 'default', lead, factsLabel, facts, factsAsStats = false,
-  photo, photoRatio = 4 / 3, plate = false, place, insets, control, wide = false, tight = false, insetLayout = 'standard',
+  photo, photoRatio = 4 / 3, plate = false, place, insets, control, wide = false, tight = false, insetLayout = 'standard', phoneTall = false,
 }: {
   crumbs: Crumb[];
   crumbLabel: string;
@@ -111,6 +111,8 @@ export function StoryHero({
   tight?: boolean;
   /** Clopotar: insets 216 at top −56 / left −40 and 244 at bottom −64 / right −28 (16:10 photo). */
   insetLayout?: 'standard' | 'clopotar';
+  /** Phones: 320 tall instead of 300 (Iconostase). */
+  phoneTall?: boolean;
 }) {
   const [first, second] = insets;
   const factList = facts.length ? (
@@ -149,7 +151,7 @@ export function StoryHero({
             <div className="order-3">{factList}</div>
           </div>
           <div className={`relative order-2 mt-8 md:mx-0 lg:mt-0 ${plate ? 'mx-5' : 'mx-3'}`}>
-            <div className={`relative overflow-hidden rounded-[24px] shadow-e3 ${plate ? 'aspect-(--ratio) bg-white p-3 lg:p-4' : 'bg-band max-lg:h-[300px] lg:aspect-(--ratio)'}`}
+            <div className={`relative overflow-hidden rounded-[24px] shadow-e3 ${plate ? 'aspect-(--ratio) bg-white p-3 lg:p-4' : `bg-band lg:aspect-(--ratio) ${phoneTall ? 'max-lg:h-80' : 'max-lg:h-[300px]'}`}`}
               style={{['--ratio' as string]: String(photoRatio)}}>
               {plate ? (
                 <span className="relative block size-full">

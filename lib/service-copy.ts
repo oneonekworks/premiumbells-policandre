@@ -164,3 +164,32 @@ export const automatizariCopy = {
   sets: {kicker: 'Pentru 2 sau 3 clopote', title: 'Alegeți setul', bells: 'clopote', offer: 'Cereți o ofertă', offerFor: 'Cereți o ofertă pentru'},
   nudge: {slug: 'cu-jug', question: 'Nu aveți încă clopotele?', name: 'Clopote cu jug', why: 'Vedeți dimensiunile și seturile recomandate.'},
 };
+
+export const iconostaseCopy = {
+  hero: {title: 'Iconostase', subline: 'din marmură și lemn aurit', lead: 'Fiecare iconostas se proiectează pentru altarul dumneavoastră: din marmură grecească sau din lemn sculptat și aurit.'},
+  closer: 'Priviți de aproape',
+  closerLabel: 'Priviți iconostasul de aproape',
+  layerTitle: 'Iconostase',
+  materials: {
+    kicker: 'Din ce se lucrează', title: 'Alegeți materialul',
+    lead: 'Deschideți o lucrare ca s-o vedeți întreagă, apoi măriți până la ornament.',
+    leadShort: 'Atingeți o lucrare ca s-o vedeți întreagă, apoi măriți până la ornament.',
+    photos: ['fotografie', 'fotografii', 'de fotografii'] as [string, string, string],
+    /** Material services (variants of Iconostase) in board order; Bronz is hidden (2026-11-16). */
+    items: [
+      {slug: 'marmura', name: 'Marmură', tab: 'Marmură', line: 'Marmură grecească, cu porți din alamă, cupru sau aurite.'},
+      {slug: 'lemn-aur', name: 'Lemn sculptat cu aur', tab: 'Lemn cu aur', line: 'Sculptat unic, cu foiță de aur: modelele Saransk și Pahomov.'},
+      {slug: 'pristol-marmura', name: 'Pristol din marmură', tab: 'Pristol', line: 'Pristol și jertfelnic, sculptate manual.'},
+    ],
+  },
+  steps: {
+    kicker: 'De la proiect la sfințire', title: 'Cum lucrăm',
+    items: [
+      {title: 'Măsurăm altarul', text: 'Venim în biserică și luăm dimensiunile.'},
+      {title: 'Proiectul', text: 'Desenul, apoi estimarea prețului.'},
+      {title: 'Execuția', text: 'Sculptură manuală, turnare și aurire.'},
+      {title: 'Montajul', text: '[Text de confirmat]'},
+    ],
+  },
+  nudge: {slug: 'usi', question: 'Și intrarea bisericii?', name: 'Uși', why: 'Din cupru turnat, cu sfinți în relief.'},
+};

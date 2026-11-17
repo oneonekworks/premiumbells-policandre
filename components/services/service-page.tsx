@@ -13,6 +13,7 @@ import {crumbs, heroFacts, heroInsets} from './pages/common';
 import {AutomatizariPage} from './pages/automatizari';
 import {BellsPage} from './pages/bells';
 import {ClopotarPage} from './pages/clopotar';
+import {IconostasePage} from './pages/iconostase';
 import {ComandaPage} from './pages/comanda';
 import {PolicandrePage} from './pages/policandre';
 import {ReconditionarePage} from './pages/reconditionare';
@@ -80,6 +81,7 @@ const pages: Record<string, (props: Props) => Promise<React.ReactNode> | React.R
   'fara-balans': BellsPage,
   'clopotar-electronic': ClopotarPage,
   'automatizari-clopote-cu-balans': AutomatizariPage,
+  iconostase: IconostasePage,
 };
 
 /** The v6 page of a service, chosen by its Romanian slug (boards per page). */
