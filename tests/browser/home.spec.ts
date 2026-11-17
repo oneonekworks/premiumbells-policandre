@@ -45,7 +45,7 @@ test('every home section renders in order, without prices or horizontal scroll',
   await expect(journal.getByRole('listitem').first().getByRole('link')).toHaveAttribute('href', /^\/blog\/[\w-]+$/);
 
   // The footer carries the offer; the catalogue card stays off until price-free PDFs exist.
-  await expect(page.locator('#oferta h2')).toBeVisible();
+  await expect(page.locator('footer#oferta')).toContainText('Cereți o ofertă');
   await expect(page.locator('#servicii a[download]')).toHaveCount(0);
 
   const html = await page.content();

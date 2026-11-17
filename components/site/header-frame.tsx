@@ -44,7 +44,7 @@ export function HeaderFrame({children}: {children: ReactNode}) {
       data-docked={docked || undefined}
       data-hidden={hidden || undefined}
       onFocusCapture={() => setHidden(false)}
-      className="group/header relative isolate mx-auto flex h-15 max-w-(--container-header) items-center justify-between gap-4 rounded-pill pl-4.5 pr-2 transition-transform duration-(--duration-fade) ease-light data-hidden:-translate-y-[140%] lg:h-17 lg:pl-6 lg:pr-2.5"
+      className="group/header pointer-events-auto relative isolate mx-auto flex h-15 max-w-(--container-header) items-center justify-between gap-4 rounded-pill pl-4.5 pr-2 transition-transform duration-(--duration-fade) ease-light data-hidden:-translate-y-[140%] lg:h-17 lg:pl-6 lg:pr-2.5"
     >
       {/* The glass is a layer behind the content, not the pill itself: an element
           with backdrop-filter stops its children (the mega menu) from blurring the page. */}

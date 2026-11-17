@@ -11,7 +11,7 @@ test('Romanian and English shells render with language-specific URLs', async ({p
 
   const scope = isMobile ? page.getByRole('dialog', {name: 'Meniu'}) : page.locator('header');
   if (isMobile) await page.getByRole('button', {name: 'Deschide meniul'}).click();
-  await scope.getByRole('group', {name: 'Limba'}).getByRole('link', {name: /EN/}).click();
+  await scope.getByRole('link', {name: /^Limba: română/}).click();
   await expect(page).toHaveURL(/\/en$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
 
@@ -57,34 +57,38 @@ test('mobile menu opens, closes with Escape, and closes after navigation', async
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
-// Needs the published `navigation` singleton (submenus on, footer columns);
-// skips while the shell runs on the lib/site.ts fallback.
-test('service dropdown opens by button, closes with Escape, outside clicks and navigation', async ({page, isMobile}) => {
+// Needs the published `navigation` singleton and homePage service groups.
+test('the Servicii mega menu opens by button, closes with Escape, outside clicks and navigation', async ({page, isMobile}) => {
   test.skip(isMobile, 'Desktop header only');
   await page.goto('/');
-  const toggle = page.getByRole('button', {name: 'Lista Servicii'});
+  const toggle = page.locator('header').getByRole('button', {name: 'Servicii'});
   test.skip(!(await toggle.count()), 'navigation singleton not published');
 
   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
   await toggle.click();
-  const list = page.locator(`#${await toggle.getAttribute('aria-controls')}`.replace(/:/g, '\\:'));
-  await expect(list.getByRole('link', {name: 'Policandre', exact: true})).toBeVisible();
+  const menu = page.getByRole('region', {name: 'Servicii', exact: true});
+  await expect(menu.getByRole('link', {name: /^Policandre/}).first()).toBeVisible();
+  await expect(menu.getByRole('link', {name: /^Toate lucrările/})).toBeVisible();
   await page.keyboard.press('Escape');
-  await expect(list).toBeHidden();
+  await expect(menu).toBeHidden();
   await expect(toggle).toBeFocused();
 
   await toggle.click();
   await page.locator('main').click({position: {x: 5, y: 5}});
-  await expect(list).toBeHidden();
+  await expect(menu).toBeHidden();
 
   await toggle.click();
-  await list.getByRole('link', {name: 'Clopote', exact: true}).click();
-  await expect(page).toHaveURL(/\/servicii\/clopote$/);
-  await expect(list).toBeHidden();
+  await menu.getByRole('link', {name: /^Clopote cu jug/}).click();
+  await expect(page).toHaveURL(/\/servicii\/clopote\/cu-jug$/);
+  await expect(menu).toBeHidden();
 });
 
-test('footer columns and the mobile submenu come from the menu document', async ({page, isMobile}) => {
+test('the footer is the v6.2 block: offer column, showroom, columns from the menu document', async ({page, isMobile}) => {
   await page.goto('/');
+  const footer = page.locator('footer#oferta');
+  await expect(footer.getByRole('link', {name: /^\+40/})).toHaveAttribute('href', /^tel:/);
+  await expect(footer.getByRole('link', {name: /Buftea/}).first()).toHaveAttribute('href', /google\.com\/maps/);
+  await expect(footer.getByRole('link', {name: '11k.io'})).toBeVisible();
   const solutions = page.getByRole('navigation', {name: 'Soluții'});
   test.skip(!(await solutions.count()), 'navigation singleton not published');
   await expect(solutions.getByRole('link', {name: 'Clopote'})).toHaveAttribute('href', '/servicii/clopote');
@@ -92,7 +96,8 @@ test('footer columns and the mobile submenu come from the menu document', async 
   if (isMobile) {
     await page.getByRole('button', {name: 'Deschide meniul'}).click();
     const dialog = page.getByRole('dialog', {name: 'Meniu'});
-    await dialog.getByRole('link', {name: 'Iconostase'}).click();
+    await dialog.getByRole('button', {name: 'Iconostase și uși'}).click();
+    await dialog.getByRole('link', {name: /^Iconostase/}).click();
     await expect(page).toHaveURL(/\/servicii\/iconostase$/);
   }
 });

@@ -35,7 +35,7 @@ export function SiteFooter({lang, dictionary, shell}: {lang: Lang; dictionary: D
   const {company, showroom} = shell;
   const home = localizedHref(lang, '/');
   const groups = (shell.footerGroups
-    ?? [{heading: dictionary.nav.label, links: shell.header}]).slice(0, 2);
+    ?? [{heading: footer.navigation, links: shell.header}]).slice(0, 2);
   const address = `${showroom.street}, ${showroom.postcode} ${showroom.town}`;
   const mapsQuery = encodeURIComponent(address);
   const legal = [

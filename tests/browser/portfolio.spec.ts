@@ -34,7 +34,7 @@ test('grid opens a project slide-over that closes with Escape and reopens with F
   expect(errors).toEqual([]);
 });
 
-test('the lightbox navigates with arrows and Escape closes only the lightbox', async ({page}) => {
+test('the lightbox navigates with arrows, keeps ?foto in the URL, and Escape closes only the lightbox', async ({page}) => {
   await page.goto('/lucrarile-noastre/clopote');
   const card = page.locator('main article h2 a').first();
   const title = (await card.textContent())!.trim();
@@ -42,16 +42,18 @@ test('the lightbox navigates with arrows and Escape closes only the lightbox', a
   const modal = page.getByRole('dialog', {name: title});
   await modal.getByRole('button', {name: /^Mărește fotografia/}).first().click();
 
-  const lightbox = page.getByRole('dialog', {name: 'Galerie foto'});
+  const lightbox = page.getByRole('dialog', {name: `Fotografii, ${title}`});
   await expect(lightbox).toBeVisible();
+  await expect(page).toHaveURL(/[?&]foto=1/);
   const counter = lightbox.locator('p[aria-live]');
-  await expect(counter).toContainText(/^1 din \d+$/);
-  const total = Number((await counter.textContent())!.split(' din ')[1]);
+  await expect(counter).toContainText(/^1 \/ \d+$/);
+  const total = Number((await counter.textContent())!.split(' / ')[1]);
   await page.keyboard.press('ArrowLeft');
-  await expect(counter).toHaveText(`${total} din ${total}`);
+  await expect(counter).toHaveText(`${total} / ${total}`);
 
   await page.keyboard.press('Escape');
   await expect(lightbox).toBeHidden();
+  await expect(page).not.toHaveURL(/foto=/);
   await expect(modal).toBeVisible();
 });
 

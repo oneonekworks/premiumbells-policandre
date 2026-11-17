@@ -30,7 +30,7 @@ export function SiteHeader({lang, dictionary, shell}: {lang: Lang; dictionary: D
   );
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3 lg:px-4 lg:pt-4">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-40 px-3 pt-3 lg:px-4 lg:pt-4">
       <HeaderFrame>
         <Logo href={home} name={shell.company.name} label={`${shell.company.name}, ${dictionary.nav.home.toLowerCase()}`} />
 
