@@ -50,7 +50,7 @@ export function SiteFooter({lang, dictionary, shell}: {lang: Lang; dictionary: D
     <>
       <footer
         id={offerAnchor}
-        className="on-dark mx-2 mb-2 mt-20 scroll-mt-header rounded-card bg-teal-950 text-on-dark [background:radial-gradient(ellipse_420px_320px_at_100%_-12%,rgb(15_107_99/var(--dT,.42)),transparent_70%),var(--color-teal-950)] md:mx-4 md:mb-4 md:[background:radial-gradient(ellipse_900px_520px_at_100%_-24%,rgb(15_107_99/var(--dT,.42)),transparent_70%),var(--color-teal-950)] lg:mt-40"
+        className="on-dark mx-2 mb-2 mt-20 scroll-mt-header [main:has(.v6-page)+&]:mt-0 rounded-card bg-teal-950 text-on-dark [background:radial-gradient(ellipse_420px_320px_at_100%_-12%,rgb(15_107_99/var(--dT,.42)),transparent_70%),var(--color-teal-950)] md:mx-4 md:mb-4 md:[background:radial-gradient(ellipse_900px_520px_at_100%_-24%,rgb(15_107_99/var(--dT,.42)),transparent_70%),var(--color-teal-950)] lg:mt-40"
       >
         <div className="flex flex-col px-5 pb-24 pt-7 md:mx-auto md:max-w-(--container-page) md:px-6 md:pb-0 md:pt-14 lg:pb-0">
           <div className="flex flex-col md:grid md:grid-cols-2 md:gap-10 md:pb-9 lg:grid-cols-[minmax(0,1.5fr)_repeat(3,minmax(0,1fr))]">

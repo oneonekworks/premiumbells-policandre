@@ -172,37 +172,44 @@ export const SITE_QUERY = defineQuery(`{
 }`);
 
 const blogPostFields = `_id, title, "slug": slug.current, kind, publishedAt, excerpt, cover{${imageFields}}`;
-const blogCardFields = `${blogPostFields}, "textLength": length(pt::text(body)), "author": author->{name, "role": ${fallback('role')}}`;
+const blogCardFields = `${blogPostFields}, "textLength": length(pt::text(body)),
+  "author": author->{name, "role": ${fallback('role')}, portrait{${imageFields}}}`;
 const publicPost = `_type == "blogPost" && ${notDraft} && language == $lang && defined(slug.current) && defined(publishedAt)`;
 
 // The redesigned home page (v5.10). Card services and slice services are
 // projected with `public` so hidden or unpublished ones can be dropped in code
+// (abroadWorks: the map story needs a photo pin per country abroad, even
+// when those works are older)
 // without losing the editor's order. Figures and the map read every public
 // project (60 today; small).
 const homeServiceFields = `_id, "public": ${publicService}, "title": ${localized('title')}, "slug": ${serviceSlug},
-  "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current), "cardLabel": ${localized('cardLabel')}, coverImage{${imageFields}}`;
+  "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current), "cardLabel": ${localized('cardLabel')},
+  "shortName": ${localized('shortName')}, coverImage{${imageFields}}`;
 const homeProjectFields = `_id, "title": ${localized('title')}, "slug": slug.current, location, year,
   "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current), "keySpec": specifications[0]{value, unit, "label": ${localized('label')}},
+  "categoryTitle": select($lang == "en" => category->title.en, category->title.ro), "craft": category->craft, featured,
   coverImage{${imageFields}}`;
 
 export const HOME_QUERY = defineQuery(`
   *[_id == "homePage" && _type == "homePage" && ${published}][0]{
     publishedLanguages,
-    "places": *[${publicProject}]{"country": location.country, "county": location.county},
+    "places": *[${publicProject}]{_id, "country": location.country, "county": location.county, "locality": location.locality},
     hero{
       "badge": badge{${linkFields}},
-      "title": ${localized('title')}, "tagline": ${localized('tagline')},
+      "title": ${localized('title')}, "tagline": ${localized('tagline')}, "highlight": ${localized('highlight')},
       image{${imageFields}},
       "primaryCta": primaryCta{${linkFields}}, "secondaryCta": secondaryCta{${linkFields}},
       "figures": figures[]{_key, source, value, "label": ${localized('label')}},
       "slices": slices[]{_key, image{${imageFields}}, "line": ${localized('line')}, "service": service->{${homeServiceFields}}}
     },
-    services{enabled, "heading": ${localized('heading')}, "groups": groups[]{
+    services{enabled, "heading": ${localized('heading')}, "lead": ${localized('lead')}, "groups": groups[]{
       _key, "title": ${localized('title')}, "facts": ${localized('facts')}, "services": services[]->{${homeServiceFields}}
     }},
     catalogues{enabled, "heading": ${localized('heading')}},
-    works{enabled, "heading": ${localized('heading')}, "projects": projects[]->{"public": ${publicProject}, ${homeProjectFields}}},
+    works{enabled, "heading": ${localized('heading')}, "lead": ${localized('lead')}, "projects": projects[]->{"public": ${publicProject}, ${homeProjectFields}}},
     "latestWorks": *[${publicProject}] | order(coalesce(featured, false) desc, coalesce(year, 0) desc, _createdAt desc)[0...12]{${homeProjectFields}},
+    "abroadWorks": *[${publicProject} && location.country != "RO" && defined(coverImage.asset)]
+      | order(coalesce(featured, false) desc, coalesce(year, 0) desc, _createdAt desc){${homeProjectFields}},
     testimonial{enabled, "testimonial": testimonial->{
       _id, "quote": ${fallback('quote')}, name, "role": ${fallback('role')}, "context": ${fallback('context')}, date,
       portrait{${imageFields}}
@@ -211,7 +218,7 @@ export const HOME_QUERY = defineQuery(`
       _id, "title": ${fallback('title')}, "context": ${fallback('context')},
       durationSeconds, waveform, "url": audio.asset->url, "mimeType": audio.asset->mimeType, artwork{${imageFields}}
     }},
-    blog{enabled, "heading": ${localized('heading')}, "postIds": posts[]._ref},
+    blog{enabled, "heading": ${localized('heading')}, "intro": ${localized('intro')}, "postIds": posts[]._ref},
     about{
       enabled, "heading": ${localized('heading')}, "lead": ${localized('lead')},
       "points": points[]{_key, "key": ${localized('key')}, "text": ${localized('text')}},

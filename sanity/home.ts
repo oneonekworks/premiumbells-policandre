@@ -14,7 +14,8 @@ export type CatalogDownload = CATALOG_DOWNLOADS_QUERY_RESULT[number];
 
 export const getHomePage = cache((lang: Lang) =>
   sanityFetch<HOME_QUERY_RESULT>({
-    query: HOME_QUERY, params: {lang}, tags: [cacheTags.homePage, cacheTags.homeMedia, cacheTags.services, cacheTags.blog],
+    query: HOME_QUERY, params: {lang}, // The map story reads every public project: new or moved works clear it too.
+    tags: [cacheTags.homePage, cacheTags.homeMedia, cacheTags.services, cacheTags.blog, cacheTags.categories, cacheTags.projectCounts],
   }));
 
 export const getCatalogDownloads = cache(() =>

@@ -13,33 +13,41 @@ function PlayIcon({playing, className}: {playing: boolean; className: string}) {
   );
 }
 
+// The board's generic bell-strike shape (V6HomeDesktopB): five strikes that
+// decay, 96 bars. Stands in until the CMS has the recording's own waveform.
+const strikeShape = Array.from({length: 96}, (_, index) => {
+  const phase = ((index / 96) * 5) % 1;
+  return 0.12 + 0.88 * Math.exp(-phase * 3.2) * (0.8 + 0.2 * Math.sin(index * 2.3));
+});
+
 /**
- * The bell player of the listening strip (M34). Nothing loads until play.
- * The waveform comes precomputed from the CMS (100 values, 0–1); without it a
- * plain progress line stands in. While it plays and the strip has scrolled
- * out of view, a small glass mini player stays at the bottom until paused or
- * ended.
+ * The listening card · v6 (boards V6HomeDesktopB, V6HomeMobileB; M34): play,
+ * the "Ascultați" label, the title and the place, a link to the Clopote page,
+ * then the waveform and the time. Nothing loads until play. The bars fill as
+ * the recording plays. While it plays and the card has scrolled out of view,
+ * a small glass mini player stays at the bottom until paused or ended.
  */
-export function BellPlayer({src, type, title, duration, waveform, labels, aside}: {
+export function BellPlayer({src, type, title, duration, waveform, labels, kicker, context, link}: {
   src: string;
   type: string;
   title: string;
   duration: number | null;
   waveform: number[] | null;
   labels: {play: string; pause: string};
-  /** The link at the end of the strip. */
-  aside?: ReactNode;
+  /** "Ascultați", the section's heading. */
+  kicker: string;
+  context: string | null;
+  link?: ReactNode;
 }) {
   const audio = useRef<HTMLAudioElement>(null);
-  const strip = useRef<HTMLDivElement>(null);
+  const card = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(false);
   const [time, setTime] = useState(0);
   const [total, setTotal] = useState(duration ?? 0);
   const [away, setAway] = useState(false);
 
   useEffect(() => {
-    // The wrapper is display: contents, so watch the section it sits in.
-    const element = strip.current?.closest('section');
+    const element = card.current;
     if (!element) return;
     const observer = new IntersectionObserver(([entry]) => setAway(!entry.isIntersecting));
     observer.observe(element);
@@ -54,9 +62,12 @@ export function BellPlayer({src, type, title, duration, waveform, labels, aside}
   };
   const progress = total ? Math.min(1, time / total) : 0;
   const name = (playing ? labels.pause : labels.play).replace('{title}', title);
+  const bars = waveform?.length ? waveform : strikeShape;
+  const timeLine = <span className="tabular-nums">{clock(time)} / {total ? clock(total) : '–:––'}</span>;
 
   return (
-    <div ref={strip} className="contents">
+    <div ref={card}
+      className="grid grid-cols-[3.75rem_minmax(0,1fr)] items-center gap-x-4 rounded-tray bg-white px-5 pb-3 pt-5 shadow-e2 md:w-[min(100%,55rem)] md:grid-cols-[4.5rem_minmax(0,1fr)_auto] md:gap-x-6 md:rounded-panel md:px-8 md:pb-5.5 md:pt-7">
       <audio
         ref={audio}
         preload="none"
@@ -73,41 +84,32 @@ export function BellPlayer({src, type, title, duration, waveform, labels, aside}
         <source src={src} type={type} />
       </audio>
 
-      <div className="flex min-w-0 items-center gap-5">
-        <button
-          type="button"
-          onClick={toggle}
-          className="grid size-16 shrink-0 place-items-center rounded-pill bg-teal-900 text-white transition-colors duration-(--duration-line) hover:bg-teal-950"
-        >
-          <PlayIcon playing={playing} className="size-5" />
-          <span className="sr-only">{name}</span>
-        </button>
-        <div className="min-w-0 flex-1">
-          {waveform?.length ? (
-            <div aria-hidden="true" className="flex h-14 items-center gap-[2px]">
-              {waveform.map((value, index) => (
-                <span
-                  key={index}
-                  className={`w-[2px] shrink-0 rounded-pill transition-colors duration-(--duration-open) ${
-                    index / waveform.length < progress ? 'bg-teal-700' : 'bg-teal-700/26'
-                  }`}
-                  style={{height: `${Math.max(8, value * 100)}%`}}
-                />
-              ))}
-            </div>
-          ) : (
-            <div aria-hidden="true" className="h-1 overflow-hidden rounded-pill bg-teal-700/20">
-              <div className="h-full origin-left bg-teal-700" style={{transform: `scaleX(${progress})`}} />
-            </div>
-          )}
-          <p className="mt-2 text-caption tabular-nums text-ink-soft">
-            {clock(time)}{total ? ` / ${clock(total)}` : ''}
-          </p>
-        </div>
+      <button type="button" onClick={toggle}
+        className="grid size-15 place-items-center rounded-pill bg-teal-900 text-white transition-[background-color,scale] duration-(--duration-line) ease-light hover:scale-104 hover:bg-teal-950 motion-reduce:hover:scale-100 md:size-18">
+        <PlayIcon playing={playing} className="size-5" />
+        <span className="sr-only">{name}</span>
+      </button>
+      <div className="min-w-0">
+        <h2 id="home-audio" className="text-[0.8125rem] font-semibold tracking-[0.02em] text-ink-soft md:text-[0.875rem]">{kicker}</h2>
+        <p className="mt-0.5 font-display text-[1.75rem] font-semibold leading-none md:mt-1 md:text-[2.125rem]">{title}</p>
+        {context && <p className="mt-0.5 text-caption text-ink-soft md:mt-1 md:text-meta">{context}</p>}
       </div>
-      {aside}
+      {link && <div className="hidden self-start md:block">{link}</div>}
 
-      {/* Mini player while the strip is out of view. */}
+      <div aria-hidden="true" className="col-span-full mt-4 flex h-11 items-center justify-between overflow-hidden md:mt-5 md:h-14">
+        {bars.map((value, index) => (
+          <span key={index}
+            className={`w-0.5 flex-none rounded-sm transition-colors duration-(--duration-open) md:w-[3px] ${index / bars.length < progress ? 'bg-teal-700' : 'bg-teal-700/24'}`}
+            style={{height: `${(((6 + Math.max(0, Math.min(1, value)) * 44) / 56) * 100).toFixed(1)}%`}} />
+        ))}
+      </div>
+      <p className="col-span-full mt-1.5 hidden justify-self-end text-meta text-ink-soft md:block">{timeLine}</p>
+      <div className="col-span-full mt-1 flex items-center justify-between border-t border-hairline md:hidden">
+        {link ?? <span />}
+        <span className="text-caption text-ink-soft">{timeLine}</span>
+      </div>
+
+      {/* Mini player while the card is out of view. */}
       <div
         inert={!(playing && away)}
         aria-hidden={!(playing && away)}

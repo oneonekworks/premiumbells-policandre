@@ -1,7 +1,7 @@
 import {expect, test, type Page} from '@playwright/test';
 import {findPriceText} from '../../scripts/lib/price-text';
 
-// Home page (redesign v5.10). Runs against the home page the server reads:
+// Home page (design v6 Clarity). Runs against the home page the server reads:
 // the published one, or the draft when the server runs with
 // SANITY_PREVIEW_DRAFTS=1 (local review before publishing). Skips while the
 // redesigned page has no triptych (old data or the placeholder). Checks
@@ -23,17 +23,22 @@ test('every home section renders in order, without prices or horizontal scroll',
   const errors = await openHome(page);
   const main = page.locator('main');
 
-  // The headline's three words link to the three services.
+  // The headline's three words link to the three services; no other link or
+  // button in the hero than the slices and the pause control (rules.md).
   await expect(main.locator('h1').getByRole('link')).toHaveCount(3);
   const hero = page.locator('#inceput');
-  await expect(hero.getByRole('link', {name: 'Vezi lucrările'})).toHaveAttribute('href', '/lucrarile-noastre');
-  await expect(hero.getByRole('link', {name: 'Cereți o ofertă'})).toHaveAttribute('href', /^(tel:\+\d+|#oferta)$/);
+  const heroLinks = await hero.locator('a').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
+  expect(heroLinks).toHaveLength(6);
+  expect(heroLinks.every((href) => href?.startsWith('/servicii/'))).toBe(true);
+  await expect(hero.locator('dl > div')).toHaveCount(3);
 
   const ids = await main.locator('section[id]').evaluateAll((sections) => sections.map((section) => section.id));
   expect(ids.filter((id) => order.includes(id))).toEqual(order.filter((id) => ids.includes(id)));
   expect(ids).toEqual(expect.arrayContaining(['inceput', 'servicii', 'lucrari', 'despre-noi', 'jurnal']));
 
   expect(await page.locator('#servicii a[href^="/servicii/"]').count()).toBeGreaterThan(3);
+  // The map story: works per country (→ Works) and photo pins (→ the work).
+  expect(await page.locator('#lucrari a[href^="/lucrarile-noastre?tara="]').count()).toBeGreaterThanOrEqual(5);
   expect(await page.locator('#lucrari a[href^="/lucrarile-noastre/"]').count()).toBeGreaterThan(3);
 
   const journal = page.locator('#jurnal');
@@ -41,7 +46,7 @@ test('every home section renders in order, without prices or horizontal scroll',
   // Newest first, with type, date and computed reading time.
   const dates = await journal.locator('time').evaluateAll((times) => times.map((time) => time.getAttribute('datetime')!));
   expect(dates).toEqual([...dates].sort().reverse());
-  await expect(journal.getByRole('listitem').first()).toContainText('min de citit');
+  await expect(journal.getByRole('listitem').first()).toContainText(/\d+ min/);
   await expect(journal.getByRole('listitem').first().getByRole('link')).toHaveAttribute('href', /^\/blog\/[\w-]+$/);
 
   // The footer carries the offer; the catalogue card stays off until price-free PDFs exist.
@@ -73,12 +78,14 @@ test('the triptych rotates until a visitor chooses a slice, and can be restarted
   await expect(toggle).toBeVisible();
 });
 
-test('reduced motion keeps the triptych still, without the pause control', async ({page}) => {
+test('reduced motion keeps the triptych still, without the pause control', async ({page, isMobile}) => {
   await page.emulateMedia({reducedMotion: 'reduce'});
   await openHome(page);
   await expect(page.locator('#inceput').getByRole('button')).toHaveCount(0);
-  await expect.poll(() => page.locator('#inceput a[href^="/servicii/"]').evaluateAll((links) =>
-    links.filter((link) => !link.closest('h1')).map((link) => getComputedStyle(link).flexGrow))).toEqual(['1', '1', '1']);
+  // Equal slices: columns on desktop, bands on phones.
+  const sizes = () => page.locator('#inceput a[href^="/servicii/"]').evaluateAll((links, mobile) =>
+    links.filter((link) => !link.closest('h1')).map((link) => Math.round(link.getBoundingClientRect()[mobile ? 'height' : 'width'])), isMobile);
+  await expect.poll(async () => new Set(await sizes()).size).toBe(1);
 });
 
 test('metadata and Organization JSON-LD come from Sanity', async ({page}) => {

@@ -557,7 +557,7 @@
   .mw-gilt   { color: var(--metal-gilt-solid);   background-image: var(--metal-gilt);   --mwl: var(--metal-gilt-line); }
   a.mw::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0.02em; height: 3px; border-radius: 2px;
     background: var(--mwl); opacity: 0; transition: opacity var(--duration-line) var(--ease-light); } /* never text-decoration: the gradient would fill it */
-  a.mw:hover::after, a.mw[aria-current]::after { opacity: 1; }
+  a.mw:hover::after, a.mw[aria-current]::after, a.mw[data-on]::after { opacity: 1; }
   @media (forced-colors: active) { .mw { -webkit-text-fill-color: currentColor; background: none; } }
 
   /* Family bar: 28×3 on cards, captions, steps */
@@ -578,6 +578,24 @@
     .m-band  { background: radial-gradient(ellipse 460px 380px at 104% 104%, rgb(var(--glow-gold) / var(--gA)), transparent 70%), var(--color-band); }
     .m-white { background: radial-gradient(ellipse 420px 360px at -4% 0%, rgb(var(--glow-teal) / var(--tA)), transparent 70%), var(--color-ground); }
   }
+
+  /* Homepage section moods (boards V6HomeDesktop + B, V6HomeMobileA + B). */
+  .m-svc    { background: radial-gradient(ellipse 1100px 700px at 104% 104%, rgb(var(--glow-gold) / var(--gA)), transparent 70%), radial-gradient(ellipse 800px 500px at 0% 0%, rgb(255 255 255 / 0.7), transparent 70%), var(--color-band); }
+  .m-about  { background: radial-gradient(ellipse 900px 620px at 104% 10%, rgb(var(--glow-gold) / var(--gA)), transparent 70%), radial-gradient(ellipse 800px 500px at 0% 100%, rgb(255 255 255 / 0.7), transparent 70%), var(--color-band); }
+  .m-listen { background: radial-gradient(ellipse 820px 460px at 50% 66%, rgb(var(--glow-gold) / var(--gA)), transparent 70%), var(--color-band); }
+  .m-blog   { background: radial-gradient(ellipse 900px 600px at 104% 100%, rgb(var(--glow-teal) / var(--tA)), transparent 70%), var(--color-ground); }
+  .m-director { background: radial-gradient(ellipse 780px 680px at 24% 50%, rgb(var(--glow-gold) / calc(var(--dG) + 0.12)), transparent 70%), radial-gradient(ellipse 760px 560px at 102% -12%, rgb(120 190 178 / calc(var(--dT) * 0.4)), transparent 70%), var(--color-teal-950); }
+  @media (max-width: 47.99rem) {
+    .m-svc    { background: radial-gradient(ellipse 460px 420px at 104% 102%, rgb(var(--glow-gold) / var(--gA)), transparent 70%), var(--color-band); }
+    .m-about  { background: radial-gradient(ellipse 420px 360px at 104% 70%, rgb(var(--glow-gold) / var(--gA)), transparent 70%), var(--color-band); }
+    .m-listen { background: radial-gradient(ellipse 420px 320px at 50% 64%, rgb(var(--glow-gold) / var(--gA)), transparent 70%), var(--color-band); }
+    .m-blog   { background: radial-gradient(ellipse 400px 360px at 104% 100%, rgb(var(--glow-teal) / var(--tA)), transparent 70%), var(--color-ground); }
+    .m-director { background: radial-gradient(ellipse 420px 420px at 30% 18%, rgb(var(--glow-gold) / calc(var(--dG) + 0.12)), transparent 70%), radial-gradient(ellipse 380px 320px at 104% 104%, rgb(120 190 178 / calc(var(--dT) * 0.4)), transparent 70%), var(--color-teal-950); }
+  }
+  /* The gilded opening quote mark on dark panels. */
+  .quote-mark { display: block; font-family: var(--font-display); font-weight: 600; line-height: 0.9; color: #d6b270;
+    background: linear-gradient(100deg, #b8955a 0%, #e6cb93 55%, #b08a4e 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  @media (forced-colors: active) { .quote-mark { -webkit-text-fill-color: currentColor; background: none; } }
 
   /* Break-out card: the standard clickable card. Markup:
      <a class="bo"><span class="ph"><img/></span><span class="tx"><i class="bar bar-gold"/><b/><small/></span></a>

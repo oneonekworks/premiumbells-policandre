@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
-import {HomeAbout, HomeAudio, HomeCatalogues, HomeHero, HomeJournal, HomeServices, HomeWorks} from '@/components/home/home-sections';
+import {HomeAbout, HomeAudio, HomeCatalogues, HomeDirector, HomeHero, HomeJournal, HomeServices} from '@/components/home/home-sections';
+import {HomeMapStory} from '@/components/home/map-story';
 import {HomePlaceholder} from '@/components/home/home-placeholder';
 import {photoAlt} from '@/lib/alt';
 import {getDictionary} from '@/lib/i18n/dictionaries';
@@ -10,7 +11,6 @@ import {getBlogPosts} from '@/sanity/blog';
 import {getCatalogDownloads, getHomePage} from '@/sanity/home';
 import {sanityImageUrl} from '@/sanity/image';
 import {routeLang} from '@/sanity/portfolio-routes';
-import {getCategories} from '@/sanity/portfolio';
 import {getSiteContent} from '@/sanity/site';
 
 // Title, description and share image: the home page's own SEO fields, then
@@ -72,34 +72,36 @@ export default async function HomePage({params}: PageProps<'/[lang]'>) {
     return <>{structuredData}<HomePlaceholder lang={lang} dictionary={dictionary} phoneHref={contact.phoneHref} /></>;
   }
 
-  const {services, catalogues, works, testimonial, audio, blog, about} = home;
+  const {services, catalogues, works, audio, blog, about} = home;
   // Only read what a visible section needs.
-  const [posts, downloads, categories] = await Promise.all([
+  const [posts, downloads] = await Promise.all([
     blog && blog.enabled !== false ? getBlogPosts(lang) : [],
     catalogues?.enabled === true ? getCatalogDownloads() : [],
-    works && works.enabled !== false ? getCategories(lang) : [],
   ]);
   const chosenPosts = blog?.postIds?.length
     ? blog.postIds.flatMap((id) => posts.filter((post) => post._id === id && post.slug))
     : posts.filter((post) => post.slug).slice(0, 3);
+  // The map pins: the editor's works when chosen, else the representative ones
+  // and, for the countries abroad, their newest works.
   const chosenWorks = works?.projects?.filter((project) => project?.public).length
     ? works.projects.flatMap((project) => (project?.public ? [project] : []))
-    : home.latestWorks;
+    : [...home.latestWorks, ...home.abroadWorks];
 
   const base = {lang, dictionary};
 
   return (
-    <>
+    <div className="v6-page mood-subtle">
       {structuredData}
-      <HomeHero {...base} home={home} contact={contact} />
+      <HomeHero {...base} home={home} />
       {services && (
         <HomeServices {...base} section={services}
           catalogues={catalogues && <HomeCatalogues {...base} section={catalogues} downloads={downloads} />} />
       )}
-      {works && <HomeWorks {...base} section={works} projects={chosenWorks} categories={categories} places={home.places} />}
-      {about && <HomeAbout {...base} section={about} contact={contact} />}
+      {works && <HomeMapStory {...base} section={works} works={chosenWorks} places={home.places} />}
+      {about && <HomeAbout {...base} section={about} />}
+      {about && <HomeDirector {...base} section={about} />}
       {audio && <HomeAudio {...base} section={audio} contact={contact} />}
-      {blog && <HomeJournal {...base} section={blog} testimonial={testimonial} posts={chosenPosts} />}
-    </>
+      {blog && <HomeJournal {...base} section={blog} posts={chosenPosts} />}
+    </div>
   );
 }

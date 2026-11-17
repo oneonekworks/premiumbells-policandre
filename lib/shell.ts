@@ -29,6 +29,12 @@ export type ShellLink = {
 export type SocialNetwork = 'facebook' | 'instagram' | 'youtube';
 export type Metal = 'gold' | 'bronze' | 'gilt';
 
+/** A work category's craft (workCategory.craft) → its metal: gold for
+ * Policandre and Recondiționări, bronze for Clopote, gilt for Iconostase și uși. */
+export function craftMetal(craft: string | null | undefined): Metal {
+  return craft === 'clopote' ? 'bronze' : craft === 'iconostase-usi' ? 'gilt' : 'gold';
+}
+
 /** One craft column of the mega menu and one section of the mobile menu. */
 export type ServiceGroup = {
   title: string;
