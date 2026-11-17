@@ -183,8 +183,8 @@ export const getShell = cache(async (lang: Lang, dictionary: Dictionary): Promis
         town: settings.showroom.town, street: settings.showroom.street, postcode: settings.showroom.postcode ?? '',
         photo: settings.showroom.photo ?? null, mapsUrl: settings.showroom.mapsUrl ?? null, wazeUrl: settings.showroom.wazeUrl ?? null,
       }
-      // The board's values (address to confirm: 108 vs 110) until the CMS has them.
-      : {town: 'Buftea', street: 'Strada Agricultori 108', postcode: '070000', photo: null, mapsUrl: null, wazeUrl: null},
+      // The showroom (no. 110, confirmed 2026-11-17) until the CMS has it.
+      : {town: 'Buftea', street: 'Strada Agricultori 110', postcode: '070000', photo: null, mapsUrl: null, wazeUrl: null},
     responseTime: settings.responseTime ?? null,
     partners: linkHref(settings.partnersLink, lang, contact) ?? `mailto:${email}`,
     header: withBlog(header),

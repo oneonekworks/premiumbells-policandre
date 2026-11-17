@@ -238,7 +238,7 @@ classification of the 39 bell works.
      CMS has no work in Belgium or Greece yet; the hero shows 5 țări manually);
    - e. `bellTypes` on the 39 bell works: proposal in
      `docs/v6-bell-types-proposal.md`, for the user to review before any write;
-   - f. waits on the client: catalogue prices + date, showroom (108 vs 110,
+   - f. waits on the client: catalogue prices + date, showroom (no. 110,
      photo), response time, `partnersLink`.
 
    a–c **published** 2026-11-17 (approved): 19 drafts (homePage, 13 services,
@@ -247,6 +247,20 @@ classification of the 39 bell works.
    current v5 pages read them without errors (every header, footer and home
    link returns 200); `npm run dev` shows them after a hard refresh, a host
    after the publish webhook or within the hourly revalidate.
+
+   **User decisions, 2026-11-17** (for V3 onward):
+   - Go ahead with V3 → V7 in order; pushing `prototype/mobile-publishing`
+     and Studio `main` is approved (pushed 2026-11-17 at `9a4942f` / `444a116`).
+   - e. bell types: not now; the user corrects them later in the Studio. Build
+     the filters so works without `bellTypes` still show under Clopote.
+   - f. catalogue prices: show a temporary "La comandă" in place of every
+     price until the client sends them (no figures, no date line). Showroom:
+     Strada Agricultori **110**, Buftea (code fallback updated); a temporary
+     photo exists, its upload to `siteSettings.showroom` waits on an explicit
+     write OK. Response time and `partnersLink`: placeholders.
+   - Missing photos (map pins, inset for Automatizări, the La comandă drawing
+     …): neutral placeholders, the user uploads the real ones later.
+   - Placeholders are fine wherever content is still missing.
 
 ### V3 · Homepage v6
 
