@@ -173,15 +173,36 @@ footer and menus).
 6. Story hero component (split; Pe scurt; two framed insets; photo control)
    and the quiet offer block.
 
-**V1 progress (2026-11-17):** steps 1–3 committed (tokens + breakpoints + fonts;
-primitives + `/v6` preview, built only with `DESIGN_PREVIEW=1`; header pill /
-mega menu from `homePage.services.groups` / mobile menu / bottom bar, section rail
-removed; header is fixed, `main` reserves 72 / 84 px). Notes: the browser pane's
-screenshots mis-draw anything behind `backdrop-filter` (inject
-`*{backdrop-filter:none!important}` to compare); `next build` sometimes stops once
-with a Next.js security-upgrade notice and passes on retry (upgrade not run, user to
-decide); mega-menu names wrap until `shortName` (V2). Open: steps 4 (footer),
-5 (Lightbox), 6 (story hero + quiet offer), `shell.spec.ts`, browser specs, docs.
+**V1 done (2026-11-17), local commits `638886c` → `0912aed`.** Notes for the
+next phases:
+
+- Tokens: `app/globals.css` = `tokens.css` + Patina aliases (block marked "delete
+  in V7"). Primitives as utilities: `btn` + `btn-primary` / `-secondary` /
+  `-light` / `-quiet` / `-outline-light` / `-icon`, `btn-sm` 48, `btn-lg` 60;
+  `chip`, `text-link`, `kicker`, `display`, `family-bar`; `.bo` (+ `bo-left`,
+  `on-white`), glass, overlay, `.mw-*`, moods, `.dark-panel` from tokens.css.
+- Header: fixed, so `main` has `pt-18 lg:pt-21`; v6 heroes that need the glow
+  behind the pill pull up with a negative margin. Only the pill takes clicks.
+  The pill's glass is a background layer, because an element with
+  `backdrop-filter` stops the mega menu inside it from blurring the page.
+  Menu data: `shell.serviceGroups` (from `homePage.services.groups`, metals by
+  position, Clopote heading links to its parent page).
+- Footer: one component, phones reorder with `display: contents` + `order`.
+  `shell.showroom` holds the board's values until V2 adds the fields.
+- Lightbox (`components/portfolio/lightbox.tsx`): `sets` (one, or several with
+  tabs for Iconostase), `offer`, `title`; `usePhotoParam` writes `?foto=N`;
+  only `addressable` galleries open from a link (the project gallery). Ratio
+  from asset width / height and crop.
+- `StoryHero` (`components/services/story-hero.tsx`) + `Breadcrumb`,
+  `photoControlClass`; `QuietOffer` (`components/site/quiet-offer.tsx`).
+  Not wired into pages yet (V4).
+- `/v6` preview: build with `DESIGN_PREVIEW=1`.
+- Browser-pane screenshots mis-draw anything behind `backdrop-filter`; inject
+  `*{backdrop-filter:none!important}` to compare with the boards.
+- Browser specs on a production build: a scratch config in `test-results/`
+  needs `outputDir: './out'` (Playwright empties `test-results/` on start).
+- `next build` may stop once with a Next.js security-upgrade notice; retry.
+  The upgrade itself is the user's call.
 
 ### V2 · Schema and content (approved steps, Studio repo)
 

@@ -7,7 +7,7 @@ kickoff prompt below.
 
 ## Where we are (2026-11-17)
 
-- **Code:** branch `prototype/mobile-publishing`, last commit `556b71c`. Built
+- **Code:** branch `prototype/mobile-publishing`; V1 committed locally (last `0912aed` plus the docs commit). Built
   on the Patina tokens + v5.10 homepage (design-plan phases A–C, 2026-11-08).
   Service pages, Works, blog and 404 still use the older v4-era layout.
 - **Design:** v6.2 on the canvas https://claude.ai/artifact/43jzYBJXgk8j9jK9uRcZKF
@@ -28,6 +28,13 @@ kickoff prompt below.
 - **V0 done 2026-11-17:** the per-page gap list is in `docs/design-plan.md`
   under V0, approved with its four decisions (craft chips on Works,
   map places abroad, service short names, the price check).
+- **V1 done 2026-11-17** (local commits `638886c` → `0912aed`, not pushed):
+  Clarity tokens and breakpoints, primitives, header + mega menu + mobile menu
+  + bottom bar, footer v6.2, Lightbox v6.2 (zoom, strip, `?foto=`, tabs), story
+  hero + quiet offer (shown on `/v6` with `DESIGN_PREVIEW=1`, wired in V4).
+  Pages keep their old layouts until V3–V6. Notes in `docs/design-plan.md`
+  under V1. **Next: V2** (schema and content; each Studio step needs the
+  user's OK).
 - **Photos:** almost all originals are in Sanity; `docs/design/clarity-v6/assets.md`
   lists every image on the boards with a description to find its original.
   The user uploads the missing ones.

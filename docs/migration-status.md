@@ -1,7 +1,7 @@
 # Migration Status
 
 **Overall status:** Portfolio (60 works), services and catalogue, homepage, blog and global content managed in Sanity and live on the hosted preview; no prices anywhere
-**Current phase:** Phase 7 done 2026-11-05; design v6 "Clarity" locked 2026-11-17 (v6.2 release candidate); v6 phase V0 (gap list, schema reconciliation) done and approved 2026-11-17; next: V1–V7 in [design-plan](design-plan.md), then Phase 8 — see [handoff](handoff.md)
+**Current phase:** Phase 7 done 2026-11-05; design v6 "Clarity" locked 2026-11-17 (v6.2 release candidate); v6 phase V0 (gap list, schema reconciliation) done and approved 2026-11-17; V1 (tokens and shared pieces) done 2026-11-17, local commits; next: V2–V7 in [design-plan](design-plan.md), then Phase 8 — see [handoff](handoff.md)
 **Last updated:** 2026-11-17
 
 ## Accepted decisions
@@ -154,6 +154,24 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-17 (design v6, phase V1)
+
+- Local commits on `prototype/mobile-publishing` (not pushed): `638886c` tokens,
+  breakpoints, fonts · `2ee51cd` primitives + `/v6` preview · `4641ccc` header,
+  mega menu, mobile menu, bottom bar · `81a8fb6` footer v6.2 · `a072d3d`
+  Lightbox v6.2 · `2685335` story hero + quiet offer · `0912aed` specs and a
+  header click fix. No Sanity change.
+- Checks on a production build: lint, typecheck, 43 unit tests; browser 58
+  passed, 22 skipped (they need the test documents, as before). Each piece was
+  compared with its board at 1440 and 390 in the browser pane.
+- `/v6` shows the shared pieces in isolation; it is only built with
+  `DESIGN_PREVIEW=1` and is a 404 otherwise (checked).
+- Placeholders until V2: footer showroom (board address, `[fotografie]`) and
+  response time (`[X] zile lucrătoare`); mega-menu names wrap until `shortName`.
+- `next build` sometimes stops once with a Next.js "known security
+  vulnerability" notice suggesting `next upgrade --agent=security`; a retry
+  passes. The upgrade was not run (user's decision).
 
 ### 2026-11-17 (design v6 locked)
 
