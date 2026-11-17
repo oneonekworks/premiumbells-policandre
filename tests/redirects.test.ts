@@ -14,6 +14,7 @@ test('next.config serves the legacy redirect table as 308s', async () => {
       '/servicii/iconostase/lemn-bronz': '/servicii/iconostase',
       '/servicii/iconostase/lemn': '/servicii/iconostase',
       '/_lucrarile-noastre': '/lucrarile-noastre',
+      '/servicii/iconostase/iconostas-bronz': '/servicii/iconostase',
       '/blog/raport-18-ianuarie-23': '/blog/raport-18-ianuarie-2023',
       '/blog2': '/blog',
     },
@@ -32,7 +33,7 @@ test('redirects are literal paths with no chains, loops or duplicates', () => {
 });
 
 test('live service variants are not redirected', () => {
-  for (const path of ['/servicii/iconostase/marmura', '/servicii/iconostase/lemn-aur', '/servicii/clopote/cu-jug']) {
+  for (const path of ['/servicii/iconostase/marmura', '/servicii/iconostase/lemn-aur', '/servicii/clopote/fara-balans']) {
     assert.ok(!legacyRedirects.some(({source}) => source === path), path);
   }
 });

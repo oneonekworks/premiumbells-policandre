@@ -96,7 +96,8 @@ test('catalogue items come in family order, published only', async () => {
 
 test('route helpers', () => {
   assert.equal(servicePath(null, 'policandre'), '/servicii/policandre');
-  assert.equal(servicePath('clopote', 'cu-jug'), '/servicii/clopote/cu-jug');
+  assert.equal(servicePath('clopote', 'cu-jug'), '/servicii/clopote');
+  assert.equal(servicePath('clopote', 'fara-balans'), '/servicii/clopote/fara-balans');
   assert.equal(catalogKey(['policandre', 'horos', 'policandre']), 'horos,policandre');
   assert.equal(catalogKey(null), '');
   assert.deepEqual(catalogAnchors({_id: 'legacy-catalog-policandre-09', anchorIds: ['Policandru-9', 'Policandru-10']}),

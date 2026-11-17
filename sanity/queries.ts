@@ -139,7 +139,7 @@ export const SERVICE_QUERY = defineQuery(`
         "description": ${localized('description')}, "audio": audio.asset->url
       }},
       _type == "sectionVideos" => {"videos": videos[]{${videoFields}}},
-      _type == "sectionCatalogue" => {families, pricesUpdatedAt},
+      _type == "sectionCatalogue" => {families},
       _type == "sectionIncluded" => {
         "items": items[]{_key, "title": ${localized('title')}, "text": ${localized('text')}},
         "sentence": ${localized('sentence')}, "link": link{${linkFields}}

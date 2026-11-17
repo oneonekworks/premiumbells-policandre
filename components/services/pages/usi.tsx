@@ -83,7 +83,7 @@ export async function UsiPage({lang, service, dictionary}: PageProps) {
                   <i aria-hidden="true" className="size-3 rounded-pill bg-[linear-gradient(135deg,#4a2c1e,#a0643f)]" />{copy.model.material}
                 </p>
                 <p className="display mt-2.5 text-[2rem] font-semibold lg:text-[2.5rem]">{copy.model.price}</p>
-                <p className="mt-3 text-body leading-[1.6] text-ink-soft">{copy.model.text}</p>
+                <p className="mt-3 text-body leading-[1.6] text-ink-soft">{model?.description ?? copy.model.text}</p>
                 <p className="mt-4.5 inline-flex h-9 items-center gap-2 rounded-pill bg-teal-tint px-3.5 text-caption font-semibold text-teal-900">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z" /><path d="M9 12l2 2 4-4" /></svg>
                   {copy.model.quality}

@@ -167,7 +167,7 @@ export function BellGuide({kind, rows, sets, labels, initial}: {
   const sub = multi ? `${set!.weights.map(num).join(', ')} kg` : `Diametru ${num(r0.diameter)} cm · Înălțime ${num(r0.height)} cm · Notă ${r0.note}`;
   const offer = multi ? `${labels.offer} Set ${setIndex + 1}` : `${labels.offer} ${kg(r0.weight)}`;
 
-  let group = -1;
+  const groupOf = (weight: number) => GROUPS.findIndex(([from, to]) => weight >= from && weight < to);
   return (
     <div className="mt-7 flex flex-col lg:mt-14 lg:grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start lg:gap-12">
       <svg width="0" height="0" className="absolute" aria-hidden="true">
@@ -205,9 +205,8 @@ export function BellGuide({kind, rows, sets, labels, initial}: {
             {labels.columns.map((column) => <div key={column} role="columnheader">{column}</div>)}
           </div>
           {rows.map((row, index) => {
-            const groupIndex = GROUPS.findIndex(([from, to]) => row.weight >= from && row.weight < to);
-            const heading = groupIndex !== group ? groupIndex : -1;
-            group = groupIndex;
+            const groupIndex = groupOf(row.weight);
+            const heading = index === 0 || groupOf(rows[index - 1].weight) !== groupIndex ? groupIndex : -1;
             const on = activeKeys.has(row.key);
             return (
               <div key={row.key} className="contents">

@@ -1,166 +1,115 @@
 import {expect, test, type Page} from '@playwright/test';
 import {findPriceText} from '../../scripts/lib/price-text';
 
-// Services and catalogue (Phase 6). The first tests need no content. The rest
-// need the hand-made test documents (`npm run services:test-docs -- --write`)
-// and skip when they are not published.
+// Service pages v6 (V4): one story hero per page, the Policandre catalogue,
+// the bell pages, the Iconostase material layer, redirects and the price
+// guard. Shape, not copy: the published services are the fixtures.
+
+const pages = [
+  '/servicii/policandre', '/servicii/policandre-la-comanda', '/servicii/reconditionare-policandre',
+  '/servicii/clopote', '/servicii/clopote/fara-balans', '/servicii/clopotar-electronic',
+  '/servicii/automatizari-clopote-cu-balans', '/servicii/iconostase', '/servicii/usi',
+];
 
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
-const hub = '/servicii/test-serviciu';
-const variant = `${hub}/test-varianta`;
 
-/** Currency in the full HTML (head, JSON-LD, RSC payload) or "preț" in visible text. */
-async function expectNoPrices(page: Page, path: string) {
-  const response = await page.goto(path);
-  expect(response?.status(), path).toBe(200);
-  const html = await page.content();
-  expect(findPriceText(html).filter(({level}) => level === 'error').map(({match}) => match), path).toEqual([]);
-  const text = await page.locator('body').innerText();
-  expect(findPriceText(text).filter(({rule}) => rule === 'price-word').map(({match}) => match), path).toEqual([]);
+async function location(page: Page, path: string) {
+  const response = await page.request.get(path, {maxRedirects: 0});
+  const target = new URL(response.headers().location ?? '', 'http://x');
+  return {status: response.status(), path: target.pathname, hash: target.hash};
 }
 
-test('the services overview renders in both languages without errors', async ({page}) => {
+test('every service page has the story hero, a breadcrumb to /#servicii and no overflow', async ({page}) => {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
-  await page.goto('/servicii');
-  await expect(page.locator('main h1')).toHaveText('Servicii');
-  expect(await noOverflow(page)).toBe(true);
-  await page.goto('/en/services');
-  await expect(page.locator('main h1')).toHaveText('Services');
+  for (const path of pages) {
+    const response = await page.goto(path);
+    expect(response?.status(), path).toBe(200);
+    await expect(page.locator('main h1'), path).toHaveCount(1);
+    const crumbs = page.getByRole('navigation', {name: 'Breadcrumb'});
+    await expect(crumbs.locator('a[href="/#servicii"]'), path).toHaveCount(1);
+    await expect(crumbs.locator('[aria-current="page"]'), path).toHaveCount(1);
+    expect(await noOverflow(page), path).toBe(true);
+  }
   expect(errors).toEqual([]);
 });
 
-test('unknown services and variants are 404s', async ({page}) => {
-  for (const path of ['/servicii/serviciu-inexistent', '/servicii/serviciu-inexistent/varianta', '/en/services/no-such-service']) {
+test('/servicii and the Clopote chooser are gone; old addresses redirect permanently', async ({page}) => {
+  expect(await location(page, '/servicii')).toMatchObject({status: 308, path: '/', hash: '#servicii'});
+  for (const [source, target] of [
+    ['/servicii/clopote/cu-jug', '/servicii/clopote'],
+    ['/servicii/iconostase/iconostas-bronz', '/servicii/iconostase'],
+    ['/servicii/iconostase/lemn', '/servicii/iconostase'],
+    ['/servicii/servicii/usi', '/servicii/usi'],
+  ]) {
+    expect(await location(page, source), source).toMatchObject({status: 308, path: target});
+  }
+  for (const path of ['/servicii/serviciu-inexistent', '/servicii/clopote/inexistent', '/en/services/no-such-service']) {
     expect((await page.goto(path))?.status(), path).toBe(404);
   }
-  await expect(page.locator('header')).toBeVisible();
 });
 
-test('legacy duplicate and typo URLs redirect permanently', async ({page}) => {
-  for (const [source, target] of [
-    ['/servicii/iconostase/lemn', '/servicii/iconostase'],
-    ['/servicii/iconostase/lemn-bronz', '/servicii/iconostase'],
-    ['/servicii/servicii/usi', '/servicii/usi'],
-    ['/_lucrarile-noastre', '/lucrarile-noastre'],
-  ]) {
-    const response = await page.request.get(source, {maxRedirects: 0});
-    expect(response.status(), source).toBe(308);
-    expect(new URL(response.headers().location, 'http://x').pathname, source).toBe(target);
-  }
-});
-
-test.describe('with the test documents', () => {
-  test.beforeEach(async ({page}) => {
-    const response = await page.request.get(hub, {maxRedirects: 0});
-    test.skip(response.status() !== 200, 'Test documents are not published (npm run services:test-docs -- --write)');
-  });
-
-  test('the overview lists the service with its active variant only', async ({page}) => {
-    await page.goto('/servicii');
-    await expect(page.getByRole('link', {name: 'Serviciu de test'})).toHaveAttribute('href', hub);
-    const variants = page.getByRole('list', {name: 'Variante: Serviciu de test'});
-    await expect(variants.getByRole('link')).toHaveText(['Variantă de test']);
-    await expect(page.getByText('Variantă ascunsă de test')).toHaveCount(0);
-  });
-
-  test('hub and variant pages render their sections, breadcrumbs and related works', async ({page}) => {
-    const errors: string[] = [];
-    page.on('pageerror', (error) => errors.push(error.message));
-    await page.goto(hub);
-    await expect(page.locator('main h1')).toHaveText('Serviciu de test');
-    await expect(page.getByRole('heading', {name: 'Variante'})).toBeVisible();
-    await expect(page.getByRole('table')).toContainText('1.100 kg');
-    await expect(page.getByText('Include: limba, icoane')).toBeVisible();
-    await expect(page.getByText('Cu clopotar electronic')).toBeVisible();
-    await expect(page.getByRole('heading', {name: 'Lucrări realizate'})).toBeVisible();
-    await expect(page.getByRole('link', {name: /Cereți o ofertă/})).toHaveAttribute('href', /^tel:/);
-    expect(await noOverflow(page)).toBe(true);
-    await expect(page).toHaveTitle(/Serviciu de test/);
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/servicii\/test-serviciu$/);
-    await expect(page.locator('link[hreflang="en"]')).toHaveCount(0);
-
-    await page.getByRole('link', {name: 'Variantă de test'}).first().click();
-    await expect(page).toHaveURL(new RegExp(`${variant}$`));
-    const breadcrumb = page.getByRole('navigation', {name: 'Breadcrumb'});
-    await expect(breadcrumb.getByRole('link')).toHaveText(['Servicii', 'Serviciu de test']);
-    expect(errors).toEqual([]);
-  });
-
-  test('hidden, misplaced and English-only URLs are 404s; a wrong-language slug redirects', async ({page}) => {
-    for (const path of ['/servicii/test-varianta', '/servicii/inexistent/test-varianta', `${hub}/test-ascuns`, '/en/services/test-service']) {
-      expect((await page.goto(path))?.status(), path).toBe(404);
-    }
-    const response = await page.request.get('/servicii/test-service', {maxRedirects: 0});
-    expect(response.status()).toBe(308);
-    expect(new URL(response.headers().location, 'http://x').pathname).toBe(hub);
-  });
-
-  test('a legacy #Policandru-N link opens that catalogue item; Escape closes it', async ({page}) => {
-    await page.goto(`${hub}#Policandru-7`);
-    const dialog = page.getByRole('dialog', {name: 'Policandru de test nr. 7'});
-    await expect(dialog).toBeVisible();
-    await expect(dialog).toContainText('3,1 m');
-    await expect(dialog).toContainText('cod 110311');
-    await expect(dialog).toContainText('Aurit');
-    await page.keyboard.press('Escape');
-    await expect(dialog).toBeHidden();
-    expect(new URL(page.url()).hash).toBe('');
-  });
-
-  test('a catalogue card opens from the keyboard, Back closes it and focus returns', async ({page}) => {
-    await page.goto(hub);
-    const card = page.getByRole('button', {name: 'Vezi detaliile: Policandru de test nr. 1'});
-    await expect(card).toContainText('1 nivel ·');
-    await card.focus();
-    await page.keyboard.press('Enter');
-    const dialog = page.getByRole('dialog', {name: 'Policandru de test nr. 1'});
-    await expect(dialog).toBeVisible();
-    expect(new URL(page.url()).hash).toMatch(/^#.+/);
-    await expect(dialog.getByRole('button', {name: 'Închide'})).toBeFocused();
-    await page.goBack();
-    await expect(dialog).toBeHidden();
-    await expect(page).toHaveURL(new RegExp(`${hub}$`));
-    await expect(card).toBeFocused();
-    await page.goForward();
-    await expect(dialog).toBeVisible();
-  });
-
-  test('a model opens its gallery; Escape closes only the lightbox', async ({page}) => {
-    await page.goto(hub);
-    await page.getByRole('button', {name: 'Vezi detaliile: Model A'}).click();
-    const dialog = page.getByRole('dialog', {name: 'Model A'});
-    await expect(dialog).toContainText('Înălțime');
-    await expect(page).toHaveURL(/#Model-A$/);
-    await dialog.getByRole('button', {name: /^Mărește fotografia/}).first().click();
-    const lightbox = page.getByRole('dialog', {name: 'Galerie foto'});
-    await expect(lightbox).toBeVisible();
-    await page.keyboard.press('Escape');
-    await expect(lightbox).toBeHidden();
-    await expect(dialog).toBeVisible();
-    await dialog.getByRole('button', {name: 'Închide'}).click();
-    await expect(dialog).toBeHidden();
-    expect(await noOverflow(page)).toBe(true);
-  });
-
-  test('YouTube loads only after a click', async ({page}) => {
-    await page.goto(hub);
-    const play = page.getByRole('button', {name: /^Redă videoclipul/});
-    test.skip(await play.count() === 0, 'No YouTube video in the test documents');
-    await expect(page.locator('iframe')).toHaveCount(0);
-    await play.click();
-    await expect(page.locator('iframe[src*="youtube-nocookie.com"]')).toHaveCount(1);
-  });
-});
-
-// Runs on the published services (and the test documents when present).
-test('no prices in the HTML or visible text of any service page or dialog', async ({page}) => {
-  await page.goto('/servicii');
-  const links = await page.locator('main a[href^="/servicii/"]').evaluateAll((anchors) =>
-    [...new Set(anchors.map((anchor) => anchor.getAttribute('href')!))]);
-  test.skip(links.length === 0, 'No published services');
-  for (const path of ['/servicii', ...links]) await expectNoPrices(page, path);
+test('Policandre: the level filter changes the grid, legacy anchors land on a card, the photo opens the Lightbox', async ({page}) => {
   await page.goto('/servicii/policandre#Policandru-7');
+  const cards = page.locator('[data-catalogue] > li');
+  await expect(page.locator('#Policandru-7')).toBeInViewport();
+  const all = await cards.count();
+  expect(all).toBeGreaterThan(12);
+  await expect(cards.first()).toContainText('La comandă');
+  const filter = page.getByRole('group', {name: 'Filtrați după nivele'}).filter({visible: true});
+  await filter.getByRole('button', {name: 'Horos'}).click();
+  await expect(filter.getByRole('button', {name: 'Horos'})).toHaveAttribute('aria-pressed', 'true');
+  expect(await cards.count()).toBeLessThan(all);
+  await cards.first().getByRole('button').click();
+  const lightbox = page.getByRole('dialog');
+  await expect(lightbox).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(lightbox).toBeHidden();
+});
+
+test('Clopote: the type picker marks the current page; a row and a set drive the size guide', async ({page}) => {
+  await page.goto('/servicii/clopote');
+  const picker = page.getByRole('navigation', {name: 'Ce fel de clopot căutați?'});
+  await expect(picker.locator('[aria-current="page"]')).toHaveAttribute('href', '/servicii/clopote');
+  await expect(picker.getByRole('link').nth(1)).toHaveAttribute('href', '/servicii/clopote/fara-balans');
+  const rows = page.getByRole('table').getByRole('button');
+  await rows.first().click();
+  await expect(rows.first()).toHaveAttribute('aria-pressed', 'true');
+  const firstSet = page.getByRole('button', {name: /^Set 1/});
+  await firstSet.click();
+  await expect(firstSet).toHaveAttribute('aria-pressed', 'true');
+  await expect(rows.first()).toHaveAttribute('aria-pressed', 'false');
+  await page.goto('/servicii/clopote/fara-balans');
+  await expect(page.getByRole('navigation', {name: 'Ce fel de clopot căutați?'}).locator('[aria-current="page"]'))
+    .toHaveAttribute('href', '/servicii/clopote/fara-balans');
+});
+
+test('Iconostase: a material opens the Lightbox at its own address; Back closes it; the address opens it directly', async ({page}) => {
+  await page.goto('/servicii/iconostase');
+  await page.locator('main a[href="/servicii/iconostase/lemn-aur"]').first().click();
+  const layer = page.getByRole('dialog');
+  await expect(layer).toBeVisible();
+  await expect(page).toHaveURL(/\/servicii\/iconostase\/lemn-aur$/);
+  await expect(layer.getByRole('tab', {selected: true})).toHaveCount(1);
+  await page.goBack();
+  await expect(layer).toBeHidden();
+  await expect(page).toHaveURL(/\/servicii\/iconostase$/);
+
+  const html = await (await page.request.get('/servicii/iconostase/marmura')).text();
+  expect(html).toContain('<dialog');
+  await page.goto('/servicii/iconostase/marmura');
   await expect(page.getByRole('dialog')).toBeVisible();
-  expect(findPriceText(await page.content()).filter(({level}) => level === 'error')).toEqual([]);
+  await page.keyboard.press('Escape');
+  await expect(page).toHaveURL(/\/servicii\/iconostase$/);
+});
+
+// Prices: none on any service page while the Policandre catalogue shows "La comandă" (user, 2026-11-17).
+test('no prices in the HTML or visible text of any service page', async ({page}) => {
+  for (const path of pages) {
+    await page.goto(path);
+    const html = await page.content();
+    expect(findPriceText(html).filter(({level}) => level === 'error').map(({match}) => match), path).toEqual([]);
+    const text = await page.locator('body').innerText();
+    expect(findPriceText(text).filter(({rule}) => rule === 'price-word').map(({match}) => match), path).toEqual([]);
+  }
 });
