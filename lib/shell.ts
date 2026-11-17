@@ -2,7 +2,7 @@ import 'server-only';
 import {cache} from 'react';
 import type {Dictionary} from '@/lib/i18n/dictionaries';
 import {languages, localizedHref, type Lang} from '@/lib/i18n/routing';
-import {servicePath, servicesPath} from '@/lib/services';
+import {servicePath, servicesAnchor} from '@/lib/services';
 import {linkHref, submenuPage, type Contact} from '@/lib/site-links';
 import {getBlogPosts} from '@/sanity/blog';
 import {getHomePage} from '@/sanity/home';
@@ -78,7 +78,7 @@ const networks: SocialNetwork[] = ['facebook', 'instagram', 'youtube'];
 
 function fallbackHeader(lang: Lang, dictionary: Dictionary): ShellLink[] {
   return [
-    {label: dictionary.nav.services, href: localizedHref(lang, servicesPath), menu: 'services'},
+    {label: dictionary.nav.services, href: `${localizedHref(lang, '/')}#${servicesAnchor}`, menu: 'services'},
     {label: dictionary.nav.works, href: localizedHref(lang, '/lucrarile-noastre')},
     {label: dictionary.nav.blog, href: localizedHref(lang, '/blog')},
   ];

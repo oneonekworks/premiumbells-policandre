@@ -6,8 +6,18 @@ type ServiceListItem = SERVICES_QUERY_RESULT[number];
 
 export const servicesPath = '/servicii';
 
+/** Anchor of the homepage services section, where "Servicii" links point (no /servicii page in v6). */
+export const servicesAnchor = 'servicii';
+
+/**
+ * Variants that a parent page renders as its own content (routes.md):
+ * /servicii/clopote is Clopote cu jug; /servicii/clopote/cu-jug redirects there.
+ */
+export const defaultVariants: Record<string, string> = {clopote: 'cu-jug'};
+
 /** Internal (Romanian-segment) path of a service, or of a variant under `parentSlug`. */
 export function servicePath(parentSlug: string | null | undefined, slug: string): string {
+  if (parentSlug && defaultVariants[parentSlug] === slug) return `${servicesPath}/${parentSlug}`;
   return parentSlug ? `${servicesPath}/${parentSlug}/${slug}` : `${servicesPath}/${slug}`;
 }
 

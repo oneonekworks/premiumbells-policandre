@@ -53,6 +53,9 @@
   --metal-gilt: linear-gradient(100deg, #7a3f1e 0%, #a5682c 55%, #8a5424 100%);   /* Iconostase · Uși */
   --metal-gilt-solid: #7a3f1e;        /* 8.21 white */
   --metal-gilt-line: #a5682c;
+  --metal-graphite: linear-gradient(100deg, #25292b 0%, #6b7478 60%, #33383b 100%); /* Fără balans · Clopotar electronic (boards' --type) */
+  --metal-graphite-solid: #3a3f42;
+  --metal-graphite-line: #6b7478;
 
   /* ---------- Craft moods · Works wall band only (v6.2), cross-fade 500ms, never on photos ---------- */
   --mood-pol: 205 160 72;             /* Policandre gold: .22 top-left, .14 lower right · active chip #6e5020 */
@@ -555,13 +558,14 @@
   .mw-gold   { color: var(--metal-gold-solid);   background-image: var(--metal-gold);   --mwl: var(--metal-gold-line); }
   .mw-bronze { color: var(--metal-bronze-solid); background-image: var(--metal-bronze); --mwl: var(--metal-bronze-line); }
   .mw-gilt   { color: var(--metal-gilt-solid);   background-image: var(--metal-gilt);   --mwl: var(--metal-gilt-line); }
+  .mw-graphite { color: var(--metal-graphite-solid); background-image: var(--metal-graphite); --mwl: var(--metal-graphite-line); }
   a.mw::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0.02em; height: 3px; border-radius: 2px;
     background: var(--mwl); opacity: 0; transition: opacity var(--duration-line) var(--ease-light); } /* never text-decoration: the gradient would fill it */
   a.mw:hover::after, a.mw[aria-current]::after, a.mw[data-on]::after { opacity: 1; }
   @media (forced-colors: active) { .mw { -webkit-text-fill-color: currentColor; background: none; } }
 
   /* Family bar: 28×3 on cards, captions, steps */
-  .bar-gold { background: var(--metal-gold); } .bar-bronze { background: var(--metal-bronze); } .bar-gilt { background: var(--metal-gilt); }
+  .bar-gold { background: var(--metal-gold); } .bar-bronze { background: var(--metal-bronze); } .bar-gilt { background: var(--metal-gilt); } .bar-graphite { background: var(--metal-graphite); }
 
   /* Mood glows: set one class on the page root; use the m-* classes on sections */
   .mood-off    { --gA: 0;    --tA: 0;    --dT: 0;    --dG: 0; }
@@ -631,6 +635,41 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .bo:hover .ph, .bo:focus-visible .ph, .bo:active .ph, .bo:hover .ph img, .bo:focus-visible .ph img { transform: none; }
+  }
+
+  /* ---------- Service pages (V4) ---------- */
+  /* Policandre model card (boards V6ServicePolicandre + Mobile): .bo.bo-left.mc */
+  .mc .ph { aspect-ratio: 4 / 5; background: #fff; width: 100%; border: 0; padding: 0; }
+  .mc .ph img { object-fit: contain; }
+  .mc .tx { flex: 1; padding-bottom: 12px; }
+  .mc b { font-size: 1.625rem; }
+  .mc .nr { min-height: 21px; color: var(--color-ink-soft); font-size: var(--text-caption); }
+  .mc .sp { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; width: 100%; margin: 16px 0 0; }
+  .mc .sp dt { color: var(--color-ink-soft); font-size: var(--text-caption); }
+  .mc .sp dd { margin: 0; color: var(--color-ink); font-size: var(--text-body); font-weight: 600; }
+  .mc .fin { width: 100%; margin: 16px 0 0; padding: 12px 0 0; border-top: 1px solid var(--color-hairline); list-style: none; }
+  .mc .fin li { display: flex; align-items: flex-start; gap: 8px; min-height: 28px; padding: 6px 0; color: var(--color-ink-soft); font-size: var(--text-caption); }
+  .mc .fin i { width: 10px; height: 10px; flex: none; margin-top: 5px; border-radius: 50%; }
+  .mc .fin .fn { display: flex; min-width: 0; flex-direction: column; color: var(--color-ink); }
+  .mc .fin .fn small { margin-top: 1px; color: var(--color-ink-soft); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+  .mc .fin .pr { margin-left: auto; color: var(--color-ink); font-size: var(--text-body); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .mc:focus-within::before { background: #fff; box-shadow: var(--shadow-e1); }
+  .dot-aur { background: var(--metal-gold); }
+  .dot-lac { background: linear-gradient(100deg, #b9b49f, #8c8a78); }
+  @media (max-width: 47.99rem) {
+    .bo.mc { padding-inline: 6px; }
+    .mc .tx, .bo.bo-left.mc .tx { padding: 12px 4px 8px; }
+    .mc b { font-size: 1.375rem; }
+    .mc .sp { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; margin-top: 10px; }
+    .mc .sp div { display: flex; justify-content: space-between; gap: 6px; }
+    .mc .sp dd { font-size: var(--text-caption); text-align: right; }
+    .mc .fin { margin-top: 10px; padding-top: 8px; }
+    .mc .fin li { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; column-gap: 8px; align-items: baseline; min-height: 24px; }
+    .mc .fin i { grid-row: 1; align-self: center; margin-top: 0; }
+    .mc .fin .fn { display: contents; }
+    .mc .fin .fn > span { grid-column: 2; grid-row: 1; }
+    .mc .fin .fn small { grid-column: 2 / 4; grid-row: 2; }
+    .mc .fin .pr { grid-column: 3; grid-row: 1; font-size: var(--text-caption); }
   }
 
   .shimmer {                          /* gilded photos only, once per hover/focus */

@@ -51,7 +51,8 @@ export const CATEGORY_PROJECTS_QUERY = defineQuery(`
   *[${publicProject} && category._ref == $categoryId]
     | order(coalesce(displayOrder, 1000000) asc, coalesce(featured, false) desc, coalesce(year, 9999) desc, _createdAt desc, _id asc)[0...500]{
       _id, "title": ${localized('title')}, "slug": slug.current, "summary": ${localized('summary')},
-      location, year, "displayDate": ${localized('displayDate')},
+      location, year, "displayDate": ${localized('displayDate')}, bellTypes, featured,
+      "keySpec": specifications[0]{value, unit, "label": ${localized('label')}},
       coverImage{${imageFields}}
     }
 `);
@@ -76,6 +77,22 @@ const publicService = `_type == "service" && ${notDraft} && ${published} && stat
   && (!defined(parent) || (parent->status == "active" && $lang in coalesce(parent->publishedLanguages, ["ro"])))`;
 const serviceSlugs = `{"ro": slug.ro.current, "en": select("en" in publishedLanguages => slug.en.current)}`;
 
+// Phase 7: global content, the home page and the blog.
+// Singletons are read by their fixed published ID, so drafts never match.
+// Labels and short texts fall back to Romanian where the site shows them on
+// an English page whose own document is published in English.
+const fallback = localizedAlt;
+
+// A link (`siteLink`): the site builds the address from `kind` and the
+// target's slugs, and drops a link whose target is not public in $lang.
+const linkFields = `_key, kind, page, url, "label": ${fallback('label')},
+  "target": document->{
+    _type, status, language, publishedLanguages,
+    "slug": select(_type in ["service", "workCategory"] => ${serviceSlug}, slug.current),
+    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),
+    "parentStatus": parent->status,
+    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)
+  }`;
 // Every public service and variant for the overview; the page builds the tree.
 export const SERVICES_QUERY = defineQuery(`
   *[${publicService}] | order(displayOrder asc, _id asc){
@@ -92,6 +109,9 @@ export const SERVICE_QUERY = defineQuery(`
     && select(defined($parentSlug) => $parentSlug in [parent->slug.ro.current, parent->slug.en.current], !defined(parent))][0]{
     _id, "title": ${localized('title')}, "slug": ${serviceSlug}, "slugs": ${serviceSlugs}, publishedLanguages,
     "cardLabel": ${localized('cardLabel')}, "summary": ${localized('summary')}, "body": ${localized('body')},
+    "shortName": ${localized('shortName')}, "heroPlace": ${localized('heroPlace')},
+    "heroFacts": heroFacts[]{_key, "figure": ${localized('figure')}, "line": ${localized('line')}},
+    "heroInsets": heroInsets[]{_key, image{${imageFields}}, "title": ${localized('title')}, "line": ${localized('line')}},
     coverImage{${imageFields}},
     "parent": parent->{_id, "title": ${localized('title')}, "slug": ${serviceSlug}, "slugs": ${serviceSlugs}},
     "variants": *[${publicService} && parent._ref == ^._id] | order(displayOrder asc, _id asc){
@@ -101,7 +121,7 @@ export const SERVICE_QUERY = defineQuery(`
     "relatedCategory": *[${publicCategory} && _id == ^.relatedCategory._ref][0]{_id, "title": ${localized('title')}, "slug": ${categorySlug}},
     "sections": sections[]{
       _key, _type, "heading": ${localized('heading')},
-      _type == "sectionGallery" => {"images": images[]{_key, ${imageFields}}},
+      _type == "sectionGallery" => {presentation, "images": images[]{_key, ${imageFields}}},
       _type == "sectionSteps" => {"steps": steps[]{
         _key, "title": ${localized('title')}, "text": ${localized('text')}, "images": images[]{_key, ${imageFields}}
       }},
@@ -111,14 +131,30 @@ export const SERVICE_QUERY = defineQuery(`
         "specifications": specifications[]{${specificationFields}}
       }},
       _type == "sectionBellSizes" => {
-        "rows": rows[]{_key, weightKg, diameterCm, heightCm, note}, "footnote": ${localized('note')}
+        "rows": rows[]{_key, weightKg, diameterCm, heightCm, note}, "footnote": ${localized('note')},
+        "groupNotes": groupNotes{"upTo100": ${localized('upTo100')}, "upTo1000": ${localized('upTo1000')}, "upTo5000": ${localized('upTo5000')}, "over5000": ${localized('over5000')}}
       },
       _type == "sectionBellSets" => {"sets": sets[]{
         _key, "title": ${localized('title')}, weightsKg, withElectronicRinger,
         "description": ${localized('description')}, "audio": audio.asset->url
       }},
       _type == "sectionVideos" => {"videos": videos[]{${videoFields}}},
-      _type == "sectionCatalogue" => {families},
+      _type == "sectionCatalogue" => {families, pricesUpdatedAt},
+      _type == "sectionIncluded" => {
+        "items": items[]{_key, "title": ${localized('title')}, "text": ${localized('text')}},
+        "sentence": ${localized('sentence')}, "link": link{${linkFields}}
+      },
+      _type == "sectionBeforeAfter" => {"items": items[]{_key, before{${imageFields}}, after{${imageFields}}, "label": ${localized('label')}, layout}},
+      _type == "sectionStages" => {
+        "church": ${localized('church')}, "place": ${localized('place')}, date,
+        "items": items[]{_key, "title": ${localized('title')}, "text": ${localized('text')}, "images": images[]{_key, ${imageFields}}}
+      },
+      _type == "sectionSystem" => {"items": items[]{_key, "name": ${localized('name')}, code, "text": ${localized('text')}, image{${imageFields}}, optional}},
+      _type == "sectionFacts" => {"items": items[]{_key, "value": ${localized('value')}, "label": ${localized('label')}}, "fullList": fullList[]{"text": ${localized('@')}}},
+      _type == "sectionKit" => {"items": items[]{_key, "name": ${localized('name')}, image{${imageFields}}}},
+      _type == "sectionRelated" => {"items": items[]{_key, "question": ${localized('question')}, "why": ${localized('why')},
+        "service": service->{_id, "public": ${publicService}, "title": ${localized('title')}, "shortName": ${localized('shortName')}, "slug": ${serviceSlug},
+          "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current), coverImage{${imageFields}}}}},
       _type == "sectionCta" => {"text": ${localized('text')}, "label": ${localized('label')}, contact, href}
     },
     seo{"title": ${localized('metaTitle')}, "description": ${localized('metaDescription')}, noIndex, shareImage{${imageFields}}}
@@ -136,22 +172,6 @@ export const CATALOG_QUERY = defineQuery(`
     }
 `);
 
-// Phase 7: global content, the home page and the blog.
-// Singletons are read by their fixed published ID, so drafts never match.
-// Labels and short texts fall back to Romanian where the site shows them on
-// an English page whose own document is published in English.
-const fallback = localizedAlt;
-
-// A link (`siteLink`): the site builds the address from `kind` and the
-// target's slugs, and drops a link whose target is not public in $lang.
-const linkFields = `_key, kind, page, url, "label": ${fallback('label')},
-  "target": document->{
-    _type, status, language, publishedLanguages,
-    "slug": select(_type in ["service", "workCategory"] => ${serviceSlug}, slug.current),
-    "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),
-    "parentStatus": parent->status,
-    "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current)
-  }`;
 const seoFields = `seo{"title": ${localized('metaTitle')}, "description": ${localized('metaDescription')}, noIndex, shareImage{${imageFields}}}`;
 
 export const SITE_QUERY = defineQuery(`{

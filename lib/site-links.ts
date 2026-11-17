@@ -1,13 +1,12 @@
 // Builds addresses for `siteLink` values from Sanity (menus, footer columns,
 // buttons). Pure, so it is unit-tested in tests/site-links.test.ts.
 import {localizedHref, type Lang} from '@/lib/i18n/routing';
-import {servicePath, servicesPath} from '@/lib/services';
+import {servicePath, servicesAnchor} from '@/lib/services';
 
 export const aboutAnchor = 'despre-noi';
 
 const pagePaths: Record<string, string> = {
   home: '/',
-  services: servicesPath,
   works: '/lucrarile-noastre',
   blog: '/blog',
 };
@@ -55,6 +54,7 @@ export function linkHref(link: LinkValue | null | undefined, lang: Lang, contact
   switch (link?.kind) {
     case 'page':
       if (link.page === 'about') return `${localizedHref(lang, '/')}#${aboutAnchor}`;
+      if (link.page === 'services') return `${localizedHref(lang, '/')}#${servicesAnchor}`;
       return link.page && pagePaths[link.page] ? localizedHref(lang, pagePaths[link.page]) : null;
     case 'document': {
       const path = documentPath(link.target ?? null, lang);

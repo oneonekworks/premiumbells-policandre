@@ -76,6 +76,10 @@ const ro = {
     },
   },
   services: {
+    home: 'Acasă',
+    breadcrumb: 'Breadcrumb',
+    facts: 'Pe scurt',
+    seeWork: 'Vedeți lucrarea',
     intro: 'Policandre, clopote, iconostase și automatizări pentru biserici ortodoxe, realizate în ateliere din Rusia și Grecia și montate de echipa noastră.',
     empty: 'Nu există încă servicii publicate.',
     variants: 'Variante',
@@ -286,6 +290,10 @@ const en: Dictionary = {
     },
   },
   services: {
+    home: 'Home',
+    breadcrumb: 'Breadcrumb',
+    facts: 'In short',
+    seeWork: 'View the work',
     intro: 'Chandeliers, bells, iconostases and automation for Orthodox churches, made in workshops in Russia and Greece and installed by our team.',
     empty: 'No services have been published yet.',
     variants: 'Options',
