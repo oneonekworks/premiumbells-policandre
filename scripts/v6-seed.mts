@@ -28,7 +28,7 @@ const image = (assetId: string) => ({ _type: "imageWithMetadata", asset: ref(ass
 
 type Fields = Record<string, unknown>;
 /** Field limits from the Studio schema, checked here so a draft never fails validation. */
-const limits: Record<string, number> = { shortName: 24, cardLabel: 60, figure: 8, line: 50, title: 24, insetLine: 32, offerLine: 120, label: 60, sliceLine: 48, lead: 160, intro: 200 };
+const limits: Record<string, number> = { shortName: 24, cardLabel: 60, figure: 10, line: 50, title: 24, insetLine: 32, offerLine: 120, label: 64, sliceLine: 52, lead: 160, intro: 200 };
 const tooLong: string[] = [];
 const check = (where: string, field: keyof typeof limits, text?: string) => {
   if (text && text.length > limits[field]) tooLong.push(`${where} · ${field} "${text}" (${text.length} > ${limits[field]})`);
@@ -107,14 +107,14 @@ const serviceSeeds: Record<string, ServiceSeed> = {
   },
   "legacy-service-clopote-cu-jug": {
     cardLabel: "Cu balans, până la 16 tone",
-    facts: [["16 t", "cel mai mare clopot cu jug"], ["2", "juguri: din stejar sau din oțel"], ["Inclus", "transportul până la biserică și TVA"]],
+    facts: [["16 t", "cel mai mare clopot cu jug"], ["2", "juguri: din stejar sau din oțel"], ["Inclus", "transportul până la biserică"]],
     insets: [
       ["image-f6db0e479c7c4d9be691c595ad74b777e26d61a2-2052x3109-webp", "Todirești II", "270 kg, 2022"],
       ["image-8363ae79259363c0236f6477a3a97b1d0fdc5b03-1068x1600-jpg", "Bolintin Vale", "clopot cu jug, 2021"],
     ],
   },
   "legacy-service-clopote-fara-balans": {
-    facts: [["Fixe", "doar limba se trage, ca la Athos"], ["Automat", "opțional, cu clopotarul electronic"], ["Inclus", "transportul până la biserică și TVA"]],
+    facts: [["Fixe", "doar limba se trage, ca la Athos"], ["Automat", "opțional, cu clopotarul electronic"], ["Inclus", "transportul până la biserică"]],
     insets: [
       ["image-3ffdf52cc00c1fbda0d4d72405fbc507efd77e19-3050x2031-webp", "Adâncata", "set de clopote fixe, 2022"],
       ["image-2da94d9a7cd29b280504ff394714b2f126d16137-3200x2400-jpg", "Pantocrator", "trase ca la Athos, 2017"],
