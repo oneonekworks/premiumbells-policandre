@@ -193,3 +193,23 @@ export const iconostaseCopy = {
   },
   nudge: {slug: 'usi', question: 'Și intrarea bisericii?', name: 'Uși', why: 'Din cupru turnat, cu sfinți în relief.'},
 };
+
+export const usiCopy = {
+  hero: {title: 'Uși', subline: 'din cupru turnat, cu sfinți în relief', lead: 'Lucrate doar după proiect, pe măsura bisericii, fiecare cu icoanele ei: uși din cupru turnat, cu sfinți și scene în relief.'},
+  place: 'Drobeta-Turnu Severin',
+  /** The one model the client keeps (v6.2): the CMS model whose title has this word. */
+  modelMatch: /cupru/i,
+  model: {
+    kicker: 'Modelul nostru', title: 'Uși din cupru',
+    lead: 'Turnate din cupru, cu sfinți și scene în relief; fiecare ușă se face după proiect, pe măsura bisericii.',
+    leadShort: 'Turnate din cupru, cu sfinți și scene în relief, pe măsura bisericii.',
+    photos: 'Fotografii', all: 'Vedeți toate', allLabel: 'Vedeți toate cele {n} fotografii', more: 'fotografii', zoom: 'Măriți',
+    material: 'Cupru', price: 'La comandă',
+    text: 'Prețul depinde de complexitatea lucrării, de înălțime și lățime. Se lucrează doar după proiect, cu icoane individuale.',
+    quality: 'Calitate garantată',
+    example: 'Montate la Catedrala din Drobeta-Turnu Severin.',
+    question: 'Vă place acest model?', call: 'Sunați', offer: 'Cereți o ofertă',
+    own: {kicker: 'Al dumneavoastră', title: 'Ușa după desenul dumneavoastră', line: 'Pornim de la un desen și îl ajustăm împreună.'},
+  },
+  nudge: {slug: 'iconostase', question: 'Și altarul?', name: 'Iconostase', why: 'Din marmură și lemn aurit.'},
+};

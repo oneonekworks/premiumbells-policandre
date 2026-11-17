@@ -17,6 +17,7 @@ import {IconostasePage} from './pages/iconostase';
 import {ComandaPage} from './pages/comanda';
 import {PolicandrePage} from './pages/policandre';
 import {ReconditionarePage} from './pages/reconditionare';
+import {UsiPage} from './pages/usi';
 import {ServiceSections} from './service-sections';
 import {StoryHero} from './story-hero';
 
@@ -82,6 +83,7 @@ const pages: Record<string, (props: Props) => Promise<React.ReactNode> | React.R
   'clopotar-electronic': ClopotarPage,
   'automatizari-clopote-cu-balans': AutomatizariPage,
   iconostase: IconostasePage,
+  usi: UsiPage,
 };
 
 /** The v6 page of a service, chosen by its Romanian slug (boards per page). */
