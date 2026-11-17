@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>v6 Uși desktop</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+:root{--white:#ffffff;--band:#eef2f1;--ink:#111a19;--ink2:#4a5553;--hair:rgba(17,26,25,.10);--teal7:#0f6b63;--teal9:#0e3a36;--night:#0b2523;--tint:#e6efed;--focus:#9a783e;--on:#eef3f1;--onsoft:#a9bdb8;--e1:0 1px 2px rgba(11,37,35,.06),0 6px 16px rgba(11,37,35,.07);--e2:0 2px 6px rgba(11,37,35,.08),0 20px 40px rgba(11,37,35,.10);--e3:0 28px 72px rgba(11,37,35,.16);--ease:cubic-bezier(.22,.61,.36,1);
+--metal-gold:linear-gradient(100deg,#6e5020 0%,#a37e36 55%,#7c5a24 100%);--metal-bronze:linear-gradient(100deg,#3f3226 0%,#7a5c40 60%,#4a3a2a 100%);--metal-gilt:linear-gradient(100deg,#7a3f1e 0%,#a5682c 55%,#8a5424 100%)}
+body{margin:0;background:var(--white);color:var(--ink);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit}
+img{display:block}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.d{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-weight:500;line-height:1;letter-spacing:-.015em;margin:0}
+.soft{color:var(--ink2)}
+.glassL{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(20px) saturate(1.3);backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.85)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glassL{background:rgba(255,255,255,.96)}}
+.mw{position:relative;display:inline-block;text-decoration:none;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.06em}
+.mw-gold{color:#6e5020;background-image:var(--metal-gold)}
+@media (forced-colors: active){.mw{-webkit-text-fill-color:currentColor;background:none}}
+.bar-gold{background:var(--metal-gold)}.bar-bronze{background:var(--metal-bronze)}.bar-gilt{background:var(--metal-gilt)}
+.dark{color:var(--on)}.dark .soft{color:var(--onsoft)}.dark :focus-visible{outline-color:#c9a467}
+.fh{font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--onsoft)}
+.fl{font-size:16px;color:var(--on);text-decoration:none;display:flex;align-items:center;min-height:44px}
+.bo{position:relative;display:flex;flex-direction:column;text-decoration:none;color:var(--ink);min-width:0}
+.bo::before{content:'';position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.9);transition:background .36s var(--ease),box-shadow .36s var(--ease)}
+.on-white .bo::before{background:rgba(238,242,241,.8)}
+.bo>*{position:relative}
+.bo .ph{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--band);box-shadow:var(--e2);transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.bo .ph.light{background:#fff;outline:1px solid var(--hair);outline-offset:-1px}
+.bo .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.bo .tx{display:flex;flex-direction:column;align-items:center;text-align:center}
+.bo .bar{display:block;height:3px;border-radius:2px;transition:width .36s var(--ease)}
+.bo b{font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.bo small{color:var(--ink2);line-height:1.5}
+.bo.left .tx{align-items:flex-start;text-align:left}
+.chold{display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:var(--tint);color:var(--ink2);font-size:14px;font-weight:500}
+.t{position:relative;display:block;overflow:hidden;background:var(--band);text-decoration:none;color:var(--ink)}
+.t img{width:100%;height:100%;object-fit:cover}
+.cap{position:absolute;max-width:calc(100% - 20px)}
+.cap .cbar{display:block;height:3px;border-radius:2px}
+.cap b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.cap span{display:block;color:var(--ink2)}
+.m-hero{background:radial-gradient(ellipse 1000px 600px at 88% -6%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 760px 560px at -6% 26%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-band{background:radial-gradient(ellipse 1100px 700px at 104% 104%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),var(--band)}
+.m-white{background:radial-gradient(ellipse 900px 560px at -4% 0%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-dark{background:radial-gradient(ellipse 900px 620px at 0% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at 100% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.m-dark2{background:radial-gradient(ellipse 900px 620px at 92% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at -2% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.mood-off{--gA:0;--tA:0;--dT:0;--dG:0}.mood-subtle{--gA:.20;--tA:.08;--dT:.42;--dG:.14}.mood-warm{--gA:.32;--tA:.12;--dT:.60;--dG:.24}
+.h2{font-size:clamp(44px,4.6vw,64px)}
+.s{font-size:17px;line-height:1.6;margin:0}
+.lead{font-size:19px;line-height:1.6;margin:0}
+.c{font-size:15px;line-height:1.5;margin:0}
+.kick{margin:0 0 16px;font-size:15px;font-weight:600;letter-spacing:.02em;color:var(--ink2)}
+.wrap{max-width:1248px;margin:0 auto;padding:0 24px}
+.xwide{max-width:1440px;margin:0 auto;padding:0 16px}
+.sec{padding:136px 0}
+.pill{position:absolute;left:50%;top:16px;transform:translateX(-50%);width:calc(100% - 32px);max-width:1200px;height:68px;border-radius:999px;box-shadow:var(--e2);display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 24px;z-index:20}
+.nav{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 16px;border-radius:999px;background:none;border:0;color:var(--ink);font:500 15px/1 Inter,system-ui,sans-serif;text-decoration:none;cursor:pointer}
+.nav:hover,.nav.on{background:var(--tint)}.nav.on{color:var(--teal9)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 26px;border-radius:999px;background:var(--teal9);color:#fff;text-decoration:none;font-size:16px;font-weight:600;transition:background .18s}
+.btn:hover{background:var(--night)}
+.btn2{display:inline-flex;align-items:center;height:52px;padding:0 26px;border-radius:999px;background:var(--white);color:var(--ink);text-decoration:none;font-size:16px;font-weight:600;box-shadow:var(--e1);transition:box-shadow .24s var(--ease)}
+.btn2:hover{box-shadow:var(--e2)}
+.btnw{display:inline-flex;align-items:center;height:52px;padding:0 26px;border-radius:999px;background:#fff;color:var(--night);text-decoration:none;font-size:16px;font-weight:600}
+.ul{font-size:16px;font-weight:600;color:var(--teal7);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;min-height:44px;display:inline-flex;align-items:center}
+.dark .ul{color:var(--tint)}
+.crumb{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--ink2)}
+.crumb a{color:var(--ink2);text-decoration:none;min-height:32px;display:inline-flex;align-items:center}.crumb a:hover{text-decoration:underline}
+.dark{border-radius:28px;margin:0 16px}
+.seg{display:inline-flex;gap:2px;padding:4px;border-radius:999px;box-shadow:var(--e1)}
+.seg button{height:40px;padding:0 16px;border-radius:999px;border:0;background:none;font:500 15px Inter,sans-serif;color:var(--ink);cursor:pointer;transition:background .18s}
+.seg button:hover{background:var(--tint)}.seg button.on{background:var(--teal9);color:#fff}
+.field{height:48px;border-radius:999px;border:1px solid var(--hair);background:#fff;padding:0 18px;font:400 15px Inter,sans-serif;color:var(--ink)}
+.bo{padding:0 14px}
+.bo::before{top:64px;border-radius:24px}
+.bo .ph{border-radius:16px}
+.bo .tx{padding:18px 16px 24px}.bo.left .tx{padding:18px 8px 24px}
+.bo .bar{width:28px;margin-bottom:12px}
+.bo b{font-size:28px}.bo small{font-size:15px;margin-top:8px}
+.bo:hover::before,.bo:focus-visible::before{background:#fff;box-shadow:var(--e1)}
+.bo:hover .ph,.bo:focus-visible .ph{transform:translateY(-12px);box-shadow:var(--e3)}
+.bo:hover .ph img,.bo:focus-visible .ph img{transform:scale(1.03)}
+.bo:hover .bar,.bo:focus-visible .bar{width:56px}
+.bo:active .ph{transform:translateY(-4px);box-shadow:var(--e2)}
+.t{border-radius:16px;transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.t img{transition:transform .6s var(--ease)}
+.t:hover,.t:focus-visible{transform:translateY(-6px);box-shadow:var(--e3)}
+.t:hover img,.t:focus-visible img{transform:scale(1.03)}
+.cap{left:12px;bottom:12px;padding:12px 16px 12px 14px;border-radius:12px;opacity:0;transform:translateY(6px);transition:opacity .24s var(--ease),transform .24s var(--ease)}
+.cap .cbar{width:22px;margin-bottom:8px}.cap b{font-size:22px}.cap span{font-size:14px;margin-top:2px}
+.t:hover .cap,.t:focus-visible .cap{opacity:1;transform:none}
+.t.feat .cap{opacity:1;transform:none;left:20px;bottom:20px}.t.feat .cap b{font-size:30px}
+@media (hover: none){.cap{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.bo .ph,.bo .ph img,.bo .bar,.t,.t img,.cap{transition:none}.bo:hover .ph,.t:hover,.bo:hover .ph img,.t:hover img{transform:none}}
+@media (max-width: 900px){.sec{padding:88px 0}.hide-s{display:none !important}.g-stack{grid-template-columns:minmax(0,1fr) !important}.g-stack>*{grid-column:auto !important;grid-row:auto !important}.dark{margin:0 8px}}
+.cv{display:block;background:var(--white);border-radius:16px;box-shadow:0 24px 56px rgba(0,0,0,.38);padding:8px;transition:transform .24s var(--ease)}.cv img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px}.cv:hover,.cv:focus-visible{transform:translateY(-6px)}.dlb{width:44px;height:44px;flex:none;border-radius:999px;background:rgba(238,243,241,.12);color:var(--on);display:flex;align-items:center;justify-content:center}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:1000px;margin:56px auto 0;padding:0}
+.stats>div{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;padding:4px 32px}.stats>div+div{border-left:1px solid var(--hair)}
+.stats dt{font-family:'Cormorant Garamond',Garamond,serif;font-size:64px;font-weight:600;line-height:.9;letter-spacing:-.02em}
+.stats dd{margin:0;font-size:15px;line-height:1.45;color:var(--ink2);max-width:200px}
+.pairw{position:relative;border-radius:24px;overflow:hidden;box-shadow:var(--e2);display:block}.pairw img{width:100%;height:100%;object-fit:cover}
+.step{position:relative;padding-top:28px}.step::before{content:'';position:absolute;left:0;top:0;width:28px;height:3px;border-radius:2px;background:var(--metal-gold)}
+.step b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-size:72px;font-weight:600;line-height:.9}
+.step h3{font-family:'Cormorant Garamond',Garamond,serif;font-size:28px;font-weight:600;margin:16px 0 0;line-height:1.1}
+.step p{margin:8px 0 0;font-size:16px;line-height:1.55;color:var(--ink2)}
+.mw-gilt{color:#7a3f1e;background-image:var(--metal-gilt)}
+.m-cupru{background:linear-gradient(135deg,#4a2c1e,#a0643f)}.m-bronz{background:var(--metal-bronze)}.m-stejar{background:linear-gradient(135deg,#7a5a38,#c09a68)}.m-cires{background:linear-gradient(135deg,#4e1a16,#8c3a2c)}.m-mix{background:linear-gradient(90deg,#b08a5c 50%,#5a4430 50%)}
+.hz{position:relative;display:block;overflow:hidden;background:var(--night)}
+.hz img{width:100%;height:100%;object-fit:cover}
+.hcap{position:absolute;display:inline-flex;align-items:center;border-radius:999px;font-weight:500;color:var(--ink)}
+.dr .ph{aspect-ratio:2/3;position:relative}
+.dr .nm{display:block;color:var(--ink2);font-variant-numeric:tabular-nums}
+.mat{display:flex;align-items:center;gap:8px;color:var(--ink2)}
+.mat i{flex:none;width:12px;height:12px;border-radius:50%}
+.dr .pr{display:block;font-weight:600;color:var(--ink)}
+.dr .op{position:absolute;display:inline-flex;align-items:center;gap:6px;border-radius:999px;font-weight:600;color:var(--ink);opacity:0;transform:translateY(6px);transition:opacity .24s var(--ease),transform .24s var(--ease)}
+.dr:hover .op,.dr:focus-visible .op{opacity:1;transform:none}
+@media (hover: none){.dr .op{opacity:1;transform:none}}
+.sk .ph{background:#fff;outline:1px solid var(--hair);outline-offset:-1px}
+.sk .ph img{object-fit:contain}
+.mats{display:grid}
+.mt img{width:100%;aspect-ratio:4/3;object-fit:cover;box-shadow:0 18px 40px rgba(0,0,0,.32)}
+.mt h3{font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1;margin:0;display:flex;align-items:center;gap:10px}
+.mt h3 i{flex:none;width:14px;height:14px;border-radius:50%}
+.mt p{margin:0;line-height:1.55;color:var(--onsoft)}
+.mt .mp{color:var(--on);font-weight:600}
+@media (prefers-reduced-motion: reduce){.dr .op{transition:none}}
+.hz{height:clamp(480px,44vw,640px);border-radius:32px;box-shadow:var(--e3)}
+.hcap{left:24px;top:24px;height:40px;padding:0 16px;font-size:14px}
+.dgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px 32px}
+.dr b{font-size:32px}.dr .nm{font-size:15px;margin-bottom:6px}.mat{font-size:15px;margin-top:10px}.dr .pr{font-size:17px;margin-top:6px}
+.dr .op{right:14px;bottom:14px;height:40px;padding:0 14px;font-size:14px}
+.sk .ph img{padding:32px}
+.mats{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.mt img{border-radius:18px}.mt h3{font-size:30px;margin-top:24px}.mt p{font-size:16px;margin-top:8px}.mt .mp{margin-top:12px}
+.nudge{display:inline-flex;align-items:center;text-align:left;text-decoration:none;color:var(--ink);border-radius:24px;transition:background .24s var(--ease),box-shadow .24s var(--ease)}
+.nudge:hover,.nudge:focus-visible{background:#fff;box-shadow:var(--e1)}
+.nudge img{flex:none;object-fit:cover;object-position:50% 40%;background:#fff;box-shadow:var(--e1)}
+.nudge span{display:block}
+.nudge .q{color:var(--ink2)}
+.nudge .n{font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.nudge .why{color:var(--ink2);line-height:1.45}
+.nudge{gap:24px;padding:12px 32px 12px 12px}.nudge img{width:128px;height:96px;border-radius:16px}.nudge .q{font-size:15px}.nudge .n{font-size:30px;margin-top:2px}.nudge .why{font-size:16px;margin-top:4px}
+.nudges{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+/* Footer v6.2 (canonical; same block on every page, keep in sync) */
+.pf{color:#eef3f1;font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;background:radial-gradient(ellipse 900px 520px at 100% -24%,rgba(15,107,99,var(--dT,.42)),rgba(15,107,99,0) 70%),#0b2523}
+.pf :focus-visible{outline:3px solid #c9a467;outline-offset:3px}
+.pf-logo{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:#eef3f1;text-decoration:none}
+.pf-logo img{display:block;height:28px;width:auto}
+.pf-logo span{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-size:24px;font-weight:600;line-height:1;letter-spacing:-.01em}
+.pf-tag{margin:8px 0 0;font-size:14px;line-height:1.55;color:#a9bdb8}
+.pf-h{margin:0 0 6px;font-size:13px;font-weight:600;letter-spacing:.02em;color:#a9bdb8}
+.pf-col{display:flex;flex-direction:column}
+.pf-l{font-size:15px;color:#eef3f1;text-decoration:none;display:flex;align-items:center;min-height:36px;width:fit-content;text-underline-offset:5px}
+.pf-l:hover{text-decoration:underline}
+.pf-note{margin:6px 0 0;font-size:13px;line-height:1.5;color:#a9bdb8}
+.pf-show{display:flex;gap:14px;align-items:flex-start;margin-top:16px;padding:10px;border-radius:16px;background:rgba(238,243,241,.06);border:1px solid rgba(238,243,241,.10)}
+.pf-show-ph{display:block;flex:none;width:84px;height:108px;object-fit:cover;object-position:40% 50%;border-radius:10px}
+.pf-addr{display:flex;align-items:flex-start;gap:6px;margin-top:6px;min-height:36px;font-size:14px;font-weight:600;line-height:1.4;color:#eef3f1;text-decoration:underline;text-decoration-color:rgba(238,243,241,.35);text-underline-offset:4px}
+.pf-addr svg{flex:none;margin-top:2px}
+.pf-maps{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.pf-map{display:inline-flex;align-items:center;height:34px;padding:0 12px;border-radius:999px;background:rgba(238,243,241,.08);color:#eef3f1;text-decoration:none;font-size:12px;font-weight:600}
+.pf-map:hover{background:rgba(238,243,241,.16)}
+.pf-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.pf-credit{display:inline-flex;align-items:center;gap:5px;margin:0;font-size:13px;color:#a9bdb8}
+.pf-credit a{color:#eef3f1;font-weight:600;text-decoration:none;min-height:40px;display:inline-flex;align-items:center}
+.pf-credit a:hover{text-decoration:underline;text-underline-offset:4px}
+.pf-heart{color:#c9a467;flex:none}
+.pf-soc{width:40px;height:40px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#eef3f1;background:rgba(238,243,241,.08)}
+.pf-soc:hover{background:rgba(238,243,241,.16)}
+.pf-lang{display:inline-flex;align-items:center;height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(238,243,241,.18);color:#eef3f1;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.04em}
+.pf-lang:hover{background:rgba(238,243,241,.08)}
+.pf{border-radius:20px;margin:0 16px 16px;padding:56px 0 0}
+.pf-in{max-width:1248px;margin:0 auto;padding:0 24px}
+.pf-grid{display:grid;grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(0,1fr));gap:40px;padding-bottom:36px}
+.pf-brand .pf-tag,.pf-brand .pf-show{max-width:400px}
+.pf-phone{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;margin:2px 0 4px;border-radius:999px;background:#fff;color:#0b2523;text-decoration:none;font-size:15px;font-weight:600;width:fit-content}
+.pf-phone:hover{background:#e6efed}
+.pf-note{max-width:240px}
+.pf-legal{display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding:14px 0 18px;border-top:1px solid rgba(238,243,241,.12)}
+.pf-legal>p{margin:0;font-size:13px;line-height:1.5;color:#a9bdb8}
+@media (max-width: 900px){.pf{margin:0 8px 8px}.pf-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pf-brand{grid-column:1 / -1}.pf-l{min-height:44px}}
+/* v6.2 story hero: main photo + two framed insets from the page's own story (caption = moment + fact), not links, not tilted, never over the subject; Pe scurt (3 facts) by the lead */
+.hst{position:relative}
+.hin{position:absolute;z-index:2;margin:0;padding:6px 6px 0;background:#fff;border-radius:16px;box-shadow:var(--e3);pointer-events:none}
+.hin img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:11px}
+.hin figcaption{padding:9px 6px 10px;font-size:13px;line-height:1.3;color:var(--ink2)}.hin figcaption b{display:block;font-size:14px;font-weight:600;color:var(--ink)}
+.hpk{font-size:15px;font-weight:600;color:var(--ink2);margin:0}
+.hpe ul{list-style:none;margin:12px 0 0;padding:0;border-top:1px solid var(--hair)}
+.hpe li{display:grid;grid-template-columns:var(--hpw,104px) minmax(0,1fr);gap:16px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--hair)}
+.hpe li b{font-weight:600;line-height:1;color:var(--teal9);white-space:nowrap}
+.hpe li span{font-size:16px;line-height:1.45;color:var(--ink2)}
+/* wide hero photo: insets overhang the bottom edge, left and centre-right, clear of the photo control (bottom-right) */
+.hst-w .hin1{width:244px;left:56px;bottom:-64px}
+.hst-w .hin2{width:216px;right:300px;bottom:-84px}
+.hst-w.hst-r .hin2{right:56px}
+.hpe-r{margin-top:28px;--hpw:96px}.hpe-r li span{font-size:15px}
+/* v6.2 one hero for all service pages (split): text + Pe scurt left | main photo 4:3 + two insets right; photo control top-right */
+.hst-s .hin1{width:200px;top:-48px;left:-64px;right:auto;bottom:auto}
+.hst-s .hin2{width:220px;bottom:-56px;right:-40px;left:auto;top:auto}
+.hpe{margin-top:32px;max-width:540px}
+.hmain{position:relative;display:block;aspect-ratio:4/3;border-radius:24px;overflow:hidden;box-shadow:var(--e3)}
+.hmain>img{width:100%;height:100%;object-fit:cover}
+.hmain .hcap{left:16px;bottom:16px;top:auto}
+/* v6.2 Uși: one model (client kept only Uși din cupru), shown inline; no model panel */
+.mdl{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:56px;align-items:start;margin-top:56px}
+.mphs{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr);grid-auto-rows:248px;gap:12px}
+.mp2{grid-column:span 2}
+/* v6.2 photo set: label “Fotografii · N” + “Vedeți toate”; last tile “+N fotografii” (N = set − 3 shown); every tile opens the lightbox at that photo */
+.mlb{display:flex;align-items:center;justify-content:space-between;margin:0 0 12px}.mlb p{margin:0;font-size:15px;font-weight:600;color:var(--ink2)}
+.mp.mmore{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:var(--night);color:var(--on);text-decoration:none;font-size:14px}
+.mp.mmore b{font-family:'Cormorant Garamond',Garamond,serif;font-size:40px;font-weight:600;line-height:1}
+.mp{position:relative;display:block;border-radius:16px;overflow:hidden;box-shadow:var(--e2);background:var(--night);transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.mp img{width:100%;height:100%;object-fit:cover}.mp:hover,.mp:focus-visible{transform:translateY(-4px);box-shadow:var(--e3)}
+.mp1{grid-row:span 2}.mp1 img{object-position:50% 20%}
+.mmat{display:flex;align-items:center;gap:8px;margin:0;font-size:15px;font-weight:600;color:var(--ink2)}.mmat i{width:12px;height:12px;border-radius:999px}
+.mpr{font-size:40px;font-weight:600;margin-top:10px}
+.mq{display:inline-flex;align-items:center;gap:8px;margin:18px 0 0;height:36px;padding:0 14px;border-radius:999px;background:var(--tint);font-size:14px;font-weight:600;color:var(--teal9)}
+.mex{margin:14px 0 0;font-size:15px;color:var(--ink2)}
+.mown{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:16px;align-items:center;margin-top:24px;padding:10px 18px 10px 10px;border-radius:18px;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9);box-shadow:var(--e1);text-decoration:none;color:var(--ink);transition:box-shadow .24s var(--ease),background .24s}
+.mown:hover,.mown:focus-visible{background:#fff;box-shadow:var(--e2)}
+.mown img{width:72px;height:96px;object-fit:cover;border-radius:10px;background:#fff}
+.mown small{display:block;font-size:13px;color:var(--ink2)}.mown b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-size:24px;font-weight:600;line-height:1.15}.mown span span{display:block;font-size:14px;color:var(--ink2);margin-top:2px}.mown i{font-style:normal;color:var(--teal7);font-size:20px}
+.qoff{display:flex;align-items:center;justify-content:space-between;gap:12px 16px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--hair)}
+.qoff p{margin:0;font-size:15px;line-height:1.4;color:var(--ink2)}
+.qoff .btn2{height:46px;padding:0 20px;font-size:15px;box-shadow:none;border:1px solid rgba(17,26,25,.18);color:var(--teal9);transition:background .18s,border-color .18s}
+.qoff .btn2:hover,.qoff .btn2:focus-visible{background:var(--tint);border-color:var(--teal7)}
+.qoff .tl{font-size:15px;font-weight:600;color:var(--teal7);text-underline-offset:5px;min-height:44px;display:inline-flex;align-items:center}
+</style>
+</helmet>
+<div class="{{moodClass}}" style="position: relative; background: var(--white)">
+<header class="pill glassL"><a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none"><img src="/_blob/ffef838890f925be83a9bb25ebc01fcd" alt="" style="height: 30px; width: auto"><span class="d" style="font-size: 24px; font-weight: 600">Premium Bells</span></a><nav aria-label="Principal" class="hide-s" style="display: flex; gap: 2px"><button class="nav on" aria-expanded="false">Servicii <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button><a href="#" class="nav">Lucrările noastre</a><a href="#" class="nav">Blog</a></nav><div style="display: flex; align-items: center; gap: 6px"><a href="#" class="nav hide-s" style="color: var(--ink2); font-size: 14px">RO / EN</a><a href="tel:+40722790776" class="btn" style="height: 48px; padding: 0 22px; font-size: 15px">+40 722 790 776</a></div></header>
+<section class="m-hero" style="padding: 128px 0 128px"><div class="wrap"><nav class="crumb" aria-label="Breadcrumb"><a href="#">Acasă</a><span aria-hidden="true">/</span><a href="V6HomeDesktop.dc.html#s2">Servicii</a><span aria-hidden="true">/</span><span aria-current="page" style="color: var(--ink)">Uși</span></nav><div class="g-stack" style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 80px; align-items: center; margin-top: 32px"><div><h1 class="d" style="font-size: clamp(64px, 7vw, 104px); line-height: .95"><span class="mw mw-gilt">Uși</span><span style="display: block; margin-top: 14px; font-size: .36em; font-style: italic; line-height: 1.15; color: var(--teal7)">din cupru turnat, cu sfinți în relief</span></h1><p class="lead soft" style="margin-top: 28px; max-width: 540px">Lucrate doar după proiect, pe măsura bisericii, fiecare cu icoanele ei: uși din cupru turnat, cu sfinți și scene în relief.</p><div class="hpe"><p class="hpk">Pe scurt</p><ul><li><b class="d" style="font-size: 28px">Cupru</b><span>turnat, cu sfinți și scene în relief</span></li><li><b class="d" style="font-size: 28px">Pe măsură</b><span>după înălțimea și lățimea ușii</span></li><li><b class="d" style="font-size: 28px">Proiect</b><span>după desenul dumneavoastră</span></li></ul></div></div><div class="hst hst-s"><div class="hz hmain" style="height: auto"><img src="/_blob/366402099ce44f667255bbe951e3cfff" alt="Ușile din cupru montate, cu preoți și credincioși în fața lor, Drobeta-Turnu Severin" style="object-position: 50% 42%"><span class="hcap glassL">Drobeta-Turnu Severin</span></div><figure class="hin hin1"><img src="/_blob/b1a2a75bd94c856b4ea616ee13aa9491" alt="Ușile din cupru, cu Mântuitorul pe timpan" style="object-position: 50% 12%"><figcaption><b>Mântuitorul pe timpan</b>cupru turnat</figcaption></figure><figure class="hin hin2"><img src="/_blob/85a74e7971f40b443aa2240f25cbcba5" alt="Detaliu: sfinți în relief pe ușile din cupru" style="object-position: 50% 30%"><figcaption><b>Sfinți în relief</b>detaliu</figcaption></figure></div></div></div></section>
+<section class="sec m-band"><div class="wrap"><div class="g-stack" style="display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 64px; align-items: end"><div><p class="kick">Modelul nostru</p><h2 class="d h2">Uși din cupru</h2></div><p class="s soft" style="max-width: 440px">Turnate din cupru, cu sfinți și scene în relief; fiecare ușă se face după proiect, pe măsura bisericii.</p></div><div class="mdl g-stack"><div><div class="mlb"><p>Fotografii · 28</p><a href="V6Lightbox.dc.html" class="ul">Vedeți toate</a></div><div class="mphs"><a href="V6Lightbox.dc.html" class="mp mp1" aria-label="Măriți: Ușile din cupru, cu doi sfinți în relief și Mântuitorul pe timpan"><img src="/_blob/b1a2a75bd94c856b4ea616ee13aa9491" alt="Ușile din cupru, cu doi sfinți în relief și Mântuitorul pe timpan"></a><a href="V6Lightbox.dc.html" class="mp mp2" aria-label="Măriți: Detaliu: sfinți în relief"><img src="/_blob/85a74e7971f40b443aa2240f25cbcba5" alt="Detaliu: sfinți în relief"></a><a href="V6Lightbox.dc.html" class="mp mp3" aria-label="Măriți: Cele trei uși din cupru, montate, Drobeta-Turnu Severin"><img src="/_blob/b7b45a0c1df8bd27a0946f64d7a49a59" alt="Cele trei uși din cupru, montate, Drobeta-Turnu Severin"></a><a href="V6Lightbox.dc.html" class="mp mmore" aria-label="Vedeți toate cele 28 de fotografii"><b>+25</b>fotografii</a></div></div><div class="minfo"><p class="mmat"><i class="m-cupru" aria-hidden="true"></i>Cupru</p><p class="d mpr">La comandă</p><p class="s soft" style="margin-top: 12px">Prețul depinde de complexitatea lucrării, de înălțime și lățime. Se lucrează doar după proiect, cu icoane individuale.</p><p class="mq"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"></path><path d="M9 12l2 2 4-4"></path></svg>Calitate garantată</p><p class="mex">Montate la Catedrala din Drobeta-Turnu Severin.</p><div class="qoff" style="margin-top: 24px"><p>Vă place acest model?</p><span style="display: flex; align-items: center; gap: 16px"><a href="tel:+40722790776" class="tl">Sunați</a><a href="V6ServiceUsi.dc.html#oferta" class="btn2">Cereți o ofertă</a></span></div><a href="V6ServiceUsi.dc.html#oferta" class="mown"><img src="/_blob/db64092294ff593022b644677a1d90f9" alt="Desen de proiect pentru o ușă de biserică"><span><small>Al dumneavoastră</small><b>Ușa după desenul dumneavoastră</b><span>Pornim de la un desen și îl ajustăm împreună.</span></span><i aria-hidden="true">→</i></a></div></div></div></section>
+<div style="height: 16px"></div>
+
+<div style="height: 16px"></div>
+<section class="m-white" style="padding: 104px 0"><div class="wrap"><div class="nudges"><a href="V6ServiceIconostase.dc.html" class="nudge"><img src="/_blob/8c3993f966e2f3ecccb5cd81eff1056e" alt=""><span><span class="q">Și altarul?</span><span class="n">Iconostase</span><span class="why">Din marmură și lemn aurit.</span></span></a></div></div></section>
+<footer id="oferta" class="pf">
+  <!-- Footer v6.2 (canonical, identical on every page): link grid, offer in the last column → legal bar -->
+  <div class="pf-in">
+    <div class="pf-grid">
+      <div class="pf-brand"><a href="#" class="pf-logo" aria-label="Premium Bells, prima pagină"><img src="/_blob/c4950ecb27217623e54fb99907e39552" alt=""><span>Premium Bells</span></a><p class="pf-tag">Clopote, policandre, iconostase și uși pentru biserici ortodoxe.</p><div id="showroom" class="pf-show"><img class="pf-show-ph" src="/_blob/a9ecc905cc34abc9817dd1703872191b" alt="Clopote cu ornamente pe suporți, în showroom-ul din Buftea"><div style="min-width: 0"><p class="pf-h" style="margin: 0">Showroom · Buftea</p><a class="pf-addr" href="https://www.google.com/maps/search/?api=1&amp;query=Strada%20Agricultori%20108%2C%20070000%20Buftea" target="_blank" rel="noopener" aria-label="Strada Agricultori 108, 070000 Buftea, deschideți în hărți"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg><span>Strada Agricultori 108<br>070000 Buftea</span></a><div class="pf-maps"><a class="pf-map" href="https://www.google.com/maps/search/?api=1&amp;query=Strada%20Agricultori%20108%2C%20070000%20Buftea" target="_blank" rel="noopener">Google Maps</a><a class="pf-map" href="https://waze.com/ul?q=Strada%20Agricultori%20108%2C%20Buftea&amp;navigate=yes" target="_blank" rel="noopener">Waze</a></div></div></div></div>
+      <nav aria-label="Servicii" class="pf-col"><p class="pf-h">Servicii</p><a href="#" class="pf-l">Policandre</a><a href="#" class="pf-l">Clopote</a><a href="#" class="pf-l">Clopotar electronic</a><a href="#" class="pf-l">Iconostase</a><a href="#" class="pf-l">Uși</a></nav>
+      <nav aria-label="Companie" class="pf-col"><p class="pf-h">Companie</p><a href="#" class="pf-l">Lucrări</a><a href="#" class="pf-l">Blog</a><a href="#" class="pf-l">Despre noi</a><a href="#" class="pf-l">Presă</a><a href="#" class="pf-l">Parteneri</a></nav>
+      <div class="pf-col"><p class="pf-h">Cereți o ofertă</p><a href="tel:+40722790776" class="pf-phone"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"></path></svg>+40 722 790 776</a><a href="mailto:[email]" class="pf-l">[email din CMS]</a><p class="pf-note">Vă sunăm, discutăm proiectul și primiți oferta în [X] zile lucrătoare.</p><a href="#" class="pf-l" style="margin-top: 10px">Colaborează cu noi →</a></div>
+    </div>
+    <div class="pf-legal"><p>© 2026 S.C. Premium Bells SRL · CUI 36422758 · J40/10836/12.08.2016</p><div class="pf-row" style="gap: 8px 16px"><p class="pf-credit">Realizat cu <svg class="pf-heart" width="12" height="12" viewBox="0 0 24 24" role="img" aria-label="drag"><path fill="currentColor" d="M12 21s-8-5.2-8-11.2A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8 2.8C20 15.8 12 21 12 21z"></path></svg> de <a href="https://11k.io" target="_blank" rel="noopener">11k.io</a></p><span class="pf-row"><a href="#" class="pf-lang" aria-label="Limba: română. Switch to English">RO / EN</a><a href="#" class="pf-soc" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21z"></path></svg></a><a href="#" class="pf-soc" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"></circle></svg></a></span></div></div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mood":{"editor":"enum","options":["Off","Subtle","Warm"],"default":"Subtle"},"$preview":{"width":1440,"height":2547}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const mood = this.props.mood ?? 'Subtle';
+    return { moodClass: 'mood-' + String(mood).toLowerCase() };
+  }
+}
+</script>
+</body>
+</html>

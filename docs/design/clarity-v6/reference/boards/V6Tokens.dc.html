@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>v6 tokens Clarity</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+:root{--white:#ffffff;--band:#eef2f1;--ink:#111a19;--ink2:#4a5553;--hair:rgba(17,26,25,.10);--teal7:#0f6b63;--teal9:#0e3a36;--night:#0b2523;--tint:#e6efed;--focus:#9a783e;--on:#eef3f1;--onsoft:#a9bdb8;--e1:0 1px 2px rgba(11,37,35,.06),0 6px 16px rgba(11,37,35,.07);--e2:0 2px 6px rgba(11,37,35,.08),0 20px 40px rgba(11,37,35,.10);--e3:0 28px 72px rgba(11,37,35,.16)}
+body{margin:0;background:var(--white);color:var(--ink);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+img{display:block}
+.d{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-weight:500;line-height:1;letter-spacing:-.015em;margin:0}
+.s{font-size:17px;line-height:1.6;margin:0}
+.c{font-size:14px;line-height:1.5;margin:0}
+.soft{color:var(--ink2)}
+.sec{padding:120px 120px}
+.head{display:grid;grid-template-columns:360px minmax(0,1fr);gap:80px}
+.sw{display:flex;flex-direction:column;gap:12px}
+.chip{height:120px;border-radius:20px;display:flex;align-items:flex-end;padding:16px;font-size:14px;font-weight:600}
+.btn{display:inline-flex;align-items:center;height:52px;padding:0 26px;border-radius:999px;background:var(--teal9);color:#fff;text-decoration:none;font-size:16px;font-weight:600}
+.btn2{display:inline-flex;align-items:center;height:52px;padding:0 26px;border-radius:999px;background:var(--white);color:var(--ink);text-decoration:none;font-size:16px;font-weight:600;box-shadow:var(--e1)}
+.glassL{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(20px) saturate(1.3);backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.85)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glassL{background:rgba(255,255,255,.96)}}
+.ramp{display:grid;grid-template-columns:200px minmax(0,1fr);gap:32px;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--hair)}
+.strip{display:flex;flex-direction:column;gap:6px;width:280px}
+.strip span{display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-radius:12px;font-size:13px;font-weight:600}
+.mz1{background:radial-gradient(ellipse 120% 90% at 100% 0%,rgba(214,178,112,.20),rgba(214,178,112,0) 70%),radial-gradient(ellipse 90% 80% at 0% 40%,rgba(15,107,99,.08),rgba(15,107,99,0) 70%),#fff}
+.mz2{background:radial-gradient(ellipse 130% 100% at 100% 100%,rgba(214,178,112,.20),rgba(214,178,112,0) 70%),#eef2f1;box-shadow:inset 0 0 0 1px rgba(17,26,25,.08)}
+.mz3{background:radial-gradient(ellipse 90% 80% at 40% 50%,rgba(214,178,112,.20),rgba(214,178,112,0) 70%),#fff}
+.mz4{background:radial-gradient(ellipse 130% 90% at 0% -10%,rgba(15,107,99,.42),rgba(15,107,99,0) 70%),radial-gradient(ellipse 110% 80% at 100% 110%,rgba(214,178,112,.14),rgba(214,178,112,0) 70%),#0b2523}
+:root{--metal-gold:linear-gradient(100deg,#6e5020 0%,#a37e36 55%,#7c5a24 100%);--metal-bronze:linear-gradient(100deg,#3f3226 0%,#7a5c40 60%,#4a3a2a 100%);--metal-gilt:linear-gradient(100deg,#7a3f1e 0%,#a5682c 55%,#8a5424 100%)}
+.mw{-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin:0}
+.mw-gold{color:#6e5020;background-image:var(--metal-gold)}.mw-bronze{color:#3f3226;background-image:var(--metal-bronze)}.mw-gilt{color:#7a3f1e;background-image:var(--metal-gilt)}
+@media (forced-colors: active){.mw{-webkit-text-fill-color:currentColor;background:none}}
+.bo{position:relative;display:flex;flex-direction:column;padding:0 14px;text-decoration:none;color:var(--ink)}
+.bo::before{content:'';position:absolute;left:0;right:0;top:64px;bottom:0;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.9);border-radius:24px;transition:background .36s cubic-bezier(.22,.61,.36,1),box-shadow .36s cubic-bezier(.22,.61,.36,1)}
+.bo>*{position:relative}
+.bo .ph{display:block;aspect-ratio:4/3;border-radius:16px;overflow:hidden;box-shadow:var(--e2);transition:transform .36s cubic-bezier(.22,.61,.36,1),box-shadow .36s cubic-bezier(.22,.61,.36,1)}
+.bo .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,.61,.36,1)}
+.bo .tx{display:flex;flex-direction:column;align-items:center;text-align:center;padding:18px 12px 22px}
+.bo .bar{display:block;width:28px;height:3px;border-radius:2px;margin-bottom:12px;transition:width .36s cubic-bezier(.22,.61,.36,1)}
+.bo b{font-family:'Cormorant Garamond',Garamond,serif;font-size:28px;font-weight:600;line-height:1.1}
+.bo small{font-size:15px;color:var(--ink2);margin-top:8px}
+.bo.on::before,.bo.live:hover::before{background:#fff;box-shadow:var(--e1)}
+.bo.on .ph,.bo.live:hover .ph{transform:translateY(-12px);box-shadow:var(--e3)}
+.bo.on .ph img,.bo.live:hover .ph img{transform:scale(1.03)}
+.bo.on .bar,.bo.live:hover .bar{width:56px}
+@media (prefers-reduced-motion: reduce){.bo .ph,.bo .ph img,.bo .bar{transition:none}.bo.live:hover .ph{transform:none}}
+.cut{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:start;padding:14px 0;border-bottom:1px solid var(--hair)}
+</style>
+</helmet>
+<div style="width: 1440px; background: var(--white)">
+
+  <section class="sec" style="padding-bottom: 96px">
+    <p class="c soft" style="font-weight: 600">Revision 6 · tokens</p>
+    <h1 class="d" style="font-size: 168px; margin-top: 32px">Clarity</h1>
+    <p class="s" style="max-width: 720px; margin-top: 32px; font-size: 20px">Same Patina teal, same photography. What changes is the space around it: white and a pale cool band take turns, one dark panel anchors the middle, cards float on real shadows again, and the type gets heavier so nothing looks washed out.</p>
+  </section>
+
+  <section class="sec" style="background: var(--band)">
+    <div class="head">
+      <div><h2 class="d" style="font-size: 64px">Colour</h2><p class="s soft" style="margin-top: 20px">The ground is now white. The old warm ground is gone, as is the 1.08 : 1 card-on-ground problem: white cards sit on the band, never on white without a shadow.</p></div>
+      <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px">
+        <div class="sw"><div class="chip" style="background: #ffffff; box-shadow: var(--e1)">White</div><p class="c"><b>#ffffff</b> · page ground, cards</p></div>
+        <div class="sw"><div class="chip" style="background: #eef2f1; box-shadow: inset 0 0 0 1px var(--hair)">Band</div><p class="c"><b>#eef2f1</b> · alternate sections; cards on it get e1</p></div>
+        <div class="sw"><div class="chip" style="background: #111a19; color: #fff">Ink</div><p class="c"><b>#111a19</b> · 17.7 on white · 15.7 on band</p></div>
+        <div class="sw"><div class="chip" style="background: #4a5553; color: #fff">Ink soft</div><p class="c"><b>#4a5553</b> · 7.7 on white · 6.9 on band (was 6.0)</p></div>
+        <div class="sw"><div class="chip" style="background: #e6efed; color: #0e3a36">Tint</div><p class="c"><b>#e6efed</b> · hover, active nav</p></div>
+        <div class="sw"><div class="chip" style="background: #0f6b63; color: #fff">Teal 700</div><p class="c"><b>#0f6b63</b> · links, played waveform · 6.4</p></div>
+        <div class="sw"><div class="chip" style="background: #0e3a36; color: #fff">Teal 900</div><p class="c"><b>#0e3a36</b> · buttons, play · white 12.5</p></div>
+        <div class="sw"><div class="chip" style="background: #0b2523; color: #eef3f1">Teal 950</div><p class="c"><b>#0b2523</b> · two panels: Despre noi, footer</p></div>
+        <div class="sw"><div class="chip" style="background: #9a783e; color: #fff">Gold</div><p class="c"><b>#9a783e</b> · focus ring only (4.1 on white); #c9a467 on dark</p></div>
+        <div class="sw"><div class="chip glassL" style="background: rgba(255,255,255,.72); box-shadow: var(--e2)">Glass</div><p class="c"><b>white 72% · blur 20</b> · header, menus, captions</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="head">
+      <div><h2 class="d" style="font-size: 64px">Rhythm</h2><p class="s soft" style="margin-top: 20px">Sections are told apart by their ground, not by hairlines. Two neighbours never share a ground.</p></div>
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 56px; align-items: start">
+        <div class="strip" role="img" aria-label="Homepage rhythm: hero white, services band, works white, about dark panel, director white, listen band, journal white, footer dark panel">
+          <span style="height: 92px; background: #fff; box-shadow: var(--e1)">Hero <i style="font-style: normal; font-weight: 500" class="soft">white</i></span>
+          <span style="height: 120px; background: var(--band)">Servicii + Cataloage <i style="font-style: normal; font-weight: 500" class="soft">band</i></span>
+          <span style="height: 84px; background: #fff; box-shadow: var(--e1)">Lucrări <i style="font-style: normal; font-weight: 500" class="soft">white</i></span>
+          <span style="height: 72px; background: var(--night); color: var(--on); margin: 0 8px">Despre noi <i style="font-style: normal; font-weight: 500; color: var(--onsoft)">dark</i></span>
+          <span style="height: 56px; background: #fff; box-shadow: var(--e1)">Director <i style="font-style: normal; font-weight: 500" class="soft">white</i></span>
+          <span style="height: 52px; background: var(--band)">Ascultați <i style="font-style: normal; font-weight: 500" class="soft">band</i></span>
+          <span style="height: 68px; background: #fff; box-shadow: var(--e1)">Jurnal <i style="font-style: normal; font-weight: 500" class="soft">white</i></span>
+          <span style="height: 64px; background: var(--night); color: var(--on); margin: 0 8px">Footer <i style="font-style: normal; font-weight: 500; color: var(--onsoft)">dark</i></span>
+        </div>
+        <div>
+          <div class="ramp" style="padding-top: 0"><p class="s" style="font-weight: 600">Section padding</p><p class="s">160 px top and bottom on desktop · 96 px on mobile</p></div>
+          <div class="ramp"><p class="s" style="font-weight: 600">Container</p><p class="s">1200 px content · 1328 px for the triptych and the two dark panels (inset 16 px, radius 28)</p></div>
+          <div class="ramp"><p class="s" style="font-weight: 600">Title → content</p><p class="s">56 px · intro line sits 20 px under the title</p></div>
+          <div class="ramp"><p class="s" style="font-weight: 600">Card gaps</p><p class="s">24 px in grids · 32 px between columns of text</p></div>
+          <div class="ramp"><p class="s" style="font-weight: 600">Dark panels</p><p class="s">Two per page, both inset with rounded corners, so they read as objects, not stripes</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="background: var(--band)">
+    <div class="head">
+      <div><h2 class="d" style="font-size: 64px">Type</h2><p class="s soft" style="margin-top: 20px">Cormorant moves from 400 to 500–600 so its hairlines hold up on white. Six sizes in total; nothing under 14 px except legal lines.</p></div>
+      <div>
+        <div class="ramp" style="padding-top: 0"><p class="c soft">Display · Cormorant 500 · 88</p><p class="d" style="font-size: 88px">Policandre</p></div>
+        <div class="ramp"><p class="c soft">Section · Cormorant 500 · 64</p><p class="d" style="font-size: 64px">Serviciile noastre</p></div>
+        <div class="ramp"><p class="c soft">Card title · Cormorant 600 · 30</p><p class="d" style="font-size: 30px; font-weight: 600">Raport 18 ianuarie 2023</p></div>
+        <div class="ramp"><p class="c soft">Lead · Inter 400 · 20</p><p style="font-size: 20px; line-height: 1.55; margin: 0">Confecționate de către ortodocși pentru ortodocși.</p></div>
+        <div class="ramp"><p class="c soft">Name · Inter 600 · 18</p><p style="font-size: 18px; font-weight: 600; margin: 0">Clopote fără balans</p></div>
+        <div class="ramp"><p class="c soft">Body / meta · Inter 400 · 17 / 15</p><p class="s soft">Tragere cu sfoară · 17 feb. 2023 · 6 min</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="head">
+      <div><h2 class="d" style="font-size: 64px">Elevation</h2><p class="s soft" style="margin-top: 20px">Back from v4, a little deeper. Every clickable card floats; flat things stay flat.</p></div>
+      <div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding: 40px; border-radius: 28px; background: var(--band)">
+        <div style="display: flex; flex-direction: column; gap: 14px"><div style="height: 150px; border-radius: 20px; background: #fff; box-shadow: var(--e1)"></div><p class="s" style="font-weight: 600">e1 · rest</p><p class="c soft">cards, cover, listen card</p></div>
+        <div style="display: flex; flex-direction: column; gap: 14px"><div style="height: 150px; border-radius: 20px; background: #fff; box-shadow: var(--e2); transform: translateY(-6px)"></div><p class="s" style="font-weight: 600">e2 · hover, header pill</p><p class="c soft">−6 px · photo 1.04 · 240 ms</p></div>
+        <div style="display: flex; flex-direction: column; gap: 14px"><div style="height: 150px; border-radius: 20px; background: #fff; box-shadow: var(--e3)"></div><p class="s" style="font-weight: 600">e3 · mega menu, overlays</p><p class="c soft">glass panel, radius 24</p></div>
+      </div>
+      <h3 class="d" style="font-size: 40px; margin-top: 64px">The break-out card</h3>
+      <p class="s soft" style="margin-top: 12px; max-width: 640px">The standard clickable card. A frosted tray starts 64 px below the top, so the photo overhangs its upper edge. On hover the tray turns from dim to white and the photo lifts out of it. Used for services, posts and catalogue-like lists; the wall, map tile and video share the same lift.</p>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding: 72px 40px 40px; margin-top: 32px; border-radius: 28px; background: var(--band)">
+        <div><a href="#" class="bo"><span class="ph"><img src="/_blob/3343907c5e196c8314eb8d098cd24d7f" alt="Policandru în naosul bisericii din Dej"></span><span class="tx"><i class="bar" style="background: linear-gradient(100deg,#6e5020 0%,#a37e36 55%,#7c5a24 100%)" aria-hidden="true"></i><b>Policandre</b><small>1–7 nivele, clasa premium</small></span></a><p class="c" style="margin-top: 16px; font-weight: 600">Rest</p><p class="c soft">tray white 55% (band 80% on white sections) · photo e2</p></div>
+        <div><a href="#" class="bo on"><span class="ph"><img src="/_blob/d9f5e92d7dcd5e29ce85525d54c2d0b1" alt="Clopot cu jug"></span><span class="tx"><i class="bar" style="background: linear-gradient(100deg,#3f3226 0%,#7a5c40 60%,#4a3a2a 100%)" aria-hidden="true"></i><b>Clopote cu jug</b><small>Cu balans, până la 16 tone</small></span></a><p class="c" style="margin-top: 16px; font-weight: 600">Hover / focus</p><p class="c soft">tray white + e1 · photo −12 px, e3, image 1.03 · bar 28 → 56 · 360 ms</p></div>
+        <div><a href="#" class="bo live"><span class="ph"><img src="/_blob/b7b45a0c1df8bd27a0946f64d7a49a59" alt="Uși din bronz"></span><span class="tx"><i class="bar" style="background: linear-gradient(100deg,#7a3f1e 0%,#a5682c 55%,#8a5424 100%)" aria-hidden="true"></i><b>Uși</b><small>Cupru, cu sfinți în relief</small></span></a><p class="c" style="margin-top: 16px; font-weight: 600; color: var(--teal7)">Live: hover it</p><p class="c soft">Press: photo −4 px, e2 · reduced motion: colour only</p></div>
+      </div>
+      <div class="ramp" style="margin-top: 24px"><p class="s" style="font-weight: 600">Anatomy</p><p class="s">Tray radius 24, 1 px white edge, starts 64 px down (36–44 on phones) · photo inset 14 (8 on phones), radius 16, 4:3 · metal bar 28 × 3 · name Cormorant 600 28 · line Inter 15 ink soft · white drawings get a 1 px hairline</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="background: var(--band)">
+    <div class="head">
+      <div><h2 class="d" style="font-size: 64px">Mood</h2><p class="s soft" style="margin-top: 20px">Two lights taken from the materials: candle gold and bronze patina. Each light section gets one soft glow from a corner, like light falling into a nave. The dark panels get patina from above and candlelight from below.</p><p class="s soft" style="margin-top: 16px">Tweaks on the homepage board: Mood Off · Subtle · Warm.</p></div>
+      <div>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">
+          <div class="sw"><div class="chip mz1" style="height: 200px; box-shadow: var(--e1)">Hero</div><p class="c"><b>Gold</b> from the top right, <b>patina</b> faint from the left</p></div>
+          <div class="sw"><div class="chip mz2" style="height: 200px">Band</div><p class="c"><b>Gold</b> rising from a lower corner</p></div>
+          <div class="sw"><div class="chip mz3" style="height: 200px; box-shadow: var(--e1)">Director</div><p class="c"><b>Candlelight</b> behind the portrait</p></div>
+          <div class="sw"><div class="chip mz4" style="height: 200px; color: #eef3f1">Dark panel</div><p class="c"><b>Patina</b> 42% above, <b>gold</b> 14% below</p></div>
+        </div>
+        <div style="margin-top: 40px">
+          <div class="ramp" style="padding-top: 0"><p class="s" style="font-weight: 600">Colours</p><p class="s">Candle gold rgb(214,178,112) · patina = teal 700. Subtle: gold 20%, patina 8%. Warm: 32% / 12%.</p></div>
+          <div class="ramp"><p class="s" style="font-weight: 600">Where</p><p class="s">Backgrounds of sections only. Never on buttons, cards, type or photos.</p></div>
+          <div class="ramp"><p class="s" style="font-weight: 600">Contrast</p><p class="s">At the core of a Warm glow, ink stays above 13 : 1 and ink soft above 5.7 : 1 (AA).</p></div>
+          <div class="ramp"><p class="s" style="font-weight: 600">Motion</p><p class="s">Static. One exception: in Ascultați the glow brightens slowly while the bell plays (off with reduced motion).</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="head">
+      <div><h2 class="d" style="font-size: 64px">Materials</h2><p class="s soft" style="margin-top: 20px">The material word: a display word painted in the metal it names, with a gentle 100° sheen. One component, three tokens, one rule: the word must name the thing.</p><p class="s soft" style="margin-top: 16px">Homepage Tweaks: Headline Materials · Ink.</p></div>
+      <div>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+          <div class="sw"><p class="d mw mw-gold" style="font-size: 76px; font-weight: 500">Policandre</p><p class="c"><b>--metal-gold</b> #6e5020 → #a37e36 → #7c5a24<br>Policandre · Proiecte la comandă · Recondiționare</p></div>
+          <div class="sw"><p class="d mw mw-bronze" style="font-size: 76px; font-weight: 500">Clopote</p><p class="c"><b>--metal-bronze</b> #3f3226 → #7a5c40 → #4a3a2a<br>Clopote cu jug · fără balans · Clopotar · Automatizări</p></div>
+          <div class="sw"><p class="d mw mw-gilt" style="font-size: 76px; font-weight: 500">Iconostase</p><p class="c"><b>--metal-gilt</b> #7a3f1e → #a5682c → #8a5424<br>Iconostase · Uși</p></div>
+        </div>
+        <div style="margin-top: 48px; padding: 48px; border-radius: 28px; background: var(--band); box-shadow: inset 0 0 0 1px var(--hair)">
+          <p class="c soft" style="font-weight: 600">On a service page: the H1 takes its family’s metal</p>
+          <h3 class="d" style="font-size: 96px; margin-top: 16px"><span class="mw mw-bronze">Clopote</span><span style="display: block; margin-top: 12px; font-size: .6em; font-style: italic; color: var(--teal7)">până la 16 tone, cu jug sau fără balans</span></h3>
+        </div>
+        <div style="margin-top: 40px">
+          <div class="ramp" style="padding-top: 0"><p class="s" style="font-weight: 600">Use</p><p class="s">Homepage headline · service page H1 (Policandre, Clopote, Iconostase) · a project page’s category word. Only where the word names the material.</p></div>
+          <div class="ramp"><p class="s" style="font-weight: 600">Size</p><p class="s">Cormorant 500–600 at 40 px or more. Below that the sheen turns muddy: use the -solid token or ink.</p></div>
+          <div class="ramp"><p class="s" style="font-weight: 600">Budget</p><p class="s">One phrase per screen. Never on section titles, buttons, body, cards or dark panels (a light set for dark grounds can follow if needed).</p></div>
+          <div class="ramp"><p class="s" style="font-weight: 600">Partner</p><p class="s">Pair it with the teal italic line. Warm metal above, cool patina below: the same gold–teal contrast the palette is built on.</p></div>
+          <div class="ramp"><p class="s" style="font-weight: 600">Link state</p><p class="s">Underline is a 3 px bar in the word’s -line token, drawn as a pseudo-element (a real text-decoration gets filled by the gradient). Focus: gold ring.</p></div>
+          <div class="ramp"><p class="s" style="font-weight: 600">Fallback</p><p class="s">-solid colour in forced-colors mode and where background-clip: text is missing. Every stop ≥ 3 : 1 on white, band and warm glow.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="background: var(--band); padding-bottom: 140px">
+    <div class="head">
+      <div><h2 class="d" style="font-size: 64px">Taken out</h2><p class="s soft" style="margin-top: 20px">Everything here was either said twice or said by something else on the page.</p></div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 56px">
+        <div>
+          <div class="cut"><span class="soft">—</span><p class="s">Section rail dots</p></div>
+          <div class="cut"><span class="soft">—</span><p class="s">60 · 3 · 12 figures under the hero (now in Lucrări and Despre noi)</p></div>
+          <div class="cut"><span class="soft">—</span><p class="s">Craft heading columns, 2 px rules, fact lists</p></div>
+          <div class="cut"><span class="soft">—</span><p class="s">Arrow buttons and glass hint chips on service cards</p></div>
+        </div>
+        <div>
+          <div class="cut"><span class="soft">—</span><p class="s">Counts inside filter chips</p></div>
+          <div class="cut"><span class="soft">—</span><p class="s">“Citiți articolul →” under each post (the card is the link)</p></div>
+          <div class="cut"><span class="soft">—</span><p class="s">Hairlines between sections and the footer’s grain</p></div>
+          <div class="cut"><span class="soft">—</span><p class="s">Darkened closed triptych slices (78% → 92%)</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":6500}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

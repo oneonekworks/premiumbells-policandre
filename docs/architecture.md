@@ -256,6 +256,8 @@ small brand assets may remain local; editorial photography belongs in Sanity.
 
 ## Route architecture
 
+> **v6 (2026-11-17):** routes change with design v6: no `/servicii` hub, `/servicii/clopote` renders Clopote cu jug, the Iconostase material URLs open a Lightbox layer, and there is **no full project page**: `/lucrarile-noastre/[category]/[project]` renders the Works page with the Project panel open (server-rendered); the intercepted route opens the panel over the current page. Category sidebar and year/county filters go; `?tip=`, `?vedere=harta` come. Details: `docs/design/clarity-v6/routes.md`, `docs/url-map.md` (v6 section).
+
 Proposed Romanian canonical routes (not a final redirect map; preserve valid
 nested legacy service routes):
 

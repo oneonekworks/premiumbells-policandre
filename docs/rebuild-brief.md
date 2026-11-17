@@ -11,7 +11,7 @@ not authorize account creation, paid services, imports, commits, or deployment.
 Premium Bells / policandre.ro is a presentational catalogue and portfolio, not
 an online store. Primary markets are Romania and Moldova. Visitors should be
 able to discover services, inspect models and completed installations, and
-contact the business with a useful enquiry. No public prices.
+contact the business with a useful enquiry. No public prices, except the Policandre model catalogue (one price per finish, with the date the prices were updated; client decision 2026-11-17).
 
 Priority services are policandre, clopote, recondiționare policandre, and bell
 automation/electronic systems. Distinguish physical bell actuation, electronic
@@ -114,7 +114,7 @@ The Drive PDFs were not accessible through the browsing tool; only supplied
 screenshots have been reviewed. Full PDF extraction remains pending direct
 attachments or accessible copies. Content can be filled progressively. Check
 dated model, warranty, availability, and company claims before publication.
-Prices must be absent from text, metadata, images, and downloadable files.
+Prices must be absent from text, metadata, images, and downloadable files, except the numeric price fields of the Policandre catalogue items (2026-11-17, see `docs/design/clarity-v6/rules.md`).
 Do not republish original priced PDFs; prepare reviewed price-free derivatives
 if downloads are retained. Preserve original sources unchanged.
 

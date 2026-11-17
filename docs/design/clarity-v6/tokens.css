@@ -1,0 +1,288 @@
+/* Premium Bells · design tokens · v6 "Clarity" (v6.2 release candidate, 2026-11-17) · Tailwind CSS v4
+   Final source of truth. Where v1–v5 differ, these values win.
+   v6.2 additions (marked "v6.2" below): overlay backdrop and on-dark glass (lightbox, Lightbox · Iconostase,
+   Project panel scrim), craft moods for the Works wall, graphite family for Clopote, docked filter bar,
+   overlay photo shadow. The warm-dark lightbox values of v2–v6.1 are removed.
+   Contrast ratios (WCAG 2.x) are noted on every colour used for text.
+   Changed from v4: white ground + band (--color-sunk removed, use --color-band),
+   darker ink, Cormorant 500–600, deeper shadows, glass blur 20,
+   new: metal tokens, mood glows, break-out card. */
+
+@import "tailwindcss";
+
+@theme {
+  /* ---------- Colour · light grounds (white and band alternate; neighbours never match) ---------- */
+  --color-ground: #ffffff;            /* page ground, odd sections */
+  --color-surface: #ffffff;           /* cards, panels */
+  --color-band: #eef2f1;              /* alternate sections */
+  --color-hairline: rgb(17 26 25 / 0.10); /* 1px borders; inside cards and tables, never between sections */
+  --color-ink: #111a19;               /* text · 17.71 white · 15.69 band · 15.13 tint */
+  --color-ink-soft: #4a5553;          /* meta, kickers, captions · 7.73 white · 6.85 band · 6.60 tint */
+
+  /* ---------- Colour · Patina (brand) ---------- */
+  --color-teal-tint: #e6efed;         /* hover / active backgrounds, note chips */
+  --color-teal-700: #0f6b63;          /* links, italic sublines, map dots · 6.36 white · 5.63 band · 5.43 tint */
+  --color-teal-900: #0e3a36;          /* primary button, play, active chip · white text 12.52 · as text on tint 10.69 */
+  --color-teal-950: #0b2523;          /* the two inset dark panels per page */
+  --color-on-dark: #eef3f1;           /* text on teal-950 · 14.37 */
+  --color-on-dark-soft: #a9bdb8;      /* meta on teal-950 · 8.18 */
+
+  /* ---------- Colour · gold UI (focus only; metals below are separate) ---------- */
+  --color-focus: #9a783e;             /* 3px focus ring on light · 4.09 white · 3.63 band */
+  --color-focus-on-dark: #c9a467;     /* focus ring on teal-950 / lightbox · 6.90; played waveform */
+  --color-ornament: #b8955a;          /* the one bell ornament (footer) · 5.74 on teal-950 */
+
+  /* ---------- Colour · overlays (v6.2: translucent teal night; was warm black #121110) ---------- */
+  --color-overlay: rgb(14 58 54 / 0.60);   /* teal-900 at 60% + blur(12px) saturate(1.4): the page behind reads as soft shapes */
+  --color-overlay-fallback: rgb(14 58 54 / 0.96); /* no backdrop-filter / reduced transparency */
+  --color-overlay-edge: rgb(9 40 37 / 0.85);      /* gradient under the top bar (140 desktop / 120 phone) */
+  --color-overlay-edge-bottom: rgb(9 40 37 / 0.88); /* gradient under the caption (240 / 280) */
+  --color-overlay-text: #eef3f1;
+  --color-overlay-soft: #c9d6d2;            /* ≥ 4.5:1 even over a white page behind */
+  --color-overlay-glass: rgb(255 255 255 / 0.06); /* controls; border white 12%, hover 12%; fallback #173431 */
+  --shadow-overlay-photo: 0 24px 64px rgb(2 12 11 / 0.55), 0 2px 8px rgb(2 12 11 / 0.35);
+  --color-photo-veil: rgb(10 18 17 / 0.34); /* flat veil under white text on photos */
+
+  /* ---------- Materials · display words ≥ 40px, 28×3 family bars ---------- */
+  /* Every stop ≥ 3:1 on white and band (lowest: gold midpoint 3.75 white · 3.33 band). */
+  --metal-gold: linear-gradient(100deg, #6e5020 0%, #a37e36 55%, #7c5a24 100%);   /* Policandre · Proiecte la comandă · Recondiționare */
+  --metal-gold-solid: #6e5020;        /* fallback, forced colors · 7.42 white */
+  --metal-gold-line: #a37e36;         /* underline bar */
+  --metal-bronze: linear-gradient(100deg, #3f3226 0%, #7a5c40 60%, #4a3a2a 100%); /* Clopote · Clopotar · Automatizări */
+  --metal-bronze-solid: #3f3226;      /* 12.39 white */
+  --metal-bronze-line: #7a5c40;
+  --metal-gilt: linear-gradient(100deg, #7a3f1e 0%, #a5682c 55%, #8a5424 100%);   /* Iconostase · Uși */
+  --metal-gilt-solid: #7a3f1e;        /* 8.21 white */
+  --metal-gilt-line: #a5682c;
+
+  /* ---------- Craft moods · Works wall band only (v6.2), cross-fade 500ms, never on photos ---------- */
+  --mood-pol: 205 160 72;             /* Policandre gold: .22 top-left, .14 lower right · active chip #6e5020 */
+  --mood-clo-a: 64 68 74;             /* Clopote warm graphite .20 top-left … */
+  --mood-clo-b: 196 152 78;           /* … + gold .24 lower right · active chip #33363b (graphite) */
+  --mood-ico: 176 96 48;              /* Iconostase și uși red-gold .18 / .12 · active chip #7a3f1e */
+  --mood-rec: 15 107 99;              /* Recondiționări patina .16 / .10 · active chip teal-900 */
+  --color-graphite: #33363b;          /* Clopote active chip, bell-type chip outline */
+
+  /* ---------- Mood · section backgrounds only ---------- */
+  --glow-gold: 214 178 112;           /* candle gold */
+  --glow-teal: 15 107 99;             /* patina (teal-700) */
+
+  /* ---------- Fonts ---------- */
+  --font-display: "Cormorant Garamond", Garamond, "Times New Roman", serif; /* 500–600; display, section titles, card names */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* ---------- Type scale ---------- */
+  --text-hero: clamp(3.25rem, 6.2vw, 5.5rem);        /* 88 desktop · 52 mobile · homepage headline */
+  --text-hero--line-height: 1;
+  --text-hero--letter-spacing: -0.015em;
+  --text-hero--font-weight: 500;
+
+  --text-page: clamp(4.5rem, 9vw, 8.25rem);          /* 132 desktop · 72–76 mobile · service H1; project H1 caps at 116 */
+  --text-page--line-height: 0.95;
+  --text-page--letter-spacing: -0.015em;
+  --text-page--font-weight: 500;
+
+  --text-section: clamp(2.5rem, 4.6vw, 4rem);        /* 64 desktop · 40 mobile */
+  --text-section--line-height: 1;
+  --text-section--letter-spacing: -0.015em;
+  --text-section--font-weight: 500;
+
+  --text-statement: clamp(2rem, 3.2vw, 2.875rem);    /* 46 desktop · 32 mobile */
+  --text-statement--line-height: 1.15;
+  --text-statement--letter-spacing: -0.015em;
+  --text-statement--font-weight: 500;
+
+  --text-figure: clamp(3rem, 4.5vw, 4rem);           /* stats 64 desktop · 48 mobile */
+  --text-figure--line-height: 0.9;
+  --text-figure--font-weight: 600;
+
+  --text-card: 1.75rem;                              /* 28 · Cormorant 600 · break-out names (24 in 4-up grids) */
+  --text-card--line-height: 1.1;
+  --text-card--font-weight: 600;
+
+  --text-lead: 1.1875rem;                            /* 19 · mobile 17 */
+  --text-lead--line-height: 1.6;
+  --text-body: 1.0625rem;                            /* 17 */
+  --text-body--line-height: 1.6;
+  --text-meta: 0.9375rem;                            /* 15 · card lines */
+  --text-meta--line-height: 1.5;
+  --text-kicker: 0.9375rem;                          /* 15 / 600 · ink-soft, above section titles · 13 on phones */
+  --text-kicker--line-height: 1.3;
+  --text-kicker--letter-spacing: 0.02em;
+  --text-kicker--font-weight: 600;
+  --text-ui: 0.9375rem;                              /* 15 · nav (500), buttons 16 (600) */
+  --text-ui--line-height: 1;
+  --text-caption: 0.875rem;                          /* 14 · the minimum; legal line may be 13 */
+  --text-caption--line-height: 1.5;
+
+  /* ---------- Spacing (4px base) ---------- */
+  --spacing: 0.25rem;
+  --spacing-gap-grid: 1.5rem;        /* 24 · card grids */
+  --spacing-gap-wall: 1rem;          /* 16 · wall (12 in the project dark panel, 8 on phones) */
+  --spacing-gutter: 1.5rem;          /* 24 page side padding · 20 phones */
+  --spacing-section: 10rem;          /* 160 homepage sections · 96 phones */
+  --spacing-section-page: 8.5rem;    /* 136 service and project pages · 88 phones */
+  --spacing-panel-inset: 1rem;       /* 16 · dark panels from the viewport edge · 8 phones */
+  --spacing-header-offset: 1rem;     /* 16 · floating pill distance from top (12 phones) */
+
+  /* ---------- Breakpoints & containers ---------- */
+  --breakpoint-sm: 30rem;            /* 480 */
+  --breakpoint-md: 48rem;            /* 768 */
+  --breakpoint-lg: 64rem;            /* 1024 */
+  --breakpoint-xl: 75rem;            /* 1200 */
+  --breakpoint-2xl: 90rem;           /* 1440 · design width */
+  --container-page: 78rem;           /* 1248 with 24 gutters = 1200 content */
+  --container-wide: 83rem;           /* 1328 · triptych-adjacent walls, journal, dark panel content */
+  --container-media: 90rem;          /* 1440 with 16 gutters = 1408 hero media */
+  --container-header: 75rem;         /* 1200 · header pill */
+  --container-text: 42.5rem;         /* 680 · reading measure */
+
+  /* ---------- Radius ---------- */
+  --radius-caption: 0.75rem;         /* 12 · glass captions */
+  --radius-image: 1rem;              /* 16 · break-out photo, wall tiles (14 phones) */
+  --radius-card: 1.25rem;            /* 20 · small cards, prev / next */
+  --radius-tray: 1.5rem;             /* 24 · break-out tray, spec cards (20 phones) */
+  --radius-panel: 1.75rem;           /* 28 · dark panels, project lead photos (24 phones) */
+  --radius-hero: 2rem;               /* 32 · service hero photo */
+  --radius-pill: 999px;              /* buttons, chips, header pill, bottom bar */
+
+  /* ---------- Shadow (teal-ink tinted) ---------- */
+  --shadow-e0: none;
+  --shadow-e1: 0 1px 2px rgb(11 37 35 / 0.06), 0 6px 16px rgb(11 37 35 / 0.07);
+  --shadow-e2: 0 2px 6px rgb(11 37 35 / 0.08), 0 20px 40px rgb(11 37 35 / 0.10);
+  --shadow-e3: 0 28px 72px rgb(11 37 35 / 0.16);
+
+  /* ---------- Motion ---------- */
+  --ease-light: cubic-bezier(0.22, 0.61, 0.36, 1);  /* the only curve; no spring, no overshoot */
+  --duration-press: 120ms;
+  --duration-out: 160ms;
+  --duration-line: 180ms;            /* underline, tint, chip fill */
+  --duration-fade: 240ms;            /* captions, menus */
+  --duration-close: 280ms;
+  --duration-open: 320ms;            /* lightbox, grid reflow */
+  --duration-card: 360ms;            /* break-out card, wall tile lift */
+  --duration-page: 480ms;
+  --duration-image: 600ms;           /* image scale inside cards */
+  --duration-text: 700ms;
+  --duration-reveal: 900ms;
+  --duration-shimmer: 1200ms;
+  --duration-counter: 1200ms;
+  --stagger-grid: 60ms;              /* max 6 per row, once */
+  --stagger-menu: 30ms;
+  --stagger-text: 100ms;
+}
+
+/* ---------- Recipes that are not single tokens ---------- */
+@layer components {
+  .glass-light {                      /* header pill, menus, wall captions, bottom bar */
+    background: rgb(255 255 255 / 0.72);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    backdrop-filter: blur(20px) saturate(1.3);
+    border: 1px solid rgb(255 255 255 / 0.85);
+  }
+
+  /* v6.2 overlays: Lightbox (with optional material tabs), Project panel scrim */
+  .overlay-backdrop {
+    background: linear-gradient(to bottom, var(--color-overlay-edge), transparent 140px),
+                linear-gradient(to top, var(--color-overlay-edge-bottom), transparent 240px),
+                var(--color-overlay);
+    -webkit-backdrop-filter: blur(12px) saturate(1.4); backdrop-filter: blur(12px) saturate(1.4);
+    box-shadow: inset 0 0 200px rgb(3 14 13 / 0.3); color: var(--color-overlay-text);
+  }
+  .glass-on-dark { background: var(--color-overlay-glass); -webkit-backdrop-filter: blur(20px) saturate(1.15); backdrop-filter: blur(20px) saturate(1.15); border: 1px solid rgb(255 255 255 / 0.12); }
+  .glass-on-dark:hover { background: rgb(255 255 255 / 0.12); }
+  /* v6.2 docked bars (header + Works filter while scrolling): stronger glass so they read above photos */
+  .glass-docked { background: rgb(255 255 255 / 0.86); -webkit-backdrop-filter: blur(20px) saturate(1.3); backdrop-filter: blur(20px) saturate(1.3);
+    box-shadow: 0 14px 36px rgb(11 37 35 / 0.20), 0 3px 8px rgb(11 37 35 / 0.10), inset 0 0 0 1px rgb(255 255 255 / 0.9); }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .overlay-backdrop { background: var(--color-overlay-fallback); }
+    .glass-on-dark { background: #173431; }
+  }
+  /* removed in v6.2 (kept for reference only): warm glass-dark and lightbox-backdrop */
+  .glass-dark {                       /* not used in v6.2 */
+    background: rgb(26 22 18 / 0.58);
+    -webkit-backdrop-filter: blur(20px) saturate(1.15);
+    backdrop-filter: blur(20px) saturate(1.15);
+    border: 1px solid rgb(220 198 156 / 0.26);
+    box-shadow: inset 0 1px 0 rgb(220 198 156 / 0.18);
+  }
+  .lightbox-backdrop {                /* not used in v6.2: use .overlay-backdrop */
+    background: rgb(18 17 16 / 0.72);
+    -webkit-backdrop-filter: blur(24px) saturate(1.1);
+    backdrop-filter: blur(24px) saturate(1.1);
+    box-shadow: inset 0 0 280px rgb(0 0 0 / 0.7);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-light { background: rgb(255 255 255 / 0.96); }
+    .glass-dark { background: rgb(26 22 18 / 0.94); }
+    .lightbox-backdrop { background: rgb(18 17 16 / 0.95); }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .glass-light { background: rgb(255 255 255 / 0.96); backdrop-filter: none; }
+    .glass-dark { background: rgb(26 22 18 / 0.94); backdrop-filter: none; }
+  }
+
+  /* Dark panel: two per page, inset, so they read as objects, not stripes */
+  .dark-panel { color: var(--color-on-dark); border-radius: var(--radius-panel); margin-inline: var(--spacing-panel-inset); }
+  @media (max-width: 47.99rem) { .dark-panel { border-radius: 1.5rem; margin-inline: 0.5rem; } }
+
+  /* Material word: Cormorant 500–600, ≥ 40px, one phrase per screen, paired with a teal italic line */
+  .mw { position: relative; display: inline-block; text-decoration: none; padding-bottom: 0.06em;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .mw-gold   { color: var(--metal-gold-solid);   background-image: var(--metal-gold);   --mwl: var(--metal-gold-line); }
+  .mw-bronze { color: var(--metal-bronze-solid); background-image: var(--metal-bronze); --mwl: var(--metal-bronze-line); }
+  .mw-gilt   { color: var(--metal-gilt-solid);   background-image: var(--metal-gilt);   --mwl: var(--metal-gilt-line); }
+  a.mw::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0.02em; height: 3px; border-radius: 2px;
+    background: var(--mwl); opacity: 0; transition: opacity var(--duration-line) var(--ease-light); } /* never text-decoration: the gradient would fill it */
+  a.mw:hover::after { opacity: 1; }
+  @media (forced-colors: active) { .mw { -webkit-text-fill-color: currentColor; background: none; } }
+
+  /* Family bar: 28×3 on cards, captions, steps */
+  .bar-gold { background: var(--metal-gold); } .bar-bronze { background: var(--metal-bronze); } .bar-gilt { background: var(--metal-gilt); }
+
+  /* Mood glows: set one class on the page root; use the m-* classes on sections */
+  .mood-off    { --gA: 0;    --tA: 0;    --dT: 0;    --dG: 0; }
+  .mood-subtle { --gA: 0.20; --tA: 0.08; --dT: 0.42; --dG: 0.14; }  /* default */
+  .mood-warm   { --gA: 0.32; --tA: 0.12; --dT: 0.60; --dG: 0.24; }
+  .m-hero  { background: radial-gradient(ellipse 1000px 600px at 88% -6%, rgb(var(--glow-gold) / var(--gA)), transparent 70%), radial-gradient(ellipse 760px 560px at -6% 26%, rgb(var(--glow-teal) / var(--tA)), transparent 70%), var(--color-ground); }
+  .m-band  { background: radial-gradient(ellipse 1100px 700px at 104% 104%, rgb(var(--glow-gold) / var(--gA)), transparent 70%), var(--color-band); }
+  .m-white { background: radial-gradient(ellipse 900px 560px at -4% 0%, rgb(var(--glow-teal) / var(--tA)), transparent 70%), var(--color-ground); }
+  .m-dark  { background: radial-gradient(ellipse 900px 620px at 0% -12%, rgb(var(--glow-teal) / var(--dT)), transparent 70%), radial-gradient(ellipse 760px 520px at 100% 112%, rgb(var(--glow-gold) / var(--dG)), transparent 70%), var(--color-teal-950); }
+  .m-dark2 { background: radial-gradient(ellipse 900px 620px at 92% -12%, rgb(var(--glow-teal) / var(--dT)), transparent 70%), radial-gradient(ellipse 760px 520px at -2% 112%, rgb(var(--glow-gold) / var(--dG)), transparent 70%), var(--color-teal-950); }
+  /* phones: same stops with ellipses scaled to about 420 × 360 */
+
+  /* Break-out card: the standard clickable card */
+  .bo { position: relative; display: flex; flex-direction: column; padding-inline: 14px; color: var(--color-ink); text-decoration: none; }
+  .bo::before { content: ""; position: absolute; inset: 64px 0 0; border-radius: var(--radius-tray);
+    background: rgb(255 255 255 / 0.55); border: 1px solid rgb(255 255 255 / 0.9);   /* on white sections: rgb(238 242 241 / 0.8) */
+    transition: background var(--duration-card) var(--ease-light), box-shadow var(--duration-card) var(--ease-light); }
+  .bo > * { position: relative; }
+  .bo .ph { display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius-image); box-shadow: var(--shadow-e2);
+    transition: transform var(--duration-card) var(--ease-light), box-shadow var(--duration-card) var(--ease-light); }
+  .bo .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--duration-image) var(--ease-light); }
+  .bo .bar { display: block; width: 28px; height: 3px; border-radius: 2px; transition: width var(--duration-card) var(--ease-light); }
+  .bo:hover::before, .bo:focus-visible::before { background: #fff; box-shadow: var(--shadow-e1); }
+  .bo:hover .ph, .bo:focus-visible .ph { transform: translateY(-12px); box-shadow: var(--shadow-e3); }
+  .bo:hover .ph img, .bo:focus-visible .ph img { transform: scale(1.03); }
+  .bo:hover .bar, .bo:focus-visible .bar { width: 56px; }
+  /* phones: tray starts 40px down, inset 8, tray radius 20, photo radius 14; press: photo −4px */
+
+  .shimmer {                          /* gilded photos only, once per hover/focus */
+    position: absolute; top: -20%; bottom: -20%; left: -40%; width: 30%;
+    background: rgb(255 226 170 / 0.28); filter: blur(26px);
+    transform: skewX(-14deg); mix-blend-mode: screen; opacity: 0; pointer-events: none;
+  }
+  .focus-ring:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+  .dark-panel .focus-ring:focus-visible { outline-color: var(--color-focus-on-dark); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .bo:hover .ph, .bo:hover .ph img { transform: none; }
+}
+
+/* Grid columns
+   services:   3 cols ≥1024 · 1–2 below · gap 24
+   wall:       4 cols ≥1024, row 248, gap 16 (homepage) · 6 cols in the project dark panel, gap 12 · 2 cols <768
+   posts:      3 cols in 1328 · swipe rail on phones
+   Removed in v6: grain on dark areas, immersive vignette, arch mask, section rail, hairlines between sections. */

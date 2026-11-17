@@ -1,5 +1,7 @@
 # Schema proposal for the v5.10 homepage
 
+> **Superseded (2026-11-17):** the design source of truth is now `docs/design/clarity-v6/` (v6 "Clarity", v6.2 release candidate) and the plan is the v6 plan at the top of `docs/design-plan.md`. This v5.10 proposal is approved and deployed; v6 additions are in `docs/design-schema-proposal-v6.md` (draft, needs approval).
+
 **Status:** Approved by the user on 2026-11-08 with the defaults below
 (figures counted automatically, "Nou" pill empty at launch, works wall from
 project covers). Nothing is changed in the Studio or the dataset yet. Part of phase B in

@@ -1,5 +1,7 @@
 # Sanity Content Model
 
+> **Note (2026-11-17):** design v6 adds fields (catalogue prices and date, bell type, story-hero insets and facts, Iconostase materials, single door model, project country, post author and featured-post fields). Proposed in `docs/design-schema-proposal-v6.md` (draft, needs approval); update this file once approved.
+
 **Status:** Proposed foundation  
 **Last updated:** 2026-10-24
 

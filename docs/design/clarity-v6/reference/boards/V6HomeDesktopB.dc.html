@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>v6 homepage desktop, part 2</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+:root{--white:#ffffff;--band:#eef2f1;--ink:#111a19;--ink2:#4a5553;--hair:rgba(17,26,25,.10);--teal7:#0f6b63;--teal9:#0e3a36;--night:#0b2523;--tint:#e6efed;--focus:#9a783e;--on:#eef3f1;--onsoft:#a9bdb8;--e1:0 1px 2px rgba(11,37,35,.06),0 6px 16px rgba(11,37,35,.07);--e2:0 2px 6px rgba(11,37,35,.08),0 20px 40px rgba(11,37,35,.10);--e3:0 28px 72px rgba(11,37,35,.16);--ease:cubic-bezier(.22,.61,.36,1)}
+body{margin:0;background:var(--white);color:var(--ink);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit}
+img{display:block}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.d{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-weight:500;line-height:1;letter-spacing:-.015em;margin:0}
+.h2{font-size:clamp(44px,4.6vw,64px)}
+.s{font-size:17px;line-height:1.6;margin:0}
+.lead{font-size:19px;line-height:1.6;margin:0}
+.c{font-size:15px;line-height:1.5;margin:0}
+.soft{color:var(--ink2)}
+.wrap{max-width:1248px;margin:0 auto;padding:0 24px}
+.wide{max-width:1360px;margin:0 auto;padding:0 16px}
+.xwide{max-width:1440px;margin:0 auto;padding:0 16px}
+/* Material word (v6 component). Tokens: --metal-<m> sheen, --metal-<m>-solid fallback, --metal-<m>-line underline. Display serif ≥ 40px only; every stop ≥ 3:1 on white, band and warm glow. The underline is a pseudo-element: a real text-decoration would be filled by the gradient too. */
+:root{--metal-gold:linear-gradient(100deg,#6e5020 0%,#a37e36 55%,#7c5a24 100%);--metal-gold-solid:#6e5020;--metal-gold-line:#a37e36;--metal-bronze:linear-gradient(100deg,#3f3226 0%,#7a5c40 60%,#4a3a2a 100%);--metal-bronze-solid:#3f3226;--metal-bronze-line:#7a5c40;--metal-gilt:linear-gradient(100deg,#7a3f1e 0%,#a5682c 55%,#8a5424 100%);--metal-gilt-solid:#7a3f1e;--metal-gilt-line:#a5682c}
+.mw{position:relative;text-decoration:none;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.mw-gold{color:var(--metal-gold-solid);background-image:var(--metal-gold);--mwl:var(--metal-gold-line)}
+.mw-bronze{color:var(--metal-bronze-solid);background-image:var(--metal-bronze);--mwl:var(--metal-bronze-line)}
+.mw-gilt{color:var(--metal-gilt-solid);background-image:var(--metal-gilt);--mwl:var(--metal-gilt-line)}
+a.mw::after{content:'';position:absolute;left:0;right:0;bottom:.02em;height:3px;border-radius:2px;background:var(--mwl);opacity:0;transition:opacity .18s var(--ease)}
+a.mw:hover::after,a.mw.on::after{opacity:1}
+a.mw:focus-visible{outline:3px solid var(--focus);outline-offset:4px;border-radius:6px}
+.hd-ink .mw{background-image:none;-webkit-text-fill-color:currentColor;color:var(--ink)}
+.hd-ink a.mw::after{background:var(--teal7)}
+@media (forced-colors: active){.mw{-webkit-text-fill-color:currentColor;background:none}}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:1000px;margin:56px auto 0;padding:0}
+.stats>div{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;padding:4px 32px}
+.stats>div+div{border-left:1px solid var(--hair)}
+.stats dt{font-family:'Cormorant Garamond',Garamond,serif;font-size:64px;font-weight:600;line-height:.9;color:var(--ink);letter-spacing:-.02em}
+.stats dd{margin:0;font-size:15px;line-height:1.45;color:var(--ink2);max-width:190px}
+@media (max-width: 900px){.stats>div+div{border-left:0;border-top:1px solid var(--hair)}.stats>div{padding:16px 0}}
+.trih{height:clamp(520px,44vw,640px)}
+.sl .tx{bottom:64px !important}
+.sl .lb{font-size:16px;padding:12px 20px}
+.sec{padding:160px 0}
+.band{background:var(--band)}
+.center{text-align:center;display:flex;flex-direction:column;align-items:center}
+.glassL{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(20px) saturate(1.3);backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.85)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glassL{background:rgba(255,255,255,.96)}}
+/* header */
+.pill{position:absolute;left:50%;top:16px;transform:translateX(-50%);width:calc(100% - 32px);max-width:1200px;height:68px;border-radius:999px;box-shadow:var(--e2);display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 24px;z-index:20}
+.nav{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 16px;border-radius:999px;background:none;border:0;color:var(--ink);font:500 15px/1 Inter,system-ui,sans-serif;text-decoration:none;cursor:pointer;transition:background .18s}
+.nav:hover{background:var(--tint)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 26px;border-radius:999px;background:var(--teal9);color:#fff;text-decoration:none;font-size:16px;font-weight:600;transition:background .18s}
+.btn:hover{background:var(--night)}
+.btn2{display:inline-flex;align-items:center;height:52px;padding:0 26px;border-radius:999px;background:var(--white);color:var(--ink);text-decoration:none;font-size:16px;font-weight:600;box-shadow:var(--e1);transition:box-shadow .24s var(--ease)}
+.btn2:hover{box-shadow:var(--e2)}
+.ul{font-size:16px;font-weight:600;color:var(--teal7);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;min-height:44px;display:inline-flex;align-items:center}
+.nou{display:inline-flex;align-items:center;gap:10px;height:40px;padding:0 16px 0 5px;border-radius:999px;background:var(--white);box-shadow:var(--e1);text-decoration:none;font-size:14px;font-weight:500;color:var(--ink)}
+.nou span{height:30px;padding:0 12px;border-radius:999px;background:var(--tint);color:var(--teal9);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;display:inline-flex;align-items:center}
+.w{color:inherit;text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:3px;text-underline-offset:12px;transition:text-decoration-color .18s var(--ease)}
+.w:hover,.w.on{text-decoration-color:var(--teal7)}
+/* triptych */
+.tri{position:absolute;top:0;bottom:0;left:-64px;right:-64px;display:flex;gap:6px;container-type:inline-size}
+.sl{position:relative;flex:1 1 0;min-width:0;overflow:hidden;transform:skewX(-10deg);transition:flex-grow .48s var(--ease);text-decoration:none;color:#fff;display:block;background:var(--night)}
+.sl.on{flex-grow:2}
+.sl .im{position:absolute;top:0;bottom:0;left:-40%;right:-40%;transform:skewX(10deg)}
+.sl .im img{width:100%;height:100%;object-fit:cover;filter:brightness(.92);transition:filter .48s var(--ease)}
+.sl.on .im img{filter:none}
+.sl .vl{position:absolute;left:0;right:0;bottom:0;height:44%;background:linear-gradient(to top,rgba(8,16,15,.78) 0%,rgba(8,16,15,.45) 45%,rgba(8,16,15,0) 100%);opacity:0;transition:opacity .24s var(--ease)}
+.sl.on .vl{opacity:1}
+.sl .tx{position:absolute;left:96px;right:110px;bottom:48px;transform:skewX(10deg);opacity:0;transition:opacity .24s var(--ease) .12s}
+.sl.on .tx{opacity:1}
+.sl .lb{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) skewX(10deg);padding:10px 18px;border-radius:999px;color:var(--ink);font-size:15px;font-weight:600;white-space:nowrap;transition:opacity .24s var(--ease)}
+.sl.on .lb{opacity:0}
+.sl.s0 .lb{left:auto;right:28px;transform:translateY(-50%) skewX(10deg)}.sl.s2 .lb{left:28px;transform:translateY(-50%) skewX(10deg)}
+@container (max-width: 640px){.sl .lb{display:none}}
+.sl:focus-visible{outline:3px solid var(--focus);outline-offset:-6px}
+/* service card v6.2 · break-out: the frosted tray starts 64px below the top, so the photo overhangs its upper edge; on hover the photo lifts further out */
+.sv{position:relative;display:flex;flex-direction:column;padding:0 14px;text-decoration:none;color:var(--ink);min-width:0}
+.sv::before{content:'';position:absolute;left:0;right:0;top:64px;bottom:0;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.9);border-radius:24px;transition:background .36s var(--ease),box-shadow .36s var(--ease)}
+.sv>*{position:relative}
+.sv:hover::before,.sv:focus-visible::before{background:#fff;box-shadow:var(--e1)}
+.sv .ph{display:block;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:var(--band);box-shadow:var(--e2);transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.sv .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.sv .tx2{display:flex;flex-direction:column;align-items:center;text-align:center;padding:18px 16px 22px}
+.sv .bar{display:block;width:28px;height:3px;border-radius:2px;margin-bottom:12px;transition:width .36s var(--ease)}
+.sv .ph.light{background:#fff;outline:1px solid var(--hair);outline-offset:-1px}
+.bar-gold{background:var(--metal-gold)}.bar-bronze{background:var(--metal-bronze)}.bar-gilt{background:var(--metal-gilt)}
+.sv b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-size:28px;font-weight:600;letter-spacing:-.01em;line-height:1.1}
+.sv small{display:block;font-size:15px;color:var(--ink2);margin-top:8px}
+.sv:hover .ph,.sv:focus-visible .ph{transform:translateY(-12px);box-shadow:var(--e3)}
+.sv:hover .ph img,.sv:focus-visible .ph img{transform:scale(1.03)}
+.sv:hover .bar,.sv:focus-visible .bar{width:56px}
+.sv:active .ph{transform:translateY(-4px);box-shadow:var(--e2);transition-duration:.12s}
+@media (prefers-reduced-motion: reduce){.sv .ph,.sv .ph img,.sv .bar{transition:none}.sv:hover .ph,.sv:focus-visible .ph{transform:none}.sv:hover .ph img{transform:none}}
+/* catalogue */
+.cv{display:block;background:var(--white);border-radius:16px;box-shadow:var(--e1);padding:8px;transition:transform .24s var(--ease),box-shadow .24s var(--ease)}
+.cv img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px}
+.cv:hover,.cv:focus-visible{transform:translateY(-6px);box-shadow:var(--e2)}
+.dlb{width:44px;height:44px;border-radius:999px;background:var(--teal9);color:#fff;display:flex;align-items:center;justify-content:center;transition:background .18s}
+.dlb:hover{background:var(--night)}
+/* works */
+.chip{height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--hair);background:var(--white);color:var(--ink);font:500 15px Inter,sans-serif;display:inline-flex;align-items:center;cursor:pointer;transition:background .18s}
+.chip:hover{background:var(--tint);border-color:transparent}
+.chip-on,.chip-on:hover{background:var(--teal9);color:#fff;border-color:var(--teal9)}
+.wall{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:248px;gap:16px}
+.t{position:relative;overflow:hidden;border-radius:16px;background:var(--band);display:block;text-decoration:none;color:var(--ink)}
+.t img{width:100%;height:100%;object-fit:cover;transition:transform .32s var(--ease)}
+.t:hover img,.t:focus-visible img{transform:scale(1.04)}
+.cap{position:absolute;left:10px;right:10px;bottom:10px;padding:12px 14px;border-radius:12px;opacity:0;transform:translateY(6px);transition:opacity .24s var(--ease),transform .24s var(--ease)}
+.t:hover .cap,.t:focus-visible .cap{opacity:1;transform:none}
+.cap b{display:block;font-size:15px;font-weight:600}.cap span{display:block;font-size:14px;color:var(--ink2)}
+@media (hover: none){.cap{opacity:1;transform:none}}
+/* dark panel */
+.dark{background:var(--night);color:var(--on);border-radius:28px;margin:0 16px}
+.dark .soft{color:var(--onsoft)}
+.dark :focus-visible{outline-color:#c9a467}
+.vid{position:relative;display:block;border-radius:20px;overflow:hidden;aspect-ratio:16/9;text-decoration:none;color:var(--ink)}
+.vid img{width:100%;height:100%;object-fit:cover;transition:transform .32s var(--ease)}
+.vid:hover img{transform:scale(1.03)}
+.vid .pl{position:absolute;left:50%;top:50%;width:80px;height:80px;margin:-40px 0 0 -40px;border-radius:999px;display:flex;align-items:center;justify-content:center}
+.facts3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:28px;padding-top:24px;border-top:1px solid rgba(238,243,241,.16)}
+.facts3 b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-size:44px;font-weight:500;line-height:1}
+.facts3 span{display:block;font-size:15px;line-height:1.45;color:var(--onsoft);margin-top:10px}
+/* listen */
+.playb{width:72px;height:72px;border-radius:999px;border:0;background:var(--teal9);color:#fff;display:flex;align-items:center;justify-content:center;flex:none;cursor:pointer;transition:background .18s,transform .18s var(--ease)}
+.playb:hover{background:var(--night);transform:scale(1.04)}
+.wave{display:flex;align-items:center;justify-content:space-between;height:56px;overflow:hidden}
+.wave span{display:block;width:3px;flex:none;border-radius:2px;background:rgba(15,107,99,.24)}
+/* journal */
+.post{display:flex;flex-direction:column;text-decoration:none;color:var(--ink)}
+.post .pi{display:block;aspect-ratio:4/3;border-radius:20px;overflow:hidden;background:var(--band);box-shadow:var(--e1);transition:transform .24s var(--ease),box-shadow .24s var(--ease)}
+.post:hover .pi,.post:focus-visible .pi{transform:translateY(-6px);box-shadow:var(--e2)}
+/* mood: two lights from the materials, candle gold and bronze patina; one soft corner glow per light section */
+.mood-off{--gA:0;--tA:0;--dT:0;--dG:0}
+.mood-subtle{--gA:.20;--tA:.08;--dT:.42;--dG:.14}
+.mood-warm{--gA:.32;--tA:.12;--dT:.60;--dG:.24}
+.m-hero{background:radial-gradient(ellipse 1000px 600px at 88% -6%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 760px 560px at -6% 26%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-svc{background:radial-gradient(ellipse 1100px 700px at 104% 104%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 800px 500px at 0% 0%,rgba(255,255,255,.7),rgba(255,255,255,0) 70%),var(--band)}
+.m-works{background:radial-gradient(ellipse 900px 560px at -4% 0%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-dark{background:radial-gradient(ellipse 900px 620px at 8% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at 102% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.m-dir{background:radial-gradient(ellipse 760px 640px at 24% 50%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),var(--white)}
+.m-listen{background:radial-gradient(ellipse 820px 460px at 50% 66%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),var(--band)}
+.m-blog{background:radial-gradient(ellipse 900px 600px at 104% 100%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-dark2{background:radial-gradient(ellipse 900px 620px at 92% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at -2% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.post .pi img{width:100%;height:100%;object-fit:cover;transition:transform .32s var(--ease)}
+.post:hover .pi img,.post:focus-visible .pi img{transform:scale(1.04)}
+.post .mt{font-size:15px;color:var(--ink2);margin-top:22px}.post .mt b{color:var(--teal7);font-weight:600}
+.post .pt{font-family:'Cormorant Garamond',Garamond,serif;font-size:30px;font-weight:600;line-height:1.12;letter-spacing:-.01em;margin-top:10px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:6px;transition:text-decoration-color .18s var(--ease)}
+.post:hover .pt,.post:focus-visible .pt{text-decoration-color:var(--teal7)}
+.post .ex{font-size:16px;line-height:1.6;color:var(--ink2);margin-top:12px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.post:focus-visible{outline-offset:8px;border-radius:16px}
+/* break-out card on posts: on white sections the tray is band-tinted, then turns white on hover */
+.post{position:relative;padding:0 14px 28px}
+.post::before{content:'';position:absolute;left:0;right:0;top:64px;bottom:0;background:rgba(238,242,241,.8);border:1px solid rgba(255,255,255,.9);border-radius:24px;transition:background .36s var(--ease),box-shadow .36s var(--ease)}
+.post>*{position:relative}
+.post .pi{box-shadow:var(--e2);transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.post .mt,.post .pt,.post .ex{padding:0 6px}
+.post:hover::before,.post:focus-visible::before{background:#fff;box-shadow:var(--e1)}
+.post:hover .pi,.post:focus-visible .pi{transform:translateY(-12px);box-shadow:var(--e3)}
+/* v6.2 post card · with byline: author pinned to the tray bottom, so bylines align across a row; whole card stays one link */
+.post .ex{margin-bottom:24px}
+.post .by{display:flex;align-items:center;gap:12px;margin:auto 6px 0;padding-top:18px;border-top:1px solid var(--hair)}
+.post .av{position:relative;flex:none;width:36px;height:36px;border-radius:999px;overflow:hidden;background:var(--band);box-shadow:0 0 0 2px #fff,var(--e1)}
+.post .av img{position:absolute;width:216px;height:144px;max-width:none;left:-120px;top:-8px}
+.post .by b{display:block;font-size:15px;font-weight:600;line-height:1.3;color:var(--ink)}
+.post .by small{display:block;font-size:13px;line-height:1.35;color:var(--ink2)}
+/* wall tiles and map tile: same soft lift */
+.t{transition:transform .36s var(--ease),box-shadow .36s var(--ease),background .36s var(--ease)}
+.t:hover,.t:focus-visible{transform:translateY(-6px);box-shadow:var(--e3)}
+.t.wmap{background:rgba(238,242,241,.8);border:1px solid rgba(255,255,255,.9)}
+.t.wmap:hover,.t.wmap:focus-visible{background:#fff;box-shadow:var(--e2)}
+/* foundry video floats on the dark panel */
+.vid{box-shadow:0 24px 56px rgba(0,0,0,.38);transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.vid:hover,.vid:focus-visible{transform:translateY(-10px);box-shadow:0 36px 80px rgba(0,0,0,.5)}
+@media (prefers-reduced-motion: reduce){.post .pi,.t,.vid{transition:none}.post:hover .pi,.t:hover,.vid:hover{transform:none}}
+/* v6.2 Despre noi: light band section, video in a rounded frame, facts on hairlines */
+.m-about{background:radial-gradient(ellipse 900px 620px at 104% 10%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 800px 500px at 0% 100%,rgba(255,255,255,.7),rgba(255,255,255,0) 70%),var(--band)}
+.vidl{position:relative;display:block;border-radius:24px;overflow:hidden;aspect-ratio:16/10;text-decoration:none;color:var(--ink);box-shadow:var(--e2);transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.vidl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.vidl:hover,.vidl:focus-visible{transform:translateY(-8px);box-shadow:var(--e3)}
+.vidl:hover img,.vidl:focus-visible img{transform:scale(1.03)}
+.vidl .pl{position:absolute;left:50%;top:50%;width:88px;height:88px;margin:-44px 0 0 -44px;border-radius:999px;display:flex;align-items:center;justify-content:center;z-index:2;transition:transform .36s var(--ease)}
+.vidl:hover .pl,.vidl:focus-visible .pl{transform:scale(1.08)}
+.vidl .vcap{position:absolute;left:20px;bottom:20px;z-index:2;padding:10px 14px;border-radius:12px;font-size:14px;color:var(--ink)}
+.vidl .vcap b{font-weight:600}
+.facts3l{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:32px;padding-top:24px;border-top:1px solid var(--hair)}
+.facts3l b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-size:44px;font-weight:500;line-height:1;color:var(--ink)}
+.facts3l span{display:block;font-size:15px;line-height:1.45;color:var(--ink2);margin-top:10px}
+@media (prefers-reduced-motion: reduce){.vidl,.vidl img,.vidl .pl{transition:none}.vidl:hover,.vidl:hover img,.vidl:hover .pl{transform:none}}
+/* v6.2 Director: dark panel 1 of 2; the portrait breaks out above and below the panel (break-out idea at section scale); candle-gold light behind the face, cool teal opposite. Panel tweak: Night (#0b2523) or Teal (#0f6b63). */
+.tone-night{--dirBg:var(--night);--dirSoft:#a9bdb8}
+.tone-teal{--dirBg:#0f6b63;--dirSoft:#d3e2de}
+.dir{position:relative;color:var(--on);border-radius:28px;margin:0 16px;padding:56px 0;background:radial-gradient(ellipse 780px 680px at 24% 50%,rgba(214,178,112,calc(var(--dG) + .12)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 760px 560px at 102% -12%,rgba(120,190,178,calc(var(--dT) * .4)),rgba(120,190,178,0) 70%),var(--dirBg)}
+.dir .soft{color:var(--dirSoft)}
+.dir :focus-visible{outline-color:#c9a467}
+.dportc{position:relative;align-self:stretch;min-height:360px}
+.dport{position:absolute;left:0;right:0;top:-88px;bottom:-88px;border-radius:24px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.36)}
+.dport img{width:100%;height:100%;object-fit:cover;object-position:30% 40%}
+.qm{display:block;height:48px;font-family:'Cormorant Garamond',Garamond,serif;font-size:128px;font-weight:600;line-height:.9;color:#d6b270;background:linear-gradient(100deg,#b8955a 0%,#e6cb93 55%,#b08a4e 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+@media (forced-colors: active){.qm{-webkit-text-fill-color:currentColor;background:none}}
+.dfacts{display:flex;flex-wrap:wrap;gap:6px 24px;margin:28px 0 0;padding:20px 0 0;list-style:none;border-top:1px solid rgba(238,243,241,.18);font-size:15px;line-height:1.45}
+.dfacts b{font-weight:600;color:var(--on)}
+@media (max-width: 900px){.facts3l{grid-template-columns:minmax(0,1fr)}.dir{margin:0 8px;padding:0 0 64px}.dportc{min-height:0}.dport{position:relative;inset:auto;aspect-ratio:4/3;margin-top:-32px}}
+@media (prefers-reduced-motion: reduce){.sl,.sl .im img,.sl .tx,.sv,.sv .ph img,.cv,.t img,.cap,.vid img,.post .pi img,.playb{transition:none}.sv:hover,.cv:hover{transform:none}.sv:hover .ph img,.t:hover img,.post:hover .pi img{transform:none}}
+@media (max-width: 900px){.trih{height:460px}.sec{padding:96px 0}.hide-s{display:none !important}.g-stack{grid-template-columns:minmax(0,1fr) !important}.g-stack>*{grid-column:auto !important;grid-row:auto !important}.h1x{white-space:normal !important}.wall{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:180px}.wall>*{grid-column:auto !important;grid-row:auto !important}.wall>.wmap{grid-column:1 / -1 !important}.facts3{grid-template-columns:minmax(0,1fr)}.dark{margin:0 8px}}
+/* Footer v6.2 (canonical; same block on every page, keep in sync) */
+.pf{color:#eef3f1;font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;background:radial-gradient(ellipse 900px 520px at 100% -24%,rgba(15,107,99,var(--dT,.42)),rgba(15,107,99,0) 70%),#0b2523}
+.pf :focus-visible{outline:3px solid #c9a467;outline-offset:3px}
+.pf-logo{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:#eef3f1;text-decoration:none}
+.pf-logo img{display:block;height:28px;width:auto}
+.pf-logo span{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-size:24px;font-weight:600;line-height:1;letter-spacing:-.01em}
+.pf-tag{margin:8px 0 0;font-size:14px;line-height:1.55;color:#a9bdb8}
+.pf-h{margin:0 0 6px;font-size:13px;font-weight:600;letter-spacing:.02em;color:#a9bdb8}
+.pf-col{display:flex;flex-direction:column}
+.pf-l{font-size:15px;color:#eef3f1;text-decoration:none;display:flex;align-items:center;min-height:36px;width:fit-content;text-underline-offset:5px}
+.pf-l:hover{text-decoration:underline}
+.pf-note{margin:6px 0 0;font-size:13px;line-height:1.5;color:#a9bdb8}
+.pf-show{display:flex;gap:14px;align-items:flex-start;margin-top:16px;padding:10px;border-radius:16px;background:rgba(238,243,241,.06);border:1px solid rgba(238,243,241,.10)}
+.pf-show-ph{display:block;flex:none;width:84px;height:108px;object-fit:cover;object-position:40% 50%;border-radius:10px}
+.pf-addr{display:flex;align-items:flex-start;gap:6px;margin-top:6px;min-height:36px;font-size:14px;font-weight:600;line-height:1.4;color:#eef3f1;text-decoration:underline;text-decoration-color:rgba(238,243,241,.35);text-underline-offset:4px}
+.pf-addr svg{flex:none;margin-top:2px}
+.pf-maps{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.pf-map{display:inline-flex;align-items:center;height:34px;padding:0 12px;border-radius:999px;background:rgba(238,243,241,.08);color:#eef3f1;text-decoration:none;font-size:12px;font-weight:600}
+.pf-map:hover{background:rgba(238,243,241,.16)}
+.pf-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.pf-credit{display:inline-flex;align-items:center;gap:5px;margin:0;font-size:13px;color:#a9bdb8}
+.pf-credit a{color:#eef3f1;font-weight:600;text-decoration:none;min-height:40px;display:inline-flex;align-items:center}
+.pf-credit a:hover{text-decoration:underline;text-underline-offset:4px}
+.pf-heart{color:#c9a467;flex:none}
+.pf-soc{width:40px;height:40px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#eef3f1;background:rgba(238,243,241,.08)}
+.pf-soc:hover{background:rgba(238,243,241,.16)}
+.pf-lang{display:inline-flex;align-items:center;height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(238,243,241,.18);color:#eef3f1;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.04em}
+.pf-lang:hover{background:rgba(238,243,241,.08)}
+.pf{border-radius:20px;margin:0 16px 16px;padding:56px 0 0}
+.pf-in{max-width:1248px;margin:0 auto;padding:0 24px}
+.pf-grid{display:grid;grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(0,1fr));gap:40px;padding-bottom:36px}
+.pf-brand .pf-tag,.pf-brand .pf-show{max-width:400px}
+.pf-phone{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;margin:2px 0 4px;border-radius:999px;background:#fff;color:#0b2523;text-decoration:none;font-size:15px;font-weight:600;width:fit-content}
+.pf-phone:hover{background:#e6efed}
+.pf-note{max-width:240px}
+.pf-legal{display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding:14px 0 18px;border-top:1px solid rgba(238,243,241,.12)}
+.pf-legal>p{margin:0;font-size:13px;line-height:1.5;color:#a9bdb8}
+@media (max-width: 900px){.pf{margin:0 8px 8px}.pf-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pf-brand{grid-column:1 / -1}.pf-l{min-height:44px}}
+</style>
+</helmet>
+<div class="{{moodClass}}" style="position: relative; background: var(--white)">
+
+  <!-- 4 · DESPRE NOI (v6.2: light band, video in a rounded frame) -->
+  <section id="s4" class="m-about" style="padding: 128px 0">
+    <div class="wide g-stack" style="display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 72px; align-items: center">
+      <a href="#" class="vidl" aria-label="Video: în turnătoria de clopote"><img src="/_blob/db0be190d0a30bf67d7f6e7ee251397f" alt=""><span class="pl glassL"><svg width="22" height="24" viewBox="0 0 20 22" aria-hidden="true"><path d="M5 2 L18 11 L5 20 Z" fill="#111a19"></path></svg></span><span class="vcap glassL"><b>În turnătorie</b> · [locul] · [durata]</span></a>
+      <div style="padding-right: 40px">
+        <h2 class="d h2">Despre noi</h2>
+        <p class="lead" style="margin-top: 20px">S.C. Premium Bells SRL reprezintă cele mai mari și mai cotate turnătorii de clopote din lumea ortodoxă — din Iaroslavl și Kamensk-Uralsky — și compania Belltron din Italia.</p>
+        <div class="facts3l">
+          <p style="margin: 0"><b>16 tone</b><span>cele mai tradiționale clopote</span></p>
+          <p style="margin: 0"><b>Athos</b><span>clopote fără balans, trase de sfoară</span></p>
+          <p style="margin: 0"><b>Balans</b><span>stilul occidental, cu icoane canonice</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · DIRECTOR (v6.2: dark panel 1 of 2; portrait breaks out above and below) -->
+  <section style="padding: 56px 0; background: var(--white)">
+    <figure class="dir {{dirTone}}" style="margin-top: 0; margin-bottom: 0">
+      <div class="wrap g-stack" style="display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 64px; align-items: center">
+        <div class="dportc"><div class="dport"><img src="/_blob/8cc3a0ae7dc6062228ad2bf71fe47c63" alt="Denis Latisev trăgând de funiile clopotelor"></div></div>
+        <div style="max-width: 520px; padding: 8px 0">
+          <span class="qm" aria-hidden="true">“</span>
+          <blockquote class="d" style="margin: 8px 0 0; font-size: clamp(26px, 2.2vw, 31px); line-height: 1.22; color: #fff">Cu fiască smerenie, am primit binecuvântare de la IPS Pimen, Arhiepiscopul Sucevei și Rădăuților, pentru importul și promovarea artei clopotelor în parohiile și mănăstirile României.</blockquote>
+          <figcaption style="margin-top: 24px"><p style="font-size: 17px; font-weight: 600; margin: 0">Denis Latisev</p><p class="c soft" style="margin-top: 4px">Director, S.C. Premium Bells SRL</p></figcaption>
+          <ul class="dfacts soft"><li><b>13 clopote</b> · 11 tone, cel mai mare de 5200 kg</li><li>turnate la Iaroslavl pentru Mănăstirea Putna</li><li>sfințite pe 10 iulie 2016</li></ul>
+        </div>
+      </div>
+    </figure>
+  </section>
+
+  <!-- 6 · ASCULTAȚI (band, one compact centred card) -->
+  <section id="s5" class="band m-listen" style="padding: 96px 0">
+    <div class="wrap" style="display: flex; justify-content: center">
+      <div style="width: min(100%, 880px); background: var(--white); border-radius: 28px; box-shadow: var(--e2); padding: 28px 32px 22px; display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 0 24px; align-items: center">
+        <button class="playb" aria-label="Ascultați: Dangăt pascal"><svg width="20" height="22" viewBox="0 0 20 22" aria-hidden="true"><path d="M5 2 L18 11 L5 20 Z" fill="currentColor"></path></svg></button>
+        <div style="min-width: 0"><h2 style="margin: 0; font-size: 14px; font-weight: 600; letter-spacing: .02em; color: var(--ink2)">Ascultați</h2><p class="d" style="font-size: 34px; font-weight: 600; margin-top: 4px">Dangăt pascal</p><p class="c soft" style="margin-top: 4px">[locul și clopotele, din CMS]</p></div>
+        <a href="#" class="ul" style="font-size: 15px; align-self: start">Mai multe dangăte pe pagina Clopote →</a>
+        <div class="wave" aria-hidden="true" style="grid-column: 1 / -1; margin-top: 20px"><sc-for list="{{bars}}" as="b" hint-placeholder-count="96"><span style="height: {{b.h}}px"></span></sc-for></div>
+        <span class="c soft" style="grid-column: 1 / -1; justify-self: end; margin-top: 6px; font-variant-numeric: tabular-nums">0:00 / [durata]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · JURNAL (white) -->
+  <section id="s6" class="sec m-blog">
+    <div class="wide">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap"><div><h2 class="d h2">Din jurnal</h2><p class="lead soft" style="margin-top: 16px">Articole, rapoarte și videoclipuri din lucrările noastre</p></div><a href="#" class="ul">Toate articolele</a></div>
+      <div class="g-stack" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 56px">
+        <a href="#" class="post"><span class="pi"><img src="/_blob/bda974d975eb7563d4d9fc351d557df1" alt="Trei clopote noi pentru Mănăstirea Putna, pe iarbă"></span><span class="mt"><b>Articol</b> · 17 feb. 2023 · 6 min</span><span class="pt">De la clopotul Buga al lui Ștefan cel Mare la noile clopote ale Mănăstirii Putna</span><span class="ex">Sfântul Ștefan cel Mare a avut grijă, printre altele, să înzestreze ctitoria sa cea iubită cu mai multe clopote, dintre care două au ajuns până la noi.</span><span class="by"><span class="av"><img src="/_blob/8cc3a0ae7dc6062228ad2bf71fe47c63" alt=""></span><span><b>Denis Latisev</b><small>Director, Premium Bells</small></span></span></a>
+        <a href="#" class="post"><span class="pi"><img src="/_blob/1c2965434cf75596c84c560fa529e7bb" alt="Ușile din bronz ale Catedralei din Drobeta-Turnu Severin, cu PS Nicodim"></span><span class="mt"><b>Raport</b> · 18 feb. 2023 · 5 min</span><span class="pt">Raport 18 ianuarie 2023</span><span class="ex">La o întâlnire cu PS Nicodim, Episcopul Severinului și Strehaiei, am discutat despre ușile de intrare ale Catedralei Învierea Domnului din Drobeta-Turnu Severin.</span><span class="by"><span class="av"><img src="/_blob/8cc3a0ae7dc6062228ad2bf71fe47c63" alt=""></span><span><b>Denis Latisev</b><small>Director, Premium Bells</small></span></span></a>
+        <a href="#" class="post"><span class="pi"><img src="/_blob/cd821b73a7b3df25b76cbcd553ba9669" alt="Două clopote fixe cu ciocane electronice Belltron"></span><span class="mt"><b>Articol</b> · 18 feb. 2023 · 5 min</span><span class="pt">Clopotar electronic pentru clopote fixe — mai performant</span><span class="ex">Noul sistem de ciocane pentru clopotele ortodoxe a fost creat de Belltron pentru piața bisericească ortodoxă din Europa de Est.</span><span class="by"><span class="av"><img src="/_blob/8cc3a0ae7dc6062228ad2bf71fe47c63" alt=""></span><span><b>Denis Latisev</b><small>Director, Premium Bells</small></span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · FOOTER v6.2 compact (dark panel 2 of 2): link grid (offer lives in its last column) → legal bar -->
+  <footer id="oferta" class="pf">
+  <!-- Footer v6.2 (canonical, identical on every page): link grid, offer in the last column → legal bar -->
+  <div class="pf-in">
+    <div class="pf-grid">
+      <div class="pf-brand"><a href="#" class="pf-logo" aria-label="Premium Bells, prima pagină"><img src="/_blob/c4950ecb27217623e54fb99907e39552" alt=""><span>Premium Bells</span></a><p class="pf-tag">Clopote, policandre, iconostase și uși pentru biserici ortodoxe.</p><div id="showroom" class="pf-show"><img class="pf-show-ph" src="/_blob/a9ecc905cc34abc9817dd1703872191b" alt="Clopote cu ornamente pe suporți, în showroom-ul din Buftea"><div style="min-width: 0"><p class="pf-h" style="margin: 0">Showroom · Buftea</p><a class="pf-addr" href="https://www.google.com/maps/search/?api=1&amp;query=Strada%20Agricultori%20108%2C%20070000%20Buftea" target="_blank" rel="noopener" aria-label="Strada Agricultori 108, 070000 Buftea, deschideți în hărți"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg><span>Strada Agricultori 108<br>070000 Buftea</span></a><div class="pf-maps"><a class="pf-map" href="https://www.google.com/maps/search/?api=1&amp;query=Strada%20Agricultori%20108%2C%20070000%20Buftea" target="_blank" rel="noopener">Google Maps</a><a class="pf-map" href="https://waze.com/ul?q=Strada%20Agricultori%20108%2C%20Buftea&amp;navigate=yes" target="_blank" rel="noopener">Waze</a></div></div></div></div>
+      <nav aria-label="Servicii" class="pf-col"><p class="pf-h">Servicii</p><a href="#" class="pf-l">Policandre</a><a href="#" class="pf-l">Clopote</a><a href="#" class="pf-l">Clopotar electronic</a><a href="#" class="pf-l">Iconostase</a><a href="#" class="pf-l">Uși</a></nav>
+      <nav aria-label="Companie" class="pf-col"><p class="pf-h">Companie</p><a href="#" class="pf-l">Lucrări</a><a href="#" class="pf-l">Blog</a><a href="#" class="pf-l">Despre noi</a><a href="#" class="pf-l">Presă</a><a href="#" class="pf-l">Parteneri</a></nav>
+      <div class="pf-col"><p class="pf-h">Cereți o ofertă</p><a href="tel:+40722790776" class="pf-phone"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"></path></svg>+40 722 790 776</a><a href="mailto:[email]" class="pf-l">[email din CMS]</a><p class="pf-note">Vă sunăm, discutăm proiectul și primiți oferta în [X] zile lucrătoare.</p><a href="#" class="pf-l" style="margin-top: 10px">Colaborează cu noi →</a></div>
+    </div>
+    <div class="pf-legal"><p>© 2026 S.C. Premium Bells SRL · CUI 36422758 · J40/10836/12.08.2016</p><div class="pf-row" style="gap: 8px 16px"><p class="pf-credit">Realizat cu <svg class="pf-heart" width="12" height="12" viewBox="0 0 24 24" role="img" aria-label="drag"><path fill="currentColor" d="M12 21s-8-5.2-8-11.2A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8 2.8C20 15.8 12 21 12 21z"></path></svg> de <a href="https://11k.io" target="_blank" rel="noopener">11k.io</a></p><span class="pf-row"><a href="#" class="pf-lang" aria-label="Limba: română. Switch to English">RO / EN</a><a href="#" class="pf-soc" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21z"></path></svg></a><a href="#" class="pf-soc" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"></circle></svg></a></span></div></div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mood":{"editor":"enum","options":["Off","Subtle","Warm"],"default":"Subtle"},"headline":{"editor":"enum","options":["Materials","Ink"],"default":"Materials"},"panel":{"editor":"enum","options":["Night","Teal"],"default":"Night"},"$preview":{"width":1440,"height":3350}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const bars = [];
+    for (let i = 0; i < 96; i++) {
+      const ph = (i / 96 * 5) % 1;
+      const a = 0.12 + 0.88 * Math.exp(-ph * 3.2) * (0.8 + 0.2 * Math.sin(i * 2.3));
+      bars.push({ h: Math.round(6 + a * 44) });
+    }
+    const mood = this.props.mood ?? 'Subtle';
+    const head = this.props.headline ?? 'Materials';
+    const panel = this.props.panel ?? 'Night';
+    return { bars: bars, moodClass: 'mood-' + String(mood).toLowerCase(), headClass: head === 'Ink' ? 'hd-ink' : 'hd-materials', dirTone: panel === 'Teal' ? 'tone-teal' : 'tone-night' };
+  }
+}
+</script>
+</body>
+</html>

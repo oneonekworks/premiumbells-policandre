@@ -1,8 +1,8 @@
 # Migration Status
 
 **Overall status:** Portfolio (60 works), services and catalogue, homepage, blog and global content managed in Sanity and live on the hosted preview; no prices anywhere
-**Current phase:** Phase 7 done 2026-11-05; next: Phase 8 (SEO, accessibility, production readiness) — see [handoff](handoff.md)
-**Last updated:** 2026-11-05
+**Current phase:** Phase 7 done 2026-11-05; design v6 "Clarity" locked 2026-11-17 (v6.2 release candidate); v6 phase V0 (gap list, schema reconciliation) done and approved 2026-11-17; next: V1–V7 in [design-plan](design-plan.md), then Phase 8 — see [handoff](handoff.md)
+**Last updated:** 2026-11-17
 
 ## Accepted decisions
 
@@ -154,6 +154,23 @@ These items do not block completing the rest of Phase 0.
   `--webpack` workaround is no longer required.
 
 ## Change log
+
+### 2026-11-17 (design v6 locked)
+
+- Design v6 "Clarity" locked as v6.2 release candidate on the canvas
+  (https://claude.ai/artifact/43jzYBJXgk8j9jK9uRcZKF, page "v6 · Clarity").
+- Handoff package written to `docs/design/clarity-v6/` (rules, routes,
+  foundations, tokens v6.2, components, pages, content model, open
+  questions, copy per page, asset list, 43 board sources, footer, map tool).
+- `docs/design-plan.md` rewritten as the v6 plan (phases V0–V7; Patina plan
+  kept below as history); `docs/design-schema-proposal-v6.md` drafted (needs
+  reconciliation with the Studio and approval); `docs/url-map.md` gained a v6
+  section; banners on `design-handoff/`, `design-schema-proposal.md`,
+  `design-foundations.md`, `content-model.md`, `architecture.md`, phase 6/7
+  plans; price rule in `rebuild-brief.md` updated (prices only in the
+  Policandre catalogue).
+- No code, schema or content changed. Not committed (the commit is the
+  user's).
 
 ### 2026-11-05 (Phase 7 step 11, close-out)
 

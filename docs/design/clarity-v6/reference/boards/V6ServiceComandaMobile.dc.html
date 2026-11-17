@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>v6 Policandre la comandă mobile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+:root{--white:#ffffff;--band:#eef2f1;--ink:#111a19;--ink2:#4a5553;--hair:rgba(17,26,25,.10);--teal7:#0f6b63;--teal9:#0e3a36;--night:#0b2523;--tint:#e6efed;--focus:#9a783e;--on:#eef3f1;--onsoft:#a9bdb8;--e1:0 1px 2px rgba(11,37,35,.06),0 6px 16px rgba(11,37,35,.07);--e2:0 2px 6px rgba(11,37,35,.08),0 20px 40px rgba(11,37,35,.10);--e3:0 28px 72px rgba(11,37,35,.16);--ease:cubic-bezier(.22,.61,.36,1);
+--metal-gold:linear-gradient(100deg,#6e5020 0%,#a37e36 55%,#7c5a24 100%);--metal-bronze:linear-gradient(100deg,#3f3226 0%,#7a5c40 60%,#4a3a2a 100%);--metal-gilt:linear-gradient(100deg,#7a3f1e 0%,#a5682c 55%,#8a5424 100%)}
+body{margin:0;background:var(--white);color:var(--ink);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit}
+img{display:block}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.d{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-weight:500;line-height:1;letter-spacing:-.015em;margin:0}
+.soft{color:var(--ink2)}
+.glassL{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(20px) saturate(1.3);backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.85)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glassL{background:rgba(255,255,255,.96)}}
+.mw{position:relative;display:inline-block;text-decoration:none;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.06em}
+.mw-gold{color:#6e5020;background-image:var(--metal-gold)}
+@media (forced-colors: active){.mw{-webkit-text-fill-color:currentColor;background:none}}
+.bar-gold{background:var(--metal-gold)}.bar-bronze{background:var(--metal-bronze)}.bar-gilt{background:var(--metal-gilt)}
+.dark{color:var(--on)}.dark .soft{color:var(--onsoft)}.dark :focus-visible{outline-color:#c9a467}
+.fh{font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--onsoft)}
+.fl{font-size:16px;color:var(--on);text-decoration:none;display:flex;align-items:center;min-height:44px}
+.bo{position:relative;display:flex;flex-direction:column;text-decoration:none;color:var(--ink);min-width:0}
+.bo::before{content:'';position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.9);transition:background .36s var(--ease),box-shadow .36s var(--ease)}
+.on-white .bo::before{background:rgba(238,242,241,.8)}
+.bo>*{position:relative}
+.bo .ph{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--band);box-shadow:var(--e2);transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.bo .ph.light{background:#fff;outline:1px solid var(--hair);outline-offset:-1px}
+.bo .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.bo .tx{display:flex;flex-direction:column;align-items:center;text-align:center}
+.bo .bar{display:block;height:3px;border-radius:2px;transition:width .36s var(--ease)}
+.bo b{font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.bo small{color:var(--ink2);line-height:1.5}
+.bo.left .tx{align-items:flex-start;text-align:left}
+.chold{display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:var(--tint);color:var(--ink2);font-size:14px;font-weight:500}
+.t{position:relative;display:block;overflow:hidden;background:var(--band);text-decoration:none;color:var(--ink)}
+.t img{width:100%;height:100%;object-fit:cover}
+.cap{position:absolute;max-width:calc(100% - 20px)}
+.cap .cbar{display:block;height:3px;border-radius:2px}
+.cap b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.cap span{display:block;color:var(--ink2)}
+.m-hero{background:radial-gradient(ellipse 1000px 600px at 88% -6%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 760px 560px at -6% 26%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-band{background:radial-gradient(ellipse 1100px 700px at 104% 104%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),var(--band)}
+.m-white{background:radial-gradient(ellipse 900px 560px at -4% 0%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-dark{background:radial-gradient(ellipse 900px 620px at 0% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at 100% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.m-dark2{background:radial-gradient(ellipse 900px 620px at 92% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at -2% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+:root{--gA:.20;--tA:.08;--dT:.42;--dG:.14}
+.h2{font-size:40px}
+.lead{font-size:17px;line-height:1.6;margin:0}
+.c{font-size:14px;line-height:1.5;margin:0}
+.kick{margin:0 0 12px;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--ink2)}
+.pad{padding:0 20px}
+.sec{padding:88px 0}
+.ib{width:44px;height:44px;border-radius:999px;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none}
+.btn{display:flex;align-items:center;justify-content:center;height:52px;padding:0 24px;border-radius:999px;background:var(--teal9);color:#fff;text-decoration:none;font-size:16px;font-weight:600}
+.btn2{display:flex;align-items:center;justify-content:center;height:52px;padding:0 24px;border-radius:999px;background:var(--white);color:var(--ink);text-decoration:none;font-size:16px;font-weight:600;box-shadow:var(--e1)}
+.btnw{display:flex;align-items:center;justify-content:center;height:52px;padding:0 24px;border-radius:999px;background:#fff;color:var(--night);text-decoration:none;font-size:16px;font-weight:600}
+.ul{font-size:15px;font-weight:600;color:var(--teal7);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;min-height:44px;display:inline-flex;align-items:center}
+.dark .ul{color:var(--tint)}
+.dark{border-radius:24px;margin:0 8px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 20px 8px;scrollbar-width:none}
+.chip{flex:none;height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--hair);background:var(--white);color:var(--ink);font:500 15px Inter,sans-serif;display:inline-flex;align-items:center}
+.chip-on{background:var(--teal9);color:#fff;border-color:var(--teal9)}
+.field{height:48px;width:100%;border-radius:999px;border:1px solid var(--hair);background:#fff;padding:0 16px;font:400 16px Inter,sans-serif;color:var(--ink)}
+.bo{padding:0 8px}
+.bo::before{top:40px;border-radius:20px}
+.bo .ph{border-radius:14px}
+.bo .tx{padding:14px 10px 18px}.bo.left .tx{padding:14px 6px 18px}
+.bo .bar{width:24px;margin-bottom:10px}
+.bo b{font-size:26px}.bo small{font-size:14px;margin-top:6px}
+.bo:active .ph{transform:translateY(-4px);box-shadow:var(--e3)}
+.rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 20px 12px;scrollbar-width:none}
+.rail .bo{flex:none;width:280px;scroll-snap-align:start}
+.t{border-radius:14px}
+.cap{left:8px;bottom:8px;padding:9px 12px;border-radius:10px}
+.cap .cbar{width:18px;margin-bottom:6px}.cap b{font-size:19px}.cap span{font-size:14px;margin-top:1px}
+.cap.big{left:12px;bottom:12px;padding:12px 14px}.cap.big b{font-size:24px}
+.bbar{position:absolute;left:12px;right:12px;bottom:12px;height:64px;border-radius:999px;box-shadow:var(--e2);display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;z-index:10}
+.bbar a{display:flex;align-items:center;justify-content:center;border-radius:999px;text-decoration:none;font-size:15px;font-weight:600}
+.m-hero{background:radial-gradient(ellipse 420px 360px at 100% -4%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 320px 300px at -10% 30%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-band{background:radial-gradient(ellipse 460px 420px at 104% 102%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),var(--band)}
+.m-white{background:radial-gradient(ellipse 400px 360px at -6% 0%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-dark{background:radial-gradient(ellipse 420px 360px at 0% -6%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 380px 320px at 104% 104%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.m-dark2{background:radial-gradient(ellipse 420px 360px at 100% -6%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 380px 320px at -4% 104%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.cv{display:block;background:var(--white);border-radius:16px;box-shadow:0 24px 56px rgba(0,0,0,.38);padding:8px;transition:transform .24s var(--ease)}.cv img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px}.cv:hover,.cv:focus-visible{transform:translateY(-6px)}.dlb{width:44px;height:44px;flex:none;border-radius:999px;background:rgba(238,243,241,.12);color:var(--on);display:flex;align-items:center;justify-content:center}
+.stats{margin:32px 0 0;padding:0}.stats>div{display:grid;grid-template-columns:84px minmax(0,1fr);gap:16px;align-items:center;padding:14px 0}.stats>div+div{border-top:1px solid var(--hair)}
+.stats dt{font-family:'Cormorant Garamond',Garamond,serif;font-size:48px;font-weight:600;line-height:.9}.stats dd{margin:0;font-size:15px;line-height:1.45;color:var(--ink2)}
+.step{position:relative;display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;padding:22px 0;border-top:1px solid var(--hair)}
+.step b{font-family:'Cormorant Garamond',Garamond,serif;font-size:52px;font-weight:600;line-height:.85}
+.step h3{font-family:'Cormorant Garamond',Garamond,serif;font-size:24px;font-weight:600;margin:0;line-height:1.1}.step p{margin:6px 0 0;font-size:15px;line-height:1.5;color:var(--ink2)}
+.step i{position:absolute;left:0;top:-2px;width:28px;height:3px;border-radius:2px;background:var(--metal-gold)}
+
+.plate{position:relative;display:block;background:#fff;box-shadow:var(--e2);overflow:hidden;transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.plate img{width:100%;height:100%;object-fit:contain;transition:transform .6s var(--ease)}
+.pgrid .plate,.ctatile{aspect-ratio:5/7}
+.ctatile{display:flex;flex-direction:column;justify-content:flex-end;text-decoration:none;color:var(--on);background:rgba(238,243,241,.08);border:1px solid rgba(238,243,241,.16)}
+.ctatile i{display:block;height:3px;border-radius:2px;background:var(--metal-gold)}
+.ctatile b{font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.inc{list-style:none;margin:0;padding:0}
+.inc li{display:flex;align-items:center;border-top:1px solid var(--hair);font-weight:500;color:var(--ink)}
+.inc li:last-child{border-bottom:1px solid var(--hair)}
+.inc i{display:block;flex:none;height:3px;border-radius:2px;background:var(--metal-gold)}
+
+.pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.plate{border-radius:14px}.pgrid .plate{padding:8px}
+.ctatile{border-radius:14px;padding:14px}.ctatile i{width:24px;margin-bottom:10px}.ctatile b{font-size:24px}
+.inc li{gap:14px;min-height:60px;font-size:16px}.inc i{width:24px}
+/* Footer v6.2 (canonical, phone; same block on every page, keep in sync) */
+.pf{color:#eef3f1;font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;background:radial-gradient(ellipse 900px 520px at 100% -24%,rgba(15,107,99,var(--dT,.42)),rgba(15,107,99,0) 70%),#0b2523}
+.pf :focus-visible{outline:3px solid #c9a467;outline-offset:3px}
+.pf-logo{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:#eef3f1;text-decoration:none}
+.pf-logo img{display:block;height:28px;width:auto}
+.pf-logo span{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-size:24px;font-weight:600;line-height:1;letter-spacing:-.01em}
+.pf-tag{margin:8px 0 0;font-size:14px;line-height:1.55;color:#a9bdb8}
+.pf-h{margin:0 0 6px;font-size:13px;font-weight:600;letter-spacing:.02em;color:#a9bdb8}
+.pf-col{display:flex;flex-direction:column}
+.pf-l{font-size:15px;color:#eef3f1;text-decoration:none;display:flex;align-items:center;min-height:36px;width:fit-content;text-underline-offset:5px}
+.pf-l:hover{text-decoration:underline}
+.pf-note{margin:6px 0 0;font-size:13px;line-height:1.5;color:#a9bdb8}
+.pf-show{display:flex;gap:14px;align-items:flex-start;margin-top:16px;padding:10px;border-radius:16px;background:rgba(238,243,241,.06);border:1px solid rgba(238,243,241,.10)}
+.pf-show-ph{display:block;flex:none;width:84px;height:108px;object-fit:cover;object-position:40% 50%;border-radius:10px}
+.pf-addr{display:flex;align-items:flex-start;gap:6px;margin-top:6px;min-height:36px;font-size:14px;font-weight:600;line-height:1.4;color:#eef3f1;text-decoration:underline;text-decoration-color:rgba(238,243,241,.35);text-underline-offset:4px}
+.pf-addr svg{flex:none;margin-top:2px}
+.pf-maps{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.pf-map{display:inline-flex;align-items:center;height:34px;padding:0 12px;border-radius:999px;background:rgba(238,243,241,.08);color:#eef3f1;text-decoration:none;font-size:12px;font-weight:600}
+.pf-map:hover{background:rgba(238,243,241,.16)}
+.pf-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.pf-credit{display:inline-flex;align-items:center;gap:5px;margin:0;font-size:13px;color:#a9bdb8}
+.pf-credit a{color:#eef3f1;font-weight:600;text-decoration:none;min-height:40px;display:inline-flex;align-items:center}
+.pf-credit a:hover{text-decoration:underline;text-underline-offset:4px}
+.pf-heart{color:#c9a467;flex:none}
+.pf-soc{width:40px;height:40px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#eef3f1;background:rgba(238,243,241,.08)}
+.pf-soc:hover{background:rgba(238,243,241,.16)}
+.pf-lang{display:inline-flex;align-items:center;height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(238,243,241,.18);color:#eef3f1;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.04em}
+.pf-lang:hover{background:rgba(238,243,241,.08)}
+.pf{border-radius:20px;margin:0 8px 8px;padding:28px 20px 96px;background:radial-gradient(ellipse 420px 320px at 100% -12%,rgba(15,107,99,var(--dT,.42)),rgba(15,107,99,0) 70%),#0b2523}
+.pf-logo img{height:24px}.pf-logo span{font-size:21px}
+.pf-l{min-height:44px}
+.pf-call{display:flex;align-items:center;justify-content:center;gap:8px;height:52px;margin-top:6px;border-radius:999px;background:#fff;color:#0b2523;text-decoration:none;font-size:16px;font-weight:600}
+.pf-mail{font-size:15px;font-weight:500;color:#e6efed;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;min-height:44px;display:inline-flex;align-items:center;margin-top:4px}
+.pf-addr{min-height:44px}.pf-map{height:44px}.pf-soc{width:44px;height:44px}.pf-lang{height:44px}
+.pf-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;margin-top:24px;padding-top:20px;border-top:1px solid rgba(238,243,241,.12)}
+.pf-legal{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;margin-top:16px;padding-top:12px;border-top:1px solid rgba(238,243,241,.12)}
+.pf-legal-t{margin:8px 0 0;font-size:12px;line-height:1.5;color:#a9bdb8}
+/* v6.2 story hero (phone): insets overlap the photo's bottom edge, then Pe scurt */
+.hst{position:relative}
+.hin{position:absolute;z-index:2;margin:0;padding:5px 5px 0;background:#fff;border-radius:14px;box-shadow:var(--e3);pointer-events:none}
+.hin img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px}
+.hin figcaption{padding:7px 4px 8px;font-size:12px;line-height:1.3;color:var(--ink2)}.hin figcaption b{display:block;font-size:13px;font-weight:600;color:var(--ink)}
+.hin1{width:168px;left:-4px;bottom:-128px}
+.hin2{width:156px;right:4px;bottom:-104px}
+.hpk{font-size:14px;font-weight:600;color:var(--ink2);margin:0}
+.hpe{margin-top:144px;padding:0 20px}
+.hpe ul{list-style:none;margin:12px 0 0;padding:0;border-top:1px solid var(--hair)}
+.hpe li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair)}
+.hpe li b{font-weight:600;line-height:1;color:var(--teal9);white-space:nowrap}
+.hpe li span{font-size:15px;line-height:1.45;color:var(--ink2)}
+.hst-gap{margin-top:144px !important}
+</style>
+</helmet>
+<div style="width: 390px; position: relative; background: var(--white)">
+<header class="glassL" style="position: absolute; left: 12px; right: 12px; top: 12px; z-index: 20; height: 60px; border-radius: 999px; box-shadow: var(--e2); display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 18px"><a href="#" style="display: flex; align-items: center; gap: 8px; text-decoration: none"><img src="/_blob/ffef838890f925be83a9bb25ebc01fcd" alt="" style="height: 26px; width: auto"><span class="d" style="font-size: 21px; font-weight: 600">Premium Bells</span></a><div style="display: flex; gap: 4px"><a href="tel:+40722790776" class="ib" aria-label="Sunați: +40 722 790 776" style="background: var(--teal9); color: #fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg></a><button class="ib" aria-label="Meniu" aria-expanded="false" style="background: var(--white); color: var(--ink); box-shadow: var(--e1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8h16M4 16h16"></path></svg></button></div></header>
+<section class="m-hero" style="padding: 100px 0 72px"><div class="pad"><nav aria-label="Breadcrumb" style="font-size: 14px; color: var(--ink2)"><a href="V6HomeMobileA.dc.html#s2" style="color: var(--ink2); text-decoration: none">Servicii</a> / <a href="V6ServicePolicandreMobile.dc.html" style="color: var(--ink2); text-decoration: none">Policandre</a> / <span aria-current="page" style="color: var(--ink)">La comandă</span></nav><h1 class="d" style="font-size: 76px; line-height: .95; margin-top: 16px"><span class="mw mw-gold">Policandre</span><span style="display: block; margin-top: 10px; font-size: 26px; font-style: italic; line-height: 1.15; color: var(--teal7)">la comandă, după naosul dumneavoastră</span></h1><p class="lead soft" style="margin-top: 20px">Executăm la comenzi individuale policandre adaptate naosului, zonei, tradiției și stilului, după diametrul și înălțimea dorite. Sunt turnate masiv din bronz.</p><div class="hst" style="margin-top: 32px"><a href="V6Lightbox.dc.html" class="plate" style="aspect-ratio: 5/7; padding: 12px; box-shadow: var(--e3); border-radius: 24px" aria-label="Măriți proiectul 3D"><img src="/_blob/70ccfea8da27d8a7ef2f306546eaee1b" alt="Proiect 3D al unui policandru pe trei nivele cu coroană, cu vedere de jos"></a><figure class="hin hin1"><img src="/_blob/3448af7ab356910921a9c727866fbf8d" alt="Proiect 3D al unui policandru pe trei nivele, cu planul fiecărui nivel" style="object-fit: contain; background: #fff"><figcaption><b>Proiect 3D</b>fiecare nivel, desenat</figcaption></figure><figure class="hin hin2"><img src="/_blob/2fbfeee2455c29dae5ff9c80e1c9db83" alt="Policandrul de 3 nivele turnat după proiect, aprins sub icoane, Dej"><figcaption><b>Turnat după proiect</b>Dej III, 2023</figcaption></figure></div><div class="hpe" style="padding: 0"><p class="hpk">Pe scurt</p><ul><li><b class="d" style="font-size: 22px">3D</b><span>proiect înainte de turnare</span></li><li><b class="d" style="font-size: 22px">4</b><span>pași, de la naos la turnare</span></li><li><b class="d" style="font-size: 22px">Bronz</b><span>turnat masiv</span></li></ul></div></div></section>
+<section class="sec m-band"><div class="pad"><p class="kick">De la naos la turnare</p><h2 class="d h2">Mai întâi, proiectul</h2><ol style="list-style: none; margin: 32px 0 0; padding: 0"><li class="step"><i aria-hidden="true"></i><b>1</b><div><h3>Măsurile naosului</h3><p>Adaptăm policandrul naosului, zonei, tradiției și stilului, după diametrul și înălțimea dorite.</p></div></li><li class="step"><i aria-hidden="true"></i><b>2</b><div><h3>Proiect în 3D</h3><p>Înainte de toate, executăm proiectul în 3D.</p></div></li><li class="step"><i aria-hidden="true"></i><b>3</b><div><h3>Consiliul parohial</h3><p>Proiectul este adoptat de consiliul parohial; abia apoi începem execuția.</p></div></li><li class="step"><i aria-hidden="true"></i><b>4</b><div><h3>Turnare în bronz</h3><p>Policandrul este turnat masiv din bronz.</p></div></li></ol></div></section>
+<section id="proiecte" class="dark m-dark" style="margin-top: 8px; padding: 44px 12px 40px"><div style="padding: 0 8px"><p class="kick" style="color: var(--onsoft)">Desene și randări</p><h2 class="d" style="font-size: 36px">Din proiectele noastre</h2></div><div class="pgrid" style="margin-top: 28px"><a href="V6Lightbox.dc.html" class="plate" aria-label="Măriți planșa: Desen tehnic: elevație și plan al unui policandru"><img src="/_blob/71f9badd67d3df9928d3494eeb2894ec" alt="Desen tehnic: elevație și plan al unui policandru"></a><a href="V6Lightbox.dc.html" class="plate" aria-label="Măriți planșa: Proiect 3D al unui policandru pe trei nivele, cu planul fiecărui nivel"><img src="/_blob/3448af7ab356910921a9c727866fbf8d" alt="Proiect 3D al unui policandru pe trei nivele, cu planul fiecărui nivel"></a><a href="V6Lightbox.dc.html" class="plate" aria-label="Măriți planșa: Planșă pentru un policandru cu 64 de lumânări, cu fotografii din atelier"><img src="/_blob/0ca4e1356fb21acc0075640ba8fb06c3" alt="Planșă pentru un policandru cu 64 de lumânări, cu fotografii din atelier"></a><a href="V6Lightbox.dc.html" class="plate" aria-label="Măriți planșa: Planșă: policandru pe trei nivele cu coroană, cruci și încadrare în arc"><img src="/_blob/755236c58a6f5439a63db937f2bd3e0b" alt="Planșă: policandru pe trei nivele cu coroană, cruci și încadrare în arc"></a><a href="V6Lightbox.dc.html" class="plate" aria-label="Măriți planșa: Două variante de policandru pe trei nivele, încadrate în arc"><img src="/_blob/c3c35513d08fe708c4f0d07780a2a908" alt="Două variante de policandru pe trei nivele, încadrate în arc"></a><a href="V6Lightbox.dc.html" class="plate" aria-label="Măriți planșa: Desen tehnic cu detalii fotografiate în atelier"><img src="/_blob/4812b6db6e4a1859923fab503f867071" alt="Desen tehnic cu detalii fotografiate în atelier"></a><a href="V6Lightbox.dc.html" class="plate" aria-label="Măriți planșa: Policandru încadrat în arc, cu cote"><img src="/_blob/9ff7256985f7e689571e5b11f2b0c3dd" alt="Policandru încadrat în arc, cu cote"></a><a href="#oferta" class="ctatile"><i aria-hidden="true"></i><b>Proiectul dumneavoastră</b><span class="ul" style="margin-top: 8px">Cereți o ofertă</span></a></div></section>
+<section class="sec m-white"><div class="pad"><p class="kick">Până la darea în exploatare</p><h2 class="d h2">Ce este inclus</h2><ul class="inc" style="margin-top: 28px"><li><i aria-hidden="true"></i>Sistemul de prindere în perete</li><li><i aria-hidden="true"></i>Lanțurile, calculate după greutatea iluminatului</li><li><i aria-hidden="true"></i>Becurile</li><li><i aria-hidden="true"></i>Asamblarea</li><li><i aria-hidden="true"></i>Darea în exploatare</li></ul><p class="lead soft" style="margin-top: 28px">Avem deja multe lucrări de succes în România, cu policandre impunătoare tip horos, la comandă.</p><a href="#" class="ul" style="margin-top: 8px">Vedeți lucrările cu policandre</a></div></section>
+<div style="height: 8px"></div>
+<footer id="oferta" class="pf">
+  <!-- Footer v6.2 (canonical, identical on every page), phone layout -->
+  <a href="#" class="pf-logo" aria-label="Premium Bells, prima pagină"><img src="/_blob/c4950ecb27217623e54fb99907e39552" alt=""><span>Premium Bells</span></a>
+  <p class="pf-tag">Clopote, policandre, iconostase și uși pentru biserici ortodoxe.</p>
+  <p class="pf-h" style="margin-top: 24px">Cereți o ofertă</p>
+  <a href="tel:+40722790776" class="pf-call"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"></path></svg><span>+40 722 790 776</span></a>
+  <a href="mailto:[email]" class="pf-mail">sau scrieți-ne: [email din CMS]</a>
+  <p class="pf-note">Vă sunăm, discutăm proiectul și primiți oferta în [X] zile lucrătoare.</p>
+  <div id="showroom" class="pf-show"><img class="pf-show-ph" src="/_blob/a9ecc905cc34abc9817dd1703872191b" alt="Clopote cu ornamente pe suporți, în showroom-ul din Buftea"><div style="min-width: 0"><p class="pf-h" style="margin: 0">Showroom · Buftea</p><a class="pf-addr" href="https://www.google.com/maps/search/?api=1&amp;query=Strada%20Agricultori%20108%2C%20070000%20Buftea" target="_blank" rel="noopener" aria-label="Strada Agricultori 108, 070000 Buftea, deschideți în hărți"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg><span>Strada Agricultori 108<br>070000 Buftea</span></a><div class="pf-maps"><a class="pf-map" href="https://www.google.com/maps/search/?api=1&amp;query=Strada%20Agricultori%20108%2C%20070000%20Buftea" target="_blank" rel="noopener">Google Maps</a><a class="pf-map" href="https://waze.com/ul?q=Strada%20Agricultori%20108%2C%20Buftea&amp;navigate=yes" target="_blank" rel="noopener">Waze</a></div></div></div>
+  <div class="pf-cols"><nav aria-label="Servicii" class="pf-col"><p class="pf-h">Servicii</p><a href="#" class="pf-l">Policandre</a><a href="#" class="pf-l">Clopote</a><a href="#" class="pf-l">Clopotar electronic</a><a href="#" class="pf-l">Iconostase</a><a href="#" class="pf-l">Uși</a></nav><nav aria-label="Companie" class="pf-col"><p class="pf-h">Companie</p><a href="#" class="pf-l">Lucrări</a><a href="#" class="pf-l">Blog</a><a href="#" class="pf-l">Despre noi</a><a href="#" class="pf-l">Presă</a><a href="#" class="pf-l">Parteneri</a></nav></div>
+  <a href="#" class="pf-l" style="margin-top: 4px">Colaborează cu noi →</a>
+  <div class="pf-legal"><p class="pf-credit">Realizat cu <svg class="pf-heart" width="12" height="12" viewBox="0 0 24 24" role="img" aria-label="drag"><path fill="currentColor" d="M12 21s-8-5.2-8-11.2A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8 2.8C20 15.8 12 21 12 21z"></path></svg> de <a href="https://11k.io" target="_blank" rel="noopener">11k.io</a></p><span class="pf-row"><a href="#" class="pf-lang" aria-label="Limba: română. Switch to English">RO / EN</a><a href="#" class="pf-soc" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21z"></path></svg></a><a href="#" class="pf-soc" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"></circle></svg></a></span></div>
+  <p class="pf-legal-t">© 2026 S.C. Premium Bells SRL · CUI 36422758 · J40/10836/12.08.2016</p>
+</footer><nav class="bbar glassL" aria-label="Contact rapid"><a href="tel:+40722790776" style="background: var(--white); color: var(--ink); box-shadow: var(--e1)">Sunați</a><a href="#oferta" style="background: var(--teal9); color: #fff">Cereți o ofertă</a></nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":5082}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

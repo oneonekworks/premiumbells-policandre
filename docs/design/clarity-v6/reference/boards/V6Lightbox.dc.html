@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>v6 lightbox desktop</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+:root{--white:#ffffff;--band:#eef2f1;--ink:#111a19;--ink2:#4a5553;--hair:rgba(17,26,25,.10);--teal7:#0f6b63;--teal9:#0e3a36;--night:#0b2523;--tint:#e6efed;--focus:#9a783e;--on:#eef3f1;--onsoft:#a9bdb8;--e1:0 1px 2px rgba(11,37,35,.06),0 6px 16px rgba(11,37,35,.07);--e2:0 2px 6px rgba(11,37,35,.08),0 20px 40px rgba(11,37,35,.10);--e3:0 28px 72px rgba(11,37,35,.16);--ease:cubic-bezier(.22,.61,.36,1);
+--metal-gold:linear-gradient(100deg,#6e5020 0%,#a37e36 55%,#7c5a24 100%);--metal-bronze:linear-gradient(100deg,#3f3226 0%,#7a5c40 60%,#4a3a2a 100%);--metal-gilt:linear-gradient(100deg,#7a3f1e 0%,#a5682c 55%,#8a5424 100%)}
+body{margin:0;background:var(--white);color:var(--ink);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit}
+img{display:block}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.d{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-weight:500;line-height:1;letter-spacing:-.015em;margin:0}
+.soft{color:var(--ink2)}
+.glassL{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(20px) saturate(1.3);backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.85)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glassL{background:rgba(255,255,255,.96)}}
+.mw{position:relative;display:inline-block;text-decoration:none;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.06em}
+.mw-gold{color:#6e5020;background-image:var(--metal-gold)}
+@media (forced-colors: active){.mw{-webkit-text-fill-color:currentColor;background:none}}
+.bar-gold{background:var(--metal-gold)}.bar-bronze{background:var(--metal-bronze)}.bar-gilt{background:var(--metal-gilt)}
+.dark{color:var(--on)}.dark .soft{color:var(--onsoft)}.dark :focus-visible{outline-color:#c9a467}
+.fh{font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--onsoft)}
+.fl{font-size:16px;color:var(--on);text-decoration:none;display:flex;align-items:center;min-height:44px}
+.bo{position:relative;display:flex;flex-direction:column;text-decoration:none;color:var(--ink);min-width:0}
+.bo::before{content:'';position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.9);transition:background .36s var(--ease),box-shadow .36s var(--ease)}
+.on-white .bo::before{background:rgba(238,242,241,.8)}
+.bo>*{position:relative}
+.bo .ph{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--band);box-shadow:var(--e2);transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.bo .ph.light{background:#fff;outline:1px solid var(--hair);outline-offset:-1px}
+.bo .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.bo .tx{display:flex;flex-direction:column;align-items:center;text-align:center}
+.bo .bar{display:block;height:3px;border-radius:2px;transition:width .36s var(--ease)}
+.bo b{font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.bo small{color:var(--ink2);line-height:1.5}
+.bo.left .tx{align-items:flex-start;text-align:left}
+.chold{display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:var(--tint);color:var(--ink2);font-size:14px;font-weight:500}
+.t{position:relative;display:block;overflow:hidden;background:var(--band);text-decoration:none;color:var(--ink)}
+.t img{width:100%;height:100%;object-fit:cover}
+.cap{position:absolute;max-width:calc(100% - 20px)}
+.cap .cbar{display:block;height:3px;border-radius:2px}
+.cap b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.cap span{display:block;color:var(--ink2)}
+.m-hero{background:radial-gradient(ellipse 1000px 600px at 88% -6%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 760px 560px at -6% 26%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-band{background:radial-gradient(ellipse 1100px 700px at 104% 104%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),var(--band)}
+.m-white{background:radial-gradient(ellipse 900px 560px at -4% 0%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-dark{background:radial-gradient(ellipse 900px 620px at 0% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at 100% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.m-dark2{background:radial-gradient(ellipse 900px 620px at 92% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at -2% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.mood-off{--gA:0;--tA:0;--dT:0;--dG:0}.mood-subtle{--gA:.20;--tA:.08;--dT:.42;--dG:.14}.mood-warm{--gA:.32;--tA:.12;--dT:.60;--dG:.24}
+.h2{font-size:clamp(44px,4.6vw,64px)}
+.s{font-size:17px;line-height:1.6;margin:0}
+.lead{font-size:19px;line-height:1.6;margin:0}
+.c{font-size:15px;line-height:1.5;margin:0}
+.kick{margin:0 0 16px;font-size:15px;font-weight:600;letter-spacing:.02em;color:var(--ink2)}
+.wrap{max-width:1248px;margin:0 auto;padding:0 24px}
+.xwide{max-width:1440px;margin:0 auto;padding:0 16px}
+.sec{padding:136px 0}
+.pill{position:absolute;left:50%;top:16px;transform:translateX(-50%);width:calc(100% - 32px);max-width:1200px;height:68px;border-radius:999px;box-shadow:var(--e2);display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 24px;z-index:20}
+.nav{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 16px;border-radius:999px;background:none;border:0;color:var(--ink);font:500 15px/1 Inter,system-ui,sans-serif;text-decoration:none;cursor:pointer}
+.nav:hover,.nav.on{background:var(--tint)}.nav.on{color:var(--teal9)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 26px;border-radius:999px;background:var(--teal9);color:#fff;text-decoration:none;font-size:16px;font-weight:600;transition:background .18s}
+.btn:hover{background:var(--night)}
+.btn2{display:inline-flex;align-items:center;height:52px;padding:0 26px;border-radius:999px;background:var(--white);color:var(--ink);text-decoration:none;font-size:16px;font-weight:600;box-shadow:var(--e1);transition:box-shadow .24s var(--ease)}
+.btn2:hover{box-shadow:var(--e2)}
+.btnw{display:inline-flex;align-items:center;height:52px;padding:0 26px;border-radius:999px;background:#fff;color:var(--night);text-decoration:none;font-size:16px;font-weight:600}
+.ul{font-size:16px;font-weight:600;color:var(--teal7);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;min-height:44px;display:inline-flex;align-items:center}
+.dark .ul{color:var(--tint)}
+.crumb{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--ink2)}
+.crumb a{color:var(--ink2);text-decoration:none;min-height:32px;display:inline-flex;align-items:center}.crumb a:hover{text-decoration:underline}
+.dark{border-radius:28px;margin:0 16px}
+.seg{display:inline-flex;gap:2px;padding:4px;border-radius:999px;box-shadow:var(--e1)}
+.seg button{height:40px;padding:0 16px;border-radius:999px;border:0;background:none;font:500 15px Inter,sans-serif;color:var(--ink);cursor:pointer;transition:background .18s}
+.seg button:hover{background:var(--tint)}.seg button.on{background:var(--teal9);color:#fff}
+.field{height:48px;border-radius:999px;border:1px solid var(--hair);background:#fff;padding:0 18px;font:400 15px Inter,sans-serif;color:var(--ink)}
+.bo{padding:0 14px}
+.bo::before{top:64px;border-radius:24px}
+.bo .ph{border-radius:16px}
+.bo .tx{padding:18px 16px 24px}.bo.left .tx{padding:18px 8px 24px}
+.bo .bar{width:28px;margin-bottom:12px}
+.bo b{font-size:28px}.bo small{font-size:15px;margin-top:8px}
+.bo:hover::before,.bo:focus-visible::before{background:#fff;box-shadow:var(--e1)}
+.bo:hover .ph,.bo:focus-visible .ph{transform:translateY(-12px);box-shadow:var(--e3)}
+.bo:hover .ph img,.bo:focus-visible .ph img{transform:scale(1.03)}
+.bo:hover .bar,.bo:focus-visible .bar{width:56px}
+.bo:active .ph{transform:translateY(-4px);box-shadow:var(--e2)}
+.t{border-radius:16px;transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.t img{transition:transform .6s var(--ease)}
+.t:hover,.t:focus-visible{transform:translateY(-6px);box-shadow:var(--e3)}
+.t:hover img,.t:focus-visible img{transform:scale(1.03)}
+.cap{left:12px;bottom:12px;padding:12px 16px 12px 14px;border-radius:12px;opacity:0;transform:translateY(6px);transition:opacity .24s var(--ease),transform .24s var(--ease)}
+.cap .cbar{width:22px;margin-bottom:8px}.cap b{font-size:22px}.cap span{font-size:14px;margin-top:2px}
+.t:hover .cap,.t:focus-visible .cap{opacity:1;transform:none}
+.t.feat .cap{opacity:1;transform:none;left:20px;bottom:20px}.t.feat .cap b{font-size:30px}
+@media (hover: none){.cap{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.bo .ph,.bo .ph img,.bo .bar,.t,.t img,.cap{transition:none}.bo:hover .ph,.t:hover,.bo:hover .ph img,.t:hover img{transform:none}}
+@media (max-width: 900px){.sec{padding:88px 0}.hide-s{display:none !important}.g-stack{grid-template-columns:minmax(0,1fr) !important}.g-stack>*{grid-column:auto !important;grid-row:auto !important}.dark{margin:0 8px}}
+.glass{background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(20px) saturate(1.15);backdrop-filter:blur(20px) saturate(1.15);border:1px solid rgba(255,255,255,.12);transition:background .18s var(--ease)}.glass:hover{background:rgba(255,255,255,.12)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:#173431}}
+/* v6.2 overlays (lightbox, close-up viewer): see-through teal-900 (60%) + light blur 12 / saturate 1.4, so the page reads as soft shapes; edge gradients (85–88%) behind the top bar and the caption keep text readable on any page */
+.lbr{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(9,40,37,.85),rgba(9,40,37,0) 140px),linear-gradient(to top,rgba(9,40,37,.88),rgba(9,40,37,0) 240px),rgba(14,58,54,.60);-webkit-backdrop-filter:blur(12px) saturate(1.4);backdrop-filter:blur(12px) saturate(1.4);box-shadow:inset 0 0 200px rgba(3,14,13,.3);color:#eef3f1}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.lbr{background:rgba(14,58,54,.96)}}
+.lbr :focus-visible{outline-color:#c9a467}
+.rb{width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#eef3f1;cursor:pointer}
+.ibx{height:44px;display:inline-flex;align-items:center;gap:8px;padding:0 14px;border-radius:999px;color:#eef3f1;font:500 14px Inter,sans-serif;cursor:pointer}
+
+/* v6.2 lightbox photo: whole photo at its own shape, as large as the stage allows (width = min(stage width, stage height × ratio); ratio from the image’s width / height in the CMS), rounded and lifted off the blur */
+.lbp{display:block;height:auto;max-height:100%;object-fit:cover;box-shadow:0 24px 64px rgba(2,12,11,.55),0 2px 8px rgba(2,12,11,.35)}
+/* v6.2 thumbnail strip: shown when a set has more than 8 photos; current photo full opacity with a light ring, others 55%; scrolls sideways, edges fade; click / tap jumps to that photo */
+.lbs{display:flex;gap:8px;padding:4px;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(to right,transparent,#000 40px,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,transparent,#000 40px,#000 calc(100% - 40px),transparent)}.lbs::-webkit-scrollbar{display:none}
+.lbs a{flex:none;display:block;width:76px;height:56px;border-radius:8px;overflow:hidden;opacity:.55;transition:opacity .18s var(--ease)}.lbs a:hover{opacity:.85}.lbs a[aria-current]{opacity:1;box-shadow:0 0 0 2px #eef3f1}
+.lbs img{width:100%;height:100%;object-fit:cover}
+/* v6.2 zoom (same as Lightbox · Iconostase): click the photo to zoom 2,5× at that point, click again for the whole photo; wheel / pinch zoom, drag pans when zoomed; “Mărește” in the top bar does the same */
+.lbp{cursor:zoom-in}
+</style>
+</helmet>
+<div class="{{moodClass}}" style="position: relative; background: var(--white)">
+<div style="position: relative; height: 900px; overflow: hidden; background: #eef2f1"><div aria-hidden="true" style="position: absolute; inset: 0; background: #eef2f1; padding: 132px 120px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-content: start"><div style="position: absolute; left: 120px; right: 120px; top: 16px; height: 68px; border-radius: 999px; background: #fff"></div><img src="/_blob/fc85c0cc5a4e1859ba766f571dffa93b" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/fad532db9330e0ddd05b3548ced08bf8" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/df5d1110d583ab3bb4b5e9ddc5691174" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/d2c27edcc7b62b5d00e1a0d4e64306ad" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/c4950ecb27217623e54fb99907e39552" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/a6e7f93f68382290350d389e3d458ab5" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/99e29f443e701ade8263aaaa2c9da59e" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/57594508f6299d945624078df0337804" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"></div><div class="lbr" role="dialog" aria-modal="true" aria-label="Fotografii, Parohia Dej III"><div style="position: absolute; left: 0; right: 0; top: 0; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px 0 40px"><div style="display: flex; align-items: baseline; gap: 18px"><p class="d" style="font-size: 30px; font-weight: 600">Parohia Dej III</p><p class="c" style="font-variant-numeric: tabular-nums">4 / 19</p></div><div style="display: flex; gap: 8px"><button class="ibx glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg>Copiază linkul</button><button class="ibx glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"></path></svg>Mărește</button><button class="ibx glass" aria-label="Închide" style="width: 44px; justify-content: center; padding: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></button></div></div><div style="position: absolute; left: 136px; right: 136px; top: 96px; height: 548px; display: flex; align-items: center; justify-content: center"><img class="lbp" src="/_blob/71b693db34a25fa6a5db7464078d18e6" alt="Policandrul de 3 nivele aprins în naos, Parohia Dej III" style="border-radius: 16px; aspect-ratio: 450 / 448; width: min(100%, calc(548px * 450 / 448))"></div><button class="rb glass" aria-label="Fotografia anterioară" style="position: absolute; left: 40px; top: 342px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button><button class="rb glass" aria-label="Fotografia următoare" style="position: absolute; right: 40px; top: 342px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button><div style="position: absolute; left: 280px; right: 280px; bottom: 124px; display: flex; justify-content: space-between; align-items: flex-end; gap: 32px"><div><p class="d" style="font-size: 36px; font-weight: 500">Policandru 3 nivele, 37 lumini, aurit</p><p class="c" style="margin-top: 6px; color: #c9d6d2">Dej, Cluj · 2023</p></div><a href="#" style="font-size: 15px; font-weight: 600; color: #eef3f1; text-underline-offset: 6px; white-space: nowrap; min-height: 44px; display: flex; align-items: center">Cereți o ofertă pentru unul asemănător</a></div><nav class="lbs" aria-label="Toate fotografiile" style="position: absolute; left: 276px; right: 276px; bottom: 36px"><a href="#" aria-label="Fotografia 1"><img src="/_blob/2fbfeee2455c29dae5ff9c80e1c9db83" alt=""></a><a href="#" aria-label="Fotografia 2"><img src="/_blob/57594508f6299d945624078df0337804" alt=""></a><a href="#" aria-label="Fotografia 3"><img src="/_blob/d2c27edcc7b62b5d00e1a0d4e64306ad" alt=""></a><a href="#" aria-label="Fotografia 4" aria-current="true"><img src="/_blob/71b693db34a25fa6a5db7464078d18e6" alt=""></a><a href="#" aria-label="Fotografia 5"><img src="/_blob/fc85c0cc5a4e1859ba766f571dffa93b" alt=""></a><a href="#" aria-label="Fotografia 6"><img src="/_blob/7afd2c0e61e7c43319097e6a99a27328" alt=""></a><a href="#" aria-label="Fotografia 7"><img src="/_blob/427f8957c12fd4e2453582c4787781ba" alt=""></a><a href="#" aria-label="Fotografia 8"><img src="/_blob/0410a96c54b7371aa261b7a060639023" alt=""></a><a href="#" aria-label="Fotografia 9"><img src="/_blob/3343907c5e196c8314eb8d098cd24d7f" alt=""></a><a href="#" aria-label="Fotografia 10"><img src="/_blob/fad532db9330e0ddd05b3548ced08bf8" alt=""></a><a href="#" aria-label="Fotografia 11"><img src="/_blob/fc85c0cc5a4e1859ba766f571dffa93b" alt=""></a><a href="#" aria-label="Fotografia 12"><img src="/_blob/fad532db9330e0ddd05b3548ced08bf8" alt=""></a><a href="#" aria-label="Fotografia 13"><img src="/_blob/df5d1110d583ab3bb4b5e9ddc5691174" alt=""></a><a href="#" aria-label="Fotografia 14"><img src="/_blob/c4950ecb27217623e54fb99907e39552" alt=""></a></nav></div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mood":{"editor":"enum","options":["Off","Subtle","Warm"],"default":"Subtle"},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const mood = this.props.mood ?? 'Subtle';
+    return { moodClass: 'mood-' + String(mood).toLowerCase() };
+  }
+}
+</script>
+</body>
+</html>

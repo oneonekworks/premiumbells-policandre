@@ -1,5 +1,7 @@
 # Phase 6 — services and catalogue: plan
 
+> **Note (2026-11-17):** design v6 overrides parts of this plan: prices are shown in the Policandre catalogue (one per finish); `/servicii` and the Clopote chooser are removed; `/servicii/clopote` shows Clopote cu jug; Iconostase is one page with a Lightbox (Bronz removed); Uși has one model. See `docs/design/clarity-v6/routes.md` and `rules.md`.
+
 **Status:** Accepted by the user on 2026-11-03 with the recommended defaults
 (see "Decisions" below). Proposed and researched on 2026-11-03.
 

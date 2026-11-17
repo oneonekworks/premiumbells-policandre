@@ -1,0 +1,217 @@
+# Clopote cu jug (/servicii/clopote)
+
+Visible Romanian copy taken from the desktop boards, in reading order, one line per text node, duplicates removed. Phone boards use the same copy (a few lines shortened; see the phone boards in reference/boards). [ ] marks a placeholder for CMS content or a client answer. Interactive boards show their default state (e.g. Works: Toate, Galerie). Header and footer: see menus.md and footer.md.
+
+<!-- board: V6ClopoteCuJug.dc.html -->
+
+## Clopote cu jug cu balans, din stejar sau oțel
+
+- Acasă
+- /
+- Servicii
+- Clopote
+- Ce fel de clopot căutați?
+- Cu jug
+- Clopotul se balansează
+- Fără balans
+- Clopotul stă fix, se trage limba
+- →
+- Clopote cu jug
+- cu balans, din stejar sau oțel
+- Clopote rusești cu jug din stejar sau oțel, până la 16 tone, cu icoane canonice și ornamente tradiționale.
+- Pe scurt
+- 16 t
+- cel mai mare clopot cu jug
+- 2
+- juguri: din stejar sau din oțel
+- Inclus
+- transportul până la biserică și TVA
+- Urmăriți filmul
+- Todirești II
+- 270 kg, 2022
+- Bolintin Vale
+- clopot cu jug, 2021
+
+## Dimensiuni clopote cu jug
+
+- Alegeți un rând sau un set
+- Dimensiuni clopote cu jug
+- 1,75 m
+- 92,5 cm
+- 90 cm
+- Clopot cu jug
+- 420 kg
+- Până la brâul unui om
+- Diametru 90 cm · Înălțime 92,5 cm · Notă Sol#-1
+- Cereți o ofertă pentru 420 kg
+- Greutate
+- Diametru
+- Înălțime
+- Notă
+- Până la 100 kg
+- [Potrivit pentru: de la client]
+- 25 kg
+- 36 cm
+- Do
+- 32 kg
+- 38 cm
+- 39 cm
+- Si-2
+- 42,5 kg
+- 43 cm
+- 44 cm
+- La-2
+- 64 kg
+- 48 cm
+- 49 cm
+- Sol-2
+- 85 kg
+- 54 cm
+- 55,5 cm
+- Fa-2
+- 100–1000 kg
+- 128 kg
+- 58 cm
+- 60 cm
+- Mi-2
+- 170 kg
+- 64,4 cm
+- 66 cm
+- Re-2
+- 250 kg
+- 72,4 cm
+- 74,5 cm
+- Si-1
+- 270 kg
+- 76 cm
+- 75 cm
+- La#-1
+- 310 kg
+- 80,8 cm
+- 82,5 cm
+- La-1
+- Sol#-1
+- 460 kg
+- 91 cm
+- 94 cm
+- Sol-1
+- 500 kg
+- 93 cm
+- 95,5 cm
+- Fa#-1
+- 620 kg
+- 101,6 cm
+- 105 cm
+- Fa-1
+- 920 kg
+- 111,7 cm
+- 115,5 cm
+- Re#-1
+- 1–5 tone
+- 1 070 kg
+- 120,6 cm
+- 127,5 cm
+- Re-1
+- 1 200 kg
+- 127,4 cm
+- 133 cm
+- Do#-1
+- 1 500 kg
+- 134,2 cm
+- 138 cm
+- Do-1
+- 1 800 kg
+- 140 cm
+- 146 cm
+- So b m
+- 2 400 kg
+- 159,2 cm
+- 164,5 cm
+- La m
+- 3 200 kg
+- 167,8 cm
+- 173 cm
+- Sol# m
+- 3 600 kg
+- 175 cm
+- 179,5 cm
+- Sol m
+- 4 800 kg
+- 199 cm
+- 204 cm
+- Fa# m
+- Peste 5 tone
+- 6 200 kg
+- 209,7 cm
+- 215 cm
+- 7 200 kg
+- 218,7 cm
+- 223,5 cm
+- Mi m
+- 7 800 kg
+- 220,7 cm
+- 226 cm
+- Re# m
+- 9 400 kg
+- 248,7 cm
+- 253 cm
+- Re m
+- 12 400 kg
+- 262 cm
+- 268 cm
+- Do m
+- 16 000 kg
+- 305 cm
+- 300 cm
+- Seturi recomandate după note muzicale
+- Set 1
+- 2 clopote · 32, 64 kg
+- Set 2
+- 2 clopote · 42,5, 85 kg
+- Set 3
+- 3 clopote · 32, 64, 128 kg
+- Set 4
+- 3 clopote · 42,5, 85, 170 kg
+- Set 5
+- 3 clopote · 64, 128, 250 kg
+- Set 6
+- 3 clopote · 128, 250, 460 kg
+- Set 7
+- 3 clopote · 170, 420, 920 kg
+- Set 8
+- 3 clopote · 250, 460, 1500 kg
+- Set 9
+- 3 clopote · 310, 620, 2400 kg
+- Set 10
+- 4 clopote · 460, 920, 1800, 3600 kg
+
+## Ce este inclus
+
+- Clopote cu jug
+- Ce este inclus
+- Limba
+- Icoanele
+- Textul
+- Ornamentele
+- Jugul de stejar
+- Transportul până la biserică
+- TVA
+- Clopote cu jug, trase automat
+- Automatizări pentru clopote cu balans
+- Motor liniar, controler și telecomandă.
+
+## Clopote cu jug montate
+
+- Din lucrările noastre
+- Clopote cu jug montate
+- Toate lucrările cu clopote cu jug
+- Vedeți lucrarea
+- Parohia Todirești II
+- Iași · Clopot cu jug 270 kg · 2022
+- Bolintin Vale
+- Clopot cu jug · 2021
+- Satul Doina
+- Clopot cu jug
+- Celălalt fel de clopote
+- Clopote fără balans →
+- Fixe, doar limba se trage, ca la Athos.

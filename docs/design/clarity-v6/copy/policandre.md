@@ -1,0 +1,289 @@
+# Policandre
+
+Visible Romanian copy taken from the desktop boards, in reading order, one line per text node, duplicates removed. Phone boards use the same copy (a few lines shortened; see the phone boards in reference/boards). [ ] marks a placeholder for CMS content or a client answer. Interactive boards show their default state (e.g. Works: Toate, Galerie). Header and footer: see menus.md and footer.md.
+
+<!-- board: V6ServicePolicandre.dc.html -->
+
+## Policandre 1–7 nivele, clasa premium
+
+- Acasă
+- /
+- Servicii
+- Policandre
+- 1–7 nivele, clasa premium
+- Turnate masiv, clasa premium, la Moscova și Iaroslavl, în stil clasic „brad” și „horă”; din Grecia, în stil bizantin.
+- Pe scurt
+- 1–7
+- nivele, după înălțimea naosului
+- 11
+- lucrări cu policandre
+- 3
+- stiluri: „brad”, „horă”, bizantin
+- Mărește detaliile
+- Glob și căni aurite
+- Dej III, 2023
+- Văzut de jos
+- 3 nivele, aprins
+
+## Modele și dimensiuni
+
+- Lăcuite sau aurite, în 1–7 nivele
+- Modele și dimensiuni
+- Spuneți-ne codul modelului și finisajul când comandați.
+- Prețurile sunt actualizate din data de [dd.mm.yyyy].
+- Toate
+- 1 nivel
+- 2 nivele
+- 3 nivele
+- 4–7 nivele
+- Horos
+- Policandru 1 nivel
+- nr. 1
+- Înălțime
+- 1,1 m
+- Diametru
+- 0,9 m
+- Lumânări
+- 12
+- Greutate
+- 20 kg
+- Lăcuit
+- cod 110112
+- [12.000] lei
+- Aurit
+- cod 110111
+- [17.400] lei
+- Policandru 2 nivele
+- nr. 2
+- 1,5 m
+- 1,22 m
+- 13
+- 48 kg
+- cod 111312
+- [14.900] lei
+- cod 111311
+- [21.600] lei
+- nr. 5
+- 0,6 m
+- 0,77 m
+- 7
+- —
+- cod 111812
+- [11.200] lei
+- cod 111811
+- [16.200] lei
+- nr. 6
+- 1,7 m
+- 40 kg
+- cod 111911
+- [20.000] lei
+- Fotografie 113011
+- nr. 7
+- 1,3 m
+- 18
+- 32 kg
+- cod 113011
+- [22.000] lei
+- nr. 8
+- 1,6 m
+- 6
+- 35 kg
+- cod 114711
+- [16.300] lei
+- Fotografie 110211
+- 1,9 m
+- 1,2 m
+- 21
+- 50 kg
+- cod 110212
+- [17.900] lei
+- cod 110211
+- [25.900] lei
+- Fotografie 111011
+- 1 m
+- 0,8 m
+- 16 kg
+- cod 111012
+- [11.600] lei
+- cod 111011
+- [16.900] lei
+- Fotografie 111211
+- nr. 3
+- 2,6 m
+- 20
+- 65 kg
+- cod 111212
+- [18.900] lei
+- cod 111211
+- [27.300] lei
+- Fotografie 113611
+- nr. 4
+- 1,05 m
+- cod 113612
+- [15.500] lei
+- cod 113611
+- [22.400] lei
+- 2,5 m
+- 1,65 m
+- 19
+- 80 kg
+- cod 114611
+- [28.800] lei
+- Fotografie 113311
+- Policandru 3 nivele
+- 3,1 m
+- 37
+- 185 kg
+- cod 110312
+- [35.600] lei
+- cod 113311
+- [51.600] lei
+- Fotografie 111611
+- 2,4 m
+- 28
+- 70 kg
+- cod 111612
+- [22.100] lei
+- cod 111611
+- [32.000] lei
+- Fotografie 113511
+- 2,2 m
+- 31
+- 60 kg
+- cod 113512
+- [22.300] lei
+- cod 113511
+- [32.300] lei
+- Fotografie 110411
+- Policandru 4 nivele
+- 4,8 m
+- 58
+- 380 kg
+- cod 110412
+- [60.500] lei
+- cod 110411
+- [87.700] lei
+- Fotografie 119911
+- 5,1 m
+- 60
+- 650 kg
+- cod 119911
+- [85.500] lei
+- Fotografie 110511
+- Policandru 5 nivele, masiv
+- 6,5 m
+- 2,7 m
+- cod 110512
+- [12.900] lei
+- cod 110511
+- [18.700] lei
+- Fotografie 110611
+- Policandru 7 nivele
+- 7,5 m
+- 3,3 m
+- 121
+- 1000 kg
+- cod 110612
+- [138.400] lei
+- cod 110611
+- [200.600] lei
+- Fotografie 112111
+- Horos cu 3 icoane
+- 0,87 m
+- 2 m
+- 24
+- 110 kg
+- cod 112112
+- [24.300] lei
+- cod 112111
+- [35.200] lei
+- Fotografie 112211
+- 3 m cu lanț
+- 1,8 m
+- 27
+- 160 kg
+- cod 112212
+- [29.900] lei
+- cod 112211
+- [43.300] lei
+- Fotografie 112311
+- 0,93 m
+- cod 112312
+- [14.700] lei
+- cod 112311
+- [21.300] lei
+- Fotografie 112411
+- 16
+- cod 112412
+- [18.800] lei
+- cod 112411
+- Fotografie 112511
+- Horos, 4–12 secții
+- 1,4–4,2 m
+- 15 kg / secție
+- cod 112512
+- cod 112511
+- [16.700] lei
+- Fotografie 111111
+- Horos cu 12 secțiuni
+- 0,7 m
+- 3 m
+- 46
+- cod 111112
+- [23.500] lei
+- cod 111111
+- [34.000] lei
+- Fotografie 112811
+- Policandru cu horos, 3 secțiuni
+- 0,95 m
+- cod 112811
+- Fotografie 112911
+- Policandru cu horos, 1 nivel
+- 8
+- cod 112911
+- Policandru cu horos, 2 nivele
+- nr. 9
+- cod 115511
+- [36.000] lei
+- Policandru cu horos, 3 nivele
+- nr. 10
+- 101
+- cod 115412
+- [44.100] lei
+- cod 115411
+- [63.900] lei
+- Nu ați găsit ce căutați?
+- Proiecte la comandă
+- Proiectate după naosul dumneavoastră.
+- Aveți deja un policandru vechi?
+- Recondiționare
+- Îl readucem la viață.
+
+<!-- board: V6ServicePolicandreB.dc.html -->
+
+## Cum lucrăm
+
+- De la alegere la sfințire
+- Cum lucrăm
+- 1
+- Alegem împreună
+- Modelul, nivelele și finisajul.
+- 2
+- Măsurăm naosul
+- Dimensiunile decid proporțiile.
+- 3
+- Turnare
+- La Moscova, Iaroslavl sau în Grecia.
+- 4
+- Montaj și sfințire
+- [Text de confirmat]
+
+## 11 lucrări
+
+- Lucrări cu policandre
+- 11 lucrări
+- Toate cele 11 lucrări
+- Parohia Dej III
+- Dej, Cluj · 3 nivele · 2023
+- [Titlu din CMS]
+- [Loc · an]

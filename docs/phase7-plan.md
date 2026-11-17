@@ -1,5 +1,7 @@
 # Phase 7 — homepage, blog and global content: plan
 
+> **Note (2026-11-17):** design v6 overrides the homepage and global decisions here where they differ (homepage sections, footer, menus, prices in the Policandre catalogue). See `docs/design/clarity-v6/` and the v6 plan in `docs/design-plan.md`.
+
 **Status:** Accepted by the user on 2026-11-04 with the recommended defaults
 (see "Decisions" below). Proposed and researched on 2026-11-04.
 

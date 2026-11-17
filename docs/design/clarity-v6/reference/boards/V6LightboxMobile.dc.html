@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>v6 lightbox mobile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+:root{--white:#ffffff;--band:#eef2f1;--ink:#111a19;--ink2:#4a5553;--hair:rgba(17,26,25,.10);--teal7:#0f6b63;--teal9:#0e3a36;--night:#0b2523;--tint:#e6efed;--focus:#9a783e;--on:#eef3f1;--onsoft:#a9bdb8;--e1:0 1px 2px rgba(11,37,35,.06),0 6px 16px rgba(11,37,35,.07);--e2:0 2px 6px rgba(11,37,35,.08),0 20px 40px rgba(11,37,35,.10);--e3:0 28px 72px rgba(11,37,35,.16);--ease:cubic-bezier(.22,.61,.36,1);
+--metal-gold:linear-gradient(100deg,#6e5020 0%,#a37e36 55%,#7c5a24 100%);--metal-bronze:linear-gradient(100deg,#3f3226 0%,#7a5c40 60%,#4a3a2a 100%);--metal-gilt:linear-gradient(100deg,#7a3f1e 0%,#a5682c 55%,#8a5424 100%)}
+body{margin:0;background:var(--white);color:var(--ink);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit}
+img{display:block}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.d{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-weight:500;line-height:1;letter-spacing:-.015em;margin:0}
+.soft{color:var(--ink2)}
+.glassL{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(20px) saturate(1.3);backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.85)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glassL{background:rgba(255,255,255,.96)}}
+.mw{position:relative;display:inline-block;text-decoration:none;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.06em}
+.mw-gold{color:#6e5020;background-image:var(--metal-gold)}
+@media (forced-colors: active){.mw{-webkit-text-fill-color:currentColor;background:none}}
+.bar-gold{background:var(--metal-gold)}.bar-bronze{background:var(--metal-bronze)}.bar-gilt{background:var(--metal-gilt)}
+.dark{color:var(--on)}.dark .soft{color:var(--onsoft)}.dark :focus-visible{outline-color:#c9a467}
+.fh{font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--onsoft)}
+.fl{font-size:16px;color:var(--on);text-decoration:none;display:flex;align-items:center;min-height:44px}
+.bo{position:relative;display:flex;flex-direction:column;text-decoration:none;color:var(--ink);min-width:0}
+.bo::before{content:'';position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.9);transition:background .36s var(--ease),box-shadow .36s var(--ease)}
+.on-white .bo::before{background:rgba(238,242,241,.8)}
+.bo>*{position:relative}
+.bo .ph{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--band);box-shadow:var(--e2);transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.bo .ph.light{background:#fff;outline:1px solid var(--hair);outline-offset:-1px}
+.bo .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.bo .tx{display:flex;flex-direction:column;align-items:center;text-align:center}
+.bo .bar{display:block;height:3px;border-radius:2px;transition:width .36s var(--ease)}
+.bo b{font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.bo small{color:var(--ink2);line-height:1.5}
+.bo.left .tx{align-items:flex-start;text-align:left}
+.chold{display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:var(--tint);color:var(--ink2);font-size:14px;font-weight:500}
+.t{position:relative;display:block;overflow:hidden;background:var(--band);text-decoration:none;color:var(--ink)}
+.t img{width:100%;height:100%;object-fit:cover}
+.cap{position:absolute;max-width:calc(100% - 20px)}
+.cap .cbar{display:block;height:3px;border-radius:2px}
+.cap b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.cap span{display:block;color:var(--ink2)}
+.m-hero{background:radial-gradient(ellipse 1000px 600px at 88% -6%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 760px 560px at -6% 26%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-band{background:radial-gradient(ellipse 1100px 700px at 104% 104%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),var(--band)}
+.m-white{background:radial-gradient(ellipse 900px 560px at -4% 0%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-dark{background:radial-gradient(ellipse 900px 620px at 0% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at 100% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.m-dark2{background:radial-gradient(ellipse 900px 620px at 92% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at -2% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+:root{--gA:.20;--tA:.08;--dT:.42;--dG:.14}
+.h2{font-size:40px}
+.lead{font-size:17px;line-height:1.6;margin:0}
+.c{font-size:14px;line-height:1.5;margin:0}
+.kick{margin:0 0 12px;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--ink2)}
+.pad{padding:0 20px}
+.sec{padding:88px 0}
+.ib{width:44px;height:44px;border-radius:999px;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none}
+.btn{display:flex;align-items:center;justify-content:center;height:52px;padding:0 24px;border-radius:999px;background:var(--teal9);color:#fff;text-decoration:none;font-size:16px;font-weight:600}
+.btn2{display:flex;align-items:center;justify-content:center;height:52px;padding:0 24px;border-radius:999px;background:var(--white);color:var(--ink);text-decoration:none;font-size:16px;font-weight:600;box-shadow:var(--e1)}
+.btnw{display:flex;align-items:center;justify-content:center;height:52px;padding:0 24px;border-radius:999px;background:#fff;color:var(--night);text-decoration:none;font-size:16px;font-weight:600}
+.ul{font-size:15px;font-weight:600;color:var(--teal7);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;min-height:44px;display:inline-flex;align-items:center}
+.dark .ul{color:var(--tint)}
+.dark{border-radius:24px;margin:0 8px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 20px 8px;scrollbar-width:none}
+.chip{flex:none;height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--hair);background:var(--white);color:var(--ink);font:500 15px Inter,sans-serif;display:inline-flex;align-items:center}
+.chip-on{background:var(--teal9);color:#fff;border-color:var(--teal9)}
+.field{height:48px;width:100%;border-radius:999px;border:1px solid var(--hair);background:#fff;padding:0 16px;font:400 16px Inter,sans-serif;color:var(--ink)}
+.bo{padding:0 8px}
+.bo::before{top:40px;border-radius:20px}
+.bo .ph{border-radius:14px}
+.bo .tx{padding:14px 10px 18px}.bo.left .tx{padding:14px 6px 18px}
+.bo .bar{width:24px;margin-bottom:10px}
+.bo b{font-size:26px}.bo small{font-size:14px;margin-top:6px}
+.bo:active .ph{transform:translateY(-4px);box-shadow:var(--e3)}
+.rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 20px 12px;scrollbar-width:none}
+.rail .bo{flex:none;width:280px;scroll-snap-align:start}
+.t{border-radius:14px}
+.cap{left:8px;bottom:8px;padding:9px 12px;border-radius:10px}
+.cap .cbar{width:18px;margin-bottom:6px}.cap b{font-size:19px}.cap span{font-size:14px;margin-top:1px}
+.cap.big{left:12px;bottom:12px;padding:12px 14px}.cap.big b{font-size:24px}
+.bbar{position:absolute;left:12px;right:12px;bottom:12px;height:64px;border-radius:999px;box-shadow:var(--e2);display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;z-index:10}
+.bbar a{display:flex;align-items:center;justify-content:center;border-radius:999px;text-decoration:none;font-size:15px;font-weight:600}
+.m-hero{background:radial-gradient(ellipse 420px 360px at 100% -4%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 320px 300px at -10% 30%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-band{background:radial-gradient(ellipse 460px 420px at 104% 102%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),var(--band)}
+.m-white{background:radial-gradient(ellipse 400px 360px at -6% 0%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-dark{background:radial-gradient(ellipse 420px 360px at 0% -6%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 380px 320px at 104% 104%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.m-dark2{background:radial-gradient(ellipse 420px 360px at 100% -6%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 380px 320px at -4% 104%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.glass{background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(20px) saturate(1.15);backdrop-filter:blur(20px) saturate(1.15);border:1px solid rgba(255,255,255,.12);transition:background .18s var(--ease)}.glass:hover{background:rgba(255,255,255,.12)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:#173431}}
+/* v6.2 overlays (lightbox, close-up viewer): see-through teal-900 (60%) + light blur 12 / saturate 1.4, so the page reads as soft shapes; edge gradients (85–88%) behind the top bar and the caption keep text readable on any page */
+.lbr{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(9,40,37,.85),rgba(9,40,37,0) 120px),linear-gradient(to top,rgba(9,40,37,.88),rgba(9,40,37,0) 280px),rgba(14,58,54,.60);-webkit-backdrop-filter:blur(12px) saturate(1.4);backdrop-filter:blur(12px) saturate(1.4);box-shadow:inset 0 0 200px rgba(3,14,13,.3);color:#eef3f1}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.lbr{background:rgba(14,58,54,.96)}}
+.lbr :focus-visible{outline-color:#c9a467}
+.rb{width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#eef3f1;cursor:pointer}
+.ibx{height:44px;display:inline-flex;align-items:center;gap:8px;padding:0 14px;border-radius:999px;color:#eef3f1;font:500 14px Inter,sans-serif;cursor:pointer}
+
+/* v6.2 lightbox photo: whole photo at its own shape, as large as the stage allows (width = min(stage width, stage height × ratio); ratio from the image’s width / height in the CMS), rounded and lifted off the blur */
+.lbp{display:block;height:auto;max-height:100%;object-fit:cover;box-shadow:0 24px 64px rgba(2,12,11,.55),0 2px 8px rgba(2,12,11,.35)}
+/* v6.2 thumbnail strip: shown when a set has more than 8 photos; current photo full opacity with a light ring, others 55%; scrolls sideways, edges fade; click / tap jumps to that photo */
+.lbs{display:flex;gap:6px;padding:4px;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(to right,transparent,#000 40px,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,transparent,#000 40px,#000 calc(100% - 40px),transparent)}.lbs::-webkit-scrollbar{display:none}
+.lbs a{flex:none;display:block;width:60px;height:44px;border-radius:8px;overflow:hidden;opacity:.55;transition:opacity .18s var(--ease)}.lbs a:hover{opacity:.85}.lbs a[aria-current]{opacity:1;box-shadow:0 0 0 2px #eef3f1}
+.lbs img{width:100%;height:100%;object-fit:cover}
+/* v6.2 zoom: tap the photo to zoom 2,5× there, tap again for the whole photo; pinch zooms, drag pans when zoomed; the chip shows at 1× */
+.zchip{position:absolute;right:12px;bottom:12px;height:36px;padding:0 12px;display:flex;align-items:center;gap:6px;border-radius:999px;font:500 13px Inter,sans-serif;color:#eef3f1;pointer-events:none}
+</style>
+</helmet>
+<div style="width: 390px; position: relative; background: var(--white)">
+<div style="position: relative; height: 844px; overflow: hidden; background: #eef2f1"><div aria-hidden="true" style="position: absolute; inset: 0; background: #eef2f1; padding: 96px 12px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-content: start"><div style="position: absolute; left: 12px; right: 12px; top: 12px; height: 60px; border-radius: 999px; background: #fff"></div><img src="/_blob/fc85c0cc5a4e1859ba766f571dffa93b" alt="" style="width: 100%; height: 150px; object-fit: cover; border-radius: 14px"><img src="/_blob/fad532db9330e0ddd05b3548ced08bf8" alt="" style="width: 100%; height: 150px; object-fit: cover; border-radius: 14px"><img src="/_blob/df5d1110d583ab3bb4b5e9ddc5691174" alt="" style="width: 100%; height: 150px; object-fit: cover; border-radius: 14px"><img src="/_blob/d2c27edcc7b62b5d00e1a0d4e64306ad" alt="" style="width: 100%; height: 150px; object-fit: cover; border-radius: 14px"><img src="/_blob/c4950ecb27217623e54fb99907e39552" alt="" style="width: 100%; height: 150px; object-fit: cover; border-radius: 14px"><img src="/_blob/a6e7f93f68382290350d389e3d458ab5" alt="" style="width: 100%; height: 150px; object-fit: cover; border-radius: 14px"><img src="/_blob/99e29f443e701ade8263aaaa2c9da59e" alt="" style="width: 100%; height: 150px; object-fit: cover; border-radius: 14px"><img src="/_blob/57594508f6299d945624078df0337804" alt="" style="width: 100%; height: 150px; object-fit: cover; border-radius: 14px"></div><div class="lbr" role="dialog" aria-modal="true" aria-label="Fotografii, Parohia Dej III"><div style="position: absolute; left: 0; right: 0; top: 0; height: 72px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px 0 20px"><p class="c" style="font-variant-numeric: tabular-nums">4 / 19</p><div style="display: flex; gap: 8px"><button class="ibx glass" aria-label="Copiază linkul" style="width: 44px; justify-content: center; padding: 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg></button><button class="ibx glass" aria-label="Închide" style="width: 44px; justify-content: center; padding: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></button></div></div><div style="position: absolute; left: 12px; right: 12px; top: 88px; height: 476px; display: flex; align-items: center; justify-content: center"><div style="position: relative; border-radius: 12px; width: min(100%, calc(476px * 450 / 448))"><img class="lbp" src="/_blob/71b693db34a25fa6a5db7464078d18e6" alt="Policandrul de 3 nivele aprins în naos, Parohia Dej III" style="border-radius: 12px; aspect-ratio: 450 / 448; width: 100%"><div class="zchip glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"></path></svg>Atingeți pentru a mări</div></div></div><nav class="lbs" aria-label="Toate fotografiile" style="position: absolute; left: 0; right: 0; top: 576px; padding-left: 16px; padding-right: 16px; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent)"><a href="#" aria-label="Fotografia 1"><img src="/_blob/2fbfeee2455c29dae5ff9c80e1c9db83" alt=""></a><a href="#" aria-label="Fotografia 2"><img src="/_blob/57594508f6299d945624078df0337804" alt=""></a><a href="#" aria-label="Fotografia 3"><img src="/_blob/d2c27edcc7b62b5d00e1a0d4e64306ad" alt=""></a><a href="#" aria-label="Fotografia 4" aria-current="true"><img src="/_blob/71b693db34a25fa6a5db7464078d18e6" alt=""></a><a href="#" aria-label="Fotografia 5"><img src="/_blob/fc85c0cc5a4e1859ba766f571dffa93b" alt=""></a><a href="#" aria-label="Fotografia 6"><img src="/_blob/7afd2c0e61e7c43319097e6a99a27328" alt=""></a><a href="#" aria-label="Fotografia 7"><img src="/_blob/427f8957c12fd4e2453582c4787781ba" alt=""></a><a href="#" aria-label="Fotografia 8"><img src="/_blob/0410a96c54b7371aa261b7a060639023" alt=""></a><a href="#" aria-label="Fotografia 9"><img src="/_blob/3343907c5e196c8314eb8d098cd24d7f" alt=""></a><a href="#" aria-label="Fotografia 10"><img src="/_blob/fad532db9330e0ddd05b3548ced08bf8" alt=""></a><a href="#" aria-label="Fotografia 11"><img src="/_blob/fc85c0cc5a4e1859ba766f571dffa93b" alt=""></a><a href="#" aria-label="Fotografia 12"><img src="/_blob/fad532db9330e0ddd05b3548ced08bf8" alt=""></a><a href="#" aria-label="Fotografia 13"><img src="/_blob/df5d1110d583ab3bb4b5e9ddc5691174" alt=""></a><a href="#" aria-label="Fotografia 14"><img src="/_blob/c4950ecb27217623e54fb99907e39552" alt=""></a></nav><div style="position: absolute; left: 20px; right: 20px; bottom: 28px"><p class="d" style="font-size: 28px; font-weight: 500; line-height: 1.1">Policandru 3 nivele, 37 lumini, aurit</p><p class="c" style="margin-top: 6px; color: #c9d6d2">Dej, Cluj · 2023</p><a href="#" style="font-size: 15px; font-weight: 600; color: #eef3f1; text-underline-offset: 6px; min-height: 44px; display: flex; align-items: center; margin-top: 6px">Cereți o ofertă pentru unul asemănător</a></div></div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

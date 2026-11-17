@@ -1,5 +1,67 @@
 # Session handoff
 
+**Updated:** 2026-11-17 · The design is locked as **v6 "Clarity" (v6.2 release
+candidate)**. Implementation continues from `docs/design/clarity-v6/` with the
+plan in `docs/design-plan.md`. Start a new Claude Code session with the
+kickoff prompt below.
+
+## Where we are (2026-11-17)
+
+- **Code:** branch `prototype/mobile-publishing`, last commit `556b71c`. Built
+  on the Patina tokens + v5.10 homepage (design-plan phases A–C, 2026-11-08).
+  Service pages, Works, blog and 404 still use the older v4-era layout.
+- **Design:** v6.2 on the canvas https://claude.ai/artifact/43jzYBJXgk8j9jK9uRcZKF
+  (page "v6 · Clarity"), exported to `docs/design/clarity-v6/` (rules, routes,
+  tokens, components, pages, content model, copy, assets, board sources).
+  `docs/design-handoff/` (v5.10) is history.
+- **Big changes against the code:** prices shown in the Policandre catalogue
+  (price check must allow them there only); no `/servicii` hub and no Clopote
+  chooser (`/servicii/clopote` = cu jug); no project page (a work opens only in
+  the Project panel; direct visit = Works + panel); Works has one filter bar
+  with bell type, a light map view, no sidebar and no year/county filters;
+  Iconostase is one page with a Lightbox that has material tabs and zoom (Bronz
+  removed); Uși has one copper model; homepage hero shows Recondiționări and a
+  map story; translucent teal Lightbox with zoom everywhere; compact footer.
+- **Schema:** `docs/design-schema-proposal-v6.md` is reconciled with
+  `../studio-premiumbells` (§2b) and approved on 2026-11-17; each
+  Studio deploy, write and publish still needs its own OK.
+- **V0 done 2026-11-17:** the per-page gap list is in `docs/design-plan.md`
+  under V0, approved with its four decisions (craft chips on Works,
+  map places abroad, service short names, the price check).
+- **Photos:** almost all originals are in Sanity; `docs/design/clarity-v6/assets.md`
+  lists every image on the boards with a description to find its original.
+  The user uploads the missing ones.
+
+## Kickoff prompt
+
+> We are implementing the v6 "Clarity" redesign of policandre.ro in this repo.
+> Read, in this order: `CLAUDE.md` / `AGENTS.md` (Next 16: read
+> `node_modules/next/dist/docs/` before writing code), `docs/handoff.md`,
+> `docs/design/clarity-v6/README.md`, `rules.md`, `routes.md`,
+> `foundations.md`, then `docs/design-plan.md` (the v6 plan at the top) and
+> `docs/design-schema-proposal-v6.md`. The board files in
+> `docs/design/clarity-v6/reference/boards/` are the exact design (HTML + CSS +
+> small scripts; `/_blob/<id>` images are stand-ins for Sanity originals, see
+> `assets.md`); the copy is in `copy/`.
+>
+> Start with phase **V0** only: compare the package with the current code and
+> write a gap list per page (exists / restyle / rebuild / remove) into
+> `docs/design-plan.md` under V0; reconcile `docs/design-schema-proposal-v6.md`
+> with `../studio-premiumbells/schemaTypes/` (read-only) and mark each row
+> exists / rename / new / drop. Then stop and show me both for approval.
+>
+> Rules for every phase: no Sanity write, publish, Studio deploy or git push
+> without my explicit OK, and export the dataset before any write; secrets stay
+> in `.env.local` and are never printed; prices only in the Policandre
+> catalogue; build desktop and phone together and compare with the boards at
+> 1440 and 390 on a production build; keep unit tests minimal; one local commit
+> per phase step; update `docs/design-plan.md`, `docs/migration-status.md` and
+> this file as you go.
+
+---
+
+# Earlier handoff (2026-11-05, Patina / Phase 7)
+
 **Updated:** 2026-11-05 · Start a new session with the kickoff prompt below; it
 is cheaper than continuing a long conversation, and these docs carry the state.
 

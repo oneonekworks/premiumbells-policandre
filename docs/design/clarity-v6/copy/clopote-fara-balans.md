@@ -1,0 +1,224 @@
+# Clopote fără balans
+
+Visible Romanian copy taken from the desktop boards, in reading order, one line per text node, duplicates removed. Phone boards use the same copy (a few lines shortened; see the phone boards in reference/boards). [ ] marks a placeholder for CMS content or a client answer. Interactive boards show their default state (e.g. Works: Toate, Galerie). Header and footer: see menus.md and footer.md.
+
+<!-- board: V6ClopoteFaraBalans.dc.html -->
+
+## Clopote fără balans fixe, trase cu sfoara, ca la Athos
+
+- Acasă
+- /
+- Servicii
+- Clopote
+- Ce fel de clopot căutați?
+- Cu jug
+- Clopotul se balansează
+- →
+- Fără balans
+- Clopotul stă fix, se trage limba
+- Clopote fără balans
+- fixe, trase cu sfoara, ca la Athos
+- Clopotele sunt fixe; doar limba se trage, asemenea tradiției ortodoxe de la Sfântul Munte sau de la Biserica Sfântului Mormânt.
+- Pe scurt
+- Fixe
+- doar limba se trage, ca la Athos
+- Automat
+- opțional, cu clopotarul electronic
+- Inclus
+- transportul până la biserică și TVA
+- Urmăriți filmul
+- Adâncata
+- set de clopote fixe, 2022
+- Pantocrator
+- trase ca la Athos, 2017
+
+## Dimensiuni clopote fără balans
+
+- Alegeți un rând sau un set
+- Dimensiuni clopote fără balans
+- 1,75 m
+- 49 cm
+- 48 cm
+- Clopot fără balans
+- 60 kg
+- Până la genunchiul unui om
+- Diametru 48 cm · Înălțime 49 cm · Notă Sol-2
+- Cereți o ofertă pentru 60 kg
+- Greutate
+- Diametru
+- Înălțime
+- Notă
+- Până la 100 kg
+- [Potrivit pentru: de la client]
+- 4 kg
+- 19,5 cm
+- 20,5 cm
+- Do-4
+- 6 kg
+- 22 cm
+- 23 cm
+- La-4
+- 8 kg
+- 24,6 cm
+- 25 cm
+- Sol-4
+- 12 kg
+- 28,5 cm
+- 29 cm
+- La-3
+- 16 kg
+- 31 cm
+- 31,5 cm
+- Mi-3
+- 22 kg
+- 36 cm
+- 36,5 cm
+- Do#-3
+- 32 kg
+- 38 cm
+- 39 cm
+- Si-2
+- 44 kg
+- 43 cm
+- 44 cm
+- La-2
+- Sol-2
+- 85 kg
+- 54 cm
+- 55,5 cm
+- Sol-1
+- 100–1000 kg
+- 120 kg
+- 58 cm
+- 60 cm
+- Fa-2
+- 160 kg
+- 64,4 cm
+- 66 cm
+- Mi-2
+- 230 kg
+- 72,4 cm
+- 74,5 cm
+- Si-1
+- 310 kg
+- 80,8 cm
+- 82,5 cm
+- 420 kg
+- 90 cm
+- 92,5 cm
+- Sol#-1
+- 460 kg
+- 91 cm
+- 94 cm
+- 500 kg
+- 93 cm
+- 95,5 cm
+- Fa#-1
+- 620 kg
+- 101,6 cm
+- 105 cm
+- Fa-1
+- 920 kg
+- 111,7 cm
+- 115,5 cm
+- Re#-1
+- 1–5 tone
+- 1 070 kg
+- 120,6 cm
+- 127,5 cm
+- Re-1
+- 1 200 kg
+- 127,4 cm
+- 133 cm
+- Do#-1
+- 1 500 kg
+- 134,2 cm
+- 138 cm
+- Do-1
+- 1 800 kg
+- 140 cm
+- 146 cm
+- So b m
+- 2 400 kg
+- 159,2 cm
+- 164,5 cm
+- La m
+- 3 200 kg
+- 167,8 cm
+- 173 cm
+- Sol# m
+- 3 600 kg
+- 175 cm
+- 179,5 cm
+- Sol m
+- 4 800 kg
+- 199 cm
+- 204 cm
+- Fa# m
+- Peste 5 tone
+- 6 200 kg
+- 209,7 cm
+- 215 cm
+- Fa m
+- 7 200 kg
+- 218,7 cm
+- 223,5 cm
+- Mi m
+- 7 800 kg
+- 220,7 cm
+- 226 cm
+- Re# m
+- 9 400 kg
+- 248,7 cm
+- 253 cm
+- Re m
+- 12 400 kg
+- 262 cm
+- 268 cm
+- Do m
+- 16 000 kg
+- 305 cm
+- 300 cm
+- Seturi acordate după note muzicale
+- Set 1
+- 5 clopote · 12, 16, 22, 32, 60 kg + clopotar electronic
+- Set 2
+- 6 clopote · 12, 16, 22, 32, 60, 120 kg + clopotar electronic
+- Set 3
+- 6 clopote · 12, 16, 22, 44, 85, 160 kg + clopotar electronic
+- Set 4
+- 7 clopote · 12, 16, 22, 32, 60, 120, 230 kg + clopotar electronic
+- Set 5
+- 8 clopote · 12, 16, 22, 32, 60, 120, 230, 460 kg + clopotar electronic
+- Set 6
+- 9 clopote · 12, 16, 22, 32, 60, 120, 230, 460, 920 kg + clopotar electronic
+
+## Ce este inclus
+
+- Clopote fără balans
+- Ce este inclus
+- Limba
+- Icoanele
+- Textul
+- Ornamentele
+- Transportul până la biserică
+- TVA
+- Clopote fixe, trase automat
+- Clopotar electronic
+- Pentru clopote fixe, cu limba trasă ca de mână.
+
+## Clopote fără balans montate
+
+- Din lucrările noastre
+- Clopote fără balans montate
+- Toate lucrările cu clopote fără balans
+- Vedeți lucrarea
+- Parohia Adâncata
+- Suceava · Set de clopote fixe · 2022
+- Sihăstria Rascai
+- Clopote fixe automatizate · 2020
+- Mănăstirea Pantocrator
+- Trase ca la Athos · 2017
+- Celălalt fel de clopote
+- Clopote cu jug →
+- Se balansează pe jug din stejar sau oțel, până la 16 tone.

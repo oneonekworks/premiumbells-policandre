@@ -1,5 +1,7 @@
 # Design foundations and site shell
 
+> **Superseded (2026-11-17):** the design source of truth is now `docs/design/clarity-v6/` (v6 "Clarity", v6.2 release candidate) and the plan is the v6 plan at the top of `docs/design-plan.md`. Tokens: `docs/design/clarity-v6/tokens.css` replaces the values below (phase V1).
+
 **Date:** 2026-10-24 · **Status:** implemented locally; visual review pending.
 
 A compact design language refining the legacy identity (real photography, teal

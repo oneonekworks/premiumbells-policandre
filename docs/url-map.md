@@ -23,6 +23,24 @@ and to find URLs not listed here (image URLs, old links from other sites).
 - Fragments (`#…`) never reach the server; they only work if the new page
   keeps the same element IDs.
 
+## v6 changes (design v6 "Clarity", 2026-11-17)
+
+Decided in the design (see `docs/design/clarity-v6/routes.md`); to implement
+in phases V4–V5 of `docs/design-plan.md`. Rows below override the tables
+further down.
+
+| Path | Today | v6 | Action |
+| --- | --- | --- | --- |
+| `/servicii` | hub page | no page | 308 → `/#servicii` (homepage services section); "Servicii" breadcrumbs link there |
+| `/servicii/clopote` | hub for the two bell types | Clopote cu jug page | keep the URL, render the cu-jug content |
+| `/servicii/clopote/cu-jug` | page | — | 308 → `/servicii/clopote` |
+| `/servicii/clopote/fara-balans` | page | page | keep |
+| `/servicii/iconostase/marmura`, `/lemn-aur`, `/pristol-marmura` | pages | Iconostase page with the Lightbox open on that material | keep the URLs as layer addresses (server-rendered) |
+| `/servicii/iconostase/iconostas-bronz` | page | — (Bronz removed) | 308 → `/servicii/iconostase` |
+| `/lucrarile-noastre/[category]` | category page with sidebar, `?an=` `?judet=` | Works pre-filtered, one filter bar | keep; drop `an` and the county select; add `?tip=`, `?vedere=harta` |
+| `/lucrarile-noastre/[category]/[project]` | full project page (+ intercepted slide-over) | Works with the Project panel open | keep the URL; render Works + panel; no full page |
+
+
 ## Pages
 
 Live = HTTP status on 2026-11-02. Sitemap = listed in a legacy sitemap

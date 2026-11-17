@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>v6 project panel mobile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+:root{--white:#ffffff;--band:#eef2f1;--ink:#111a19;--ink2:#4a5553;--hair:rgba(17,26,25,.10);--teal7:#0f6b63;--teal9:#0e3a36;--night:#0b2523;--tint:#e6efed;--focus:#9a783e;--on:#eef3f1;--onsoft:#a9bdb8;--e1:0 1px 2px rgba(11,37,35,.06),0 6px 16px rgba(11,37,35,.07);--e2:0 2px 6px rgba(11,37,35,.08),0 20px 40px rgba(11,37,35,.10);--e3:0 28px 72px rgba(11,37,35,.16);--ease:cubic-bezier(.22,.61,.36,1);
+--metal-gold:linear-gradient(100deg,#6e5020 0%,#a37e36 55%,#7c5a24 100%);--metal-bronze:linear-gradient(100deg,#3f3226 0%,#7a5c40 60%,#4a3a2a 100%);--metal-gilt:linear-gradient(100deg,#7a3f1e 0%,#a5682c 55%,#8a5424 100%)}
+body{margin:0;background:var(--white);color:var(--ink);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit}
+img{display:block}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.d{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-weight:500;line-height:1;letter-spacing:-.015em;margin:0}
+.soft{color:var(--ink2)}
+.glassL{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(20px) saturate(1.3);backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.85)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glassL{background:rgba(255,255,255,.96)}}
+.mw{position:relative;display:inline-block;text-decoration:none;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.06em}
+.mw-gold{color:#6e5020;background-image:var(--metal-gold)}
+@media (forced-colors: active){.mw{-webkit-text-fill-color:currentColor;background:none}}
+.bar-gold{background:var(--metal-gold)}.bar-bronze{background:var(--metal-bronze)}.bar-gilt{background:var(--metal-gilt)}
+.dark{color:var(--on)}.dark .soft{color:var(--onsoft)}.dark :focus-visible{outline-color:#c9a467}
+.fh{font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--onsoft)}
+.fl{font-size:16px;color:var(--on);text-decoration:none;display:flex;align-items:center;min-height:44px}
+.bo{position:relative;display:flex;flex-direction:column;text-decoration:none;color:var(--ink);min-width:0}
+.bo::before{content:'';position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.9);transition:background .36s var(--ease),box-shadow .36s var(--ease)}
+.on-white .bo::before{background:rgba(238,242,241,.8)}
+.bo>*{position:relative}
+.bo .ph{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--band);box-shadow:var(--e2);transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.bo .ph.light{background:#fff;outline:1px solid var(--hair);outline-offset:-1px}
+.bo .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.bo .tx{display:flex;flex-direction:column;align-items:center;text-align:center}
+.bo .bar{display:block;height:3px;border-radius:2px;transition:width .36s var(--ease)}
+.bo b{font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.bo small{color:var(--ink2);line-height:1.5}
+.bo.left .tx{align-items:flex-start;text-align:left}
+.chold{display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:var(--tint);color:var(--ink2);font-size:14px;font-weight:500}
+.t{position:relative;display:block;overflow:hidden;background:var(--band);text-decoration:none;color:var(--ink)}
+.t img{width:100%;height:100%;object-fit:cover}
+.cap{position:absolute;max-width:calc(100% - 20px)}
+.cap .cbar{display:block;height:3px;border-radius:2px}
+.cap b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.cap span{display:block;color:var(--ink2)}
+.m-hero{background:radial-gradient(ellipse 1000px 600px at 88% -6%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 760px 560px at -6% 26%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-band{background:radial-gradient(ellipse 1100px 700px at 104% 104%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),var(--band)}
+.m-white{background:radial-gradient(ellipse 900px 560px at -4% 0%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-dark{background:radial-gradient(ellipse 900px 620px at 0% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at 100% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.m-dark2{background:radial-gradient(ellipse 900px 620px at 92% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at -2% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+:root{--gA:.20;--tA:.08;--dT:.42;--dG:.14}
+.h2{font-size:40px}
+.lead{font-size:17px;line-height:1.6;margin:0}
+.c{font-size:14px;line-height:1.5;margin:0}
+.kick{margin:0 0 12px;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--ink2)}
+.pad{padding:0 20px}
+.sec{padding:88px 0}
+.ib{width:44px;height:44px;border-radius:999px;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none}
+.btn{display:flex;align-items:center;justify-content:center;height:52px;padding:0 24px;border-radius:999px;background:var(--teal9);color:#fff;text-decoration:none;font-size:16px;font-weight:600}
+.btn2{display:flex;align-items:center;justify-content:center;height:52px;padding:0 24px;border-radius:999px;background:var(--white);color:var(--ink);text-decoration:none;font-size:16px;font-weight:600;box-shadow:var(--e1)}
+.btnw{display:flex;align-items:center;justify-content:center;height:52px;padding:0 24px;border-radius:999px;background:#fff;color:var(--night);text-decoration:none;font-size:16px;font-weight:600}
+.ul{font-size:15px;font-weight:600;color:var(--teal7);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;min-height:44px;display:inline-flex;align-items:center}
+.dark .ul{color:var(--tint)}
+.dark{border-radius:24px;margin:0 8px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 20px 8px;scrollbar-width:none}
+.chip{flex:none;height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--hair);background:var(--white);color:var(--ink);font:500 15px Inter,sans-serif;display:inline-flex;align-items:center}
+.chip-on{background:var(--teal9);color:#fff;border-color:var(--teal9)}
+.field{height:48px;width:100%;border-radius:999px;border:1px solid var(--hair);background:#fff;padding:0 16px;font:400 16px Inter,sans-serif;color:var(--ink)}
+.bo{padding:0 8px}
+.bo::before{top:40px;border-radius:20px}
+.bo .ph{border-radius:14px}
+.bo .tx{padding:14px 10px 18px}.bo.left .tx{padding:14px 6px 18px}
+.bo .bar{width:24px;margin-bottom:10px}
+.bo b{font-size:26px}.bo small{font-size:14px;margin-top:6px}
+.bo:active .ph{transform:translateY(-4px);box-shadow:var(--e3)}
+.rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 20px 12px;scrollbar-width:none}
+.rail .bo{flex:none;width:280px;scroll-snap-align:start}
+.t{border-radius:14px}
+.cap{left:8px;bottom:8px;padding:9px 12px;border-radius:10px}
+.cap .cbar{width:18px;margin-bottom:6px}.cap b{font-size:19px}.cap span{font-size:14px;margin-top:1px}
+.cap.big{left:12px;bottom:12px;padding:12px 14px}.cap.big b{font-size:24px}
+.bbar{position:absolute;left:12px;right:12px;bottom:12px;height:64px;border-radius:999px;box-shadow:var(--e2);display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;z-index:10}
+.bbar a{display:flex;align-items:center;justify-content:center;border-radius:999px;text-decoration:none;font-size:15px;font-weight:600}
+.m-hero{background:radial-gradient(ellipse 420px 360px at 100% -4%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 320px 300px at -10% 30%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-band{background:radial-gradient(ellipse 460px 420px at 104% 102%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),var(--band)}
+.m-white{background:radial-gradient(ellipse 400px 360px at -6% 0%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-dark{background:radial-gradient(ellipse 420px 360px at 0% -6%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 380px 320px at 104% 104%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.m-dark2{background:radial-gradient(ellipse 420px 360px at 100% -6%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 380px 320px at -4% 104%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.glass{background:rgba(26,22,18,.58);-webkit-backdrop-filter:blur(20px) saturate(1.15);backdrop-filter:blur(20px) saturate(1.15);border:1px solid rgba(220,198,156,.26);box-shadow:inset 0 1px 0 rgba(220,198,156,.18)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:rgba(26,22,18,.94)}}
+.lbr{position:absolute;inset:0;background:rgba(18,17,16,.72);-webkit-backdrop-filter:blur(24px) saturate(1.1);backdrop-filter:blur(24px) saturate(1.1);box-shadow:inset 0 0 280px rgba(0,0,0,.7);color:#efe8da}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.lbr{background:rgba(18,17,16,.95)}}
+.lbr :focus-visible{outline-color:#c9a467}
+.rb{width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#efe8da;cursor:pointer}
+.ibx{height:44px;display:inline-flex;align-items:center;gap:8px;padding:0 14px;border-radius:999px;color:#efe8da;font:500 14px Inter,sans-serif;cursor:pointer}
+.m-cupru{background:linear-gradient(135deg,#4a2c1e,#a0643f)}.m-bronz{background:var(--metal-bronze)}.m-stejar{background:linear-gradient(135deg,#7a5a38,#c09a68)}.m-cires{background:linear-gradient(135deg,#4e1a16,#8c3a2c)}.m-mix{background:linear-gradient(90deg,#b08a5c 50%,#5a4430 50%)}
+.scr{position:absolute;inset:0;background:rgba(11,37,35,.42);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.pn{position:absolute;background:#fff;box-shadow:var(--e3);overflow:hidden}
+.lp{position:relative;overflow:hidden;background:#e4e9e7;cursor:zoom-in}
+.lp img{width:100%;height:100%;object-fit:contain;transition:transform .4s var(--ease);pointer-events:none}
+.lz{position:absolute;display:inline-flex;align-items:center;gap:6px;border-radius:999px;font-weight:600;color:var(--ink);pointer-events:none}
+.pth{display:flex;gap:8px}
+.pth button{flex:none;padding:0;border:0;border-radius:10px;overflow:hidden;cursor:pointer;background:var(--band);opacity:.7;transition:opacity .18s}
+.pth button:hover{opacity:1}.pth button.on{opacity:1;box-shadow:0 0 0 2px var(--teal9)}
+.pth img{width:100%;height:100%;object-fit:cover}
+.pk{margin:0;font-size:14px;font-weight:600;color:var(--ink2);font-variant-numeric:tabular-nums}
+.pt{font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.05;margin:0}
+.pm{display:flex;align-items:center;gap:8px;color:var(--ink2)}.pm i{width:12px;height:12px;border-radius:50%;flex:none}
+.pp{font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1;margin:0}
+.pd{margin:0;line-height:1.6;color:var(--ink2)}
+.pq{display:inline-flex;align-items:center;gap:8px;margin:14px 0 0;height:34px;padding:0 14px 0 10px;border-radius:999px;background:var(--tint);color:var(--teal9);font-size:14px;font-weight:600;align-self:flex-start}
+.ps{list-style:none;margin:0;padding:0}.ps li{padding:10px 0;border-top:1px solid var(--hair);color:var(--ink)}
+.pnav{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pnav button{display:flex;align-items:center;gap:10px;min-height:64px;padding:8px;border-radius:16px;border:0;background:var(--band);color:var(--ink);font:500 14px/1.3 Inter,sans-serif;text-align:left;cursor:pointer;transition:background .18s}
+.pnav button:hover{background:var(--tint)}
+.pnav img{width:36px;height:48px;object-fit:cover;border-radius:8px;flex:none}
+.pnav small{display:block;font-size:12px;color:var(--ink2)}
+.ix{width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:var(--band);color:var(--ink);text-decoration:none}
+@media (prefers-reduced-motion: reduce){.lp img{transition:none}}
+.pn{left:0;right:0;top:40px;bottom:0;border-radius:24px 24px 0 0;overflow:auto}
+.lp{height:420px;margin:0 12px;border-radius:18px}
+.lz{left:10px;bottom:10px;height:32px;padding:0 10px;font-size:13px}
+.pth{overflow-x:auto;scrollbar-width:none;padding:10px 12px 0}
+.pth button{width:56px;height:56px}
+.pi{padding:20px 20px 32px}
+.pt{font-size:34px;margin-top:6px}.pm{font-size:14px;margin-top:10px}.pp{font-size:28px;margin-top:16px}.pd{font-size:15px;margin-top:10px}.ps{margin-top:12px;font-size:14px}
+
+/* v6.2 Project panel (floating layer over Lucrările noastre) */
+.pbar{display:block;width:28px;height:3px;border-radius:2px}
+.pmeta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;color:var(--ink2);font-size:15px;margin:10px 0 0}
+.pmeta a{color:var(--teal7);font-weight:600;text-underline-offset:4px}
+.lead{position:relative;display:block;overflow:hidden;border-radius:18px;background:#fff}
+.lead img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.lead:hover img{transform:scale(1.02)}
+.lead .lz{position:absolute;right:12px;bottom:12px;height:40px;display:inline-flex;align-items:center;gap:8px;padding:0 14px;border-radius:999px;font:500 14px Inter,sans-serif;color:var(--ink)}
+.pg{display:grid;gap:8px}
+.pg a{position:relative;display:block;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--band)}
+.pg img{width:100%;height:100%;object-fit:cover}
+.pg .more{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--night);color:var(--on);text-decoration:none;font-size:13px}
+.pg .more b{font-family:'Cormorant Garamond',Garamond,serif;font-size:26px;font-weight:600;line-height:1}
+.sp{padding:14px 0;border-top:1px solid var(--hair)}
+.sp b{font-family:'Cormorant Garamond',Garamond,serif;font-size:22px;font-weight:600}
+.sp dl{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:8px 0 0}
+.sp dt{font-size:12px;color:var(--ink2)}.sp dd{margin:2px 0 0;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.offer{border-radius:20px;background:var(--band);padding:18px 18px 18px 20px}
+.offer p{margin:0}
+.pnav a{display:flex;align-items:center;gap:10px;min-height:64px;padding:8px;border-radius:16px;background:var(--band);color:var(--ink);font:500 14px/1.3 Inter,sans-serif;text-decoration:none;transition:background .18s}
+.pnav a:hover{background:var(--tint)}
+.pnav a span{min-width:0}
+.pnav b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lead .lz{left:auto}
+.pnav{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.pnav a{min-width:0}
+.sp dl{grid-template-columns:repeat(3,minmax(0,1fr))}
+.stick{position:sticky;bottom:0;padding:12px 20px 16px;background:linear-gradient(rgba(255,255,255,0),#fff 28%)}
+/* v6.2 panel additions: map line (opens Lucrări · Hartă on this county) and a film tile in the photo grid (only when the project has a video) */
+.pmap{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:14px;align-items:center;min-height:56px;padding:6px 14px 6px 8px;border-radius:14px;background:var(--band);text-decoration:none;color:var(--ink);transition:background .18s var(--ease)}
+.pmap:hover,.pmap:focus-visible{background:var(--tint)}
+.pmap b{display:block;font-size:15px;font-weight:600;line-height:1.3}.pmap small{display:block;font-size:13px;line-height:1.35;color:var(--ink2)}
+.pmap i{font-style:normal;color:var(--teal7);font-size:18px}
+.pg a.vtile{color:#fff;text-decoration:none}
+.vtile::after{content:'';position:absolute;inset:0;background:rgba(11,37,35,.35)}
+.vtile .vp{position:absolute;z-index:1;left:50%;top:44%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:999px;background:rgba(255,255,255,.9);color:var(--teal9);display:flex;align-items:center;justify-content:center;box-shadow:var(--e2)}
+.vtile small{position:absolute;z-index:1;left:0;right:0;bottom:6px;text-align:center;font-size:11px;font-weight:600;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+/* v6.2 quiet offer inside layers: the visitor looks first; the request sits at the end of the content as a light (secondary) button; dark filled buttons are only for the final step on pages (footer, phone bottom bar) */
+.qoff{display:flex;align-items:center;justify-content:space-between;gap:12px 16px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--hair)}
+.qoff p{margin:0;font-size:15px;line-height:1.4;color:var(--ink2)}
+.qoff .btn2{height:46px;padding:0 20px;font-size:15px;box-shadow:none;border:1px solid rgba(17,26,25,.18);color:var(--teal9);transition:background .18s,border-color .18s}
+.qoff .btn2:hover,.qoff .btn2:focus-visible{background:var(--tint);border-color:var(--teal7)}
+.qoff .tl{font-size:15px;font-weight:600;color:var(--teal7);text-underline-offset:5px;min-height:44px;display:inline-flex;align-items:center}
+.qoff{flex-direction:column;align-items:stretch}.qoff .btn2{width:100%;justify-content:center;height:48px}
+</style>
+</helmet>
+<div style="width: 390px; position: relative; background: var(--white)">
+<div style="position: relative; height: 844px; overflow: hidden; background: var(--band)"><div aria-hidden="true"><img src="/_blob/2fbfeee2455c29dae5ff9c80e1c9db83" alt="" style="position: absolute; left: 20px; top: 16px; width: 350px; height: 310px; object-fit: cover; border-radius: 14px"></div><div class="scr"></div>
+<div class="pn" role="dialog" aria-modal="true" aria-label="Parohia Dej III" style="display: flex; flex-direction: column"><div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 12px 12px 20px"><p class="pk">Lucrarea 1 din 10</p><a href="V6WorksMobile.dc.html" class="ix" aria-label="Închide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></a></div><div style="padding: 0 12px"><a href="V6LightboxMobile.dc.html" class="lead" style="height: 274px"><img src="/_blob/71b693db34a25fa6a5db7464078d18e6" alt="Policandrul de 3 nivele aprins în naosul bisericii, Parohia Dej III"><span class="lz glassL"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"></path></svg>Mărește</span></a></div><div class="pi"><i class="pbar bar-gold" aria-hidden="true"></i><h2 class="pt" style="margin-top: 12px">Parohia Dej III</h2><p class="pmeta" style="font-size: 14px"><a href="#">Policandre</a><span aria-hidden="true">·</span><span>Dej, Cluj</span><span aria-hidden="true">·</span><span>2023</span></p><p class="pd" style="font-size: 16px; margin-top: 12px">Două policandre pentru naos: unul de 3 nivele și unul de 2 nivele. Globul și cănile pentru lumini sunt aurite; restul elementelor, alamă cu lac.</p><div style="margin-top: 14px"><div class="sp"><b>Policandru 3 nivele</b><dl><div><dt>Înălțime</dt><dd>3,1 m</dd></div><div><dt>Diametru</dt><dd>1,6 m</dd></div><div><dt>Greutate</dt><dd>185 kg</dd></div><div><dt>Lumini</dt><dd>37</dd></div><div><dt>Finisaj</dt><dd>Aurit</dd></div></dl></div><div class="sp"><b>Policandru 2 nivele</b><dl><div><dt>Înălțime</dt><dd>2,5 m</dd></div><div><dt>Diametru</dt><dd>1,65 m</dd></div><div><dt>Greutate</dt><dd>80 kg</dd></div><div><dt>Lumini</dt><dd>19</dd></div><div><dt>Finisaj</dt><dd>Alamă cu lac</dd></div></dl></div></div><a href="V6WorksMobile.dc.html" class="pmap" style="margin-top: 14px"><svg width="64" height="44" viewBox="-20 -10 640 430" aria-hidden="true"><path d="M14.8 202.5 L45.6 188.6 L68.4 180.4 L85.5 147.6 L108.3 98.4 L131.1 73.8 L165.3 53.3 L199.5 49.2 L239.4 53.3 L279.3 72.2 L313.4 54.9 L347.6 50.8 L376.1 27.9 L410.3 69.7 L433.1 102.5 L455.9 131.2 L467.3 172.2 L464.5 217.3 L467.3 254.2 L495.8 274.7 L535.7 262.4 L552.8 282.9 L547.1 307.5 L507.2 336.2 L490.1 397.7 L450.2 378.8 L398.9 367.4 L347.6 403.4 L284.9 401.8 L228.0 400.2 L171.0 393.6 L142.5 360.8 L153.9 332.1 L114.0 326.4 L79.8 311.6 L85.5 278.8 L45.6 254.2 Z" fill="#ffffff" stroke="#4a5553" stroke-width="5"></path><circle cx="221" cy="120" r="30" fill="#0f6b63"></circle></svg><span><b>Pe hartă · Dej, Cluj</b><small>și alte lucrări din apropiere</small></span><i aria-hidden="true">→</i></a><p class="pk" style="margin-top: 20px">Fotografii · 19</p><div style="margin-top: 10px"><div class="pg" style="grid-template-columns: repeat(3, minmax(0, 1fr))"><a href="V6LightboxMobile.dc.html"><img src="/_blob/2fbfeee2455c29dae5ff9c80e1c9db83" alt="Policandrul de 3 nivele aprins, sub icoane"></a><a href="V6LightboxMobile.dc.html"><img src="/_blob/7afd2c0e61e7c43319097e6a99a27328" alt="Policandrul văzut de jos, cu lumini"></a><a href="V6LightboxMobile.dc.html"><img src="/_blob/427f8957c12fd4e2453582c4787781ba" alt="Detaliu: glob și căni aurite"></a><a href="V6LightboxMobile.dc.html"><img src="/_blob/0410a96c54b7371aa261b7a060639023" alt="Policandrul de 2 nivele aprins"></a><a href="V6LightboxMobile.dc.html" class="vtile" aria-label="Redați filmul lucrării, durata [durată]"><img src="/_blob/1dc2f1547575aadd742404588e41e9f9" alt=""><span class="vp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"></path></svg></span><small>Film · [durată]</small></a><a href="V6LightboxMobile.dc.html" class="more" aria-label="Toate cele 19 fotografii"><b>+14</b>fotografii</a></div></div><div class="qoff" style="margin-top: 24px"><p>Doriți un policandru asemănător?</p><a href="V6WorksMobile.dc.html#oferta" class="btn2">Cereți o ofertă</a></div><div style="margin-top: 20px"><div class="pnav"><a href="#" aria-label="Lucrarea anterioară: Recondiționare, [Parohie]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg><img src="/_blob/fad532db9330e0ddd05b3548ced08bf8" alt=""><span><small>Anterior</small></span></a><a href="#" aria-label="Lucrarea următoare: Parohia Ziua Crucii" style="flex-direction: row-reverse; text-align: right"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg><img src="/_blob/57594508f6299d945624078df0337804" alt=""><span><small>Următor</small></span></a></div></div></div></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

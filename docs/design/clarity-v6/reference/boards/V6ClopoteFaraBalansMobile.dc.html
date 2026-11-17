@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>v6 Clopote fără balans mobile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+:root{--white:#ffffff;--band:#eef2f1;--ink:#111a19;--ink2:#4a5553;--hair:rgba(17,26,25,.10);--teal7:#0f6b63;--teal9:#0e3a36;--night:#0b2523;--tint:#e6efed;--focus:#9a783e;--on:#eef3f1;--onsoft:#a9bdb8;--e1:0 1px 2px rgba(11,37,35,.06),0 6px 16px rgba(11,37,35,.07);--e2:0 2px 6px rgba(11,37,35,.08),0 20px 40px rgba(11,37,35,.10);--e3:0 28px 72px rgba(11,37,35,.16);--gA:.20;--tA:.08;--dT:.42;--dG:.14;
+--metal-bronze:linear-gradient(100deg,#3f3226 0%,#7a5c40 60%,#4a3a2a 100%)}
+body{margin:0;background:var(--white);color:var(--ink);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit}
+img{display:block}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.d{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-weight:500;line-height:1;letter-spacing:-.015em;margin:0}
+.h2{font-size:40px}
+.lead{font-size:17px;line-height:1.6;margin:0}
+.c{font-size:14px;line-height:1.5;margin:0}
+.soft{color:var(--ink2)}
+.kick{margin:0 0 12px;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--ink2)}
+.pad{padding:0 20px}
+.sec{padding:88px 0}
+.glassL{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(20px) saturate(1.3);backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.85)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glassL{background:rgba(255,255,255,.96)}}
+.ib{width:44px;height:44px;border-radius:999px;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none}
+.btn{display:flex;align-items:center;justify-content:center;height:52px;padding:0 24px;border-radius:999px;background:var(--teal9);color:#fff;text-decoration:none;font-size:16px;font-weight:600}
+.btn2{display:flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 24px 0 8px;border-radius:999px;background:var(--white);color:var(--ink);text-decoration:none;font-size:16px;font-weight:600;box-shadow:var(--e1)}
+.btn2 i{width:36px;height:36px;border-radius:999px;background:var(--teal9);color:#fff;display:flex;align-items:center;justify-content:center}
+.ul{font-size:15px;font-weight:600;color:var(--teal7);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;min-height:44px;display:inline-flex;align-items:center}
+.mw{-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#3f3226;background-image:var(--metal-bronze);padding-bottom:.06em}
+@media (forced-colors: active){.mw{-webkit-text-fill-color:currentColor;background:none}}
+.stats{margin:32px 0 0;padding:0}
+.stats>div{display:grid;grid-template-columns:84px minmax(0,1fr);gap:16px;align-items:center;padding:14px 0}
+.stats>div+div{border-top:1px solid var(--hair)}
+.stats dt{font-family:'Cormorant Garamond',Garamond,serif;font-size:48px;font-weight:600;line-height:.9}
+.stats dd{margin:0;font-size:15px;line-height:1.45;color:var(--ink2)}
+.bo{position:relative;display:flex;flex-direction:column;padding:0 8px;text-decoration:none;color:var(--ink);min-width:0}
+.bo::before{content:'';position:absolute;left:0;right:0;top:40px;bottom:0;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.9);border-radius:20px}
+.on-white .bo::before{background:rgba(238,242,241,.8)}
+.bo>*{position:relative}
+.bo .ph{display:block;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:var(--band);box-shadow:var(--e2)}
+.bo .ph img{width:100%;height:100%;object-fit:cover}
+.bo .tx{display:flex;flex-direction:column;align-items:center;text-align:center;padding:14px 10px 18px}
+.bo .bar{display:block;width:24px;height:3px;border-radius:2px;margin-bottom:10px;background:var(--metal-bronze)}
+.bo b{font-family:'Cormorant Garamond',Garamond,serif;font-size:28px;font-weight:600;line-height:1.1}
+.bo small{font-size:14px;color:var(--ink2);margin-top:6px;line-height:1.45}
+.bo.left .tx{align-items:flex-start;text-align:left;padding:14px 6px 18px}
+.bo:active .ph{transform:translateY(-4px);box-shadow:var(--e3)}
+.tag{display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:999px;background:var(--tint);color:var(--teal9);font-size:13px;font-weight:600;margin-top:12px}
+.tbl{width:100%;border-collapse:separate;border-spacing:0}
+.tbl th{font-size:12px;font-weight:600;color:var(--ink2);text-align:left;padding:14px 14px;border-bottom:1px solid var(--hair)}
+.tbl td{padding:12px 14px;border-bottom:1px solid rgba(17,26,25,.06);font-size:14px;font-variant-numeric:tabular-nums}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td.w{font-family:'Cormorant Garamond',Garamond,serif;font-size:22px;font-weight:600;white-space:nowrap}
+.tbl .nt{display:inline-flex;height:26px;padding:0 10px;border-radius:999px;background:var(--tint);color:var(--teal9);font-size:13px;font-weight:600;align-items:center;white-space:nowrap}
+.dark{color:var(--on);border-radius:24px;margin:0 8px}
+.dark .soft{color:var(--onsoft)}
+.dark :focus-visible{outline-color:#c9a467}
+.playb{width:64px;height:64px;border-radius:999px;border:0;background:#fff;color:var(--night);display:flex;align-items:center;justify-content:center;flex:none}
+.wave{display:flex;align-items:center;justify-content:space-between;height:48px;overflow:hidden}
+.wave span{display:block;width:2px;flex:none;border-radius:2px;background:rgba(238,243,241,.28)}
+.wave span.pl{background:#c9a467}
+.setr{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:10px 12px;border-radius:14px}
+.setr.on{background:rgba(238,243,241,.1)}
+.setr .pb{width:44px;height:44px;border-radius:999px;border:1px solid rgba(238,243,241,.3);background:none;color:var(--on);display:flex;align-items:center;justify-content:center}
+.setr.on .pb{background:#fff;color:var(--night);border-color:#fff}
+.setr b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-size:24px;font-weight:600;line-height:1.1}
+.setr span{display:block;font-size:13px;color:var(--onsoft);margin-top:2px}
+.setr a{color:var(--tint);font-size:14px;font-weight:600;min-height:44px;display:inline-flex;align-items:center}
+.step{position:relative;display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;padding:22px 0;border-top:1px solid var(--hair)}
+.step b{font-family:'Cormorant Garamond',Garamond,serif;font-size:52px;font-weight:600;line-height:.85}
+.step h3{font-family:'Cormorant Garamond',Garamond,serif;font-size:24px;font-weight:600;margin:0;line-height:1.1}
+.step p{margin:6px 0 0;font-size:15px;line-height:1.5;color:var(--ink2)}
+.step i{position:absolute;left:0;top:-2px;width:28px;height:3px;border-radius:2px;background:var(--metal-bronze)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 20px 8px;scrollbar-width:none}
+.chip{flex:none;height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--hair);background:var(--white);color:var(--ink);font:500 15px Inter,sans-serif;display:inline-flex;align-items:center}
+.chip-on{background:var(--teal9);color:#fff;border-color:var(--teal9)}
+.rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 20px 12px;scrollbar-width:none}
+.rail .bo{flex:none;width:280px;scroll-snap-align:start}
+.fl{font-size:16px;color:var(--on);text-decoration:none;display:flex;align-items:center;min-height:44px}
+.fh{margin:0 0 4px;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--onsoft)}
+.bbar{position:absolute;left:12px;right:12px;bottom:12px;height:64px;border-radius:999px;box-shadow:var(--e2);display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;z-index:10}
+.bbar a{display:flex;align-items:center;justify-content:center;border-radius:999px;text-decoration:none;font-size:15px;font-weight:600}
+.m-hero{background:radial-gradient(ellipse 420px 360px at 100% -4%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 320px 300px at -10% 30%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-band{background:radial-gradient(ellipse 460px 420px at 104% 102%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),var(--band)}
+.m-white{background:radial-gradient(ellipse 400px 360px at -6% 0%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-dark{background:radial-gradient(ellipse 420px 360px at 0% -6%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 380px 320px at 104% 104%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.m-dark2{background:radial-gradient(ellipse 420px 360px at 100% -6%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 380px 320px at -4% 104%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+
+:root{--type:linear-gradient(100deg,#25292b 0%,#6b7478 60%,#33383b 100%);--typeSolid:#3a3f42}
+.mw{background-image:var(--type);color:#3a3f42}
+.bar,.step::before{background:var(--type)}
+.guide{background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9);box-shadow:var(--e1)}
+.stg{position:relative;display:flex;align-items:flex-end;justify-content:center;border-bottom:2px solid var(--hair)}
+.stg svg{display:block;flex:none}
+.stg .pers{fill:#a4b0ad}.stg .bl{fill:var(--typeSolid)}
+.g-k{margin:0;color:var(--ink2);font-weight:600}
+.g-t{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1}
+.g-s{margin:0;color:var(--ink2);line-height:1.45}
+.dt{background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9);box-shadow:var(--e1);overflow:hidden}
+.dh,.dr{display:grid;grid-template-columns:1.25fr 1fr 1fr .85fr;align-items:center}
+.dh{font-weight:600;color:var(--ink2);border-bottom:1px solid var(--hair)}
+.dr{position:relative;border-bottom:1px solid var(--hair);color:var(--ink2);transition:background .18s}
+.dr:last-child{border-bottom:0}.dr:hover{background:var(--tint)}
+.dr.on{background:var(--teal9);color:#fff}.dr.on .rb{color:#fff}
+.rb{background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--ink);cursor:pointer;text-align:left}
+.rb::after{content:'';position:absolute;inset:0}
+.sl{list-style:none;margin:0;padding:0;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9);box-shadow:var(--e1);overflow:hidden}
+.sr{display:flex;align-items:center;border-bottom:1px solid var(--hair);transition:background .18s}
+.sr:last-child{border-bottom:0}.sr:hover{background:var(--tint)}.sr.on{background:var(--teal9);color:#fff}
+.sb{flex:1;min-width:0;display:block;background:none;border:0;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.sb b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.sb span{display:block;color:var(--ink2);line-height:1.4}.sr.on .sb span{color:var(--tint)}
+.pl{flex:none;width:44px;height:44px;border-radius:999px;border:0;background:var(--teal9);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.sr.on .pl{background:#fff;color:var(--night)}
+.inl{list-style:none;margin:0;padding:0;display:grid}
+.inl li{display:flex;align-items:center;gap:12px;border-top:1px solid rgba(238,243,241,.14)}
+.inl i{display:block;width:24px;height:3px;border-radius:2px;background:var(--type);flex:none}
+.dark .inl i{background:#c9a467}
+.nud{display:flex;align-items:center;text-decoration:none;color:var(--on);background:rgba(238,243,241,.06);border:1px solid rgba(238,243,241,.14);transition:background .24s var(--ease)}
+.nud:hover,.nud:focus-visible{background:rgba(238,243,241,.12)}
+.nud img{flex:none;background:#fff}
+.nud span{display:block}.nud .q{color:var(--onsoft)}
+.nud .n{font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.nud .why{color:var(--onsoft);line-height:1.45}
+
+.guide{border-radius:20px;padding:10px 12px;position:sticky;bottom:84px;z-index:5;display:grid;grid-template-columns:128px minmax(0,1fr);gap:12px;align-items:center;background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:var(--e2)}
+.g-k{font-size:13px}.g-t{font-size:30px;margin-top:2px}.g-s{font-size:14px;margin-top:2px}
+.g-cta{font-size:14px;font-weight:600;color:var(--teal7);display:inline-flex;align-items:center;min-height:44px;text-decoration:underline;text-underline-offset:4px}
+.dt,.sl{border-radius:18px}
+.dh,.dr{padding:0 12px;min-height:44px;font-size:14px}.dh{font-size:13px}
+.sr{gap:10px;padding:10px 12px}.sb{padding:2px 0}.sb b{font-size:22px}.sb span{font-size:14px;margin-top:1px}
+.inl{grid-template-columns:minmax(0,1fr)}.inl li{min-height:48px;font-size:16px}
+.nud{gap:12px;padding:10px;border-radius:16px}.nud img{width:88px;height:66px;border-radius:12px}.nud .q{font-size:14px}.nud .n{font-size:23px;margin-top:2px}.nud .why{font-size:14px;margin-top:2px}
+
+:root{--yoke:#6b7478}
+
+.bw{display:flex;flex-direction:column;align-items:center}
+.bbox{position:relative}.bbox svg{overflow:visible}
+.pw{position:relative;display:flex}
+.plb{position:absolute;left:50%;bottom:calc(100% + 4px);transform:translateX(-50%);font-size:14px;color:var(--ink2);white-space:nowrap}
+.yk{background:var(--yoke);border-radius:2px;flex:none}
+.stg .bl .bd{fill:none;stroke:rgba(255,255,255,.34);stroke-width:1;vector-effect:non-scaling-stroke}
+.stg .bl .rope{fill:none;stroke:#8a8378;stroke-width:2;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.dmh{position:absolute;left:100%;bottom:0;margin-left:8px;padding-left:6px;display:flex;align-items:center;border-left:1px solid var(--ink2);font-size:14px;color:var(--ink2);white-space:nowrap}
+.dmd{position:absolute;left:0;right:0;top:calc(100% + 8px);padding-top:3px;border-top:1px solid var(--ink2);text-align:center;font-size:14px;color:var(--ink2);white-space:nowrap}
+.g-h{margin:0;font-family:'Cormorant Garamond',Garamond,serif;font-style:italic;color:var(--teal7);line-height:1.15}
+.dg{background:var(--tint);border-bottom:1px solid var(--hair)}
+.dg>div{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dg b{font-weight:600;color:var(--ink)}.dg span{color:var(--ink2);font-size:14px}
+.sb{display:flex}
+.st{display:block;min-width:0}
+.sl .sb .st b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.sl .sb .st span{display:block;color:var(--ink2);line-height:1.4}.sl .sr.on .sb .st span{color:var(--tint)}
+.sl .sb .sv{display:flex;align-items:flex-end;flex:none;margin:0}
+.ms{display:block;flex:none;fill:var(--typeSolid)}.sr.on .ms{fill:#fff}
+
+.plb{display:none}
+.g-h{font-size:19px;margin-top:2px}
+.dg{padding:8px 12px}.dg b{font-size:14px}.dg span{font-size:13px}
+.sb{flex-direction:column-reverse;gap:8px}
+.sl .sb .st b{font-size:24px}.sl .sb .st span{font-size:14px;margin-top:1px}
+.sl .sb .sv{gap:2px;height:56px}
+.stg .bl path,.stg .bl circle,.ms path{fill:url(#graphiteG)}
+.stg .bl .bd{fill:none;stroke:rgba(235,240,243,.55)}
+.stg .bl .rope{fill:none}
+.sr.on .ms path{fill:#fff}
+/* v6.2 set mini bells: same drawing as the size-guide bell (bands + clapper), so they read as bells */
+.ms{overflow:visible}.ms circle{fill:url(#graphiteG)}.ms .bd{fill:none;stroke:rgba(255,255,255,.34);stroke-width:1;vector-effect:non-scaling-stroke}
+.sr.on .ms circle{fill:#fff}.sr.on .ms .bd{fill:none;stroke:rgba(14,58,54,.35)}
+/* Footer v6.2 (canonical, phone; same block on every page, keep in sync) */
+.pf{color:#eef3f1;font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;background:radial-gradient(ellipse 900px 520px at 100% -24%,rgba(15,107,99,var(--dT,.42)),rgba(15,107,99,0) 70%),#0b2523}
+.pf :focus-visible{outline:3px solid #c9a467;outline-offset:3px}
+.pf-logo{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:#eef3f1;text-decoration:none}
+.pf-logo img{display:block;height:28px;width:auto}
+.pf-logo span{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-size:24px;font-weight:600;line-height:1;letter-spacing:-.01em}
+.pf-tag{margin:8px 0 0;font-size:14px;line-height:1.55;color:#a9bdb8}
+.pf-h{margin:0 0 6px;font-size:13px;font-weight:600;letter-spacing:.02em;color:#a9bdb8}
+.pf-col{display:flex;flex-direction:column}
+.pf-l{font-size:15px;color:#eef3f1;text-decoration:none;display:flex;align-items:center;min-height:36px;width:fit-content;text-underline-offset:5px}
+.pf-l:hover{text-decoration:underline}
+.pf-note{margin:6px 0 0;font-size:13px;line-height:1.5;color:#a9bdb8}
+.pf-show{display:flex;gap:14px;align-items:flex-start;margin-top:16px;padding:10px;border-radius:16px;background:rgba(238,243,241,.06);border:1px solid rgba(238,243,241,.10)}
+.pf-show-ph{display:block;flex:none;width:84px;height:108px;object-fit:cover;object-position:40% 50%;border-radius:10px}
+.pf-addr{display:flex;align-items:flex-start;gap:6px;margin-top:6px;min-height:36px;font-size:14px;font-weight:600;line-height:1.4;color:#eef3f1;text-decoration:underline;text-decoration-color:rgba(238,243,241,.35);text-underline-offset:4px}
+.pf-addr svg{flex:none;margin-top:2px}
+.pf-maps{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.pf-map{display:inline-flex;align-items:center;height:34px;padding:0 12px;border-radius:999px;background:rgba(238,243,241,.08);color:#eef3f1;text-decoration:none;font-size:12px;font-weight:600}
+.pf-map:hover{background:rgba(238,243,241,.16)}
+.pf-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.pf-credit{display:inline-flex;align-items:center;gap:5px;margin:0;font-size:13px;color:#a9bdb8}
+.pf-credit a{color:#eef3f1;font-weight:600;text-decoration:none;min-height:40px;display:inline-flex;align-items:center}
+.pf-credit a:hover{text-decoration:underline;text-underline-offset:4px}
+.pf-heart{color:#c9a467;flex:none}
+.pf-soc{width:40px;height:40px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#eef3f1;background:rgba(238,243,241,.08)}
+.pf-soc:hover{background:rgba(238,243,241,.16)}
+.pf-lang{display:inline-flex;align-items:center;height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(238,243,241,.18);color:#eef3f1;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.04em}
+.pf-lang:hover{background:rgba(238,243,241,.08)}
+.pf{border-radius:20px;margin:0 8px 8px;padding:28px 20px 96px;background:radial-gradient(ellipse 420px 320px at 100% -12%,rgba(15,107,99,var(--dT,.42)),rgba(15,107,99,0) 70%),#0b2523}
+.pf-logo img{height:24px}.pf-logo span{font-size:21px}
+.pf-l{min-height:44px}
+.pf-call{display:flex;align-items:center;justify-content:center;gap:8px;height:52px;margin-top:6px;border-radius:999px;background:#fff;color:#0b2523;text-decoration:none;font-size:16px;font-weight:600}
+.pf-mail{font-size:15px;font-weight:500;color:#e6efed;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;min-height:44px;display:inline-flex;align-items:center;margin-top:4px}
+.pf-addr{min-height:44px}.pf-map{height:44px}.pf-soc{width:44px;height:44px}.pf-lang{height:44px}
+.pf-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;margin-top:24px;padding-top:20px;border-top:1px solid rgba(238,243,241,.12)}
+.pf-legal{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;margin-top:16px;padding-top:12px;border-top:1px solid rgba(238,243,241,.12)}
+.pf-legal-t{margin:8px 0 0;font-size:12px;line-height:1.5;color:#a9bdb8}
+/* v6.2 story hero (phone): insets overlap the photo's bottom edge, then Pe scurt */
+.hst{position:relative}
+.hin{position:absolute;z-index:2;margin:0;padding:5px 5px 0;background:#fff;border-radius:14px;box-shadow:var(--e3);pointer-events:none}
+.hin img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px}
+.hin figcaption{padding:7px 4px 8px;font-size:12px;line-height:1.3;color:var(--ink2)}.hin figcaption b{display:block;font-size:13px;font-weight:600;color:var(--ink)}
+.hin1{width:168px;left:-4px;bottom:-128px}
+.hin2{width:156px;right:4px;bottom:-104px}
+.hpk{font-size:14px;font-weight:600;color:var(--ink2);margin:0}
+.hpe{margin-top:144px;padding:0 20px}
+.hpe ul{list-style:none;margin:12px 0 0;padding:0;border-top:1px solid var(--hair)}
+.hpe li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair)}
+.hpe li b{font-weight:600;line-height:1;color:var(--teal9);white-space:nowrap}
+.hpe li span{font-size:15px;line-height:1.45;color:var(--ink2)}
+.hst-gap{margin-top:144px !important}
+/* v6.2b depth: band tray, current option a raised white card, the other faded 55% (as desktop; small line stays ink2 for contrast) */
+.tswq{margin:0 0 8px;font-size:14px;font-weight:600;color:var(--ink2)}
+.tpick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;padding:4px;border-radius:22px;background:var(--band);box-shadow:inset 0 1px 2px rgba(11,37,35,.06)}
+.tpick a{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:12px 12px 16px;border-radius:18px;text-decoration:none;color:var(--ink)}
+.tpick a>.tic,.tpick a b{opacity:.55;filter:grayscale(1)}
+.tpick .tic{width:40px;height:40px;color:var(--ink2)}
+.tpick a[aria-current]{background:#fff;box-shadow:var(--e2)}.tpick a[aria-current]>.tic,.tpick a[aria-current] b{opacity:1;filter:none}.tpick a[aria-current] .tic{color:var(--typeSolid)}
+.tpick b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;font-size:25px;line-height:1.05}
+.tpick small{display:block;font-size:13px;line-height:1.3;margin-top:2px;color:var(--ink2)}
+.tpick .tgo{position:absolute;right:14px;top:16px;font-family:Inter,sans-serif;font-style:normal;font-size:20px;color:var(--teal7)}
+
+.toth{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;margin:40px 12px 0;padding:12px 12px 20px;border-radius:20px;background:var(--band);text-decoration:none;color:var(--ink)}
+.toth img{grid-column:1/-1;width:100%;height:160px;object-fit:cover;border-radius:14px}
+.toth>span{padding-left:8px}.toth small{display:block;font-size:13px;font-weight:600;color:var(--ink2)}.toth b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-size:30px;font-weight:600;line-height:1.1;margin-top:2px}.toth span span{display:block;font-size:14px;color:var(--ink2);margin-top:2px}
+.toth .tgo{font-style:normal;font-size:22px;color:var(--teal7);padding-right:8px}
+</style>
+</helmet>
+<div style="width: 390px; position: relative; background: var(--white)">
+<svg width="0" height="0" aria-hidden="true" style="position: absolute"><defs><linearGradient id="graphiteG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1c2022"></stop><stop offset=".18" stop-color="#454c50"></stop><stop offset=".36" stop-color="#b4bdc1"></stop><stop offset=".5" stop-color="#737c81"></stop><stop offset=".76" stop-color="#3b4145"></stop><stop offset="1" stop-color="#181b1d"></stop></linearGradient></defs></svg>
+
+<header class="glassL" style="position: absolute; left: 12px; right: 12px; top: 12px; z-index: 20; height: 60px; border-radius: 999px; box-shadow: var(--e2); display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 18px">
+    <a href="#" style="display: flex; align-items: center; gap: 8px; text-decoration: none"><img src="/_blob/ffef838890f925be83a9bb25ebc01fcd" alt="" style="height: 26px; width: auto"><span class="d" style="font-size: 21px; font-weight: 600">Premium Bells</span></a>
+    <div style="display: flex; gap: 4px">
+      <a href="tel:+40722790776" class="ib" aria-label="Sunați: +40 722 790 776" style="background: var(--teal9); color: #fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg></a>
+      <button class="ib" aria-label="Meniu" aria-expanded="false" style="background: var(--white); color: var(--ink); box-shadow: var(--e1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8h16M4 16h16"></path></svg></button>
+    </div>
+  </header>
+<section class="m-hero" style="padding: 100px 0 72px"><div class="pad"><nav aria-label="Breadcrumb" style="font-size: 14px; color: var(--ink2)"><a href="V6HomeMobileA.dc.html#s2" style="color: var(--ink2); text-decoration: none">Servicii</a> / <span aria-current="page" style="color: var(--ink)">Clopote</span></nav><div style="margin-top: 16px"><p class="tswq" id="tswq">Ce fel de clopot căutați?</p><nav class="tpick" aria-labelledby="tswq"><a href="V6ClopoteCuJugMobile.dc.html"><svg class="tic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8h32"/><path d="M14 8v-3M34 8v-3"/><g transform="rotate(-18 24 8)"><path d="M24 8v5"/><path d="M17 33c0-11 2.5-20 7-20s7 9 7 20l3 3H14z"/><path d="M24 36v3"/></g><path d="M11 43q13 6 26 0" stroke-dasharray="1.5 3.5"/><path d="M34.5 41.6 37 43l-2.6 1.3M13.5 41.6 11 43l2.6 1.3"/></svg><span><b>Cu jug</b><small>Clopotul se balansează</small></span><i class="tgo" aria-hidden="true">→</i></a><a href="V6ClopoteFaraBalansMobile.dc.html" aria-current="page"><svg class="tic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h36"/><path d="M8 8v-3M40 8v-3"/><path d="M20 8v5M28 8v5"/><path d="M17 33c0-11 2.5-20 7-20s7 9 7 20l3 3H14z"/><path d="M24 33v5"/><circle cx="24" cy="39.5" r="1.6"/><path d="M25.5 39.5c6 0 9-2 11-5s3-4 6-4"/></svg><span><b>Fără balans</b><small>Stă fix, se trage limba</small></span></a></nav></div><h1 class="d" style="font-size: 62px; line-height: .95; margin-top: 24px"><span class="mw">Clopote fără balans</span><span style="display: block; margin-top: 10px; font-size: 26px; font-style: italic; line-height: 1.15; color: var(--teal7)">fixe, trase cu sfoara, ca la Athos</span></h1><p class="lead soft" style="margin-top: 20px">Clopotele sunt fixe; doar limba se trage, asemenea tradiției ortodoxe de la Sfântul Munte sau de la Biserica Sfântului Mormânt.</p></div><div class="hst" style="margin: 32px 12px 0"><div style="position: relative; height: 300px; border-radius: 24px; overflow: hidden; box-shadow: var(--e3)"><img src="/_blob/cf0b6fd1d4b12fd6e6c44d222dabe6ee" alt="Clopote fixe, cu icoane și ornamente argintate, așezate în șir" style="width: 100%; height: 100%; object-fit: cover"><button class="glassL" style="position: absolute; right: 12px; bottom: 12px; height: 44px; padding: 0 14px; border-radius: 999px; display: flex; align-items: center; gap: 6px; font: 600 14px Inter, sans-serif; color: var(--ink)"><svg width="14" height="16" viewBox="0 0 20 22" aria-hidden="true"><path d="M5 2 L18 11 L5 20 Z" fill="currentColor"></path></svg>Filmul</button></div><figure class="hin hin1"><img src="/_blob/51c658a681cb612a0c1e33507f107ba7" alt="Set de clopote fixe, Parohia Adâncata"><figcaption><b>Adâncata</b>set de clopote fixe, 2022</figcaption></figure><figure class="hin hin2"><img src="/_blob/0028404d957bfec073802a844e029439" alt="Clopote fixe la Mănăstirea Pantocrator"><figcaption><b>Pantocrator</b>trase ca la Athos, 2017</figcaption></figure></div><div class="hpe"><p class="hpk">Pe scurt</p><ul><li><b class="d" style="font-size: 22px">Fixe</b><span>doar limba se trage, ca la Athos</span></li><li><b class="d" style="font-size: 22px">Automat</b><span>opțional, cu clopotarul electronic</span></li><li><b class="d" style="font-size: 22px">Inclus</b><span>transportul până la biserică și TVA</span></li></ul></div></section>
+<section id="dimensiuni" class="sec m-band"><div class="pad"><p class="kick">Alegeți un rând sau un set</p><h2 class="d h2">Dimensiuni clopote fără balans</h2><div style="margin-top: 28px"><div class="dt" role="table" aria-label="Dimensiuni clopote fără balans"><div class="dh" role="row"><div role="columnheader">Greutate</div><div role="columnheader">Diametru</div><div role="columnheader">Înălțime</div><div role="columnheader">Notă</div></div><sc-for list="{{rows}}" as="r" hint-placeholder-count="12"><sc-if value="{{r.isG}}" hint-placeholder-val="{{ false }}"><div class="dg" role="row"><div role="cell"><b>{{r.label}}</b><span>[Potrivit pentru: de la client]</span></div></div></sc-if><sc-if value="{{r.isR}}" hint-placeholder-val="{{ true }}"><div class="{{r.cls}}" role="row"><div role="rowheader"><button class="rb" aria-pressed="{{r.pressed}}" onClick="{{r.pick}}">{{r.w}}</button></div><div role="cell">{{r.d}}</div><div role="cell">{{r.h}}</div><div role="cell">{{r.n}}</div></div></sc-if></sc-for></div></div><h3 class="d" style="font-size: 30px; margin-top: 40px">Seturi acordate după note muzicale</h3><ul class="sl" style="margin-top: 16px"><sc-for list="{{sets}}" as="s" hint-placeholder-count="6"><li class="{{s.cls}}"><button class="sb" aria-pressed="{{s.pressed}}" onClick="{{s.pick}}"><span class="st"><b style="font-size: 24px">{{s.n}}</b><span>{{s.label}}</span></span><span class="sv" aria-hidden="true"><sc-for list="{{s.mini}}" as="b" hint-placeholder-count="3"><svg class="ms" viewBox="0 0 100 100" preserveAspectRatio="none" style="width: {{b.w}}px; height: {{b.h}}px"><path d="M42 9L42 4Q42 0 46 0L54 0Q58 0 58 4L58 9Z"></path><path d="M36 14C36 9 42 8 50 8C58 8 64 9 64 14C66 20 69 26 71 36C74 52 76 66 84 78C88 84 94 88 98 90L98 96L2 96L2 90C6 88 12 84 16 78C24 66 26 52 29 36C31 26 34 20 36 14Z"></path><circle cx="50" cy="97" r="3"></circle><path class="bd" d="M33 27H67M29 40H71M15 80H85M6 89H94"></path></svg></sc-for></span></button><sc-if value="{{s.audio}}" hint-placeholder-val="{{ false }}"><button class="pl" aria-label="{{s.play}}"><svg width="12" height="14" viewBox="0 0 20 22" aria-hidden="true"><path d="M5 2 L18 11 L5 20 Z" fill="currentColor"></path></svg></button></sc-if></li></sc-for></ul><aside class="guide" aria-live="polite" style="margin-top: 16px"><div class="stg" aria-hidden="true" style="height: {{guide.H}}px; gap: {{guide.gap}}px"><div class="pw"><span class="plb">1,75 m</span><svg class="pers" viewBox="0 0 40 175" preserveAspectRatio="none" style="width: {{guide.pw}}px; height: {{guide.ph}}px"><circle cx="20" cy="13" r="12"></circle><path d="M20 29c-10 0-16 6-16 16v46h7v84h8V108h2v67h8V91h7V45c0-10-6-16-16-16z"></path></svg></div><sc-for list="{{guide.bells}}" as="b" hint-placeholder-count="1"><div class="bw"><div class="yk" style="width: {{b.yw}}px; height: {{b.yh}}px"></div><div class="bbox" style="width: {{b.w}}px; height: {{b.h}}px"><sc-if value="{{b.rope}}" hint-placeholder-val="{{ true }}"><svg class="bl" viewBox="0 0 100 100" preserveAspectRatio="none" style="width: {{b.w}}px; height: {{b.h}}px"><path d="M42 9L42 4Q42 0 46 0L54 0Q58 0 58 4L58 9Z"></path><path d="M36 14C36 9 42 8 50 8C58 8 64 9 64 14C66 20 69 26 71 36C74 52 76 66 84 78C88 84 94 88 98 90L98 96L2 96L2 90C6 88 12 84 16 78C24 66 26 52 29 36C31 26 34 20 36 14Z"></path><circle cx="50" cy="97" r="3"></circle><path class="bd" d="M33 27H67M29 40H71M15 80H85M6 89H94"></path><path class="rope" d="M50 97C32 106 4 106 -18 88"></path></svg></sc-if><sc-if value="{{b.plain}}" hint-placeholder-val="{{ false }}"><svg class="bl" viewBox="0 0 100 100" preserveAspectRatio="none" style="width: {{b.w}}px; height: {{b.h}}px"><path d="M42 9L42 4Q42 0 46 0L54 0Q58 0 58 4L58 9Z"></path><path d="M36 14C36 9 42 8 50 8C58 8 64 9 64 14C66 20 69 26 71 36C74 52 76 66 84 78C88 84 94 88 98 90L98 96L2 96L2 90C6 88 12 84 16 78C24 66 26 52 29 36C31 26 34 20 36 14Z"></path><circle cx="50" cy="97" r="3"></circle><path class="bd" d="M33 27H67M29 40H71M15 80H85M6 89H94"></path></svg></sc-if><sc-if value="{{b.dim}}" hint-placeholder-val="{{ false }}"><span class="dmh" style="height: {{b.h}}px">{{b.hl}}</span><span class="dmd">{{b.dl}}</span></sc-if></div></div></sc-for></div><div><p class="g-k">{{guide.kicker}}</p><b class="g-t">{{guide.title}}</b><p class="g-h">{{guide.human}}</p><p class="g-s">{{guide.sub}}</p><a href="#oferta" class="g-cta">Cereți o ofertă</a></div></aside></div></section>
+<section class="dark m-dark" style="margin-top: 8px; padding: 56px 20px 32px"><p class="kick" style="color: var(--onsoft)">Clopote fără balans</p><h2 class="d" style="font-size: 36px">Ce este inclus</h2><ul class="inl" style="margin-top: 24px"><li><i aria-hidden="true"></i>Limba</li><li><i aria-hidden="true"></i>Icoanele</li><li><i aria-hidden="true"></i>Textul</li><li><i aria-hidden="true"></i>Ornamentele</li><li><i aria-hidden="true"></i>Transportul până la biserică</li><li><i aria-hidden="true"></i>TVA</li></ul><div style="margin-top: 24px"><a href="V6ClopotarElectronicMobile.dc.html" class="nud"><img src="/_blob/a514babbde0d86d795c648a346ae084d" alt="" style="object-fit: cover; padding: 0"><span><span class="q">Clopote fixe, trase automat</span><span class="n">Clopotar electronic</span><span class="why">Pentru clopote fixe, cu limba trasă ca de mână.</span></span></a></div></section>
+<section class="sec m-white on-white" style="margin-top: 8px"><div class="pad"><p class="kick">Din lucrările noastre</p><h2 class="d h2">Clopote fără balans montate</h2></div><div class="rail" style="margin-top: 28px"><a href="V6ProjectPanelMobile.dc.html" class="bo left" aria-haspopup="dialog"><span class="ph"><img src="/_blob/51c658a681cb612a0c1e33507f107ba7" alt="Parohia Adâncata"></span><span class="tx"><i class="bar" aria-hidden="true"></i><b style="font-size: 24px">Parohia Adâncata</b><small>Suceava · Set de clopote fixe · 2022</small></span></a><a href="V6ProjectPanelMobile.dc.html" class="bo left" aria-haspopup="dialog"><span class="ph"><img src="/_blob/aa31d3c6b92fc171a36795ab4de75f5d" alt="Sihăstria Rascai"></span><span class="tx"><i class="bar" aria-hidden="true"></i><b style="font-size: 24px">Sihăstria Rascai</b><small>Clopote fixe automatizate · 2020</small></span></a><a href="V6ProjectPanelMobile.dc.html" class="bo left" aria-haspopup="dialog"><span class="ph"><img src="/_blob/0028404d957bfec073802a844e029439" alt="Mănăstirea Pantocrator"></span><span class="tx"><i class="bar" aria-hidden="true"></i><b style="font-size: 24px">Mănăstirea Pantocrator</b><small>Trase ca la Athos · 2017</small></span></a></div><div class="pad" style="margin-top: 12px"><a href="V6WorksMobile.dc.html" class="ul">Toate lucrările cu clopote fără balans</a></div><a href="V6ClopoteCuJugMobile.dc.html" class="toth"><img src="/_blob/4fa52263160795ddd8155e0bb9df7b9d" alt=""><span><small>Celălalt fel de clopote</small><b>Clopote cu jug</b><span>Se balansează pe jug din stejar sau oțel, până la 16 tone.</span></span><i class="tgo" aria-hidden="true">→</i></a></section>
+<footer id="oferta" class="pf" style="margin-top: 8px">
+  <!-- Footer v6.2 (canonical, identical on every page), phone layout -->
+  <a href="#" class="pf-logo" aria-label="Premium Bells, prima pagină"><img src="/_blob/c4950ecb27217623e54fb99907e39552" alt=""><span>Premium Bells</span></a>
+  <p class="pf-tag">Clopote, policandre, iconostase și uși pentru biserici ortodoxe.</p>
+  <p class="pf-h" style="margin-top: 24px">Cereți o ofertă</p>
+  <a href="tel:+40722790776" class="pf-call"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"></path></svg><span>+40 722 790 776</span></a>
+  <a href="mailto:[email]" class="pf-mail">sau scrieți-ne: [email din CMS]</a>
+  <p class="pf-note">Vă sunăm, discutăm proiectul și primiți oferta în [X] zile lucrătoare.</p>
+  <div id="showroom" class="pf-show"><img class="pf-show-ph" src="/_blob/a9ecc905cc34abc9817dd1703872191b" alt="Clopote cu ornamente pe suporți, în showroom-ul din Buftea"><div style="min-width: 0"><p class="pf-h" style="margin: 0">Showroom · Buftea</p><a class="pf-addr" href="https://www.google.com/maps/search/?api=1&amp;query=Strada%20Agricultori%20108%2C%20070000%20Buftea" target="_blank" rel="noopener" aria-label="Strada Agricultori 108, 070000 Buftea, deschideți în hărți"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg><span>Strada Agricultori 108<br>070000 Buftea</span></a><div class="pf-maps"><a class="pf-map" href="https://www.google.com/maps/search/?api=1&amp;query=Strada%20Agricultori%20108%2C%20070000%20Buftea" target="_blank" rel="noopener">Google Maps</a><a class="pf-map" href="https://waze.com/ul?q=Strada%20Agricultori%20108%2C%20Buftea&amp;navigate=yes" target="_blank" rel="noopener">Waze</a></div></div></div>
+  <div class="pf-cols"><nav aria-label="Servicii" class="pf-col"><p class="pf-h">Servicii</p><a href="#" class="pf-l">Policandre</a><a href="#" class="pf-l">Clopote</a><a href="#" class="pf-l">Clopotar electronic</a><a href="#" class="pf-l">Iconostase</a><a href="#" class="pf-l">Uși</a></nav><nav aria-label="Companie" class="pf-col"><p class="pf-h">Companie</p><a href="#" class="pf-l">Lucrări</a><a href="#" class="pf-l">Blog</a><a href="#" class="pf-l">Despre noi</a><a href="#" class="pf-l">Presă</a><a href="#" class="pf-l">Parteneri</a></nav></div>
+  <a href="#" class="pf-l" style="margin-top: 4px">Colaborează cu noi →</a>
+  <div class="pf-legal"><p class="pf-credit">Realizat cu <svg class="pf-heart" width="12" height="12" viewBox="0 0 24 24" role="img" aria-label="drag"><path fill="currentColor" d="M12 21s-8-5.2-8-11.2A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8 2.8C20 15.8 12 21 12 21z"></path></svg> de <a href="https://11k.io" target="_blank" rel="noopener">11k.io</a></p><span class="pf-row"><a href="#" class="pf-lang" aria-label="Limba: română. Switch to English">RO / EN</a><a href="#" class="pf-soc" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21z"></path></svg></a><a href="#" class="pf-soc" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"></circle></svg></a></span></div>
+  <p class="pf-legal-t">© 2026 S.C. Premium Bells SRL · CUI 36422758 · J40/10836/12.08.2016</p>
+</footer><nav class="bbar glassL" aria-label="Contact rapid"><a href="tel:+40722790776" style="background: var(--white); color: var(--ink); box-shadow: var(--e1)">Sunați</a><a href="#oferta" style="background: var(--teal9); color: #fff">Cereți o ofertă</a></nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":7256}}'>
+const ROWS = [["4","19.5","20.5","Do-4"],["6","22","23","La-4"],["8","24.6","25","Sol-4"],["12","28.5","29","La-3"],["16","31","31.5","Mi-3"],["22","36","36.5","Do#-3"],["32","38","39","Si-2"],["44","43","44","La-2"],["60","48","49","Sol-2"],["85","54","55.5","Sol-1"],["120","58","60","Fa-2"],["160","64.4","66","Mi-2"],["230","72.4","74.5","Si-1"],["310","80.8","82.5","La-2"],["420","90","92.5","Sol#-1"],["460","91","94","Sol-1"],["500","93","95.5","Fa#-1"],["620","101.6","105","Fa-1"],["920","111.7","115.5","Re#-1"],["1070","120.6","127.5","Re-1"],["1200","127.4","133","Do#-1"],["1500","134.2","138","Do-1"],["1800","140","146","So b m"],["2400","159.2","164.5","La m"],["3200","167.8","173","Sol# m"],["3600","175","179.5","Sol m"],["4800","199","204","Fa# m"],["6200","209.7","215","Fa m"],["7200","218.7","223.5","Mi m"],["7800","220.7","226","Re# m"],["9400","248.7","253","Re m"],["12400","262","268","Do m"],["16000","305","300","Fa# m"]];
+const SETS = [[12,16,22,32,60],[12,16,22,32,60,120],[12,16,22,44,85,160],[12,16,22,32,60,120,230],[12,16,22,32,60,120,230,460],[12,16,22,32,60,120,230,460,920]];
+const AUDIO = true;
+const SHORT = "fără balans";
+const STAGE = {"w": 128, "h": 88, "dims": false, "mini": 52, "miniW": 250};
+const YH = 5;
+const ROPE = true;
+const GROUPS = [[0, 100, 'Până la 100 kg'], [100, 1000, '100–1000 kg'], [1000, 5000, '1–5 tone'], [5000, 1e9, 'Peste 5 tone']];
+const num = (v) => String(v).replace('.', ',');
+const kg = (v) => (Number(v) >= 1000 ? String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : num(v)) + ' kg';
+const human = (h) => h <= 40 ? 'Sub genunchiul unui om' : h <= 60 ? 'Până la genunchiul unui om' : h <= 85 ? 'Până la șoldul unui om' : h <= 110 ? 'Până la brâul unui om' : h <= 140 ? 'Până la pieptul unui om' : h <= 160 ? 'Până la umărul unui om' : h <= 185 ? 'Cât un om' : h <= 240 ? 'Mai înalt decât un om' : 'Aproape de două ori cât un om';
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const setI = st.set === undefined ? -1 : st.set;
+    const sel = st.sel === undefined ? 8 : st.sel;
+    const active = setI >= 0 ? SETS[setI].map((w) => ROWS.findIndex((r) => Number(r[0]) === w)) : [sel];
+    const rows = [];
+    let g = -1;
+    ROWS.forEach((r, i) => {
+      const gi = GROUPS.findIndex((x) => Number(r[0]) >= x[0] && Number(r[0]) < x[1]);
+      if (gi !== g) { g = gi; rows.push({ isG: true, isR: false, label: GROUPS[gi][2] }); }
+      const on = active.indexOf(i) >= 0;
+      rows.push({ isG: false, isR: true, w: kg(r[0]), d: num(r[1]) + ' cm', h: num(r[2]) + ' cm', n: r[3], cls: on ? 'dr on' : 'dr', pressed: on ? 'true' : 'false', pick: () => this.setState({ sel: i, set: -1 }) });
+    });
+    const row = (w) => ROWS.find((r) => Number(r[0]) === w);
+    const miniMax = Math.max(...SETS.map((s) => Math.max(...s.map((w) => Number(row(w)[2])))));
+    const miniSum = Math.max(...SETS.map((s) => s.reduce((a, w) => a + Number(row(w)[1]), 0)));
+    const mk = Math.min(STAGE.mini / miniMax, STAGE.miniW / miniSum);
+    const sets = SETS.map((s, i) => ({ n: 'Set ' + (i + 1), label: s.length + ' clopote · ' + s.map(num).join(', ') + ' kg' + (AUDIO ? ' + clopotar electronic' : ''), cls: i === setI ? 'sr on' : 'sr', pressed: i === setI ? 'true' : 'false', pick: () => this.setState({ set: i === setI ? -1 : i }), play: 'Ascultați setul ' + (i + 1), audio: AUDIO, mini: s.map((w) => ({ w: Math.max(5, Math.round(Number(row(w)[1]) * mk)), h: Math.max(5, Math.round(Number(row(w)[2]) * mk)) })) }));
+    const bs = active.map((i) => ROWS[i]);
+    const multi = setI >= 0;
+    const single = !multi;
+    const sumD = bs.reduce((a, r) => a + Number(r[1]) * 1.2, 0) + (bs.length - 1) * 6;
+    const rope = ROPE && single ? Number(bs[0][1]) * 0.2 : 0;
+    const maxH = Math.max(175, ...bs.map((r) => Number(r[2]) + YH));
+    const reserve = 64 + (STAGE.dims ? 76 : 0);
+    const k = Math.min(STAGE.h / maxH, (STAGE.w - reserve) / (sumD + 50 + rope), 1);
+    const r0 = ROWS[sel];
+    const top = bs.reduce((a, r) => Math.max(a, Number(r[2])), 0);
+    const guide = {
+      H: STAGE.h + 28, gap: Math.max(multi ? 2 : 8, Math.round((6 + rope) * k)), pw: Math.round(40 * k), ph: Math.round(175 * k),
+      bells: bs.map((r) => ({ w: Math.max(4, Math.round(Number(r[1]) * k)), h: Math.max(4, Math.round(Number(r[2]) * k)), yw: Math.round(Number(r[1]) * 1.2 * k), yh: Math.max(2, Math.round(YH * k)), rope: ROPE && single, plain: !(ROPE && single), dim: STAGE.dims && single, hl: num(r[2]) + ' cm', dl: num(r[1]) + ' cm' })),
+      kicker: multi ? 'Set ' + (setI + 1) + ' de clopote ' + SHORT : 'Clopot ' + SHORT,
+      title: multi ? SETS[setI].length + ' clopote' : kg(r0[0]),
+      human: (multi ? 'Cel mai mare: ' : '') + (multi ? human(top).charAt(0).toLowerCase() + human(top).slice(1) : human(top)),
+      sub: multi ? SETS[setI].map(num).join(', ') + ' kg' : 'Diametru ' + num(r0[1]) + ' cm · Înălțime ' + num(r0[2]) + ' cm · Notă ' + r0[3],
+      cta: multi ? 'Cereți o ofertă pentru Set ' + (setI + 1) : 'Cereți o ofertă pentru ' + kg(r0[0]),
+    };
+    return { rows, sets, guide };
+  }
+}
+</script>
+</body>
+</html>

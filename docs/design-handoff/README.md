@@ -1,5 +1,7 @@
 # Premium Bells — homepage v5.10 implementation handoff
 
+> **Superseded (2026-11-17):** the design source of truth is now `docs/design/clarity-v6/` (v6 "Clarity", v6.2 release candidate) and the plan is the v6 plan at the top of `docs/design-plan.md`. This folder (v5.10 homepage, Patina tokens) is kept as history; do not build from it.
+
 Everything Claude Code (or a developer) needs to build the redesigned homepage of policandre.ro. Design source: Claude Design canvas https://claude.ai/artifact/43jzYBJXgk8j9jK9uRcZKF (page "v5.10 · Homepage Triptych").
 
 ## What's in here

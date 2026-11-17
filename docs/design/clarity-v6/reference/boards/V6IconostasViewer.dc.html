@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>v6 Lightbox Iconostase desktop</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+:root{--white:#ffffff;--band:#eef2f1;--ink:#111a19;--ink2:#4a5553;--hair:rgba(17,26,25,.10);--teal7:#0f6b63;--teal9:#0e3a36;--night:#0b2523;--tint:#e6efed;--focus:#9a783e;--on:#eef3f1;--onsoft:#a9bdb8;--e1:0 1px 2px rgba(11,37,35,.06),0 6px 16px rgba(11,37,35,.07);--e2:0 2px 6px rgba(11,37,35,.08),0 20px 40px rgba(11,37,35,.10);--e3:0 28px 72px rgba(11,37,35,.16);--ease:cubic-bezier(.22,.61,.36,1);
+--metal-gold:linear-gradient(100deg,#6e5020 0%,#a37e36 55%,#7c5a24 100%);--metal-bronze:linear-gradient(100deg,#3f3226 0%,#7a5c40 60%,#4a3a2a 100%);--metal-gilt:linear-gradient(100deg,#7a3f1e 0%,#a5682c 55%,#8a5424 100%)}
+body{margin:0;background:var(--white);color:var(--ink);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit}
+img{display:block}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.d{font-family:'Cormorant Garamond',Garamond,'Times New Roman',serif;font-weight:500;line-height:1;letter-spacing:-.015em;margin:0}
+.soft{color:var(--ink2)}
+.glassL{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(20px) saturate(1.3);backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.85)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glassL{background:rgba(255,255,255,.96)}}
+.mw{position:relative;display:inline-block;text-decoration:none;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.06em}
+.mw-gold{color:#6e5020;background-image:var(--metal-gold)}
+@media (forced-colors: active){.mw{-webkit-text-fill-color:currentColor;background:none}}
+.bar-gold{background:var(--metal-gold)}.bar-bronze{background:var(--metal-bronze)}.bar-gilt{background:var(--metal-gilt)}
+.dark{color:var(--on)}.dark .soft{color:var(--onsoft)}.dark :focus-visible{outline-color:#c9a467}
+.fh{font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--onsoft)}
+.fl{font-size:16px;color:var(--on);text-decoration:none;display:flex;align-items:center;min-height:44px}
+.bo{position:relative;display:flex;flex-direction:column;text-decoration:none;color:var(--ink);min-width:0}
+.bo::before{content:'';position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.9);transition:background .36s var(--ease),box-shadow .36s var(--ease)}
+.on-white .bo::before{background:rgba(238,242,241,.8)}
+.bo>*{position:relative}
+.bo .ph{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--band);box-shadow:var(--e2);transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.bo .ph.light{background:#fff;outline:1px solid var(--hair);outline-offset:-1px}
+.bo .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.bo .tx{display:flex;flex-direction:column;align-items:center;text-align:center}
+.bo .bar{display:block;height:3px;border-radius:2px;transition:width .36s var(--ease)}
+.bo b{font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.bo small{color:var(--ink2);line-height:1.5}
+.bo.left .tx{align-items:flex-start;text-align:left}
+.chold{display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:var(--tint);color:var(--ink2);font-size:14px;font-weight:500}
+.t{position:relative;display:block;overflow:hidden;background:var(--band);text-decoration:none;color:var(--ink)}
+.t img{width:100%;height:100%;object-fit:cover}
+.cap{position:absolute;max-width:calc(100% - 20px)}
+.cap .cbar{display:block;height:3px;border-radius:2px}
+.cap b{display:block;font-family:'Cormorant Garamond',Garamond,serif;font-weight:600;line-height:1.1}
+.cap span{display:block;color:var(--ink2)}
+.m-hero{background:radial-gradient(ellipse 1000px 600px at 88% -6%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),radial-gradient(ellipse 760px 560px at -6% 26%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-band{background:radial-gradient(ellipse 1100px 700px at 104% 104%,rgba(214,178,112,var(--gA)),rgba(214,178,112,0) 70%),var(--band)}
+.m-white{background:radial-gradient(ellipse 900px 560px at -4% 0%,rgba(15,107,99,var(--tA)),rgba(15,107,99,0) 70%),var(--white)}
+.m-dark{background:radial-gradient(ellipse 900px 620px at 0% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at 100% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.m-dark2{background:radial-gradient(ellipse 900px 620px at 92% -12%,rgba(15,107,99,var(--dT)),rgba(15,107,99,0) 70%),radial-gradient(ellipse 760px 520px at -2% 112%,rgba(214,178,112,var(--dG)),rgba(214,178,112,0) 70%),var(--night)}
+.mood-off{--gA:0;--tA:0;--dT:0;--dG:0}.mood-subtle{--gA:.20;--tA:.08;--dT:.42;--dG:.14}.mood-warm{--gA:.32;--tA:.12;--dT:.60;--dG:.24}
+.h2{font-size:clamp(44px,4.6vw,64px)}
+.s{font-size:17px;line-height:1.6;margin:0}
+.lead{font-size:19px;line-height:1.6;margin:0}
+.c{font-size:15px;line-height:1.5;margin:0}
+.kick{margin:0 0 16px;font-size:15px;font-weight:600;letter-spacing:.02em;color:var(--ink2)}
+.wrap{max-width:1248px;margin:0 auto;padding:0 24px}
+.xwide{max-width:1440px;margin:0 auto;padding:0 16px}
+.sec{padding:136px 0}
+.pill{position:absolute;left:50%;top:16px;transform:translateX(-50%);width:calc(100% - 32px);max-width:1200px;height:68px;border-radius:999px;box-shadow:var(--e2);display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 24px;z-index:20}
+.nav{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 16px;border-radius:999px;background:none;border:0;color:var(--ink);font:500 15px/1 Inter,system-ui,sans-serif;text-decoration:none;cursor:pointer}
+.nav:hover,.nav.on{background:var(--tint)}.nav.on{color:var(--teal9)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 26px;border-radius:999px;background:var(--teal9);color:#fff;text-decoration:none;font-size:16px;font-weight:600;transition:background .18s}
+.btn:hover{background:var(--night)}
+.btn2{display:inline-flex;align-items:center;height:52px;padding:0 26px;border-radius:999px;background:var(--white);color:var(--ink);text-decoration:none;font-size:16px;font-weight:600;box-shadow:var(--e1);transition:box-shadow .24s var(--ease)}
+.btn2:hover{box-shadow:var(--e2)}
+.btnw{display:inline-flex;align-items:center;height:52px;padding:0 26px;border-radius:999px;background:#fff;color:var(--night);text-decoration:none;font-size:16px;font-weight:600}
+.ul{font-size:16px;font-weight:600;color:var(--teal7);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;min-height:44px;display:inline-flex;align-items:center}
+.dark .ul{color:var(--tint)}
+.crumb{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--ink2)}
+.crumb a{color:var(--ink2);text-decoration:none;min-height:32px;display:inline-flex;align-items:center}.crumb a:hover{text-decoration:underline}
+.dark{border-radius:28px;margin:0 16px}
+.seg{display:inline-flex;gap:2px;padding:4px;border-radius:999px;box-shadow:var(--e1)}
+.seg button{height:40px;padding:0 16px;border-radius:999px;border:0;background:none;font:500 15px Inter,sans-serif;color:var(--ink);cursor:pointer;transition:background .18s}
+.seg button:hover{background:var(--tint)}.seg button.on{background:var(--teal9);color:#fff}
+.field{height:48px;border-radius:999px;border:1px solid var(--hair);background:#fff;padding:0 18px;font:400 15px Inter,sans-serif;color:var(--ink)}
+.bo{padding:0 14px}
+.bo::before{top:64px;border-radius:24px}
+.bo .ph{border-radius:16px}
+.bo .tx{padding:18px 16px 24px}.bo.left .tx{padding:18px 8px 24px}
+.bo .bar{width:28px;margin-bottom:12px}
+.bo b{font-size:28px}.bo small{font-size:15px;margin-top:8px}
+.bo:hover::before,.bo:focus-visible::before{background:#fff;box-shadow:var(--e1)}
+.bo:hover .ph,.bo:focus-visible .ph{transform:translateY(-12px);box-shadow:var(--e3)}
+.bo:hover .ph img,.bo:focus-visible .ph img{transform:scale(1.03)}
+.bo:hover .bar,.bo:focus-visible .bar{width:56px}
+.bo:active .ph{transform:translateY(-4px);box-shadow:var(--e2)}
+.t{border-radius:16px;transition:transform .36s var(--ease),box-shadow .36s var(--ease)}
+.t img{transition:transform .6s var(--ease)}
+.t:hover,.t:focus-visible{transform:translateY(-6px);box-shadow:var(--e3)}
+.t:hover img,.t:focus-visible img{transform:scale(1.03)}
+.cap{left:12px;bottom:12px;padding:12px 16px 12px 14px;border-radius:12px;opacity:0;transform:translateY(6px);transition:opacity .24s var(--ease),transform .24s var(--ease)}
+.cap .cbar{width:22px;margin-bottom:8px}.cap b{font-size:22px}.cap span{font-size:14px;margin-top:2px}
+.t:hover .cap,.t:focus-visible .cap{opacity:1;transform:none}
+.t.feat .cap{opacity:1;transform:none;left:20px;bottom:20px}.t.feat .cap b{font-size:30px}
+@media (hover: none){.cap{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.bo .ph,.bo .ph img,.bo .bar,.t,.t img,.cap{transition:none}.bo:hover .ph,.t:hover,.bo:hover .ph img,.t:hover img{transform:none}}
+@media (max-width: 900px){.sec{padding:88px 0}.hide-s{display:none !important}.g-stack{grid-template-columns:minmax(0,1fr) !important}.g-stack>*{grid-column:auto !important;grid-row:auto !important}.dark{margin:0 8px}}
+.glass{background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(20px) saturate(1.15);backdrop-filter:blur(20px) saturate(1.15);border:1px solid rgba(255,255,255,.12);transition:background .18s var(--ease)}.glass:hover{background:rgba(255,255,255,.12)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:#173431}}
+/* v6.2 overlays (lightbox, close-up viewer): see-through teal-900 (60%) + light blur 12 / saturate 1.4, so the page reads as soft shapes; edge gradients (85–88%) behind the top bar and the caption keep text readable on any page */
+.lbr{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(9,40,37,.85),rgba(9,40,37,0) 140px),linear-gradient(to top,rgba(9,40,37,.88),rgba(9,40,37,0) 240px),rgba(14,58,54,.60);-webkit-backdrop-filter:blur(12px) saturate(1.4);backdrop-filter:blur(12px) saturate(1.4);box-shadow:inset 0 0 200px rgba(3,14,13,.3);color:#eef3f1}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.lbr{background:rgba(14,58,54,.96)}}
+.lbr :focus-visible{outline-color:#c9a467}
+.rb{width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#eef3f1;cursor:pointer}
+.ibx{height:44px;display:inline-flex;align-items:center;gap:8px;padding:0 14px;border-radius:999px;color:#eef3f1;font:500 14px Inter,sans-serif;cursor:pointer}
+
+/* v6.2 lightbox photo: whole photo at its own shape, as large as the stage allows (width = min(stage width, stage height × ratio); ratio from the image’s width / height in the CMS), rounded and lifted off the blur */
+.lbp{display:block;height:auto;max-height:100%;object-fit:cover;box-shadow:0 24px 64px rgba(2,12,11,.55),0 2px 8px rgba(2,12,11,.35)}
+/* v6.2 thumbnail strip: shown when a set has more than 8 photos; current photo full opacity with a light ring, others 55%; scrolls sideways, edges fade; click / tap jumps to that photo */
+.lbs{display:flex;gap:8px;padding:4px;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(to right,transparent,#000 40px,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,transparent,#000 40px,#000 calc(100% - 40px),transparent)}.lbs::-webkit-scrollbar{display:none}
+.lbs a{flex:none;display:block;width:76px;height:56px;border-radius:8px;overflow:hidden;opacity:.55;transition:opacity .18s var(--ease)}.lbs a:hover{opacity:.85}.lbs a[aria-current]{opacity:1;box-shadow:0 0 0 2px #eef3f1}
+.lbs img{width:100%;height:100%;object-fit:cover}
+
+/* v6.2 Lightbox · Iconostase (the close-up viewer merged into the Lightbox): material tabs in the top bar; the photo box is the photo's own shape; zoom happens inside it */
+.tabs{display:inline-flex;gap:2px;padding:4px;border-radius:999px}
+.tabs button{height:40px;padding:0 18px;border-radius:999px;border:0;background:none;color:#eef3f1;font:500 15px Inter,sans-serif;cursor:pointer;white-space:nowrap}
+.tabs button:hover{background:rgba(255,255,255,.08)}
+.tabs button[aria-selected="true"]{background:#eef3f1;color:#0b2523}
+.zbox{position:relative;overflow:hidden;background:rgba(4,20,19,.4);box-shadow:0 24px 64px rgba(2,12,11,.55),0 2px 8px rgba(2,12,11,.35);touch-action:none;user-select:none;-webkit-user-select:none;cursor:zoom-in}
+.zbox.zoomed{cursor:grab}.zbox.zoomed.drag{cursor:grabbing}
+.cvs{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+.cvs.anim{transition:transform .45s var(--ease)}
+.cvs img{width:100%;height:100%;display:block;pointer-events:none;-webkit-user-drag:none}
+.zhint{position:absolute;left:50%;top:14px;transform:translateX(-50%);height:36px;padding:0 14px;display:flex;align-items:center;gap:8px;border-radius:999px;font:500 14px Inter,sans-serif;color:#eef3f1;white-space:nowrap;pointer-events:none}
+.zchip{position:absolute;right:12px;bottom:12px;height:36px;padding:0 12px;display:flex;align-items:center;gap:6px;border-radius:999px;font:500 13px Inter,sans-serif;color:#eef3f1;pointer-events:none}
+.lbs button{flex:none;display:block;padding:0;border:0;border-radius:8px;overflow:hidden;opacity:.55;cursor:pointer;background:#173431;transition:opacity .18s var(--ease)}
+.lbs button:hover{opacity:.85}.lbs button.on{opacity:1;box-shadow:0 0 0 2px #eef3f1}
+.lbs button img{width:100%;height:100%;object-fit:cover}
+@media (prefers-reduced-motion: reduce){.cvs.anim{transition:none}}
+</style>
+</helmet>
+<div class="{{moodClass}}" style="position: relative; background: var(--white)">
+<div style="position: relative; height: 900px; overflow: hidden; background: #eef2f1"><div aria-hidden="true" style="position: absolute; inset: 0; background: #eef2f1; padding: 132px 120px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-content: start"><div style="position: absolute; left: 120px; right: 120px; top: 16px; height: 68px; border-radius: 999px; background: #fff"></div><img src="/_blob/fc85c0cc5a4e1859ba766f571dffa93b" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/fad532db9330e0ddd05b3548ced08bf8" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/df5d1110d583ab3bb4b5e9ddc5691174" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/d2c27edcc7b62b5d00e1a0d4e64306ad" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/c4950ecb27217623e54fb99907e39552" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/a6e7f93f68382290350d389e3d458ab5" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/99e29f443e701ade8263aaaa2c9da59e" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"><img src="/_blob/57594508f6299d945624078df0337804" alt="" style="width: 100%; height: 248px; object-fit: cover; border-radius: 16px"></div><div class="lbr" role="dialog" aria-modal="true" aria-label="Iconostase, fotografii"><div style="position: absolute; left: 0; right: 0; top: 0; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px 0 40px"><div style="display: flex; align-items: center; gap: 24px"><p class="d" style="font-size: 30px; font-weight: 600">Iconostase</p><div class="tabs glass" role="tablist" aria-label="Material"><sc-for list="{{tabs}}" as="tb" hint-placeholder-count="3"><button role="tab" aria-selected="{{tb.sel}}" onClick="{{tb.pick}}">{{tb.label}}</button></sc-for></div><p class="c" style="font-variant-numeric: tabular-nums">{{counter}}</p></div><div style="display: flex; gap: 8px"><button class="ibx glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg>Copiază linkul</button><button class="ibx glass" onClick="{{toggle}}"><sc-if value="{{zoomed}}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5M8 11h6"></path></svg></sc-if><sc-if value="{{notZoomed}}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"></path></svg></sc-if>{{zLabel}}</button><a href="V6ServiceIconostase.dc.html" class="ibx glass" aria-label="Închide" style="width: 44px; justify-content: center; padding: 0; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></a></div></div><div style="position: absolute; left: 136px; right: 136px; top: 96px; height: 548px; display: flex; align-items: center; justify-content: center"><div class="{{boxCls}}" style="width: {{fw}}px; height: {{fh}}px; border-radius: 16px" tabIndex="0" role="img" aria-label="{{stageLabel}}" onPointerDown="{{down}}" onPointerMove="{{move}}" onPointerUp="{{up}}" onPointerCancel="{{up}}" onWheel="{{wheel}}" onKeyDown="{{key}}"><div class="{{cvsCls}}" style="width: {{fw}}px; height: {{fh}}px; transform: {{tf}}"><img src="{{src}}" alt="" draggable="false"></div><sc-if value="{{zoomed}}" hint-placeholder-val="{{ false }}"><div class="zhint glass">Trageți pentru a vă mișca · clic pentru a micșora</div></sc-if></div></div><button class="rb glass" aria-label="Fotografia anterioară" onClick="{{prev}}" style="position: absolute; left: 40px; top: 342px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button><button class="rb glass" aria-label="Fotografia următoare" onClick="{{next}}" style="position: absolute; right: 40px; top: 342px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button><div style="position: absolute; left: 280px; right: 280px; bottom: 124px; display: flex; justify-content: space-between; align-items: flex-end; gap: 32px"><div><p class="d" style="font-size: 36px; font-weight: 500">{{title}}</p><p class="c" style="margin-top: 6px; color: #c9d6d2">{{line}}</p></div><a href="V6ServiceIconostase.dc.html#oferta" style="font-size: 15px; font-weight: 600; color: #eef3f1; text-underline-offset: 6px; white-space: nowrap; min-height: 44px; display: flex; align-items: center">Cereți o ofertă pentru unul asemănător</a></div><nav class="lbs" aria-label="Toate fotografiile" style="position: absolute; left: 276px; right: 276px; bottom: 36px"><sc-for list="{{thumbs}}" as="th" hint-placeholder-count="12"><button class="{{th.cls}}" style="width: 76px; height: 56px" aria-label="{{th.alt}}" aria-current="{{th.cur}}" onClick="{{th.pick}}"><img src="{{th.src}}" alt=""></button></sc-for></nav></div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mood":{"editor":"enum","options":["Off","Subtle","Warm"],"default":"Subtle"},"$preview":{"width":1440,"height":900}}'>
+const T = [{"tab": "Marmură", "title": "Marmură grecească", "line": "Cu porți din alamă, cupru sau aurite.", "ph": [{"src": "/_blob/d3723159e43a8e0a840940db021a5b41", "ar": 1.5002, "alt": "Iconostas din marmură albă cu cupole aurite, vedere de ansamblu"}, {"src": "/_blob/e315431074aeee5eb28d2a35b3a16c08", "ar": 2.0349, "alt": "Ușă diaconească cu înger turnat, lângă o icoană în ramă aurită"}, {"src": "/_blob/ecf11656f53f921924afc04d7ba80c8c", "ar": 2.0349, "alt": "Iconostas din marmură cu ușile împărătești roșii, aurite"}, {"src": "/_blob/41742fdd98564d69fbcee286f1bed2a5", "ar": 2.0319, "alt": "Iconostas din marmură cu uși argintate"}, {"src": "/_blob/b3b8e471710cf629cd978b0bce4cb235", "ar": 2.0378, "alt": "Iconostas alb cu coloane verzi și rânduri de icoane"}, {"src": "/_blob/cbbb3f11f47fc7013bdf2387554073a9", "ar": 2.0378, "alt": "Iconostas din marmură grecească, sculptat"}, {"src": "/_blob/3f6d5570ce42bd294136435f301db831", "ar": 2.0378, "alt": "Iconostas din marmură cu elemente din bronz"}, {"src": "/_blob/2721ce66cda6f3cd62a50e27bcd5b294", "ar": 2.0378, "alt": "Ușile împărătești din cupru și aur, între icoane în mozaic"}, {"src": "/_blob/d9c5714eafd7adf3756a3bf40079b3c6", "ar": 0.6664, "alt": "Iconostas din marmură în altar, cu uși aurite"}, {"src": "/_blob/1f3768d96f8a7ad9de27c0dbe5c4124b", "ar": 0.6664, "alt": "Iconostas din marmură cu cupole, vedere laterală"}, {"src": "/_blob/635ef15731c444a71a25ef52b92f86ce", "ar": 0.6664, "alt": "Cupola aurită deasupra ușilor împărătești"}, {"src": "/_blob/4b37e733f49ff8d3124bae6f9ca5d3da", "ar": 1.5, "alt": "Iconostas din marmură cu cupole, vedere largă"}, {"src": "/_blob/7eca259973fa2e3579d3d7c15bc8a437", "ar": 1.6865, "alt": "Iconostas din marmură albă cu trei cupole aurite, vedere de ansamblu"}, {"src": "/_blob/8196b8dbda78e3c1881135078baeed96", "ar": 0.748, "alt": "Cupola din marmură deasupra ușilor împărătești aurite, cu doi îngeri"}, {"src": "/_blob/2147f74c0254e93c5edae180182e52c9", "ar": 1.6843, "alt": "Cupola văzută de jos: nervuri din marmură albă și ornament aurit"}, {"src": "/_blob/2298a3d1db3578a60e4f5ab8709bc4ed", "ar": 1.6977, "alt": "Capitel din marmură cu frunze aurite, sub friza aurită"}, {"src": "/_blob/27971b7f9180e40f5b82e2112ab497bf", "ar": 1.0, "alt": "Iconostas din marmură albă cu arc, perdea roșie și ușile împărătești roșii, aurite"}]}, {"tab": "Lemn cu aur", "title": "Lemn sculptat cu aur", "line": "Sculptat unic, cu foiță de aur: modelele Saransk și Pahomov.", "ph": [{"src": "/_blob/4346b5098a43049901b5670b9f12debe", "ar": 1.3662, "alt": "Iconostas sculptat din lemn aurit, cu policandru în față"}, {"src": "/_blob/f92a30f6ae017b2a95fba6ed8bb3294e", "ar": 0.6671, "alt": "Iconostas aurit, detaliu lateral cu icoane"}, {"src": "/_blob/6a58b7aafe5046f73ca08b336a55c002", "ar": 0.6664, "alt": "Iconostas aurit pe toată lățimea altarului"}, {"src": "/_blob/5c0974a3ed1c889643ee149b2b825fa9", "ar": 0.6664, "alt": "Iconostas sculptat și aurit, vedere frontală"}, {"src": "/_blob/0e0a417d3be6e186ab8c0b324a728b40", "ar": 0.6664, "alt": "Iconostas aurit sub bolta albă"}, {"src": "/_blob/c16accf82c8be51028db9691f8ef3d4a", "ar": 0.6664, "alt": "Iconostas aurit cu policandru, vedere din naos"}, {"src": "/_blob/2fe934d3619adf76feefda758eae1b9f", "ar": 0.667, "alt": "Iconostasul Pahomov, lemn sculptat și aurit, cu medalioane pe arc"}, {"src": "/_blob/b768ccd03599588f3f6e8b7f0bdeb00e", "ar": 0.6693, "alt": "Pahomov: coloană și ușă, lemn aurit"}, {"src": "/_blob/fe0d21a3c2c8b06c9a52de6a7eba6b04", "ar": 0.6664, "alt": "Pahomov: ușile împărătești cu icoane"}, {"src": "/_blob/222c80fd715454ec8ce44c631f19aa22", "ar": 1.5006, "alt": "Pahomov: registru de icoane, ornamente aurite"}, {"src": "/_blob/c4c8e7ea2ee7445a7c8e6f59e8921796", "ar": 0.75, "alt": "Pahomov: ornament aurit deasupra unei icoane"}, {"src": "/_blob/fc8ef7f526e680435b3e2d64ec352c5b", "ar": 0.75, "alt": "Pahomov: porumbelul în soare de raze"}, {"src": "/_blob/6b0f66955b636e895c6326742186e0d5", "ar": 1.5006, "alt": "Pahomov: porumbel aurit cu aripile deschise"}, {"src": "/_blob/b7c20a1d38196727c14b48e8de778b21", "ar": 0.6664, "alt": "Pahomov: icoană în ramă traforată, aurită"}, {"src": "/_blob/d18fa78a660490db7175946c7a4cf2c3", "ar": 1.5006, "alt": "Iconostas aurit în biserică, vedere largă"}, {"src": "/_blob/bf59e603d39c936999d40f6c147fa73c", "ar": 0.6664, "alt": "Iconostas aurit cu policandru"}]}, {"tab": "Pristol", "title": "Pristol din marmură", "line": "Pristol și jertfelnic, sculptate manual din marmură grecească, chineză și egipteană; 1 × 1, 1,1 × 1,1 sau 1 × 3 m.", "ph": [{"src": "/_blob/fd489c3322248e58629fe5cea52ee466", "ar": 1.5, "alt": "Pristol din marmură în altar, în timpul slujbei"}, {"src": "/_blob/ab829e4424d336da804c0d08bbaef848", "ar": 0.6664, "alt": "Pristol din marmură cu cruce și coloane"}, {"src": "/_blob/f0e4b306a11ac8615883855147f185c1", "ar": 0.6664, "alt": "Pristol cu basoreliefuri din bronz, între coloane"}, {"src": "/_blob/61c5ef976ed3988f8bff7e67e6928acc", "ar": 0.6664, "alt": "Pristol din marmură albă cu arcade, în atelier"}, {"src": "/_blob/26f487c20094c21beb8dffdb59cd6025", "ar": 0.6664, "alt": "Pristol cu medalioane verzi, în atelier"}, {"src": "/_blob/2fa486add1916b544ff4ef525a2614d7", "ar": 0.6664, "alt": "Pristol din marmură cu cruce sculptată"}, {"src": "/_blob/1aeb81d1a201d878df31363e8bb2a105", "ar": 1.5005, "alt": "Jertfelnic din marmură, în atelier"}, {"src": "/_blob/4219ab6b68471305c76fe35b1f8b10cb", "ar": 0.6664, "alt": "Analog din marmură, în atelier"}]}];
+// Stage (the area the photo fits in) and zoom: one click / tap zooms 2,5× at that point, another returns to the whole photo; wheel and pinch zoom freely up to 5×; drag pans when zoomed; at 1× a sideways swipe changes the photo.
+const SW = 1168, SH = 548, ZOOM = 2.5, MAXZ = 5;
+function fit(ar) { return ar > SW / SH ? { fw: SW, fh: SW / ar } : { fw: SH * ar, fh: SH }; }
+function place(ar, z, cx, cy) {
+  const f = fit(ar); const W = f.fw * z, H = f.fh * z; const h = 0.5 / z;
+  cx = Math.min(1 - h, Math.max(h, cx)); cy = Math.min(1 - h, Math.max(h, cy));
+  return { fw: f.fw, fh: f.fh, W, H, L: f.fw / 2 - cx * W, T: f.fh / 2 - cy * H, cx, cy };
+}
+class Component extends DCLogic {
+  st() { const s = this.state || {}; return { t: s.t ?? 0, p: s.p ?? 0, z: s.z ?? 1, cx: s.cx ?? 0.5, cy: s.cy ?? 0.5, anim: s.anim ?? true, drag: s.drag ?? false }; }
+  ar() { const s = this.st(); return T[s.t].ph[s.p].ar; }
+  go(t, p) { const n = T[t].ph.length; this.setState({ t, p: ((p % n) + n) % n, z: 1, cx: 0.5, cy: 0.5, anim: false }); }
+  zoomTo(nz, px, py, anim) {
+    const s = this.st(); const g = place(this.ar(), s.z, s.cx, s.cy); nz = Math.max(1, Math.min(MAXZ, nz));
+    const ix = (px - g.L) / g.W, iy = (py - g.T) / g.H; const W2 = g.fw * nz, H2 = g.fh * nz;
+    const q = place(this.ar(), nz, (g.fw / 2 - (px - ix * W2)) / W2, (g.fh / 2 - (py - iy * H2)) / H2);
+    this.setState({ z: nz, cx: q.cx, cy: q.cy, anim });
+  }
+  loc(e) { const r = e.currentTarget.getBoundingClientRect(); const k = r.width / fit(this.ar()).fw || 1; return { x: (e.clientX - r.left) / k, y: (e.clientY - r.top) / k }; }
+  renderVals() {
+    const s = this.st(); const m = T[s.t]; const ph = m.ph[s.p]; const g = place(ph.ar, s.z, s.cx, s.cy); const zoomed = s.z > 1.001;
+    const P = this._p || (this._p = {});
+    const down = (e) => {
+      if (e.button !== undefined && e.button > 0) return;
+      const l = this.loc(e); P[e.pointerId] = { x: l.x, y: l.y, x0: l.x, y0: l.y };
+      try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {}
+      this._mv = 0; const a = Object.values(P); if (a.length === 2) this._pd = Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y);
+      this.setState({ anim: false, drag: true });
+    };
+    const move = (e) => {
+      const q = P[e.pointerId]; if (!q) return; const l = this.loc(e); const dx = l.x - q.x, dy = l.y - q.y; q.x = l.x; q.y = l.y;
+      this._mv = (this._mv || 0) + Math.abs(dx) + Math.abs(dy); const a = Object.values(P); const c = this.st();
+      if (a.length >= 2) { const d = Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y); if (this._pd) this.zoomTo(c.z * d / this._pd, (a[0].x + a[1].x) / 2, (a[0].y + a[1].y) / 2, false); this._pd = d; this._mv += 99; return; }
+      if (c.z > 1.001) { const gg = place(this.ar(), c.z, c.cx, c.cy); const q2 = place(this.ar(), c.z, c.cx - dx / gg.W, c.cy - dy / gg.H); this.setState({ cx: q2.cx, cy: q2.cy, anim: false }); }
+    };
+    const up = (e) => {
+      const q = P[e.pointerId]; delete P[e.pointerId]; this._pd = null;
+      if (Object.keys(P).length) return; this.setState({ drag: false, anim: true });
+      if (!q || e.type === 'pointercancel') return; const c = this.st(); const sx = q.x - q.x0, sy = q.y - q.y0;
+      if (c.z <= 1.001 && Math.abs(sx) > 48 && Math.abs(sx) > Math.abs(sy)) { this.go(c.t, c.p + (sx < 0 ? 1 : -1)); return; }
+      if ((this._mv || 0) < 6) { if (c.z > 1.001) this.setState({ z: 1, cx: 0.5, cy: 0.5, anim: true }); else this.zoomTo(ZOOM, q.x, q.y, true); }
+    };
+    const wheel = (e) => { const l = this.loc(e); this.zoomTo(this.st().z * Math.exp(-e.deltaY * 0.0015), l.x, l.y, false); };
+    const key = (e) => {
+      const c = this.st(); const k = e.key; const st = 0.12 / c.z;
+      if (k === '+' || k === '=') this.zoomTo(c.z * 1.5, g.fw / 2, g.fh / 2, true);
+      else if (k === '-') this.zoomTo(c.z / 1.5, g.fw / 2, g.fh / 2, true);
+      else if (k === '0') this.setState({ z: 1, cx: 0.5, cy: 0.5, anim: true });
+      else if (k === 'ArrowLeft') { if (c.z > 1.001) { const q = place(this.ar(), c.z, c.cx - st, c.cy); this.setState({ cx: q.cx, anim: true }); } else this.go(c.t, c.p - 1); }
+      else if (k === 'ArrowRight') { if (c.z > 1.001) { const q = place(this.ar(), c.z, c.cx + st, c.cy); this.setState({ cx: q.cx, anim: true }); } else this.go(c.t, c.p + 1); }
+      else if (k === 'ArrowUp' && c.z > 1.001) { const q = place(this.ar(), c.z, c.cx, c.cy - st); this.setState({ cy: q.cy, anim: true }); }
+      else if (k === 'ArrowDown' && c.z > 1.001) { const q = place(this.ar(), c.z, c.cx, c.cy + st); this.setState({ cy: q.cy, anim: true }); }
+      else return;
+      e.preventDefault();
+    };
+    return {
+      moodClass: 'mood-' + String(this.props.mood ?? 'Subtle').toLowerCase(),
+      tabs: T.map((x, i) => ({ label: x.tab, sel: i === s.t ? 'true' : 'false', pick: () => this.go(i, 0) })),
+      counter: (s.p + 1) + ' / ' + m.ph.length, title: m.title, line: m.line,
+      src: ph.src, stageLabel: ph.alt + (zoomed ? '. Mărită; trageți pentru a vă mișca.' : '. Activați pentru a mări.'),
+      boxCls: 'zbox' + (zoomed ? ' zoomed' : '') + (s.drag ? ' drag' : ''), cvsCls: s.anim ? 'cvs anim' : 'cvs',
+      fw: g.fw.toFixed(1), fh: g.fh.toFixed(1), tf: 'translate(' + g.L.toFixed(1) + 'px, ' + g.T.toFixed(1) + 'px) scale(' + s.z.toFixed(4) + ')',
+      zoomed, notZoomed: !zoomed, zLabel: zoomed ? 'Micșorează' : 'Mărește',
+      toggle: () => { const c = this.st(); if (c.z > 1.001) this.setState({ z: 1, cx: 0.5, cy: 0.5, anim: true }); else { const f = fit(this.ar()); this.zoomTo(ZOOM, f.fw / 2, f.fh / 2, true); } },
+      prev: () => this.go(this.st().t, this.st().p - 1), next: () => this.go(this.st().t, this.st().p + 1),
+      thumbs: m.ph.map((x, i) => ({ src: x.src, alt: 'Fotografia ' + (i + 1) + ': ' + x.alt, cls: i === s.p ? 'on' : '', cur: i === s.p ? 'true' : 'false', pick: () => this.go(this.st().t, i) })),
+      down, move, up, wheel, key,
+    };
+  }
+}
+</script>
+</body>
+</html>

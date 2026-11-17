@@ -1,4 +1,241 @@
-# Redesign "Patina" (v4 + v5.10 homepage): implementation plan
+# Redesign v6 "Clarity": implementation plan
+
+**Status:** Written 2026-11-17, when the design was locked as v6.2 release
+candidate. Supersedes the Patina / v5.10 plan, which is kept below as history
+(phases A–C were built on it). Runs before Phase 8 of `docs/migration-plan.md`.
+
+**Source of truth:** `docs/design/clarity-v6/` (start with its `README.md`).
+Design canvas: https://claude.ai/artifact/43jzYBJXgk8j9jK9uRcZKF, page
+"v6 · Clarity". Where this plan and the package differ, the package's board
+files win for design, this plan wins for process.
+
+## Rules that stay in force
+
+- The rules in `docs/design/clarity-v6/rules.md`. **Changed:** prices are shown
+  in the Policandre model catalogue only (one per finish, plus the "Prețurile
+  sunt actualizate din data de …" line); everywhere else "La comandă". CTA
+  wording "Cereți o ofertă".
+- Every Sanity write, publish, Studio deploy and git push is a separate
+  approved action; export the dataset before any write. Tokens stay in
+  `.env.local` and are never printed.
+- Next 16 differs from training data: read `node_modules/next/dist/docs/`
+  before each phase. Browser checks run on a production build.
+- Unit tests stay minimal; browser specs check shape, not copy. Design quality
+  is the measure: compare every page at 1440 and 390 with its board (open the
+  canvas for the rendered version with real photos).
+- Fonts stay on `next/font` (self-hosted, `latin-ext`).
+- Build desktop and phone together; reuse one component per pattern (story
+  hero, break-out card, Lightbox, Project panel, footer, filter bar).
+
+## What carries over from the Patina build (phases A–C, 2026-11-08)
+
+Keep and restyle rather than rewrite: the header (pill, hide on scroll,
+mega menu, mobile menu, bottom bar), the footer component (content changes),
+`btn*` / `chip` / `card` utilities (values change), the triptych (third slice
+and headline change), the video facade, the listening strip, the journal, the
+Sanity reads, cache tags and revalidation, the portfolio routes and the
+intercepted project route. Replace: the Patina tokens (ground `#f7f6f2`, paper,
+stone, grain, arch, section rail, warm lightbox), the bento services, the works
+wall section on the homepage, the category sidebar and year/county filters, the
+full project page, the `/servicii` hub and the Clopote chooser, the Iconostase
+material pages.
+
+## Phases
+
+Each phase ends with lint, typecheck, unit and browser tests on a production
+build, a look at 1440 and 390 against the boards, and a local commit. Pushes
+are the user's.
+
+### V0 · Reconcile (read-only, no code)
+
+Read the package, `docs/design-schema-proposal-v6.md`, `routes.md` and the
+current code; write a gap list per page (exists / restyle / rebuild / remove)
+into this file under V0, and finish the schema reconciliation against
+`../studio-premiumbells`. Ask the user to approve the schema proposal.
+
+**Done and approved by the user on 2026-11-17** (gap list, schema proposal §2b and the four decisions below, as proposed). Compared against the code at
+`556b71c` and the Studio at `f293665`. Verdicts: **exists** (keep as is),
+**restyle** (same structure, new look), **rebuild** (new structure or
+behaviour, may reuse parts), **new** (nothing today), **remove**.
+
+#### Shared pieces
+
+| Piece | Today | v6 | Verdict |
+| --- | --- | --- | --- |
+| Tokens (`app/globals.css`) | Patina: ground `#f7f6f2`, aliases `paper`/`stone`/`line`/`gold-*`, container 90rem, grain, arch | `tokens.css` v6.2: white + band `#eef2f1`, ink `#111a19`, page 78rem / wide 83rem, metal gradients, moods, overlay, `.bo`, glass docked / on-dark | **rebuild** (replace; keep aliases until V7) |
+| Breakpoints | Tailwind defaults (sm 40rem, xl 80rem) | sm 30 · md 48 · lg 64 · xl 75 · 2xl 90rem | **rebuild** (all `sm:`/`xl:` classes reflow; check every page) |
+| Fonts (`app/[lang]/layout.tsx`) | Cormorant 400 + 600, italic 400 and 600 | Cormorant 500–600 + italic 500; Inter 400/500/600 | **restyle** |
+| `btn*`, `chip`, `card`, `card-lift` | Patina values | v6 values; break-out card `.bo` replaces `card-lift` on most cards | **restyle** + **new** `.bo`, family bars, material words (`.mw-*`), dark panel, mood glows |
+| Header (`header.tsx`, `header-frame.tsx`) | 88px bar → glass pill after 80px, hides on fast scroll | Pill from load; docked glass over photos | **restyle** |
+| Mega menu (`nav-links.tsx`) | One list of 8 services + featured works card; 64×48 thumbs | Three craft columns (Policandre · Clopote · Iconostase și uși), 88×66 thumbs, "Toate lucrările" card | **restyle** (groups from `homePage.services.groups`, already in Sanity) |
+| Mobile menu, bottom bar | Glass sheet with thumb rows; glass bar | `V6MobileMenu`; same bar, v6 styles | **restyle** |
+| Footer (`footer.tsx`) | Big "Cereți o ofertă" block on top, link columns, legal line | Compact canonical block (`reference/footer.html`): brand + showroom card, Servicii, Companie, "Cereți o ofertă" column, credit line, legal bar | **rebuild** (needs showroom + response time in `siteSettings`) |
+| Section rail (`section-rail.tsx`) | Dots on the right, homepage only | — | **remove** |
+| Lightbox (`portfolio/lightbox.tsx`) | Dialog, arrows, warm dark | Teal translucent overlay, photo at its own shape, zoom 2.5× / 1–5×, drag, strip for > 8 photos, `?foto=` in the URL, optional material tabs | **rebuild** (one component for works, services, Iconostase) |
+| Project panel (`project-modal.tsx`, `project-details.tsx`) | Slide-over via intercepted route + full project page | Floating two-column panel; "Lucrarea n din N", prev / next through the filtered list, film tile, quiet offer, "Pe hartă" line | **rebuild**; full project page **remove** (direct URL = Works + panel, server-rendered) |
+| Story hero | — (service pages use a 2-column header) | Breadcrumb → H1 + teal italic + lead + Pe scurt ×3 \| photo 4:3 + two framed insets, optional photo control | **new** (one component, every service page) |
+| Quiet offer block | `ContactSection` / `sectionCta` on service pages | Question + light button at the end of layers and pages | **rebuild** |
+| Video facade, bell player | Exist (v5.10) | Same behaviour, v6 frames | **restyle** |
+| Price checks (`verify-no-prices`, browser specs, Studio `priceTextValidation`) | Reject price text everywhere | Prices allowed in the Policandre catalogue only | **rebuild** the checks: skip the catalogue price numbers and the Policandre page's price line; keep them everywhere else |
+
+#### Homepage `/` (`V6HomeDesktop` + `B`, `V6HomeMobileA` + `B`)
+
+| Section | Today (v5.10) | v6 | Verdict |
+| --- | --- | --- | --- |
+| Hero | Nou pill, H1 one line, claim + 2 buttons + figures, triptych 460 tall | Kicker "Confecționate…", H1 in material words (gold / bronze / gold), teal italic subline, triptych 1408 × up to 640, no buttons, stats row 12 · 60 · 5 țări under the triptych with long labels | **restyle** (triptych kept); third slice Recondiționări (data); buttons, pill, figures-in-row **remove** |
+| Serviciile noastre | Craft bands with fact columns, 12-col bento | Centred title + one sentence, 3 × 3 break-out cards, Cataloage with two covers | **rebuild** (cards); catalogue card **restyle** |
+| Lucrări | Wall of 10 + Romania mini map tile, chips | Map story: title row, 1200 × 700 Europe map (`tools/map-europe.js`, build-time SVG), glass country island, 8 photo pins → Project panel; phone: map + pin rail + country chips | **rebuild** (needs countries BE / GR and places abroad) |
+| Despre noi | Two columns, video + lead + 3-row list | Light band: video frame \| title, lead, facts in three columns | **restyle** |
+| Director | Hairline figure, low-arch 3:2 photo | Dark panel, 4:5 portrait breaking out, quote, name, Putna fact line | **rebuild** (layout; data exists) |
+| Ascultați | Wide white strip, progress line (no waveform) | Compact centred card 880, waveform, link to Clopote, mini player | **restyle** (waveform still needs the approved script) |
+| Din jurnal | Posts without card, no byline | Title + subtitle, post cards with byline (avatar, name, role); phone swipe rail | **restyle** |
+| Rail | Dots | — | **remove** |
+
+#### Service pages (`/servicii/*`)
+
+| Page | Today | v6 | Verdict |
+| --- | --- | --- | --- |
+| `/servicii` | Hub page | No page: 308 → `/#servicii`; breadcrumbs "Servicii" → `/#servicii` | **remove** + redirect |
+| `/servicii/policandre` | Generic template; catalogue section with families in dialogs (`catalogue-section.tsx`, `dialog-grid.tsx`), `#Policandru-N` anchors | Story hero (Pe scurt 1–7 · 11 · 3, Mărește), level filter (1 · 2 · 3 · 4–7 · Horos), 28 model cards with **price per finish**, date line, two thumbnail links, Cum lucrăm ×4, 11 lucrări ×4 break-out | **rebuild** (catalogue, anchors kept); steps and related works **restyle** |
+| `/servicii/policandre-la-comanda` | Generic template | Story hero (3D plate 5:7), Mai întâi proiectul ×4, dark panel of drawing plates ×7 + call tile, Ce este inclus ×5 | **rebuild** |
+| `/servicii/reconditionare-policandre` | Generic template | Story hero, dark panel before / after ×3, stage rows ×4 (case study) | **rebuild** (new section types) |
+| `/servicii/clopote` | Chooser hub listing the two types | Renders **Clopote cu jug**: type switch card, story hero + film control, size guide (sticky, interactive) + table + set rows with mini bells, dark "Ce este inclus", 3 works → Project panel (this type only), "Celălalt fel de clopote" | **rebuild** |
+| `/servicii/clopote/cu-jug` | Nested page | 308 → `/servicii/clopote` | **remove** + redirect |
+| `/servicii/clopote/fara-balans` | Nested page | Same template, graphite, audio per set | **rebuild** |
+| `/servicii/clopotar-electronic` | Generic template | Story hero, process flow ×3 + La alegere ×2, fact grid ×6 + full list, dark video tiles ×6, photos ×6 | **rebuild** |
+| `/servicii/automatizari-clopote-cu-balans` | Generic template | Story hero, kit tiles ×5, dark set rows ×5 (no prices), link to Clopote cu jug | **rebuild** |
+| `/servicii/iconostase` + 4 material pages | Hub + nested pages | One page: story hero + "Priviți de aproape", 3 material cards → Lightbox with tabs, Cum lucrăm + link to Uși; `/marmura`, `/lemn-aur`, `/pristol-marmura` render the page with the Lightbox open | **rebuild**; nested page template **remove**; `/iconostas-bronz` 308 → `/servicii/iconostase` |
+| `/servicii/usi` | Generic template with models | Story hero + place caption, one copper model inline (photo group → Lightbox, Calitate garantată, mounted example, custom-door card), link to Iconostase | **rebuild** |
+| `[service]/[variant]` route | Renders variants | Only `clopote/fara-balans` and the Iconostase material layers remain | **rebuild** (route keeps those, 308s the rest) |
+
+#### Works `/lucrarile-noastre`
+
+| Piece | Today | v6 | Verdict |
+| --- | --- | --- | --- |
+| Overview page | Category cards | One page with the filter bar, Toate on | **rebuild** |
+| `[category]` page | Sidebar (`category-nav`), filters: search, year, county, pagination | Same page with the craft chip on; one filter bar (crafts, bell type after Clopote, search icon, Galerie \| Hartă) that docks under the header; craft mood on the band; 4-column wall with captions, map tile first row, "Arată încă 24" | **rebuild**; sidebar, year and county filters **remove**; search and pagination kept |
+| Hartă view | — | Homepage map component, dots + photo card, glass island (județe, countries) | **new** |
+| `[category]/[project]` | Full project page + intercepted slide-over | Direct visit = Works filtered + panel open (SSR); intercepted = panel over the current page, from any page | **rebuild** (routes kept, page removed) |
+| URL params | `cauta`, `an`, `judet`, `pagina` | `tip`, `vedere`, `cauta`, `judet` / `tara`, `pagina`; craft path segment | **rebuild** (`an` removed) |
+
+#### Blog, article, 404, English
+
+| Page | Today | v6 | Verdict |
+| --- | --- | --- | --- |
+| `/blog` | Featured first post + grid | Featured story preview (cover + 2 insets + film pill + Pe scurt + byline), post cards with byline, "Arată mai multe" | **restyle** (featured block falls back to cover \| text until the new post fields exist) |
+| `/blog/[post]` | Article body, related posts, JSON-LD | v6 type, 680 column, pull quote in teal italic, images up to 1180, "Citiți și" ×2 | **restyle** |
+| 404 | Text + links | Centred H1 + lead + Acasă / Lucrări, 3 craft break-out cards | **rebuild** |
+| `/en` | Placeholder | Placeholder | **exists** |
+
+#### Tests to rewrite as pages change
+
+`home.spec.ts` (V3), `services.spec.ts` (V4, price check now allows the
+Policandre catalogue), `portfolio.spec.ts` and `filters.spec.ts` (V5: no
+project page, no year filter), `blog.spec.ts` (V6), `shell.spec.ts` (V1,
+footer and menus).
+
+#### Decisions (approved 2026-11-17)
+
+1. **Craft chips on Works.** Today's categories are Policandre, Clopote,
+   Recondiționări, Automatizări, Uși. Proposal: add a `craft` value to each
+   category (Automatizări → Clopote, Uși → Iconostase și uși) and use craft
+   slugs in the Works path (`/lucrarile-noastre/clopote` shows Clopote +
+   Automatizări). Existing category URLs keep working as filters.
+2. **Map places abroad.** Keep the county-centre lookup for Romania and
+   Moldova; add a small place lookup for the works abroad (Lleida, Belgium,
+   Athos) instead of a geopoint on every project.
+3. **Service short names.** The 3 × 3 cards and the menus use short names
+   ("Proiecte la comandă", "Recondiționare", "Uși"); the Sanity titles are
+   longer. Proposal: an optional `shortName` on `service`.
+4. **Price check.** Allow numbers in `catalogVariant.price` only; keep the
+   text check everywhere; the browser price check skips the Policandre
+   catalogue block.
+
+### V1 · Tokens and shared pieces (no Sanity)
+
+1. Replace the Patina tokens in `app/globals.css` with
+   `docs/design/clarity-v6/tokens.css` (keep temporary aliases, as in phase A,
+   and delete them in V7). Switch the breakpoints (sm 480 · md 768 · lg 1024 ·
+   xl 1200 · 2xl 1440).
+2. Primitives: buttons, chips, text link, break-out card (`.bo`), family bar,
+   material word (`.mw-*`), glass light / docked / on-dark, mood classes, dark
+   panel, focus ring.
+3. Header v6 (pill from load, docked glass), mega menu v6.2 (three columns,
+   thumbnails 88 × 66, featured "Toate lucrările" card), mobile menu, bottom
+   bar.
+4. Footer v6.2, canonical (`reference/footer.html` + `footer.css`): showroom
+   card, "Cereți o ofertă" column, credit line, legal bar; one component on
+   every page.
+5. Lightbox v6.2: translucent teal overlay, whole photo at its own shape,
+   zoom (click / tap 2.5×, wheel / pinch 1–5×, drag), thumbnail strip > 8
+   photos, URL-addressable, focus trap. Optional material tabs (used by
+   Iconostase). Logic reference: `V6IconostasViewer.dc.html`.
+6. Story hero component (split; Pe scurt; two framed insets; photo control)
+   and the quiet offer block.
+
+### V2 · Schema and content (approved steps, Studio repo)
+
+The approved parts of `docs/design-schema-proposal-v6.md`, in its order:
+Studio change → deploy (approved) → export → seed drafts (dry run, approved)
+→ publish (approved). Includes the price-check change and the bell-type
+classification of the 39 bell works.
+
+### V3 · Homepage v6
+
+From the v5.10 build to the v6 boards (`V6HomeDesktop` + `B`, phone `A` + `B`):
+hero (third slice Recondiționări, linked headline, stats 12 · 60 · 5 țări),
+Serviciile noastre (3 × 3 cards, `id="servicii"`), the map story (title row,
+1200 × 700 Europe map from `tools/map-europe.js`, country island, 8 photo pins
+→ Project panel), Despre noi (light) + Director panel (dark), Ascultați
+(compact), Din jurnal (byline cards), footer.
+
+### V4 · Service pages
+
+One story-hero template for all. Policandre (catalogue with prices per finish,
+date line, `#Policandru-N`), La comandă, Recondiționare (before / after media
+panel, stages), Clopote cu jug at `/servicii/clopote` + Fără balans (type
+switch, size guide with yoke hanger, set rows with mini bells, works →
+Project panel, "Celălalt fel de clopote"), Clopotar electronic, Automatizări,
+Iconostase (three materials → Lightbox with tabs; material URLs open the
+layer), Uși (one copper model, photo group → Lightbox, custom-door card).
+Remove `/servicii` and the chooser; redirects per `routes.md`.
+
+### V5 · Works, Project panel, map view
+
+One filter bar (categories, bell type sliding in after Clopote, search icon,
+Galerie | Hartă) that docks under the header; craft moods on the band; wall of
+project tiles with captions; map view = the homepage map component (dots,
+photo card on hover / tap, glass island with județe and countries). Project
+panel as the only project view: intercepted route over any page, direct visit
+renders Works + panel server-side; prev / next through the filtered list;
+quiet offer; map line; film tile. Remove the full project page, the sidebar
+and the year / county filters.
+
+### V6 · Blog, Article, 404
+
+Featured story preview (cover + two inset photos + film pill + Pe scurt +
+byline), post cards with byline, article in the v6 type, 404.
+
+### V7 · Motion, accessibility, clean-up
+
+Reveals, layer transitions, filter cross-fades, reduced motion and reduced
+transparency audit, keyboard and screen-reader pass of every layer, delete the
+token aliases, redirects check (`url-map.md`), Lighthouse on the preview.
+
+## Content still needed from the user
+
+See `docs/design/clarity-v6/open-questions.md`; the main ones: Policandre
+price list, currency, VAT and the "actualizate" date; showroom number 108 vs
+110; response time; contact email; registered office; Director vs Manager;
+door metal; countries and counts; originals for the stand-in photos listed in
+`assets.md` (most are in Sanity; the user uploads the rest).
+
+---
+
+# History: Redesign "Patina" (v4 + v5.10 homepage)
+
+The plan below was written 2026-11-07 and drove phases A–C. It is superseded by
+the v6 plan above; keep it for the record of what was built and why.
 
 **Status:** Written 2026-11-07. Schema proposal approved 2026-11-08 with
 its defaults; phase A done 2026-11-08; phase B next. Runs before Phase 8 of
