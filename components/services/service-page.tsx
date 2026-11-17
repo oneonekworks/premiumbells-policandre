@@ -10,7 +10,9 @@ import {sanityImageUrl} from '@/sanity/image';
 import type {ServiceDetail} from '@/sanity/services';
 import {Section, wrap} from './blocks';
 import {crumbs, heroFacts, heroInsets} from './pages/common';
+import {AutomatizariPage} from './pages/automatizari';
 import {BellsPage} from './pages/bells';
+import {ClopotarPage} from './pages/clopotar';
 import {ComandaPage} from './pages/comanda';
 import {PolicandrePage} from './pages/policandre';
 import {ReconditionarePage} from './pages/reconditionare';
@@ -76,6 +78,8 @@ const pages: Record<string, (props: Props) => Promise<React.ReactNode> | React.R
   'reconditionare-policandre': ReconditionarePage,
   'cu-jug': BellsPage,
   'fara-balans': BellsPage,
+  'clopotar-electronic': ClopotarPage,
+  'automatizari-clopote-cu-balans': AutomatizariPage,
 };
 
 /** The v6 page of a service, chosen by its Romanian slug (boards per page). */

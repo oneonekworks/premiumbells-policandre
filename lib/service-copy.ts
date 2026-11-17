@@ -128,3 +128,39 @@ export const faraBalansCopy = {
   },
   works: {...bellCommon.works, title: 'Clopote fără balans montate', all: 'Toate lucrările cu clopote fără balans'},
 };
+
+export const clopotarCopy = {
+  hero: {title: 'Clopotar electronic', subline: 'pentru clopote fixe', lead: 'Clopotele fixe sună automat din limbă, cu melodii de la Athos, la ora dorită sau din telecomandă.'},
+  flow: {
+    kicker: 'De la buton la limba clopotului', title: 'Cum funcționează', optional: 'La alegere',
+    /** Steps by the CMS component's anchor (sectionModels "Componente"); the CMS gives the photo. */
+    steps: [
+      {anchor: 'GM870I', name: '1. Controler', code: 'GM870I · Melodii Athos', text: 'Pornește melodiile la ora dorită sau la apăsarea unei taste.'},
+      {anchor: 'QUADRO', name: '2. Panou electric', code: 'QUADRO', text: 'Module pentru controlul motoarelor, elemente de protecție, întrerupătorul principal.'},
+      {anchor: 'M-8000', name: '3. Motor pe limba clopotului', code: 'M-8000', text: 'Cu frânghia reglată, clopotul sună natural, din limbă. Include placă zincată și scripete de aluminiu.'},
+    ],
+    options: [
+      {anchor: 'KIITF4EVO', name: 'Telecomandă de buzunar', code: 'KIITF4EVO · 4 canale', text: 'Pornește trei melodii de pe apelarea rapidă. Recomandată în interiorul bisericii, la aproximativ 50 m.'},
+      {anchor: 'GSM4000', name: 'Modul GSM', code: 'GSM4000', text: 'Porniți melodiile de pe smartphone, prin rețeaua GSM. Cartela SIM nu este furnizată.'},
+    ],
+  },
+  facts: {
+    kicker: 'GM870I', title: 'Controlerul, pe scurt', all: 'Toate caracteristicile', listFrom: 'GM870I',
+    items: [
+      {value: '7″', label: 'Ecran LCD color'}, {value: '1000', label: 'melodii de înregistrat'},
+      {value: '24', label: 'ieșiri de releu, cu opțiunea RL085'}, {value: '10', label: 'taste de apelare rapidă'},
+      {value: '10 ani', label: 'păstrează memoria la o pană de curent'}, {value: '2,3 kg', label: '334 × 60 × 180 mm'},
+    ],
+  },
+  videos: {kicker: 'Filmate în clopotnițe', title: 'Vedeți cum sună', play: 'Redați filmul', placeholder: '[film din clopotniță]', slots: 6},
+  photos: {kicker: 'Montaj', title: 'Din clopotnițe', zoom: 'Măriți', shown: 6},
+};
+
+export const automatizariCopy = {
+  hero: {title: 'Automatizări', subline: 'pentru clopote cu balans', lead: 'Clopotele cu jug pornesc singure, din controler sau din telecomandă: un set complet, gata de montat în clopotniță.'},
+  /** Until the CMS has the two inset photos (placeholders keep the captions). */
+  insets: [{title: 'Motor liniar', line: 'pornește clopotul'}, {title: 'Controler', line: 'și 2 telecomenzi în set'}],
+  kit: {kicker: 'În fiecare set', title: 'Ce primiți', items: ['Controler', 'Motor liniar', 'Modem', '2 telecomenzi', 'Ciocan extern']},
+  sets: {kicker: 'Pentru 2 sau 3 clopote', title: 'Alegeți setul', bells: 'clopote', offer: 'Cereți o ofertă', offerFor: 'Cereți o ofertă pentru'},
+  nudge: {slug: 'cu-jug', question: 'Nu aveți încă clopotele?', name: 'Clopote cu jug', why: 'Vedeți dimensiunile și seturile recomandate.'},
+};

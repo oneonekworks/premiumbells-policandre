@@ -77,7 +77,7 @@ function Inset({inset, className}: {inset: HeroInset; className: string}) {
 
 export function StoryHero({
   crumbs, crumbLabel, slot, title, metal, subline, sublineEm = 0.36, titleSize = 'default', lead, factsLabel, facts, factsAsStats = false,
-  photo, photoRatio = 4 / 3, plate = false, place, insets, control, wide = false, tight = false,
+  photo, photoRatio = 4 / 3, plate = false, place, insets, control, wide = false, tight = false, insetLayout = 'standard',
 }: {
   crumbs: Crumb[];
   crumbLabel: string;
@@ -109,6 +109,8 @@ export function StoryHero({
   wide?: boolean;
   /** 112 below the hero instead of 128 (La comandă, Clopotar). */
   tight?: boolean;
+  /** Clopotar: insets 216 at top −56 / left −40 and 244 at bottom −64 / right −28 (16:10 photo). */
+  insetLayout?: 'standard' | 'clopotar';
 }) {
   const [first, second] = insets;
   const factList = facts.length ? (
@@ -159,8 +161,12 @@ export function StoryHero({
               ) : null}
               {control}
             </div>
-            {first ? <Inset inset={first} className="-bottom-32 -left-1 w-[168px] lg:-left-16 lg:-top-12 lg:bottom-auto lg:w-[200px]" /> : null}
-            {second ? <Inset inset={second} className="-bottom-26 right-1 w-[156px] lg:-bottom-14 lg:-right-10 lg:w-[220px]" /> : null}
+            {first ? <Inset inset={first} className={insetLayout === 'clopotar'
+              ? '-bottom-26 right-1 w-[156px] lg:-left-10 lg:-top-14 lg:bottom-auto lg:right-auto lg:w-[216px]'
+              : '-bottom-32 -left-1 w-[168px] lg:-left-16 lg:-top-12 lg:bottom-auto lg:w-[200px]'} /> : null}
+            {second ? <Inset inset={second} className={insetLayout === 'clopotar'
+              ? '-bottom-32 -left-1 w-[168px] lg:-bottom-16 lg:-right-7 lg:left-auto lg:w-[244px]'
+              : '-bottom-26 right-1 w-[156px] lg:-bottom-14 lg:-right-10 lg:w-[220px]'} /> : null}
           </div>
         </div>
       </div>

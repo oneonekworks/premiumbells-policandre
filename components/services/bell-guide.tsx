@@ -2,6 +2,7 @@
 
 import {useRef, useState, type CSSProperties} from 'react';
 import {PlayIcon} from '@/components/site/icons';
+import {kg} from '@/lib/bells';
 
 /**
  * Size guide v6.2 (boards V6ClopoteCuJug, V6ClopoteFaraBalans + Mobile;
@@ -43,7 +44,6 @@ const CROWN = 'M42 9L42 4Q42 0 46 0L54 0Q58 0 58 4L58 9Z';
 const BANDS = 'M33 27H67M29 40H71M15 80H85M6 89H94';
 
 const num = (value: number) => String(value).replace('.', ',');
-export const kg = (value: number) => `${value >= 1000 ? String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : num(value)} kg`;
 const human = (h: number) => (h <= 40 ? 'Sub genunchiul unui om' : h <= 60 ? 'Până la genunchiul unui om' : h <= 85 ? 'Până la șoldul unui om'
   : h <= 110 ? 'Până la brâul unui om' : h <= 140 ? 'Până la pieptul unui om' : h <= 160 ? 'Până la umărul unui om'
     : h <= 185 ? 'Cât un om' : h <= 240 ? 'Mai înalt decât un om' : 'Aproape de două ori cât un om');
