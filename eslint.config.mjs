@@ -15,6 +15,8 @@ const eslintConfig = defineConfig([
     "sanity/types.ts",
     // Scratch Playwright configs and measurements (git-ignored).
     "test-results/**",
+    // Design package exports (board sources and the map script), not app code.
+    "docs/**",
   ]),
 ]);
 

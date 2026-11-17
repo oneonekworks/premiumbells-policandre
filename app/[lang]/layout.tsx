@@ -9,14 +9,13 @@ import {getShell} from '@/lib/shell';
 import {site} from '@/lib/site';
 import '../globals.css';
 
-// Both fonts include latin-ext for Romanian ș/ț and cyrillic for a possible
-// future language.
-const inter = Inter({subsets: ['latin', 'latin-ext'], variable: '--font-inter'});
-// Cormorant 400 (+ italic for the claim) is the redesign; 600 stays until the
-// old pages that use font-semibold on titles are redesigned (docs/design-plan.md).
+// Both fonts include latin-ext for Romanian ș/ț. v6 Clarity: Inter 400/500/600,
+// Cormorant Garamond 500–600 (display, titles, card names) + italic 500 (the teal
+// sublines).
+const inter = Inter({subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'], variable: '--font-inter'});
 const cormorant = Cormorant_Garamond({
   subsets: ['latin', 'latin-ext'],
-  weight: ['400', '600'],
+  weight: ['500', '600'],
   style: ['normal', 'italic'],
   variable: '--font-cormorant',
 });

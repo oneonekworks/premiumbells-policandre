@@ -16,7 +16,7 @@ export function CategoryNav({items, label}: {items: CategoryNavItem[]; label: st
   const pathname = usePathname();
   return (
     <nav aria-label={label}>
-      <ul className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 sm:-mx-8 sm:px-8 lg:mx-0 lg:flex-col lg:gap-1 lg:overflow-visible lg:p-0">
+      <ul className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 md:-mx-8 md:px-8 lg:mx-0 lg:flex-col lg:gap-1 lg:overflow-visible lg:p-0">
         {items.map((item) => {
           const active = isActive(pathname, item.href);
           return (
