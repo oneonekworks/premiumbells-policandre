@@ -221,8 +221,10 @@ classification of the 39 bell works.
    `siteSettings.showroom`, `responseTime`, `partnersLink` (placeholders while
    empty); BE / GR countries; `verify-no-prices` skips `pricesUpdatedAt` (the
    price itself is a number, which the text check never reads).
-3. **Studio deploy** — waits for the user's OK (`npx sanity deploy -y`).
-4. **Export** the dataset, then **seed scripts, dry run first**, one approved
+3. **Studio deploy** — done 2026-11-17 (approved), https://premiumbells.sanity.studio/.
+4. **Export** the dataset (done: `.migration/backups/production-2026-11-17-before-v6-seed-raw.tar.gz`,
+   `--raw` so image references are kept; `--no-assets` drops them), then
+   **seed scripts, dry run first** (`scripts/v6-seed.mts --step home|services|categories`), one approved
    write each, drafts, then an approved publish:
    - a. homePage: third slice Recondiționare policandre, `highlight`, figure
      labels (12 · 60 · 5 țări), services / works lead, journal subtitle
@@ -232,9 +234,10 @@ classification of the 39 bell works.
      `assets.md`; Iconostase Bronz → `status: hidden`;
    - c. `workCategory.craft` (Automatizări → clopote, Uși → iconostase-usi)
      and `offerLine`;
-   - d. project countries BE / GR for the works abroad;
-   - e. `bellTypes` on the 39 bell works: a proposed classification for the
-     user to review before any write;
+   - d. project countries BE / GR for the works abroad (nothing to change: the
+     CMS has no work in Belgium or Greece yet; the hero shows 5 țări manually);
+   - e. `bellTypes` on the 39 bell works: proposal in
+     `docs/v6-bell-types-proposal.md`, for the user to review before any write;
    - f. waits on the client: catalogue prices + date, showroom (108 vs 110,
      photo), response time, `partnersLink`.
 
