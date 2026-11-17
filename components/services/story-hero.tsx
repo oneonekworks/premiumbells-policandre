@@ -146,8 +146,8 @@ export function StoryHero({
             </div>
             <div className="order-3">{factList}</div>
           </div>
-          <div className="relative order-2 mx-3 mt-8 md:mx-0 lg:mt-0">
-            <div className={`relative overflow-hidden rounded-[24px] shadow-e3 max-lg:h-[300px] lg:aspect-(--ratio) ${plate ? 'bg-white p-3 lg:p-4' : 'bg-band'}`}
+          <div className={`relative order-2 mt-8 md:mx-0 lg:mt-0 ${plate ? 'mx-5' : 'mx-3'}`}>
+            <div className={`relative overflow-hidden rounded-[24px] shadow-e3 ${plate ? 'aspect-(--ratio) bg-white p-3 lg:p-4' : 'bg-band max-lg:h-[300px] lg:aspect-(--ratio)'}`}
               style={{['--ratio' as string]: String(photoRatio)}}>
               {plate ? (
                 <span className="relative block size-full">

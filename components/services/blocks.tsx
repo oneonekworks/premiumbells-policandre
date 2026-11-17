@@ -156,3 +156,40 @@ export function RailButton({href, label}: {href: string; label: string}) {
 export function HeadLink({href, label, onDark = false}: {href: string; label: string; onDark?: boolean}) {
   return <Link href={href} className={`text-link ${onDark ? '!text-teal-tint' : ''}`}>{label}</Link>;
 }
+
+/**
+ * Media panel v6.2 (dark, components.md "Media panel"): kicker + title in the
+ * page column, the media row almost the full panel width (inset 16 from the
+ * panel edge). 64 above and below; phones 44 / 40, media inset 12.
+ */
+export function MediaPanel({kicker, title, id, children, className = ''}: {
+  kicker?: string | null;
+  title: string;
+  id?: string;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <section id={id} className={`dark-panel m-dark on-dark px-3 pb-10 pt-11 lg:px-0 lg:py-16 ${className}`}>
+      <div className={`${wrap} max-md:px-2`}>
+        {kicker ? <p className="kicker mb-3 !text-on-dark-soft md:mb-4">{kicker}</p> : null}
+        <h2 className="display text-[2.25rem] lg:section-title">{title}</h2>
+      </div>
+      <div className="mt-7 lg:mt-10 lg:px-4">{children}</div>
+    </section>
+  );
+}
+
+/** "Ce este inclus" rows: metal bar + item, hairlines between (light sections). */
+export function IncludedList({items, metal, className = ''}: {items: string[]; metal: HeroMetal; className?: string}) {
+  return (
+    <ul className={`border-b border-hairline ${className}`}>
+      {items.map((item) => (
+        <li key={item} className="flex min-h-15 items-center gap-3.5 border-t border-hairline text-base font-medium text-ink lg:min-h-18 lg:gap-4.5 lg:text-lg">
+          <i aria-hidden="true" className={`block h-[3px] w-6 flex-none rounded-[2px] lg:w-7 ${metalBar[metal]}`} />
+          {item}
+        </li>
+      ))}
+    </ul>
+  );
+}

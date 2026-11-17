@@ -40,3 +40,35 @@ export const policandreCopy = {
   },
   works: {kicker: 'Lucrări cu policandre', title: '{n} lucrări', all: 'Toate cele {n} lucrări'},
 };
+
+export const comandaCopy = {
+  hero: {title: 'Policandre', subline: 'la comandă, după naosul dumneavoastră', lead: 'Executăm la comenzi individuale policandre adaptate naosului, zonei, tradiției și stilului, după diametrul și înălțimea dorite. Sunt turnate masiv din bronz.'},
+  crumb: 'La comandă',
+  zoom: 'Măriți proiectul 3D',
+  steps: {
+    kicker: 'De la naos la turnare',
+    title: 'Mai întâi, proiectul',
+    items: [
+      {title: 'Măsurile naosului', text: 'Adaptăm policandrul naosului, zonei, tradiției și stilului, după diametrul și înălțimea dorite.'},
+      {title: 'Proiect în 3D', text: 'Înainte de toate, executăm proiectul în 3D.'},
+      {title: 'Consiliul parohial', text: 'Proiectul este adoptat de consiliul parohial; abia apoi începem execuția.'},
+      {title: 'Turnare în bronz', text: 'Policandrul este turnat masiv din bronz.'},
+    ],
+  },
+  plates: {kicker: 'Desene și randări', title: 'Din proiectele noastre', zoom: 'Măriți planșa', call: 'Proiectul dumneavoastră', offer: 'Cereți o ofertă', shown: 7},
+  included: {
+    kicker: 'Până la darea în exploatare',
+    title: 'Ce este inclus',
+    items: ['Sistemul de prindere în perete', 'Lanțurile, calculate după greutatea iluminatului', 'Becurile', 'Asamblarea', 'Darea în exploatare'],
+    sentence: 'Avem deja multe lucrări de succes în România, cu policandre impunătoare tip horos, la comandă.',
+    link: 'Vedeți lucrările cu policandre',
+  },
+};
+
+export const reconditionareCopy = {
+  hero: {title: 'Recondiționare', subline: 'a policandrelor vechi, piesă cu piesă', lead: 'Readucem la viață policandre și tot ce e turnat din bronz masiv, obiecte vechi de epocă.'},
+  beforeAfter: {kicker: 'Înainte și după', title: 'Aceleași piese, încă o viață', before: 'Înainte', after: 'După', shown: 3,
+    /** Chip placement of the gallery's composite squares, as on the board (until "Înainte și după" pairs exist in the CMS). */
+    layouts: ['stacked', 'stacked', 'side'] as const},
+  stages: {kicker: 'Catedrala Sfântul Alexandru din Alexandria · August 2022', title: 'Lucrarea, pe etape', all: 'Toate cele {n} fotografii', zoom: 'Măriți'},
+};

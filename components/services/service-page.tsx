@@ -10,7 +10,9 @@ import {sanityImageUrl} from '@/sanity/image';
 import type {ServiceDetail} from '@/sanity/services';
 import {Section, wrap} from './blocks';
 import {crumbs, heroFacts, heroInsets} from './pages/common';
+import {ComandaPage} from './pages/comanda';
 import {PolicandrePage} from './pages/policandre';
+import {ReconditionarePage} from './pages/reconditionare';
 import {ServiceSections} from './service-sections';
 import {StoryHero} from './story-hero';
 
@@ -69,6 +71,8 @@ function GenericServicePage({lang, service, dictionary}: Props) {
 
 const pages: Record<string, (props: Props) => Promise<React.ReactNode> | React.ReactNode> = {
   policandre: PolicandrePage,
+  'policandre-la-comanda': ComandaPage,
+  'reconditionare-policandre': ReconditionarePage,
 };
 
 /** The v6 page of a service, chosen by its Romanian slug (boards per page). */
