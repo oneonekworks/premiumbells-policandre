@@ -248,6 +248,12 @@ classification of the 39 bell works.
    link returns 200); `npm run dev` shows them after a hard refresh, a host
    after the publish webhook or within the hourly revalidate.
 
+   **Showroom written 2026-11-17** (approved by the user): after a raw export
+   (`.migration/backups/production-2026-11-17-before-showroom.tar.gz`),
+   `siteSettings.showroom` = Strada Agricultori 110, 070000 Buftea, photo
+   `image-b72e4943efd9ad5d3e679517730e86d30acfb7c2-1096x1382-webp` (portrait,
+   temporary).
+
    **User decisions, 2026-11-17** (for V3 onward):
    - Go ahead with V3 → V7 in order; pushing `prototype/mobile-publishing`
      and Studio `main` is approved (pushed 2026-11-17 at `9a4942f` / `444a116`).
