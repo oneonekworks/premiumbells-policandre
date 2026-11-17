@@ -241,6 +241,13 @@ classification of the 39 bell works.
    - f. waits on the client: catalogue prices + date, showroom (108 vs 110,
      photo), response time, `partnersLink`.
 
+   a–c **published** 2026-11-17 (approved): 19 drafts (homePage, 13 services,
+   5 categories) in one transaction, after a fresh raw export
+   (`.migration/backups/production-2026-11-17-before-v6-publish.tar.gz`). The
+   current v5 pages read them without errors (every header, footer and home
+   link returns 200); `npm run dev` shows them after a hard refresh, a host
+   after the publish webhook or within the hourly revalidate.
+
 ### V3 · Homepage v6
 
 From the v5.10 build to the v6 boards (`V6HomeDesktop` + `B`, phone `A` + `B`):
