@@ -1,8 +1,12 @@
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import {SanityImage} from '@/components/sanity-image';
+import {StoryHero} from '@/components/services/story-hero';
+import {QuietOffer} from '@/components/site/quiet-offer';
+import {getDictionary} from '@/lib/i18n/dictionaries';
 import {isLang} from '@/lib/i18n/routing';
-import {getCategories} from '@/sanity/portfolio';
+import {getCategories, getCategoryProjects} from '@/sanity/portfolio';
+import {LightboxDemo} from './lightbox-demo';
 
 // Design preview of the v6 shared pieces, checked in isolation before they are
 // wired into pages (docs/design-plan.md, V1). Only built with DESIGN_PREVIEW=1;
@@ -32,6 +36,16 @@ export default async function V6Preview({params}: PageProps<'/[lang]/v6'>) {
   if (process.env.DESIGN_PREVIEW !== '1' || !isLang(lang)) notFound();
   const categories = (await getCategories(lang)).filter((category) => category.coverImage);
   const photo = categories[0]?.coverImage;
+  const dictionary = getDictionary(lang);
+  const cover = (index: number) => categories[index % Math.max(categories.length, 1)]?.coverImage ?? null;
+  // Two photo sets for the tabbed Lightbox: the first category's project covers, then the category covers.
+  const projects = categories[0] ? await getCategoryProjects(lang, categories[0]._id) : [];
+  const sets = [
+    {tab: 'Marmură', title: 'Marmură grecească', line: 'Cu porți din alamă, cupru sau aurite.',
+      images: projects.flatMap((project) => (project.coverImage?.asset ? [{...project.coverImage, _key: project._id}] : []))},
+    {tab: 'Lemn cu aur', title: 'Lemn sculptat cu aur', line: 'Sculptat unic, cu foiță de aur.',
+      images: categories.flatMap((category) => (category.coverImage?.asset ? [{...category.coverImage, _key: category._id}] : []))},
+  ].filter((set) => set.images.length);
 
   return (
     <div className="mood-subtle">
@@ -45,6 +59,31 @@ export default async function V6Preview({params}: PageProps<'/[lang]/v6'>) {
           </h1>
         </div>
       </section>
+
+      <StoryHero
+        crumbLabel="Breadcrumb"
+        crumbs={[{label: 'Acasă', href: '/'}, {label: 'Servicii', href: '/#servicii'}, {label: 'Clopote', href: '/servicii/clopote'}, {label: 'Clopotar electronic'}]}
+        title="Clopotar electronic" metal="bronze" subline="pentru clopote fixe"
+        lead="Clopotele fixe sună automat din limbă, cu melodii de la Athos, la ora dorită sau din telecomandă."
+        factsLabel="Pe scurt"
+        facts={[
+          {figure: '1000', line: 'melodii de înregistrat, și cele de la Athos'},
+          {figure: '10 ani', line: 'memoria se păstrează la o pană de curent'},
+          {figure: '50 m', line: 'raza telecomenzii de buzunar, opțională'},
+        ]}
+        photo={cover(1)}
+        insets={[{image: cover(2), title: 'Motor pe limbă', line: 'clopotul sună natural'}, {image: cover(3), title: 'Montaj în clopotniță', line: 'motoare și panou electric'}]}
+        control={sets.length ? <LightboxDemo sets={sets} labels={dictionary.portfolio.lightbox} label="Priviți de aproape" /> : null}
+      />
+
+      <Block title="Oferta discretă">
+        <div className="max-w-xl">
+          <QuietOffer question="Vă place acest model?" call={{href: 'tel:+40722790776', label: 'Sunați'}} offer={{href: '#oferta', label: 'Cereți o ofertă'}} />
+        </div>
+        <div className="mt-8 max-w-xl rounded-card bg-teal-950 p-6">
+          <QuietOffer onDark question="Doriți un policandru asemănător?" offer={{href: '#oferta', label: 'Cereți o ofertă'}} />
+        </div>
+      </Block>
 
       <Block title="Butoane și legături" ground="m-band">
         <div className="flex flex-wrap items-center gap-4">
