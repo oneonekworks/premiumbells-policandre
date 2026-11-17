@@ -10,6 +10,7 @@ import {sanityImageUrl} from '@/sanity/image';
 import type {ServiceDetail} from '@/sanity/services';
 import {Section, wrap} from './blocks';
 import {crumbs, heroFacts, heroInsets} from './pages/common';
+import {BellsPage} from './pages/bells';
 import {ComandaPage} from './pages/comanda';
 import {PolicandrePage} from './pages/policandre';
 import {ReconditionarePage} from './pages/reconditionare';
@@ -73,6 +74,8 @@ const pages: Record<string, (props: Props) => Promise<React.ReactNode> | React.R
   policandre: PolicandrePage,
   'policandre-la-comanda': ComandaPage,
   'reconditionare-policandre': ReconditionarePage,
+  'cu-jug': BellsPage,
+  'fara-balans': BellsPage,
 };
 
 /** The v6 page of a service, chosen by its Romanian slug (boards per page). */

@@ -72,3 +72,59 @@ export const reconditionareCopy = {
     layouts: ['stacked', 'stacked', 'side'] as const},
   stages: {kicker: 'Catedrala Sfântul Alexandru din Alexandria · August 2022', title: 'Lucrarea, pe etape', all: 'Toate cele {n} fotografii', zoom: 'Măriți'},
 };
+
+const bellCommon = {
+  question: 'Ce fel de clopot căutați?',
+  guide: {
+    kicker: 'Alegeți un rând sau un set',
+    columns: ['Greutate', 'Diametru', 'Înălțime', 'Notă'] as [string, string, string, string],
+    groups: ['Până la 100 kg', '100–1000 kg', '1–5 tone', 'Peste 5 tone'] as [string, string, string, string],
+    groupNotePlaceholder: '[Potrivit pentru: de la client]',
+    person: '1,75 m',
+    bells: 'clopote',
+    ringer: 'clopotar electronic',
+    play: 'Ascultați',
+    pause: 'Opriți',
+    offer: 'Cereți o ofertă pentru',
+    offerShort: 'Cereți o ofertă',
+  },
+  works: {kicker: 'Din lucrările noastre'},
+  other: 'Celălalt fel de clopote',
+  video: 'Urmăriți filmul',
+  videoShort: 'Filmul',
+};
+
+export const bellTypes = {
+  'cu-jug': {
+    name: 'Cu jug', line: 'Clopotul se balansează', lineShort: 'Clopotul se balansează',
+    other: {name: 'Clopote cu jug', line: 'Se balansează pe jug din stejar sau oțel, până la 16 tone.'},
+  },
+  'fara-balans': {
+    name: 'Fără balans', line: 'Clopotul stă fix, se trage limba', lineShort: 'Stă fix, se trage limba',
+    other: {name: 'Clopote fără balans', line: 'Fixe, doar limba se trage, ca la Athos.'},
+  },
+} as const;
+
+export const cuJugCopy = {
+  ...bellCommon,
+  hero: {title: 'Clopote cu jug', subline: 'cu balans, din stejar sau oțel', lead: 'Clopote rusești cu jug din stejar sau oțel, până la 16 tone, cu icoane canonice și ornamente tradiționale.'},
+  sizes: {title: 'Dimensiuni clopote cu jug', short: 'cu jug', sets: 'Seturi recomandate după note muzicale', initial: 10},
+  included: {
+    kicker: 'Clopote cu jug', title: 'Ce este inclus',
+    items: ['Limba', 'Icoanele', 'Textul', 'Ornamentele', 'Jugul de stejar', 'Transportul până la biserică', 'TVA'],
+    nudge: {slug: 'automatizari-clopote-cu-balans', question: 'Clopote cu jug, trase automat', name: 'Automatizări pentru clopote cu balans', why: 'Motor liniar, controler și telecomandă.', contain: true},
+  },
+  works: {...bellCommon.works, title: 'Clopote cu jug montate', all: 'Toate lucrările cu clopote cu jug'},
+};
+
+export const faraBalansCopy = {
+  ...bellCommon,
+  hero: {title: 'Clopote fără balans', subline: 'fixe, trase cu sfoara, ca la Athos', lead: 'Clopotele sunt fixe; doar limba se trage, asemenea tradiției ortodoxe de la Sfântul Munte sau de la Biserica Sfântului Mormânt.'},
+  sizes: {title: 'Dimensiuni clopote fără balans', short: 'fără balans', sets: 'Seturi acordate după note muzicale', initial: 8},
+  included: {
+    kicker: 'Clopote fără balans', title: 'Ce este inclus',
+    items: ['Limba', 'Icoanele', 'Textul', 'Ornamentele', 'Transportul până la biserică', 'TVA'],
+    nudge: {slug: 'clopotar-electronic', question: 'Clopote fixe, trase automat', name: 'Clopotar electronic', why: 'Pentru clopote fixe, cu limba trasă ca de mână.', contain: false},
+  },
+  works: {...bellCommon.works, title: 'Clopote fără balans montate', all: 'Toate lucrările cu clopote fără balans'},
+};
