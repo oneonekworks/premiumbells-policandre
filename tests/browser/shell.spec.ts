@@ -26,8 +26,8 @@ test('Romanian and English shells render with language-specific URLs', async ({p
 });
 
 test('language prefixes and section names are canonicalised', async ({page}) => {
-  await page.goto('/ro/servicii');
-  await expect(page).toHaveURL(/\/servicii$/);
+  await page.goto('/ro/blog');
+  await expect(page).toHaveURL(/\/blog$/);
   await page.goto('/en/lucrarile-noastre');
   await expect(page).toHaveURL(/\/en\/our-work$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
@@ -79,7 +79,7 @@ test('the Servicii mega menu opens by button, closes with Escape, outside clicks
 
   await toggle.click();
   await menu.getByRole('link', {name: /^Clopote cu jug/}).click();
-  await expect(page).toHaveURL(/\/servicii\/clopote\/cu-jug$/);
+  await expect(page).toHaveURL(/\/servicii\/clopote$/);
   await expect(menu).toBeHidden();
 });
 

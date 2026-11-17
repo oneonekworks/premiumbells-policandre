@@ -164,11 +164,11 @@ export function StoryHero({
               {control}
             </div>
             {first ? <Inset inset={first} className={insetLayout === 'clopotar'
-              ? '-bottom-26 right-1 w-[156px] lg:-left-10 lg:-top-14 lg:bottom-auto lg:right-auto lg:w-[216px]'
-              : '-bottom-32 -left-1 w-[168px] lg:-left-16 lg:-top-12 lg:bottom-auto lg:w-[200px]'} /> : null}
+              ? '-bottom-26 right-1 w-[156px] lg:-left-6 lg:-top-14 lg:bottom-auto lg:right-auto lg:w-[216px] xl:-left-10'
+              : '-bottom-32 -left-1 w-[168px] lg:-left-10 lg:-top-12 lg:bottom-auto lg:w-[200px] xl:-left-16'} /> : null}
             {second ? <Inset inset={second} className={insetLayout === 'clopotar'
-              ? '-bottom-32 -left-1 w-[168px] lg:-bottom-16 lg:-right-7 lg:left-auto lg:w-[244px]'
-              : '-bottom-26 right-1 w-[156px] lg:-bottom-14 lg:-right-10 lg:w-[220px]'} /> : null}
+              ? '-bottom-32 -left-1 w-[168px] lg:-bottom-16 lg:-right-3 lg:left-auto lg:w-[244px] xl:-right-7'
+              : '-bottom-26 right-1 w-[156px] lg:-bottom-14 lg:-right-3 lg:w-[220px] xl:-right-10'} /> : null}
           </div>
         </div>
       </div>

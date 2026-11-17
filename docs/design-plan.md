@@ -327,6 +327,63 @@ Iconostase (three materials → Lightbox with tabs; material URLs open the
 layer), Uși (one copper model, photo group → Lightbox, custom-door card).
 Remove `/servicii` and the chooser; redirects per `routes.md`.
 
+**V4 done (2026-11-17), commits `f351f6d` → `V4 step 8` (this log).** Checked at 1440, 1024
+and 390 against the boards (headless Chrome, backdrop-filter off); production
+build: typecheck, lint, 43 unit tests, browser specs (services, home, shell,
+portfolio, filters, blog) pass. Notes for the next phases:
+
+- One page component per service, chosen by the Romanian slug in
+  `components/services/service-page.tsx` (`pages/*.tsx`); any other public
+  service falls back to a generic story-hero page with its CMS sections.
+  Shared pieces: `blocks.tsx` (`Section` 136 / 88, `wrap`, `SectionHead`,
+  `Steps`, `Nudges`, `WorkCards` with the "Vedeți lucrarea" hint, `MediaPanel`,
+  `IncludedList`), `lightbox-group.tsx` (one Lightbox for server-rendered
+  tiles), `photo-control.tsx`, `bell-guide.tsx`, `model-catalogue.tsx`,
+  `material-layer.tsx`.
+- `StoryHero` follows the boards per page: title sizes (`titleSize`), italic
+  line (`sublineEm`), phones 300 tall (320 Iconostase, the 5:7 plate keeps its
+  ratio), `plate`, `place`, `insetLayout="clopotar"`, `tight` (112 below).
+  Insets pull in at 1024–1199 so nothing overflows. The photo control sits
+  top-right on phones too: bottom-right (boards) it hides under the second
+  inset. `mw-graphite` / `bar-graphite` added (Fără balans, Clopotar).
+- Board copy without a CMS field lives in `lib/service-copy.ts` (hero title,
+  italic line and lead, kickers, steps, lists); the CMS gives photos, Pe scurt,
+  insets, the catalogue, bell tables and sets, galleries, works. The new v6
+  section types (`sectionIncluded`, `sectionBeforeAfter`, `sectionStages`,
+  `sectionSystem`, `sectionFacts`, `sectionKit`, `sectionRelated`) are read and
+  win over the copy when an editor adds them.
+- Routes: `/servicii` → 308 `/#servicii` (page-level `permanentRedirect`, both
+  languages); `servicePath('clopote', 'cu-jug')` is `/servicii/clopote`, which
+  renders Cu jug (`defaultVariants`); `/servicii/clopote/cu-jug` → 308;
+  `/servicii/iconostase/iconostas-bronz` → 308 (legacy table); the three
+  material addresses render Iconostase with the layer open (dialog in the
+  server HTML), clicks push the address, tabs replace it, Back / Esc return.
+  Every "Servicii" link and breadcrumb points at `/#servicii`.
+- Policandre catalogue: "La comandă" in every finish row, no date line, no
+  `pricesUpdatedAt` in the query (re-add both with the price list). Lengths in
+  metres as on the board. Level groups read the levels from the title (the CMS
+  has "Policandru 2 nivele, nr. 2" with `levels: 1`). `#Policandru-N` anchors
+  are the card ids (extra anchors as empty spans); phones show 12 + "Arătați
+  toate modelele".
+- Bell pages: works with this bell type first, then works without `bellTypes`
+  (none are set yet); "Toate lucrările cu clopote …" links to
+  `/lucrarile-noastre/clopote?tip=cu-jug|fara-balans` (V5 must read `tip`).
+  Work cards still link to the project URL; V5 turns them into the panel
+  (browse this service's works only, category shown as text).
+- Price guard: the boards' "TVA" (Ce este inclus) and „estimarea prețului” /
+  „Prețul depinde…” (Iconostase step 2, Uși) are left out or reworded, because
+  the guard reads them as price text (the V2 seed did the same with TVA). Uși
+  shows the CMS model description instead.
+- Content gaps (placeholders on the site): Policandre and Uși hero photos are
+  the small card covers (673 / 576 px); no hero film for the bell pages (the
+  "Urmăriți filmul" control is left out without a video); no videos for
+  Clopotar (six "[film din clopotniță]" tiles); Automatizări has no inset
+  photos and no kit photos ("[fotografie]"); the custom-door drawing on Uși
+  ("[desen]"); "Potrivit pentru" notes in the bell tables
+  ("[Potrivit pentru: de la client]"); step 4 texts on Policandre and
+  Iconostase ("[Text de confirmat]"); before / after chips follow the board's
+  order of the gallery squares until "Înainte și după" pairs exist.
+
 ### V5 · Works, Project panel, map view
 
 One filter bar (categories, bell type sliding in after Clopote, search icon,

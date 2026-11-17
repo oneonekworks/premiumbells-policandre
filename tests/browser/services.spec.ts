@@ -75,7 +75,7 @@ test('Clopote: the type picker marks the current page; a row and a set drive the
   const rows = page.getByRole('table').getByRole('button');
   await rows.first().click();
   await expect(rows.first()).toHaveAttribute('aria-pressed', 'true');
-  const firstSet = page.getByRole('button', {name: /^Set 1/});
+  const firstSet = page.getByRole('button', {name: /^Set 1 /});
   await firstSet.click();
   await expect(firstSet).toHaveAttribute('aria-pressed', 'true');
   await expect(rows.first()).toHaveAttribute('aria-pressed', 'false');
