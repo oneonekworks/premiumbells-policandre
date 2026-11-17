@@ -48,7 +48,7 @@ export default async function RootLayout({children, params}: LayoutProps<'/[lang
           {dictionary.skipToContent}
         </a>
         <SiteHeader lang={lang} dictionary={dictionary} shell={shell} />
-        <main id="continut" className="flex-1">{children}</main>
+        <main id="continut" className="flex-1 pt-18 lg:pt-21">{children}</main>
         <SiteFooter lang={lang} dictionary={dictionary} shell={shell} />
       </body>
     </html>

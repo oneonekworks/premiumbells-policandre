@@ -96,3 +96,107 @@ export function YouTubeIcon(props: IconProps) {
     </svg>
   );
 }
+
+// v6 board icons (docs/design/clarity-v6/reference/boards).
+
+/** The phone glyph of the v6 header, footer and bottom bar (stroke 1.8–2). */
+export function PhoneV6Icon(props: IconProps) {
+  return (
+    <Outline strokeWidth={1.8} {...props}>
+      <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" />
+    </Outline>
+  );
+}
+
+/** Two-line menu glyph of the v6 phone header. */
+export function MenuV6Icon(props: IconProps) {
+  return (
+    <Outline strokeWidth={1.8} {...props}>
+      <path d="M4 8h16M4 16h16" />
+    </Outline>
+  );
+}
+
+export function CloseV6Icon(props: IconProps) {
+  return (
+    <Outline strokeWidth={1.8} {...props}>
+      <path d="M6 6l12 12M18 6 6 18" />
+    </Outline>
+  );
+}
+
+/** 12 px chevron next to "Servicii" and the mobile menu groups. */
+export function CaretIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden="true" {...props}>
+      <path d="M2.5 4.5 6 8l3.5-3.5" />
+    </svg>
+  );
+}
+
+export function ArrowV6Icon(props: IconProps) {
+  return (
+    <Outline strokeWidth={1.6} {...props}>
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </Outline>
+  );
+}
+
+export function ChevronLeftIcon(props: IconProps) {
+  return (
+    <Outline strokeWidth={1.6} {...props}>
+      <path d="M15 5l-7 7 7 7" />
+    </Outline>
+  );
+}
+
+export function ChevronRightIcon(props: IconProps) {
+  return (
+    <Outline strokeWidth={1.6} {...props}>
+      <path d="M9 5l7 7-7 7" />
+    </Outline>
+  );
+}
+
+export function ZoomInIcon(props: IconProps) {
+  return (
+    <Outline strokeWidth={1.8} {...props}>
+      <circle cx="11" cy="11" r="6" />
+      <path d="M20 20l-4.5-4.5M11 8v6M8 11h6" />
+    </Outline>
+  );
+}
+
+export function ZoomOutIcon(props: IconProps) {
+  return (
+    <Outline strokeWidth={1.8} {...props}>
+      <circle cx="11" cy="11" r="6" />
+      <path d="M20 20l-4.5-4.5M8 11h6" />
+    </Outline>
+  );
+}
+
+export function LinkIcon(props: IconProps) {
+  return (
+    <Outline {...props}>
+      <path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" />
+    </Outline>
+  );
+}
+
+export function PinIcon(props: IconProps) {
+  return (
+    <Outline strokeWidth={2} {...props}>
+      <path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z" />
+      <circle cx="12" cy="9.5" r="2.5" />
+    </Outline>
+  );
+}
+
+export function PlayIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 20 22" aria-hidden="true" {...props}>
+      <path d="M5 2 L18 11 L5 20 Z" fill="currentColor" />
+    </svg>
+  );
+}

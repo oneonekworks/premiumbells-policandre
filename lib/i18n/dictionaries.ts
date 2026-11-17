@@ -21,9 +21,9 @@ const ro = {
     call: 'Sunați',
     write: 'sau scrieți-ne',
   },
-  menu: {open: 'Deschide meniul', close: 'Închide meniul', title: 'Meniu'},
+  menu: {open: 'Deschide meniul', close: 'Închide meniul', title: 'Meniu', quickContact: 'Contact rapid'},
   contact: {call: 'Sunați-ne', email: 'Scrieți-ne', heading: 'Contact'},
-  language: {label: 'Limba', ro: 'Română', en: 'English'},
+  language: {label: 'Limba', ro: 'Română', en: 'English', switchTo: 'Switch to English'},
   countries: {RO: 'România', MD: 'Republica Moldova', ES: 'Spania'},
   portfolio: {
     categories: 'Categorii de lucrări',
@@ -137,8 +137,6 @@ const ro = {
     pauseAudio: 'Pauză: {title}',
     readArticle: 'Citiți articolul',
     withTestimonial: 'Mărturie și jurnal',
-    rail: 'Secțiunile paginii',
-    railTop: 'Început',
   },
   blog: {
     heading: 'Articole, rapoarte și video',
@@ -184,9 +182,9 @@ const en: Dictionary = {
     call: 'Call',
     write: 'or write to us',
   },
-  menu: {open: 'Open menu', close: 'Close menu', title: 'Menu'},
+  menu: {open: 'Open menu', close: 'Close menu', title: 'Menu', quickContact: 'Quick contact'},
   contact: {call: 'Call us', email: 'Email us', heading: 'Contact'},
-  language: {label: 'Language', ro: 'Română', en: 'English'},
+  language: {label: 'Language', ro: 'Română', en: 'English', switchTo: 'Treceți la română'},
   countries: {RO: 'Romania', MD: 'Moldova', ES: 'Spain'},
   portfolio: {
     categories: 'Work categories',
@@ -300,8 +298,6 @@ const en: Dictionary = {
     pauseAudio: 'Pause: {title}',
     readArticle: 'Read the article',
     withTestimonial: 'Testimony and journal',
-    rail: 'Page sections',
-    railTop: 'Top',
   },
   blog: {
     heading: 'Articles, reports and video',

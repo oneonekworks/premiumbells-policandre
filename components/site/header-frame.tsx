@@ -3,14 +3,15 @@
 import {useEffect, useRef, useState, type ReactNode} from 'react';
 
 /**
- * The header's moving part. At the top of the page it is a plain bar on the
- * ground; after 80px it becomes the floating white-glass pill (M06). Scrolling
- * down quickly hides the pill and any scroll up brings it back (M07), never
- * while a submenu is open. Reduced motion keeps it visible.
+ * Header v6: a floating white-glass pill from the first paint (no plain bar),
+ * 16 px from the top (12 on phones). Once the page moves under it, it docks:
+ * the stronger glass and shadow keep it readable over photos (v6.2). Scrolling
+ * down quickly hides it, any scroll up brings it back (M07); never while a
+ * menu is open, never for keyboard focus, never with reduced motion.
  */
 export function HeaderFrame({children}: {children: ReactNode}) {
   const frame = useRef<HTMLDivElement>(null);
-  const [scrolled, setScrolled] = useState(false);
+  const [docked, setDocked] = useState(false);
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export function HeaderFrame({children}: {children: ReactNode}) {
       const y = scrollY;
       const delta = y - last;
       last = y;
-      setScrolled(y > 80);
+      setDocked(y > 8);
       const menuOpen = Boolean(frame.current?.querySelector('[aria-expanded="true"]'));
       if (still.matches || menuOpen || y < 400) setHidden(false);
       else if (delta > 12) setHidden(true);
@@ -40,11 +41,16 @@ export function HeaderFrame({children}: {children: ReactNode}) {
   return (
     <div
       ref={frame}
-      data-scrolled={scrolled || undefined}
+      data-docked={docked || undefined}
       data-hidden={hidden || undefined}
       onFocusCapture={() => setHidden(false)}
-      className="group/header relative mx-auto flex h-16 max-w-page items-center justify-between gap-4 border border-transparent bg-ground px-5 transition-[max-width,margin,padding,border-radius,box-shadow,background-color,transform] duration-(--duration-fade) ease-light md:px-8 lg:h-header lg:px-14 data-hidden:-translate-y-[130%] data-scrolled:mx-3 data-scrolled:mt-3 data-scrolled:max-w-(--container-header) data-scrolled:rounded-pill data-scrolled:bg-white/72 data-scrolled:border-white/90 data-scrolled:pl-5 data-scrolled:pr-2 data-scrolled:shadow-e2 data-scrolled:backdrop-blur-[16px] data-scrolled:backdrop-saturate-[1.2] lg:data-scrolled:mx-auto lg:data-scrolled:mt-4 lg:data-scrolled:h-16 lg:data-scrolled:pl-6"
+      className="group/header relative isolate mx-auto flex h-15 max-w-(--container-header) items-center justify-between gap-4 rounded-pill pl-4.5 pr-2 transition-transform duration-(--duration-fade) ease-light data-hidden:-translate-y-[140%] lg:h-17 lg:pl-6 lg:pr-2.5"
     >
+      {/* The glass is a layer behind the content, not the pill itself: an element
+          with backdrop-filter stops its children (the mega menu) from blurring the page. */}
+      <span aria-hidden="true" className={`absolute inset-0 -z-10 rounded-pill transition-[background-color,box-shadow] duration-(--duration-fade) ease-light ${
+        docked ? 'glass-docked' : 'glass-light shadow-e2'
+      }`} />
       {children}
     </div>
   );

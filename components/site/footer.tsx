@@ -134,7 +134,7 @@ export function SiteFooter({lang, dictionary, shell}: {lang: Lang; dictionary: D
           </p>
         </div>
       </footer>
-      <BottomBar offerHref={`#${offerAnchor}`} offerLabel={offer.title} phoneHref={company.phone.href} callLabel={offer.call} />
+      <BottomBar offerHref={`#${offerAnchor}`} offerLabel={offer.title} phoneHref={company.phone.href} callLabel={offer.call} label={dictionary.menu.quickContact} />
     </>
   );
 }

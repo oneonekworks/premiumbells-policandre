@@ -173,6 +173,16 @@ footer and menus).
 6. Story hero component (split; Pe scurt; two framed insets; photo control)
    and the quiet offer block.
 
+**V1 progress (2026-11-17):** steps 1–3 committed (tokens + breakpoints + fonts;
+primitives + `/v6` preview, built only with `DESIGN_PREVIEW=1`; header pill /
+mega menu from `homePage.services.groups` / mobile menu / bottom bar, section rail
+removed; header is fixed, `main` reserves 72 / 84 px). Notes: the browser pane's
+screenshots mis-draw anything behind `backdrop-filter` (inject
+`*{backdrop-filter:none!important}` to compare); `next build` sometimes stops once
+with a Next.js security-upgrade notice and passes on retry (upgrade not run, user to
+decide); mega-menu names wrap until `shortName` (V2). Open: steps 4 (footer),
+5 (Lightbox), 6 (story hero + quiet offer), `shell.spec.ts`, browser specs, docs.
+
 ### V2 · Schema and content (approved steps, Studio repo)
 
 The approved parts of `docs/design-schema-proposal-v6.md`, in its order:

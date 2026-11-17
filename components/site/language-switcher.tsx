@@ -42,3 +42,33 @@ export function LanguageSwitcher({current, label, names, missing, onDark = false
     </div>
   );
 }
+
+/**
+ * v6 "RO / EN": one link to the other language (header, mobile menu, footer).
+ * The aria-label names the current language and offers the other one in its
+ * own language ("Limba: română. Switch to English").
+ */
+export function LanguageToggle({current, names, missing, variant = 'header'}: {
+  current: Lang;
+  names: Record<Lang, string> & {label: string; switchTo: string};
+  missing: Partial<Record<Lang, string[]>>;
+  variant?: 'header' | 'menu' | 'footer';
+}) {
+  const pathname = usePathname();
+  const other = languages.find((lang) => lang !== current) ?? current;
+  const styles = {
+    header: 'inline-flex h-11 items-center rounded-pill px-4 text-[0.875rem] font-medium text-ink-soft transition-colors duration-(--duration-line) hover:bg-teal-tint',
+    menu: 'text-link text-ink-soft',
+    footer: 'inline-flex h-11 items-center rounded-pill border border-on-dark/18 px-3.5 text-[0.8125rem] font-semibold tracking-[0.04em] text-on-dark hover:bg-on-dark/8 md:h-10',
+  };
+  return (
+    <Link
+      href={alternateHref(pathname, other, missing[other])}
+      hrefLang={other}
+      aria-label={`${names.label}: ${names[current].toLowerCase()}. ${names.switchTo}`}
+      className={styles[variant]}
+    >
+      {languages.map((lang) => lang.toUpperCase()).join(' / ')}
+    </Link>
+  );
+}

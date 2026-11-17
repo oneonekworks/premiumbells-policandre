@@ -1,7 +1,5 @@
 import type {Metadata} from 'next';
-import {homeAnchors, HomeAbout, HomeAudio, HomeCatalogues, HomeHero, HomeJournal, HomeServices, HomeWorks} from '@/components/home/home-sections';
-import {SectionRail} from '@/components/home/section-rail';
-import {offerAnchor} from '@/components/site/footer';
+import {HomeAbout, HomeAudio, HomeCatalogues, HomeHero, HomeJournal, HomeServices, HomeWorks} from '@/components/home/home-sections';
 import {HomePlaceholder} from '@/components/home/home-placeholder';
 import {photoAlt} from '@/lib/alt';
 import {getDictionary} from '@/lib/i18n/dictionaries';
@@ -89,15 +87,6 @@ export default async function HomePage({params}: PageProps<'/[lang]'>) {
     : home.latestWorks;
 
   const base = {lang, dictionary};
-  const rail = [
-    {id: homeAnchors.top, label: dictionary.home5.railTop},
-    services?.enabled !== false && services?.heading ? {id: homeAnchors.services, label: services.heading} : null,
-    works?.enabled !== false && works?.heading ? {id: homeAnchors.works, label: works.heading} : null,
-    about?.enabled !== false && about?.heading ? {id: homeAnchors.about, label: about.heading} : null,
-    audio?.enabled !== false && audio?.recording?.title ? {id: homeAnchors.audio, label: audio.recording.title} : null,
-    blog?.enabled !== false && blog?.heading && chosenPosts.length ? {id: homeAnchors.journal, label: blog.heading} : null,
-    {id: offerAnchor, label: dictionary.offer.title},
-  ].filter((item) => item !== null);
 
   return (
     <>
@@ -111,7 +100,6 @@ export default async function HomePage({params}: PageProps<'/[lang]'>) {
       {about && <HomeAbout {...base} section={about} contact={contact} />}
       {audio && <HomeAudio {...base} section={audio} contact={contact} />}
       {blog && <HomeJournal {...base} section={blog} testimonial={testimonial} posts={chosenPosts} />}
-      <SectionRail sections={rail} label={dictionary.home5.rail} />
     </>
   );
 }

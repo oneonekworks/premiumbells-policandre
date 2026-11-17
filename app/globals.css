@@ -203,7 +203,7 @@
   --text-chip--line-height: 1;
   --text-micro: 0.75rem;
   --text-micro--line-height: 1.35;
-  --spacing-header: 5.5rem;                /* anchor scroll offset; the v6 pill needs 16 + 68 + air */
+  --spacing-header: 6rem;                  /* anchor scroll offset under the fixed v6 pill (16 + 68 + 12) */
   --spacing-card-inset: 0.5rem;
   --spacing-gap-pair: 1.5rem;
   --spacing-gap-services: 1rem;
