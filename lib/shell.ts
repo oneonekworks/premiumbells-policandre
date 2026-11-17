@@ -51,6 +51,8 @@ export type Shell = {
     tagline: string;
     social: {network: SocialNetwork; href: string}[];
   };
+  /** Footer showroom card. Not in siteSettings yet (V2): the board's values until then. */
+  showroom: {town: string; street: string; postcode: string; photo: SanityImageValue | null};
   header: ShellLink[];
   /** Craft columns from homePage.services.groups (Policandre · Clopote · Iconostase și uși). */
   serviceGroups: ServiceGroup[];
@@ -172,6 +174,7 @@ export const getShell = cache(async (lang: Lang, dictionary: Dictionary): Promis
       tagline: settings.tagline ?? dictionary.footer.tagline,
       social,
     },
+    showroom: {town: 'Buftea', street: 'Strada Agricultori 108', postcode: '070000', photo: null},
     header: withBlog(header),
     serviceGroups: groups,
     works: {

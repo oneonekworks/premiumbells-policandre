@@ -1,137 +1,141 @@
 import Link from 'next/link';
-import type {CSSProperties} from 'react';
+import {SanityImage} from '@/components/sanity-image';
 import type {Dictionary} from '@/lib/i18n/dictionaries';
 import {localizedHref, type Lang} from '@/lib/i18n/routing';
 import type {Shell, ShellLink} from '@/lib/shell';
 import {BottomBar} from './bottom-bar';
-import {FacebookIcon, InstagramIcon, YouTubeIcon} from './icons';
-import {LanguageSwitcher} from './language-switcher';
+import {ArrowV6Icon, FacebookIcon, InstagramIcon, PhoneV6Icon, PinIcon, YouTubeIcon} from './icons';
+import {LanguageToggle} from './language-switcher';
 import {Logo} from './logo';
 
 const socialIcons = {facebook: FacebookIcon, instagram: InstagramIcon, youtube: YouTubeIcon};
 const socialNames = {facebook: 'Facebook', instagram: 'Instagram', youtube: 'YouTube'};
 
-/** The anchor of the offer block; the bottom bar and "Cereți o ofertă" buttons point here. */
+/** The footer's anchor; the header phone menu and the bottom bar "Cereți o ofertă" land here. */
 export const offerAnchor = 'oferta';
 
-const headingClass = 'mb-3 text-chip font-semibold text-on-dark';
-const linkClass = 'inline-flex min-h-10 items-center text-body text-on-dark-soft transition-colors duration-(--duration-line) hover:text-on-dark';
+const heading = 'mb-1.5 text-[0.8125rem] font-semibold tracking-[0.02em] text-on-dark-soft';
+const link = 'flex min-h-11 w-fit items-center text-[0.9375rem] text-on-dark underline-offset-[5px] hover:underline md:min-h-9';
 
-/** Internal links use next/link; external, tel: and mailto: stay plain anchors. */
-function FooterLink({link}: {link: ShellLink}) {
-  return link.href.startsWith('/')
-    ? <Link href={link.href} className={linkClass}>{link.label}</Link>
-    : <a href={link.href} className={linkClass} rel={link.href.startsWith('http') ? 'noopener' : undefined}>{link.label}</a>;
+function FooterLink({item, className = link}: {item: ShellLink; className?: string}) {
+  return item.href.startsWith('/')
+    ? <Link href={item.href} className={className}>{item.label}</Link>
+    : <a href={item.href} className={className} rel={item.href.startsWith('http') ? 'noopener' : undefined}>{item.label}</a>;
 }
 
-function LinkColumn({heading, links}: {heading: string; links: ShellLink[]}) {
-  return (
-    <nav aria-label={heading}>
-      <h2 className={headingClass}>{heading}</h2>
-      <ul>
-        {links.map((link) => <li key={`${link.href}-${link.label}`}><FooterLink link={link} /></li>)}
-      </ul>
-    </nav>
-  );
-}
-
-/** The one gold ornament on the site (tokens: --color-ornament). */
-function BellOrnament() {
-  return (
-    <svg viewBox="0 0 40 44" aria-hidden="true" className="h-11 w-10 text-ornament">
-      <g fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20 2v4" />
-        <path d="M17 6h6" />
-        <path d="M20 6c-6.6 0-10.5 5.2-10.5 12.4 0 6.4-1.6 10.4-5 13.6h31c-3.4-3.2-5-7.2-5-13.6C30.5 11.2 26.6 6 20 6Z" />
-        <path d="M4.5 32h31" />
-        <path d="M16.5 36a3.5 3.5 0 0 0 7 0" />
-        <path d="M14 18.5c.6-3.4 2.6-5.6 6-6" opacity="0.6" />
-      </g>
-    </svg>
-  );
-}
-
+/**
+ * Footer v6.2, the one canonical block on every page (reference/footer.html +
+ * footer.css): brand + showroom card · two link columns · "Cereți o ofertă"
+ * (phone pill, email, response note, Colaborează) · legal bar with the credit,
+ * RO / EN and socials. Phones reorder it (offer before the showroom) with
+ * `display: contents` wrappers and `order`, so the markup stays one block.
+ */
 export function SiteFooter({lang, dictionary, shell}: {lang: Lang; dictionary: Dictionary; shell: Shell}) {
   const {footer, offer} = dictionary;
-  const {company} = shell;
-  const groups = shell.footerGroups
-    ?? [{heading: footer.navigation, links: [{label: dictionary.nav.home, href: localizedHref(lang, '/')}, ...shell.header]}];
+  const {company, showroom} = shell;
+  const home = localizedHref(lang, '/');
+  const groups = (shell.footerGroups
+    ?? [{heading: dictionary.nav.label, links: shell.header}]).slice(0, 2);
+  const address = `${showroom.street}, ${showroom.postcode} ${showroom.town}`;
+  const mapsQuery = encodeURIComponent(address);
   const legal = [
-    company.legalName,
+    `© ${new Date().getFullYear()} ${company.legalName}`,
     `CUI ${company.cui}`,
-    company.registration ? `${footer.registration} ${company.registration}` : null,
-    company.address?.split('\n').map((line) => line.trim()).filter(Boolean).join(', '),
-    `© ${new Date().getFullYear()}`,
-  ].filter(Boolean);
+    company.registration,
+  ].filter(Boolean).join(' · ');
 
   return (
     <>
-      <footer className="on-dark grain mx-3 mb-28 mt-20 rounded-panel bg-teal-950 text-on-dark lg:mx-4 lg:mb-4 lg:mt-40">
-        <div className="mx-auto max-w-page px-5 pb-8 pt-12 md:px-8 lg:px-14 lg:pb-10 lg:pt-18">
-          <section id={offerAnchor} aria-labelledby="oferta-titlu" className="scroll-mt-header grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-            <div>
-              <h2 id="oferta-titlu" className="font-display text-offer">{offer.title}</h2>
-              <p className="mt-5 max-w-xl text-lead text-on-dark-soft">{offer.text}</p>
-            </div>
-            <div className="flex flex-col items-start gap-3 lg:items-end">
-              <a href={company.phone.href} className="btn btn-light min-h-15 px-8 text-[1.0625rem]">
-                {offer.call}: {company.phone.display}
-              </a>
-              <a href={`mailto:${company.email}`} className="inline-flex min-h-11 items-center text-body text-on-dark-soft underline decoration-on-dark/30 underline-offset-4 hover:text-on-dark hover:decoration-on-dark">
-                {offer.write}: {company.email}
-              </a>
-            </div>
-          </section>
-
-          <div className="my-12 h-px bg-on-dark/14" />
-
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[2fr_repeat(var(--cols),1fr)]"
-            style={{'--cols': groups.length + 1} as CSSProperties}>
-            <div>
-              <Logo href={localizedHref(lang, '/')} name={company.name} inverted />
-              <div className="mt-6 flex items-start gap-4">
-                <BellOrnament />
-                <p className="max-w-xs text-body text-on-dark-soft">{company.tagline}</p>
+      <footer
+        id={offerAnchor}
+        className="on-dark mx-2 mb-2 mt-20 scroll-mt-header rounded-card bg-teal-950 text-on-dark [background:radial-gradient(ellipse_420px_320px_at_100%_-12%,rgb(15_107_99/var(--dT,.42)),transparent_70%),var(--color-teal-950)] md:mx-4 md:mb-4 md:[background:radial-gradient(ellipse_900px_520px_at_100%_-24%,rgb(15_107_99/var(--dT,.42)),transparent_70%),var(--color-teal-950)] lg:mt-40"
+      >
+        <div className="flex flex-col px-5 pb-24 pt-7 md:mx-auto md:max-w-(--container-page) md:px-6 md:pb-0 md:pt-14 lg:pb-0">
+          <div className="flex flex-col md:grid md:grid-cols-2 md:gap-10 md:pb-9 lg:grid-cols-[minmax(0,1.5fr)_repeat(3,minmax(0,1fr))]">
+            {/* Brand: logo, tagline, showroom (phones: the showroom moves below the offer). */}
+            <div className="contents md:col-span-2 md:block lg:col-span-1">
+              <div className="order-1">
+                <Logo href={home} name={company.name} inverted label={`${company.name}, ${footer.home}`} />
               </div>
-              {company.social.length ? (
-                <ul aria-label={footer.social} className="mt-6 flex gap-2">
-                  {company.social.map((item) => {
-                    const Icon = socialIcons[item.network];
-                    return (
-                      <li key={item.href}>
-                        <a href={item.href} rel="noopener"
-                          className="grid size-11 place-items-center rounded-pill bg-on-dark/8 text-on-dark-soft transition-colors hover:bg-on-dark/14 hover:text-on-dark">
-                          <Icon className="size-5" />
-                          <span className="sr-only">{socialNames[item.network]}</span>
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
-              ) : null}
+              <p className="order-2 mt-2 max-w-[400px] text-caption leading-[1.55] text-on-dark-soft">{company.tagline}</p>
+              <div id="showroom" className="order-4 mt-4 flex max-w-[400px] items-start gap-3.5 rounded-[16px] border border-on-dark/10 bg-on-dark/6 p-2.5">
+                <span className="relative grid h-27 w-21 flex-none place-items-center overflow-hidden rounded-[10px] bg-on-dark/8 text-center text-[0.75rem] text-on-dark-soft">
+                  {showroom.photo
+                    ? <SanityImage image={showroom.photo} cover sizes="84px" />
+                    : footer.photo}
+                </span>
+                <div className="min-w-0">
+                  <p className={`${heading} mb-0`}>{footer.showroom} · {showroom.town}</p>
+                  <a href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`} target="_blank" rel="noopener"
+                    aria-label={`${address}, ${footer.openInMaps}`}
+                    className="mt-1.5 flex min-h-11 items-start gap-1.5 text-caption font-semibold leading-[1.4] text-on-dark underline decoration-on-dark/35 underline-offset-4 md:min-h-9">
+                    <PinIcon className="mt-0.5 size-3.5 flex-none" />
+                    <span>{showroom.street}<br />{showroom.postcode} {showroom.town}</span>
+                  </a>
+                  <div className="mt-1.5 flex flex-wrap gap-1.5">
+                    <a href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`} target="_blank" rel="noopener"
+                      className="inline-flex h-11 items-center rounded-pill bg-on-dark/8 px-3 text-[0.75rem] font-semibold hover:bg-on-dark/16 md:h-8.5">Google Maps</a>
+                    <a href={`https://waze.com/ul?q=${encodeURIComponent(`${showroom.street}, ${showroom.town}`)}&navigate=yes`} target="_blank" rel="noopener"
+                      className="inline-flex h-11 items-center rounded-pill bg-on-dark/8 px-3 text-[0.75rem] font-semibold hover:bg-on-dark/16 md:h-8.5">Waze</a>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {groups.map((group) => <LinkColumn key={group.heading} heading={group.heading} links={group.links} />)}
+            {/* Link columns: two across on phones, under a hairline. */}
+            <div className="order-5 mt-6 grid grid-cols-2 gap-x-4 border-t border-on-dark/12 pt-5 md:contents">
+              {groups.map((group) => (
+                <nav key={group.heading} aria-label={group.heading} className="flex flex-col">
+                  <p className={heading}>{group.heading}</p>
+                  {group.links.map((item) => <FooterLink key={`${item.href}-${item.label}`} item={item} />)}
+                </nav>
+              ))}
+            </div>
 
-            <div>
-              <h2 className={headingClass}>{dictionary.contact.heading}</h2>
-              <ul>
-                <li><a href={company.phone.href} className={linkClass}>{company.phone.display}</a></li>
-                <li><a href={`mailto:${company.email}`} className={`${linkClass} break-all`}>{company.email}</a></li>
-              </ul>
-              <div className="mt-3">
-                <LanguageSwitcher current={lang} label={dictionary.language.label} names={dictionary.language}
-                  missing={shell.missingPaths} onDark />
-              </div>
+            {/* Cereți o ofertă (phones: right after the tagline). */}
+            <div className="contents md:flex md:flex-col">
+              <p className={`${heading} order-3 mt-6 md:mt-0`}>{offer.title}</p>
+              <a href={company.phone.href}
+                className="order-3 mt-1.5 flex h-13 items-center justify-center gap-2 rounded-pill bg-white text-base font-semibold text-teal-950 hover:bg-teal-tint md:mb-1 md:mt-0.5 md:h-11 md:w-fit md:px-4.5 md:text-[0.9375rem]">
+                <PhoneV6Icon className="size-4" />{company.phone.display}
+              </a>
+              <a href={`mailto:${company.email}`}
+                className="order-3 mt-1 flex min-h-11 w-fit items-center break-all text-[0.9375rem] font-medium text-teal-tint underline underline-offset-[5px] md:mt-0 md:min-h-9 md:font-normal md:text-on-dark md:no-underline md:hover:underline">
+                <span className="md:hidden">{offer.write}:&nbsp;</span>{company.email}
+              </a>
+              <p className="order-3 mt-1.5 max-w-[240px] text-[0.8125rem] leading-normal text-on-dark-soft max-md:max-w-none">{footer.offerNote}</p>
+              <a href={`mailto:${company.email}`} className={`${link} order-6 mt-1 gap-1 md:mt-2.5`}>
+                {footer.collaborate} <ArrowV6Icon className="size-3.5" />
+              </a>
             </div>
           </div>
 
-          <p className="mt-12 border-t border-on-dark/14 pt-6 text-caption text-on-dark-soft">
-            {company.registryUrl
-              ? <a href={company.registryUrl} rel="noopener" className="underline-offset-4 hover:text-on-dark hover:underline">{legal[0]}</a>
-              : legal[0]}
-            {legal.slice(1).map((part) => <span key={part}> · {part}</span>)}
-          </p>
+          <div className="order-7 mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-on-dark/12 pt-3 md:mt-0 md:pb-4.5 md:pt-3.5">
+            <p className="hidden text-[0.8125rem] leading-normal text-on-dark-soft md:block">{legal}</p>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 max-md:w-full max-md:justify-between">
+              <p className="inline-flex items-center gap-1.5 text-[0.8125rem] text-on-dark-soft">
+                {footer.credit}
+                <svg width="12" height="12" viewBox="0 0 24 24" role="img" aria-label={footer.creditHeart} className="flex-none text-focus-on-dark">
+                  <path fill="currentColor" d="M12 21s-8-5.2-8-11.2A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8 2.8C20 15.8 12 21 12 21z" />
+                </svg>
+                {footer.creditBy}
+                <a href="https://11k.io" target="_blank" rel="noopener" className="inline-flex min-h-10 items-center font-semibold text-on-dark hover:underline hover:underline-offset-4">11k.io</a>
+              </p>
+              <span className="flex items-center gap-2">
+                <LanguageToggle current={lang} names={dictionary.language} missing={shell.missingPaths} variant="footer" />
+                {company.social.map((item) => {
+                  const Icon = socialIcons[item.network];
+                  return (
+                    <a key={item.href} href={item.href} rel="noopener" aria-label={socialNames[item.network]}
+                      className="grid size-11 place-items-center rounded-pill bg-on-dark/8 text-on-dark hover:bg-on-dark/16 md:size-10">
+                      <Icon className="size-4" />
+                    </a>
+                  );
+                })}
+              </span>
+            </div>
+          </div>
+          <p className="order-8 mt-2 text-[0.75rem] leading-normal text-on-dark-soft md:hidden">{legal}</p>
         </div>
       </footer>
       <BottomBar offerHref={`#${offerAnchor}`} offerLabel={offer.title} phoneHref={company.phone.href} callLabel={offer.call} label={dictionary.menu.quickContact} />
