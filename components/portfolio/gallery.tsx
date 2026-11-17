@@ -4,17 +4,23 @@ import {useState} from 'react';
 import {SanityImage} from '@/components/sanity-image';
 import type {Dictionary} from '@/lib/i18n/dictionaries';
 import type {ProjectDetail} from '@/sanity/portfolio';
-import {Lightbox} from './lightbox';
+import {Lightbox, usePhotoParam} from './lightbox';
 
 export type GalleryImage = NonNullable<ProjectDetail['gallery']>[number];
 
 // Galleries reach 200+ photos. Thumbnails render 24 at a time (each lazy and
-// CDN-resized); the lightbox pages through the whole set.
+// CDN-resized); the lightbox pages through the whole set. The open photo is
+// `?foto=N` on the address; `addressable` galleries also open from such a link.
 const STEP = 24;
 
-export function Gallery({images, labels}: {images: GalleryImage[]; labels: Dictionary['portfolio']}) {
+export function Gallery({images, labels, title, addressable = false}: {
+  images: GalleryImage[];
+  labels: Dictionary['portfolio'];
+  title?: string | null;
+  addressable?: boolean;
+}) {
   const [visible, setVisible] = useState(STEP);
-  const [open, setOpen] = useState<number | null>(null);
+  const photo = usePhotoParam(images.length, addressable);
 
   return (
     <>
@@ -23,9 +29,10 @@ export function Gallery({images, labels}: {images: GalleryImage[]; labels: Dicti
           <li key={image._key}>
             <button
               type="button"
-              onClick={() => setOpen(index)}
+              onClick={() => photo.show(index)}
+              aria-haspopup="dialog"
               aria-label={[labels.lightbox.open, image.alt].filter(Boolean).join(': ')}
-              className="group relative block aspect-square w-full cursor-zoom-in overflow-hidden rounded-md bg-stone"
+              className="group relative block aspect-square w-full cursor-zoom-in overflow-hidden rounded-md bg-band"
             >
               <SanityImage
                 image={image}
@@ -44,8 +51,9 @@ export function Gallery({images, labels}: {images: GalleryImage[]; labels: Dicti
           </button>
         </div>
       )}
-      {open !== null && (
-        <Lightbox images={images} index={open} onIndexChange={setOpen} onClose={() => setOpen(null)} labels={labels.lightbox} />
+      {photo.open !== null && (
+        <Lightbox sets={[{images}]} index={photo.open} title={title}
+          onIndexChange={(index) => photo.move(index)} onClose={photo.close} labels={labels.lightbox} />
       )}
     </>
   );

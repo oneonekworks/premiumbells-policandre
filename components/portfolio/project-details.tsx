@@ -101,7 +101,7 @@ export function ProjectDetails({project, category, dictionary, headingLevel}: {
           <h2 className="mb-5 font-display text-3xl font-semibold text-teal-900">
             {portfolio.gallery} <span className="text-lg font-normal text-ink-soft">({gallery.length})</span>
           </h2>
-          <Gallery images={gallery} labels={portfolio} />
+          <Gallery images={gallery} labels={portfolio} title={project.title} addressable />
         </section>
       ) : null}
     </article>
