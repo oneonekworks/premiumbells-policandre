@@ -281,7 +281,34 @@
   text-wrap: balance;
 }
 
-/* ---------- Buttons: 52px pills; colour and shadow change, never scale ---------- */
+/* ---------- Type helpers (v6) ---------- */
+
+/* Kicker: 15 / 600 ink-soft above section titles · 13 on phones. */
+@utility kicker {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: var(--text-kicker--line-height);
+  letter-spacing: var(--text-kicker--letter-spacing);
+  color: var(--color-ink-soft);
+
+  @media (width >= 48rem) {
+    font-size: var(--text-kicker);
+  }
+}
+
+/* Display face at the v6 weight; size comes from a text-* utility. */
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1;
+}
+
+/* ---------- Buttons (v6): pills; colour and shadow change, never scale ----------
+   btn 52 (default) · btn-sm 48 (compact, header) · btn-lg 60 (large CTA).
+   Variants: primary teal-900 · secondary white + e1 · light (white on dark) ·
+   quiet (inside layers: hairline border, teal text, no shadow) ·
+   outline-light (quiet on dark) · icon (44 circle). */
 
 @utility btn {
   display: inline-flex;
@@ -289,13 +316,14 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.625rem;
+  padding: 0.625rem 1.625rem;
   border: 1px solid transparent;
   border-radius: var(--radius-pill);
-  font-size: var(--text-ui);
+  font-size: 1rem;
   font-weight: 600;
   line-height: 1.2;
   text-align: center;
+  text-decoration: none;
   cursor: pointer;
   transition-property: background-color, border-color, color, box-shadow, filter;
   transition-duration: var(--duration-line);
@@ -305,11 +333,26 @@
     filter: brightness(0.9);
     transition-duration: var(--duration-press);
   }
+
+  &:disabled, &[aria-disabled='true'] {
+    background: var(--color-band);
+    color: var(--color-ink-soft);
+    box-shadow: none;
+    border-color: transparent;
+    cursor: not-allowed;
+    filter: none;
+  }
 }
 
 @utility btn-sm {
-  min-height: 2.75rem;
-  padding: 0.5rem 1.125rem;
+  min-height: 3rem;
+  padding: 0.5rem 1.375rem;
+  font-size: var(--text-ui);
+}
+
+@utility btn-lg {
+  min-height: 3.75rem;
+  padding: 0.75rem 2rem;
 }
 
 @utility btn-primary {
@@ -325,33 +368,85 @@
   background: var(--color-surface);
   color: var(--color-ink);
   box-shadow: var(--shadow-e1);
+  transition-duration: var(--duration-fade);
 
   &:hover {
     box-shadow: var(--shadow-e2);
   }
 }
 
-/* On teal-950 and on photographs. */
+/* White on teal-950 and on photographs. */
 @utility btn-light {
   background: white;
-  color: var(--color-teal-900);
+  color: var(--color-teal-950);
 
   &:hover {
     background: var(--color-teal-tint);
   }
 }
 
+/* Quiet offer inside layers and at the end of content: 46 tall, hairline 18%. */
+@utility btn-quiet {
+  min-height: 2.875rem;
+  padding: 0.5rem 1.25rem;
+  border-color: rgb(17 26 25 / 0.18);
+  background: transparent;
+  color: var(--color-teal-900);
+  font-size: var(--text-ui);
+
+  &:hover, &:focus-visible {
+    background: var(--color-teal-tint);
+    border-color: var(--color-teal-700);
+  }
+}
+
+/* The quiet button on teal-950 / the overlay: border white 35%. */
 @utility btn-outline-light {
-  border-color: color-mix(in srgb, var(--color-on-dark) 45%, transparent);
+  border-color: rgb(255 255 255 / 0.35);
+  background: transparent;
   color: var(--color-on-dark);
 
   &:hover {
     border-color: var(--color-on-dark);
-    background: color-mix(in srgb, var(--color-on-dark) 10%, transparent);
+    background: rgb(255 255 255 / 0.08);
   }
 }
 
-/* ---------- Chips ---------- */
+/* 44 round icon button (header phone, menu, close). Pair with a colour variant. */
+@utility btn-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color var(--duration-line) var(--ease-light), box-shadow var(--duration-fade) var(--ease-light);
+}
+
+/* ---------- Text link: 1px underline, 2px on hover / focus; teal-tint on dark ---------- */
+
+@utility text-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  color: var(--color-teal-700);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  transition: text-decoration-thickness var(--duration-line) var(--ease-light);
+
+  &:hover, &:focus-visible {
+    text-decoration-thickness: 2px;
+  }
+
+  .on-dark &, .dark-panel & {
+    color: var(--color-teal-tint);
+  }
+}
+
+/* ---------- Chips: 44 tall, surface + hairline; active teal-900 ---------- */
 
 @utility chip {
   display: inline-flex;
@@ -359,23 +454,33 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1.125rem;
+  border: 1px solid var(--color-hairline);
   border-radius: var(--radius-pill);
   background: var(--color-surface);
-  box-shadow: var(--shadow-e1);
   color: var(--color-ink);
-  font-size: var(--text-chip);
+  font-size: var(--text-caption);
   font-weight: 500;
   white-space: nowrap;
-  transition: background-color var(--duration-line) var(--ease-light), color var(--duration-line) var(--ease-light);
+  transition: background-color var(--duration-line) var(--ease-light), color var(--duration-line) var(--ease-light), border-color var(--duration-line) var(--ease-light);
 
   &:hover {
     background: var(--color-teal-tint);
   }
 
-  &[aria-current], &[aria-pressed='true'] {
+  &[aria-current], &[aria-pressed='true'], &[aria-selected='true'] {
+    border-color: var(--color-teal-900);
     background: var(--color-teal-900);
     color: white;
   }
+}
+
+/* Family bar: 28 × 3 (the colour comes from .bar-gold / .bar-bronze / .bar-gilt). */
+@utility family-bar {
+  display: block;
+  width: 1.75rem;
+  height: 3px;
+  flex: none;
+  border-radius: 2px;
 }
 
 /* ---------- Text helpers ---------- */
@@ -472,6 +577,42 @@
     .m-hero  { background: radial-gradient(ellipse 420px 360px at 100% -4%, rgb(var(--glow-gold) / var(--gA)), transparent 70%), radial-gradient(ellipse 320px 300px at -10% 30%, rgb(var(--glow-teal) / var(--tA)), transparent 70%), var(--color-ground); }
     .m-band  { background: radial-gradient(ellipse 460px 380px at 104% 104%, rgb(var(--glow-gold) / var(--gA)), transparent 70%), var(--color-band); }
     .m-white { background: radial-gradient(ellipse 420px 360px at -4% 0%, rgb(var(--glow-teal) / var(--tA)), transparent 70%), var(--color-ground); }
+  }
+
+  /* Break-out card: the standard clickable card. Markup:
+     <a class="bo"><span class="ph"><img/></span><span class="tx"><i class="bar bar-gold"/><b/><small/></span></a>
+     .bo-left aligns the text left (posts, models); .on-white on a white section
+     switches the tray to band 80%. */
+  .bo { position: relative; display: flex; flex-direction: column; min-width: 0; padding-inline: 14px; color: var(--color-ink); text-decoration: none; }
+  .bo::before { content: ""; position: absolute; inset: 64px 0 0; border-radius: var(--radius-tray);
+    background: rgb(255 255 255 / 0.55); border: 1px solid rgb(255 255 255 / 0.9);
+    transition: background var(--duration-card) var(--ease-light), box-shadow var(--duration-card) var(--ease-light); }
+  .on-white .bo::before, .bo.on-white::before { background: rgb(238 242 241 / 0.8); }
+  .bo > * { position: relative; }
+  .bo .ph { display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius-image); background: var(--color-band); box-shadow: var(--shadow-e2);
+    transition: transform var(--duration-card) var(--ease-light), box-shadow var(--duration-card) var(--ease-light); }
+  .bo .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--duration-image) var(--ease-light); }
+  .bo .tx { display: flex; flex-direction: column; align-items: center; padding: 18px 16px 24px; text-align: center; }
+  .bo.bo-left .tx { align-items: flex-start; padding: 18px 8px 24px; text-align: left; }
+  .bo .bar { display: block; width: 28px; height: 3px; margin-bottom: 12px; border-radius: 2px; transition: width var(--duration-card) var(--ease-light); }
+  .bo b { font-family: var(--font-display); font-size: var(--text-card); font-weight: 600; line-height: 1.1; }
+  .bo small { margin-top: 8px; color: var(--color-ink-soft); font-size: var(--text-meta); line-height: 1.5; }
+  .bo:hover::before, .bo:focus-visible::before { background: #fff; box-shadow: var(--shadow-e1); }
+  .bo:hover .ph, .bo:focus-visible .ph { transform: translateY(-12px); box-shadow: var(--shadow-e3); }
+  .bo:hover .ph img, .bo:focus-visible .ph img { transform: scale(1.03); }
+  .bo:hover .bar, .bo:focus-visible .bar { width: 56px; }
+  .bo:active .ph { transform: translateY(-4px); box-shadow: var(--shadow-e2); }
+  /* phones: tray starts 40px down, inset 8, tray radius 20, photo radius 14, name 22 */
+  @media (max-width: 47.99rem) {
+    .bo { padding-inline: 8px; }
+    .bo::before { top: 40px; border-radius: 1.25rem; }
+    .bo .ph { border-radius: 0.875rem; }
+    .bo .tx { padding: 14px 8px 18px; }
+    .bo b { font-size: 1.375rem; }
+    .bo small { font-size: var(--text-caption); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bo:hover .ph, .bo:focus-visible .ph, .bo:active .ph, .bo:hover .ph img, .bo:focus-visible .ph img { transform: none; }
   }
 
   .shimmer {                          /* gilded photos only, once per hover/focus */
