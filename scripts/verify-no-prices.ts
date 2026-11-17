@@ -3,6 +3,8 @@ import { createWriteClient, writeReport } from "./lib/import-run";
 import { findPriceText, findPriceTextInValue, type PriceFinding } from "./lib/price-text";
 
 // Read-only price check over the dataset: every string of every service,
+// (design v6: the only prices allowed are the numeric catalogVariant.price on
+// Policandre catalogue items, plus the catalogue's pricesUpdatedAt date)
 // catalogue item, project, work category and Phase 7 document (drafts
 // included) and the original filename of every asset. Catalogue PDFs need a
 // person as well (`reviewed`); their text layer is checked here once a
@@ -42,7 +44,9 @@ async function main() {
   const hits = documents.flatMap((document) => {
     const findings: PriceFinding[] = ASSET_TYPES.includes(document._type)
       ? findPriceText(document.originalFilename ?? "", "originalFilename")
-      : findPriceTextInValue(document, { skip: ["migratedAt"] }); // import timestamps read as thousands
+      // Import timestamps and the catalogue's "prices updated on" date read as thousands.
+      // Catalogue variant prices (design v6, decision 4) are numbers, which the text check never reads.
+      : findPriceTextInValue(document, { skip: ["migratedAt", "pricesUpdatedAt"] });
     return findings.map((finding) => ({ id: document._id, type: document._type, ...finding }));
   });
   const errors = hits.filter((hit) => hit.level === "error");

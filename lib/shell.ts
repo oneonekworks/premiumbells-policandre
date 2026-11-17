@@ -51,8 +51,12 @@ export type Shell = {
     tagline: string;
     social: {network: SocialNetwork; href: string}[];
   };
-  /** Footer showroom card. Not in siteSettings yet (V2): the board's values until then. */
-  showroom: {town: string; street: string; postcode: string; photo: SanityImageValue | null};
+  /** Footer showroom card; the board's address until siteSettings.showroom is filled in. */
+  showroom: {town: string; street: string; postcode: string; photo: SanityImageValue | null; mapsUrl: string | null; wazeUrl: string | null};
+  /** "… primiți oferta în [X] zile lucrătoare": null keeps the [X] placeholder. */
+  responseTime: string | null;
+  /** "Colaborează cu noi": siteSettings.partnersLink, else an e-mail. */
+  partners: string;
   header: ShellLink[];
   /** Craft columns from homePage.services.groups (Policandre · Clopote · Iconostase și uși). */
   serviceGroups: ServiceGroup[];
@@ -174,7 +178,15 @@ export const getShell = cache(async (lang: Lang, dictionary: Dictionary): Promis
       tagline: settings.tagline ?? dictionary.footer.tagline,
       social,
     },
-    showroom: {town: 'Buftea', street: 'Strada Agricultori 108', postcode: '070000', photo: null},
+    showroom: settings.showroom?.street && settings.showroom.town
+      ? {
+        town: settings.showroom.town, street: settings.showroom.street, postcode: settings.showroom.postcode ?? '',
+        photo: settings.showroom.photo ?? null, mapsUrl: settings.showroom.mapsUrl ?? null, wazeUrl: settings.showroom.wazeUrl ?? null,
+      }
+      // The board's values (address to confirm: 108 vs 110) until the CMS has them.
+      : {town: 'Buftea', street: 'Strada Agricultori 108', postcode: '070000', photo: null, mapsUrl: null, wazeUrl: null},
+    responseTime: settings.responseTime ?? null,
+    partners: linkHref(settings.partnersLink, lang, contact) ?? `mailto:${email}`,
     header: withBlog(header),
     serviceGroups: groups,
     works: {

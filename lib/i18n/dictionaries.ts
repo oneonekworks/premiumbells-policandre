@@ -24,7 +24,7 @@ const ro = {
   menu: {open: 'Deschide meniul', close: 'Închide meniul', title: 'Meniu', quickContact: 'Contact rapid'},
   contact: {call: 'Sunați-ne', email: 'Scrieți-ne', heading: 'Contact'},
   language: {label: 'Limba', ro: 'Română', en: 'English', switchTo: 'Switch to English'},
-  countries: {RO: 'România', MD: 'Republica Moldova', ES: 'Spania'},
+  countries: {RO: 'România', MD: 'Moldova', ES: 'Spania', BE: 'Belgia', GR: 'Grecia · Muntele Athos'},
   portfolio: {
     categories: 'Categorii de lucrări',
     projects: ['lucrare', 'lucrări', 'de lucrări'],
@@ -208,7 +208,7 @@ const en: Dictionary = {
   menu: {open: 'Open menu', close: 'Close menu', title: 'Menu', quickContact: 'Quick contact'},
   contact: {call: 'Call us', email: 'Email us', heading: 'Contact'},
   language: {label: 'Language', ro: 'Română', en: 'English', switchTo: 'Treceți la română'},
-  countries: {RO: 'Romania', MD: 'Moldova', ES: 'Spain'},
+  countries: {RO: 'Romania', MD: 'Moldova', ES: 'Spain', BE: 'Belgium', GR: 'Greece · Mount Athos'},
   portfolio: {
     categories: 'Work categories',
     projects: ['project', 'projects', 'projects'],

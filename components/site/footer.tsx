@@ -37,7 +37,9 @@ export function SiteFooter({lang, dictionary, shell}: {lang: Lang; dictionary: D
   const groups = (shell.footerGroups
     ?? [{heading: footer.navigation, links: shell.header}]).slice(0, 2);
   const address = `${showroom.street}, ${showroom.postcode} ${showroom.town}`;
-  const mapsQuery = encodeURIComponent(address);
+  const mapsHref = showroom.mapsUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+  const wazeHref = showroom.wazeUrl ?? `https://waze.com/ul?q=${encodeURIComponent(`${showroom.street}, ${showroom.town}`)}&navigate=yes`;
+  const offerNote = shell.responseTime ? footer.offerNote.replace('[X] zile lucrătoare', shell.responseTime).replace('[X] working days', shell.responseTime) : footer.offerNote;
   const legal = [
     `© ${new Date().getFullYear()} ${company.legalName}`,
     `CUI ${company.cui}`,
@@ -66,16 +68,16 @@ export function SiteFooter({lang, dictionary, shell}: {lang: Lang; dictionary: D
                 </span>
                 <div className="min-w-0">
                   <p className={`${heading} mb-0`}>{footer.showroom} · {showroom.town}</p>
-                  <a href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`} target="_blank" rel="noopener"
+                  <a href={mapsHref} target="_blank" rel="noopener"
                     aria-label={`${address}, ${footer.openInMaps}`}
                     className="mt-1.5 flex min-h-11 items-start gap-1.5 text-caption font-semibold leading-[1.4] text-on-dark underline decoration-on-dark/35 underline-offset-4 md:min-h-9">
                     <PinIcon className="mt-0.5 size-3.5 flex-none" />
                     <span>{showroom.street}<br />{showroom.postcode} {showroom.town}</span>
                   </a>
                   <div className="mt-1.5 flex flex-wrap gap-1.5">
-                    <a href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`} target="_blank" rel="noopener"
+                    <a href={mapsHref} target="_blank" rel="noopener"
                       className="inline-flex h-11 items-center rounded-pill bg-on-dark/8 px-3 text-[0.75rem] font-semibold hover:bg-on-dark/16 md:h-8.5">Google Maps</a>
-                    <a href={`https://waze.com/ul?q=${encodeURIComponent(`${showroom.street}, ${showroom.town}`)}&navigate=yes`} target="_blank" rel="noopener"
+                    <a href={wazeHref} target="_blank" rel="noopener"
                       className="inline-flex h-11 items-center rounded-pill bg-on-dark/8 px-3 text-[0.75rem] font-semibold hover:bg-on-dark/16 md:h-8.5">Waze</a>
                   </div>
                 </div>
@@ -103,8 +105,8 @@ export function SiteFooter({lang, dictionary, shell}: {lang: Lang; dictionary: D
                 className="order-3 mt-1 flex min-h-11 w-fit items-center break-all text-[0.9375rem] font-medium text-teal-tint underline underline-offset-[5px] md:mt-0 md:min-h-9 md:font-normal md:text-on-dark md:no-underline md:hover:underline">
                 <span className="md:hidden">{offer.write}:&nbsp;</span>{company.email}
               </a>
-              <p className="order-3 mt-1.5 max-w-[240px] text-[0.8125rem] leading-normal text-on-dark-soft max-md:max-w-none">{footer.offerNote}</p>
-              <a href={`mailto:${company.email}`} className={`${link} order-6 mt-1 gap-1 md:mt-2.5`}>
+              <p className="order-3 mt-1.5 max-w-[240px] text-[0.8125rem] leading-normal text-on-dark-soft max-md:max-w-none">{offerNote}</p>
+              <a href={shell.partners} className={`${link} order-6 mt-1 gap-1 md:mt-2.5`}>
                 {footer.collaborate} <ArrowV6Icon className="size-3.5" />
               </a>
             </div>

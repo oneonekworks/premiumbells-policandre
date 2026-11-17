@@ -211,6 +211,33 @@ Studio change → deploy (approved) → export → seed drafts (dry run, approve
 → publish (approved). Includes the price-check change and the bell-type
 classification of the 39 bell works.
 
+**Steps (2026-11-17):**
+
+1. **Studio schema** — done locally, Studio commit `415ffb2` (not deployed):
+   every §2b row of the schema proposal (25 new fields / section types, the
+   renames, nothing removed); the Studio guard test allows exactly
+   `catalogVariant.price` and `sectionCatalogue.pricesUpdatedAt`.
+2. **Website reads** — done locally: regenerated types; footer reads
+   `siteSettings.showroom`, `responseTime`, `partnersLink` (placeholders while
+   empty); BE / GR countries; `verify-no-prices` skips `pricesUpdatedAt` (the
+   price itself is a number, which the text check never reads).
+3. **Studio deploy** — waits for the user's OK (`npx sanity deploy -y`).
+4. **Export** the dataset, then **seed scripts, dry run first**, one approved
+   write each, drafts, then an approved publish:
+   - a. homePage: third slice Recondiționare policandre, `highlight`, figure
+     labels (12 · 60 · 5 țări), services / works lead, journal subtitle
+     (copy from `docs/design/clarity-v6/copy/homepage.md`);
+   - b. services: `shortName` (Proiecte la comandă, Recondiționare, Uși,
+     Marmură …), `heroFacts` and `heroInsets` from the boards' copy and
+     `assets.md`; Iconostase Bronz → `status: hidden`;
+   - c. `workCategory.craft` (Automatizări → clopote, Uși → iconostase-usi)
+     and `offerLine`;
+   - d. project countries BE / GR for the works abroad;
+   - e. `bellTypes` on the 39 bell works: a proposed classification for the
+     user to review before any write;
+   - f. waits on the client: catalogue prices + date, showroom (108 vs 110,
+     photo), response time, `partnersLink`.
+
 ### V3 · Homepage v6
 
 From the v5.10 build to the v6 boards (`V6HomeDesktop` + `B`, phone `A` + `B`):

@@ -159,6 +159,9 @@ export const SITE_QUERY = defineQuery(`{
     name, legalName, cui, registration, registryUrl, email, "phone": phone{display, e164},
     "address": ${localized('address')}, "tagline": ${fallback('tagline')},
     "social": social[]{_key, network, url},
+    "responseTime": ${localized('responseTime')},
+    "showroom": showroom{town, street, postcode, mapsUrl, wazeUrl, photo{${imageFields}}},
+    "partnersLink": partnersLink{${linkFields}},
     "seo": defaultSeo{"title": ${localized('metaTitle')}, "description": ${localized('metaDescription')}, shareImage{${imageFields}}}
   },
   "navigation": *[_id == "navigation" && ${published}][0]{
