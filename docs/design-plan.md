@@ -271,6 +271,45 @@ Serviciile noastre (3 × 3 cards, `id="servicii"`), the map story (title row,
 → Project panel), Despre noi (light) + Director panel (dark), Ascultați
 (compact), Din jurnal (byline cards), footer.
 
+**V3 done (2026-11-17), commit `96549a5`.** Checked at 1440, 1024 and 390
+against the boards (headless Chrome, `test-results/shots.mjs <url> <prefix>
+<width>`, backdrop-filter off); production build: typecheck, lint, 43 unit
+tests, 26 browser specs (home + shell) pass. Notes for the next phases:
+
+- Page root: `<div className="v6-page mood-subtle">`. `v6-page` drops the
+  footer's legacy top margin (`[main:has(.v6-page)+&]:mt-0`), so the last
+  section carries the space above the footer (as on the boards). Use it on
+  every rebuilt page; V7 deletes the legacy margin.
+- Section moods for the homepage are in `globals.css` (`m-svc`, `m-about`,
+  `m-listen`, `m-blog`, `m-director`); `.quote-mark` is the gilded “ on dark.
+- Containers: `page` = 1248 / 24 gutters, `wide` = 1360 / 16 (in
+  `home-sections.tsx`); the triptych sits in 1440 / 16.
+- Europe map: `components/map/europe-map.tsx` (static drawing in `public/maps`
+  + SVG layer for labels, leaders, dots; children positioned in %) and
+  `lib/europe-map.ts` (same projection as `tools/map-europe.js`, county centres,
+  places abroad). Reuse both for the Works Hartă view (V5). Pins: the editor's
+  `homePage.works.projects`, else the representative works + the newest work
+  per country abroad; countries without works get `[Parohie]` placeholder pins.
+- Country rows link to `/lucrarile-noastre?tara=ro|md|es|be|gr` and "Deschideți
+  harta" to `?vedere=harta`: V5 must read `tara` and `vedere`.
+- `BylineCard` (`components/blog/byline-card.tsx`) is the post card with byline
+  for Blog and "Citiți și" (V6). `BellPlayer` is now the whole listening card.
+- `VideoFacade` has `look="feature"` (the Despre noi frame); the article keeps
+  the plain look until V6.
+- Pins, project tiles and menus still link to the full project page; the
+  panel arrives in V5.
+- Content gaps seen on the homepage: the triptych slices have no own photos
+  (they fall back to the small service covers); the headline reads
+  "recondiționare" (the service's short name; the board says "recondiționări");
+  no works in Belgium or on Athos (placeholder pins, `[n]` counts); no works
+  marked `featured`, so Romania's four pins are the newest works; the
+  recording has no place/context (`[locul și clopotele, din CMS]`) and no
+  waveform (the board's generic strike shape stands in); no foundry video
+  (poster only, no play button); the director's fact line is dictionary copy
+  (`home6.directorFacts`); the Despre noi lead and points are the longer CMS
+  texts; Automatizări's cover is the product sheet; catalogues stay hidden
+  (no reviewed PDFs).
+
 ### V4 · Service pages
 
 One story-hero template for all. Policandre (catalogue with prices per finish,
