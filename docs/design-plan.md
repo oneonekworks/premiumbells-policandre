@@ -561,6 +561,26 @@ pages, desktop and phone. Scratch checks in `test-results/` (git-ignored):
 - Not added: scroll reveals (v6 has only the `--duration-reveal` token, no
   component or board asks for one); layer transitions and the Works / Blog
   cross-fades exist already.
+- Lighthouse 12.8 on premiumbells-preview.netlify.app after the push (local
+  Chrome, mobile = simulated slow 4G; Performance · Accessibility · Best
+  practices; SEO is 66 everywhere only because the preview is `noindex`):
+
+  | Page | Mobile | Desktop |
+  | --- | --- | --- |
+  | `/` | 46 · 100 · 100 (LCP 5.8 s, TBT 1.7 s, CLS 0.09) | 83 · 100 · 100 (LCP 1.3 s, **CLS 0.25**) |
+  | `/lucrarile-noastre` | 83 · 100 · 100 (LCP 4.5 s) | 98 · 100 · 100 |
+  | `/servicii/policandre` | 84 · 100 · 100 (LCP 4.3 s) | 99 · 100 · 100 |
+  | `/servicii/clopote` | 85 · 100 · 100 (LCP 3.9 s) | 98 · 100 · 100 |
+  | `/blog` | 86 · 100 · 100 (LCP 3.9 s) | 99 · 100 · 100 |
+  | `/blog/clopotele-manastirii-putna` | 83 · 100 · 100 (LCP 4.7 s) | 98 · 100 · 100 |
+
+  (The 404 cannot be scored: Lighthouse stops on a 404 status.) **Open:** the
+  homepage triptych's auto-rotation animates the slices' flex width (desktop)
+  and height (phones), so every step counts as a layout shift (desktop CLS
+  0.25, "needs improvement" at the edge of "poor"; phones also shift the page
+  below on the first step). Fix: move the slices with transforms / clip-path
+  instead of layout. Mobile LCP on every page is mostly TTFB (≈ 1.4 s from the
+  Netlify function) plus the hero photo's load.
 
 ## Content still needed from the user
 
