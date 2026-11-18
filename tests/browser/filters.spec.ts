@@ -1,133 +1,93 @@
 import {expect, test, type Page} from '@playwright/test';
 
-// Search and filters on the Clopote grid. Reads the live published dataset
-// (no writes): needs works in Iași, Botoșani and 2022, more than 24 Romanian
-// works, and at least one Moldovan one.
+// The one filter bar on Lucrările noastre (v6.2, V5): crafts, bell type after
+// Clopote, search, Galerie | Hartă, place from the map, "Arată încă 24".
+// Reads the live published dataset (no writes): needs Clopote works in Iași,
+// more than 34 works in all, and the Automatizări category.
 
-const grid = '/lucrarile-noastre/clopote';
 const fold = (text: string) => text.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
-const cards = (page: Page) => page.locator('main article');
-const search = (page: Page) => page.getByRole('searchbox', {name: 'Caută'});
-const year = (page: Page) => page.getByRole('combobox', {name: 'An'});
-const county = (page: Page) => page.getByRole('combobox', {name: 'Județ'});
-const result = (page: Page) => page.locator('main p[aria-live]');
+const tiles = (page: Page) => page.locator('main a.wt[aria-haspopup="dialog"]');
+const chip = (page: Page, name: string | RegExp) =>
+  page.getByRole('button', {name, exact: typeof name === 'string'}).filter({visible: true}).first();
+const counter = (page: Page) => page.locator('main p', {hasText: / din \d+/}).last();
 
-async function cardTexts(page: Page) {
-  await expect(cards(page).first()).toBeVisible();
-  return (await cards(page).allTextContents()).map(fold);
-}
-
-test('search ignores diacritics and adds one history entry while typing', async ({page}) => {
+test('crafts and bell type are one bar; the address follows; a type clears with its category', async ({page}) => {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
-  await page.goto(grid);
-  const all = await cards(page).count();
-  const entries = await page.evaluate(() => history.length);
+  await page.goto('/lucrarile-noastre');
+  await expect(chip(page, 'Toate')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', {name: 'Doar clopote cu jug'})).toHaveCount(0);
 
-  await search(page).pressSequentially('iasi', {delay: 40});
-  await expect(page).toHaveURL(`${grid}?cauta=iasi`);
-  await expect(result(page)).toHaveText(/^\d+ din \d+ (de )?lucrări$/);
-  const texts = await cardTexts(page);
-  expect(texts.length).toBeLessThan(all);
-  expect(texts.every((text) => text.includes('iasi'))).toBe(true);
-  expect(texts.some((text) => text.includes('ziua crucii'))).toBe(true);
-  expect(await page.evaluate(() => history.length)).toBe(entries + 1);
+  await chip(page, 'Clopote').click();
+  await expect(page).toHaveURL(/\/lucrarile-noastre\/clopote$/);
+  await expect(chip(page, 'Clopote')).toHaveAttribute('aria-pressed', 'true');
+  const all = fold((await counter(page).textContent())!);
 
-  await search(page).fill('rosu');
-  await expect(page).toHaveURL(`${grid}?cauta=rosu`);
-  await expect(cards(page).filter({hasText: 'Roșu Chiajna'})).toHaveCount(1);
-  // 16 px text, so phones do not zoom into the field.
-  expect(await search(page).evaluate((input) => parseFloat(getComputedStyle(input).fontSize))).toBeGreaterThanOrEqual(16);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await chip(page, 'Doar clopote cu jug').click();
+  await expect(page).toHaveURL(/\/lucrarile-noastre\/clopote\?tip=cu-jug$/);
+  // Works not marked with a type yet still show under each type.
+  await expect(counter(page)).toContainText('Clopote cu jug');
+  await chip(page, /^Cu jug, apăsați/).click();
+  await expect(page).toHaveURL(/\/lucrarile-noastre\/clopote$/);
+  await expect(counter(page)).not.toContainText('Clopote cu jug');
+  expect(fold((await counter(page).textContent())!)).toBe(all);
+
+  await chip(page, 'Doar clopote fără balans').click();
+  await chip(page, 'Policandre').click();
+  await expect(page).toHaveURL(/\/lucrarile-noastre\/policandre$/);
+  await expect(page.getByRole('button', {name: /clopote fără balans/})).toHaveCount(0);
+  await expect(tiles(page).first()).toContainText('Policandre ·');
+
+  await page.goBack();
+  await expect(page).toHaveURL(/tip=fara-balans/);
+  await expect(chip(page, /^Fără balans, apăsați/)).toHaveAttribute('aria-pressed', 'true');
   expect(errors).toEqual([]);
 });
 
-test('filters combine with each other and with the search; nothing found can be cleared', async ({page}) => {
-  await page.goto(grid);
-  await county(page).selectOption('botosani');
-  await expect(page).toHaveURL(`${grid}?judet=botosani`);
-  expect((await cardTexts(page)).every((text) => text.includes('botosani'))).toBe(true);
+test('search ignores diacritics; an old category address filters to itself; unknown params are ignored', async ({page}) => {
+  await page.goto('/lucrarile-noastre?an=2022');
+  await expect(tiles(page)).toHaveCount(10);
+  const field = page.getByRole('searchbox', {name: 'Caută o lucrare'}).filter({visible: true});
+  if (!(await field.count())) await page.getByRole('button', {name: 'Caută o lucrare'}).filter({visible: true}).first().click();
+  await page.getByRole('searchbox', {name: 'Caută o lucrare'}).filter({visible: true}).pressSequentially('iasi', {delay: 30});
+  await expect(page).toHaveURL(/cauta=iasi/);
+  const texts = (await tiles(page).allTextContents()).map(fold);
+  expect(texts.length).toBeGreaterThan(0);
+  expect(texts.every((text) => text.includes('iasi'))).toBe(true);
 
-  await year(page).selectOption('2018');
-  await expect(page).toHaveURL(`${grid}?an=2018&judet=botosani`);
-  expect((await cardTexts(page)).every((text) => text.includes('botosani') && text.includes('2018'))).toBe(true);
-
-  await search(page).fill('zzzz');
-  await expect(page).toHaveURL(`${grid}?cauta=zzzz&an=2018&judet=botosani`);
-  await expect(page.getByText('Nicio lucrare nu corespunde căutării.')).toBeVisible();
-  await expect(cards(page)).toHaveCount(0);
-
-  await page.getByRole('button', {name: 'Șterge filtrele'}).click();
-  await expect(page).toHaveURL(grid);
-  await expect(search(page)).toHaveValue('');
-  await expect(year(page)).toHaveValue('');
-  await expect(county(page)).toHaveValue('');
-  await expect(result(page)).toBeEmpty();
-
-  // Moldova is one option, whether or not a raion is set.
-  await county(page).selectOption('moldova');
-  await expect(page).toHaveURL(`${grid}?judet=moldova`);
-  expect((await cardTexts(page)).every((text) => text.includes('moldova'))).toBe(true);
+  await page.goto('/lucrarile-noastre/automatizari');
+  await expect(chip(page, 'Clopote')).toHaveAttribute('aria-pressed', 'true');
+  const captions = await tiles(page).locator('span span').allTextContents();
+  expect(captions.filter(Boolean).every((text) => text.startsWith('Automatizări'))).toBe(true);
 });
 
-test('pagination keeps the filters and a new filter returns to page 1', async ({page}) => {
-  // Every Romanian work matches the country name: more than one page.
-  await page.goto(`${grid}?cauta=romania`);
-  const pagination = page.getByRole('navigation', {name: 'Paginare'});
-  await expect(pagination).toContainText('Pagina 1 din 2');
-  await pagination.getByRole('link', {name: 'Înainte'}).click();
-  await expect(page).toHaveURL(`${grid}?cauta=romania&pagina=2`);
-  await expect(pagination).toContainText('Pagina 2 din 2');
-  await expect(search(page)).toHaveValue('romania');
-  expect((await cardTexts(page)).some((text) => text.includes('moldova'))).toBe(false);
+test('Hartă: a county from the list filters the gallery; its chip clears it', async ({page}) => {
+  await page.goto('/lucrarile-noastre?vedere=harta');
+  const iasi = page.getByRole('button', {name: /^Iași\s*\d+$/}).filter({visible: true}).first();
+  await expect(iasi).toBeVisible();
+  await iasi.click();
+  await expect(page).toHaveURL(/judet=iasi/);
+  await expect(page).not.toHaveURL(/vedere=harta/);
+  const texts = (await tiles(page).allTextContents()).map(fold);
+  expect(texts.length).toBeGreaterThan(0);
+  expect(texts.every((text) => text.includes('iasi'))).toBe(true);
+  await page.getByRole('button', {name: 'Iași, arată toate locurile'}).click();
+  await expect(page).toHaveURL(/\/lucrarile-noastre$/);
 
-  await year(page).selectOption('2022');
-  await expect(page).toHaveURL(`${grid}?cauta=romania&an=2022`);
-  await expect(pagination).toHaveCount(0);
-
-  // A year or county the category does not have is ignored.
-  await page.goto(`${grid}?an=1800&judet=nicaieri`);
-  await expect(result(page)).toBeEmpty();
-  await expect(cards(page)).toHaveCount(24);
+  await page.goto('/lucrarile-noastre?tara=ro');
+  expect(await tiles(page).count()).toBe(10);
 });
 
-test('the slide-over opens from filtered results and Back/Forward restore the filters', async ({page}) => {
-  await page.goto(grid);
-  await search(page).fill('parohia');
-  await expect(page).toHaveURL(`${grid}?cauta=parohia`);
-  await year(page).selectOption('2022');
-  const filtered = `${grid}?cauta=parohia&an=2022`;
-  await expect(page).toHaveURL(filtered);
-  const count = await cards(page).count();
+test('"Arată încă 24" adds tiles and keeps the page in the address; the bar docks under the header', async ({page}) => {
+  await page.goto('/lucrarile-noastre');
+  await page.getByRole('link', {name: 'Arată încă 24'}).click();
+  await expect(tiles(page)).toHaveCount(34);
+  await expect(page).toHaveURL(/pagina=2/);
 
-  const card = page.locator('main article h2 a').first();
-  const title = (await card.textContent())!.trim();
-  await card.click();
-  const modal = page.getByRole('dialog', {name: title});
-  await expect(modal).toBeVisible();
-  await expect(page).toHaveURL(/\/lucrarile-noastre\/clopote\/[a-z0-9-]+$/);
-
-  await page.keyboard.press('Escape');
-  await expect(modal).toBeHidden();
-  await expect(page).toHaveURL(filtered);
-  await expect(cards(page)).toHaveCount(count);
-  await expect(year(page)).toHaveValue('2022');
-
-  await page.goBack();
-  await expect(page).toHaveURL(`${grid}?cauta=parohia`);
-  await expect(year(page)).toHaveValue('');
-  await expect(search(page)).toHaveValue('parohia');
-  await page.goBack();
-  await expect(page).toHaveURL(grid);
-  await expect(search(page)).toHaveValue('');
-  await expect(cards(page)).toHaveCount(24);
-
-  await page.goForward();
-  await expect(page).toHaveURL(`${grid}?cauta=parohia`);
-  await expect(search(page)).toHaveValue('parohia');
-  await page.goForward();
-  await expect(page).toHaveURL(filtered);
-  await expect(cards(page)).toHaveCount(count);
-  await page.goForward();
-  await expect(modal).toBeVisible();
+  await page.evaluate(() => scrollTo(0, 1600));
+  const docked = page.locator('[role=region][aria-label="Filtre lucrări"]').filter({visible: true});
+  await expect(docked).toHaveCount(1);
+  await expect(docked).toHaveClass(/glass-docked/);
+  // Under the header (96 / 84), or at the top while a fast scroll hides the header.
+  expect((await docked.boundingBox())!.y).toBeLessThan(110);
 });

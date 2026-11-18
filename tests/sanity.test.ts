@@ -4,7 +4,6 @@ import {evaluate, parse} from 'groq-js';
 import {
   CATEGORIES_QUERY, CATEGORY_PROJECTS_QUERY, CATEGORY_QUERY, PORTFOLIO_PAGE_QUERY, PROJECT_QUERY,
 } from '../sanity/queries';
-import {pageNumber} from '../sanity/pagination';
 
 const gallery = Array.from({length: 201}, (_, i) => ({
   _key: `photo-${i}`, _type: 'imageWithMetadata',
@@ -111,11 +110,4 @@ test('full 201-image gallery keeps order; English alt falls back, captions do no
 test('page copy reads only the published singleton in a published language', async () => {
   assert.deepEqual(await query(PORTFOLIO_PAGE_QUERY, {lang: 'ro'}), {title: 'Pagina publicată', intro: 'Text public'});
   assert.equal(await query(PORTFOLIO_PAGE_QUERY, {lang: 'en'}), null);
-});
-
-test('pagination rejects malformed or unbounded page parameters', () => {
-  for (const value of [undefined, ['2'], '0', '-1', '1.5', 'NaN', '10001', '9007199254740993']) {
-    assert.equal(pageNumber(value), 1);
-  }
-  assert.equal(pageNumber('9'), 9);
 });

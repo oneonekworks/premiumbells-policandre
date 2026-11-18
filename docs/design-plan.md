@@ -395,6 +395,71 @@ renders Works + panel server-side; prev / next through the filtered list;
 quiet offer; map line; film tile. Remove the full project page, the sidebar
 and the year / county filters.
 
+**V5 done (2026-11-18).** Checked at 1440, 1024 and 390 against the boards
+(headless Chrome, backdrop-filter off; `test-results/v5.mjs <base> <dir>
+<width>` clicks through Clopote → Cu jug → docked → Hartă → panel → next →
+Esc → direct visit); production build: typecheck, lint, 38 unit tests, all
+browser specs pass (portfolio and filters rewritten). Notes for the next phases:
+
+- Data: `WORKS_QUERY` / `getWorks(lang)` reads every public work once (tagged
+  with each category's projects tag); `PROJECT_QUERY` now carries the category
+  (title, slug, craft, `offerLine`). Pure logic in `lib/works.ts` (address ↔
+  state, craft paths, bell type, place, order of Toate, captions, wall shapes,
+  island rows); `craftMetal` moved there (`lib/shell` re-exports it).
+- Address: the path segment is a category; the first category of a craft
+  stands for the craft (`/clopote` = Clopote + Automatizări, `/usi` = Iconostase
+  și uși, `/reconditionari-policandre`), other categories filter to themselves
+  (`/automatizari`). Params `tip`, `cauta`, `judet` / `tara`, `vedere=harta`,
+  `pagina` (cumulative: 10, then +24); `an` and unknown values are ignored.
+  `?tip=` shows the works marked with the type first, then every unmarked bell
+  work (none are marked yet).
+- `components/works/works-browser.tsx` renders the bar, wall and Hartă view on
+  the server from the address, then filters in the browser with the History API
+  (Next keeps `usePathname` / `useSearchParams` in step). On a project address
+  the wall keeps its last state.
+- Filter bar: desktop (≥ 1200) one pill (max 1200), sticky at 96, `glass-docked`
+  when stuck, the count only when docked; the bell types slide in after
+  Clopote. **Decision:** the board's bar does not fit 1200 with the bell types,
+  the count and labelled Galerie | Hartă, so with Clopote on the view toggle is
+  icon-only below 1440 and when docked, and the docked count is the short
+  total. Below 1200 the phone layout (chip row, search field, icon toggle) and
+  a fixed docked bar (top 84) with a small count under it. The docked bars move
+  up when the header hides (`html[data-header-hidden]`, set by `HeaderFrame`).
+- Wall: shapes from the board in an 11-slot cycle (desktop L T S [map] S S W T
+  L S S; phones F T S S [map] S S FW T S S), captions always on (desktop: craft
+  · place · what · year; phones shorter). Captions start with the category
+  title (Automatizări, Uși), not the craft word.
+- Hartă: `components/works/works-map.tsx` on the homepage `EuropeMap`; works at
+  one county centre spread on a small ring so each dot can be pointed at; dot →
+  photo card (opens the panel); island rows / phone chips filter the gallery
+  (`judet` / `tara`) and switch back to Galerie; a removable place chip shows
+  above the wall.
+- Project panel: `components/works/project-panel.tsx` (server) +
+  `project-panel-view.tsx` (dialog). Intercepted route
+  `app/[lang]/@modal/(.)lucrarile-noastre/[category]/[project]` over any page
+  (the slot has `default`, `page` and `[...rest]` returning null); direct visit
+  `lucrarile-noastre/[category]/[project]` = Works page filtered to the category
+  + the panel sent open by the server, made modal on load; × there replaces the
+  address with the category's. The list it browses: `setProjectList` from the
+  wall (its filtered list) or `ProjectListScope` (service-page `WorkCards`, with
+  `list` + `plain`: that service's works, category as text); otherwise the
+  category list from the server. Film tile opens a video layer; photos open the
+  Lightbox (`?foto=`); the map line links to `?vedere=harta&judet=…`; the offer
+  closes the panel and scrolls to `#oferta`.
+- Removed: the full project page, the category layout and sidebar, the old
+  `@modal`, `project-card` / `-details` / `-filters` / `-modal`, `category-nav`,
+  `components/pagination`, `sanity/pagination` (`portableText` lives in
+  `components/portfolio/portable-text.tsx`).
+- **RSC prefetch issue (V3 note):** Next 16.4 leaves the segment prefetches of
+  Works addresses with `?tara=` / `?judet=` open in the browser (curl gets a
+  quick 200). Those links use `prefetch={false}` (homepage country rows and map
+  links, the panel's map line, `HeadLink` with a query, "Arată încă").
+- Prod preview for this session: `web-prod-3101` (launch.json); the older
+  `web-prod` on 3100 belongs to another session.
+- Content gaps: no work is `featured` (Toate order is the crafts alternating);
+  no work has `bellTypes`; no works in Belgium or on Athos; Iconostase și uși has
+  one work (Uși); no film durations (the film tile reads "Film").
+
 ### V6 · Blog, Article, 404
 
 Featured story preview (cover + two inset photos + film pill + Pe scurt +
