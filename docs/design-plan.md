@@ -465,6 +465,52 @@ browser specs pass (portfolio and filters rewritten). Notes for the next phases:
 Featured story preview (cover + two inset photos + film pill + Pe scurt +
 byline), post cards with byline, article in the v6 type, 404.
 
+**V6 done (2026-11-18).** Checked at 1440, 1024 and 390 against the boards
+(headless Chrome, backdrop-filter off; the story preview with a temporary
+fixture, since no post has the story fields yet); production build:
+typecheck, lint, 38 unit tests, all browser specs pass (`blog.spec.ts`
+rewritten, 404 checks in `shell.spec.ts`). Notes for V7:
+
+- Blog (`app/[lang]/blog/page.tsx`, `components/blog/blog-index.tsx`): the
+  page renders everything on the server; the kind filter (glass segmented
+  control ≥ 1024, chip row below; only with two or more kinds) picks which
+  pieces show, no address change. The featured block is the newest post of
+  the chosen kind; the rest are byline cards on the band, 9 at a time ("Arată
+  mai multe" moves focus to the first new card). Cross-fade only after a
+  choice, so the LCP photo is not delayed.
+- Featured story (`featured-post.tsx`, `film-pill.tsx`): reads
+  `blogPost.story` (highlights, two insets, film); with no insets / no
+  highlights it is the plain cover | text layout (excerpt on phones too). The
+  insets shrink to 184 / 212 between 1024 and 1199 and the lower one pulls in
+  to −12 below 1440, so nothing leaves the viewport. The film layer is now one
+  component (`components/site/film-layer.tsx`), shared with the Project panel.
+- `BylineCard` gained `ground` (`band` = white 55% tray on the band) and an
+  initials avatar; `MetaLine`, `postPath`, `longDate` live in
+  `byline-card.tsx`. Removed `post-card.tsx`, `from-blog.tsx` and
+  `POSTS_REFERENCING_QUERY` (no page used them since V5).
+- Article (`app/[lang]/blog/[post]/page.tsx`, `article-body.tsx`): hero per
+  board (breadcrumb Jurnal / kind, meta, H1 to 72, cover 16:9 r28, 4:3 on
+  phones); body on `.article-grid` (text 680, `.wide` children to 1180:
+  landscape photos, galleries, films; portrait photos stay in the column);
+  every photo opens one Lightbox with all the article's photos; pull quote
+  teal italic 44 / 34, quotes over 160 characters step down to 32 / 26.
+  `VideoFacade` takes a remote still (the YouTube thumbnail when the editor
+  set no poster). **Decisions:** the board has no byline in the article, so
+  author and text source moved to one quiet line under the body ("Publicat
+  de … · Sursa textului: …"); the related works and services (every post has
+  one of each) stay, as break-out cards under "Citiți și" ("Din acest
+  articol"); works open the Project panel over the article.
+- Header: prerendered pages (Blog) report the internal `/ro/…` path to
+  `usePathname`, so `isActive` strips `/ro`; "Blog" is now marked current on
+  `/blog` as on the board.
+- 404 (`app/[lang]/not-found.tsx`): the craft cards are the menu columns (first
+  service's photo, the craft page, the board's short line from the
+  dictionary).
+- Content gaps: no post has `story` fields (the Blog shows the plain featured
+  layout until an editor fills them); no film durations (the pill shows the
+  film title); the newest post is "Clopotar electronic", not Putna as on the
+  board (order by `publishedAt`).
+
 ### V7 · Motion, accessibility, clean-up
 
 Reveals, layer transitions, filter cross-fades, reduced motion and reduced

@@ -36,8 +36,16 @@ test('language prefixes and section names are canonicalised', async ({page}) => 
 test('unknown paths return 404 inside the shell', async ({page}) => {
   const response = await page.goto('/pagina-inexistenta-check');
   expect(response?.status()).toBe(404);
-  await expect(page.getByRole('heading', {name: 'Pagina nu a fost găsită.'})).toBeVisible();
+  const main = page.locator('main');
+  await expect(main.getByRole('heading', {level: 1})).toHaveText('Pagina nu există');
   await expect(page.locator('header')).toBeVisible();
+  // v6: Acasă / Lucrările noastre, then one break-out card per craft; the footer is the only dark panel.
+  await expect(main.getByRole('link', {name: 'Acasă', exact: true})).toHaveAttribute('href', '/');
+  await expect(main.getByRole('link', {name: 'Lucrările noastre', exact: true})).toHaveAttribute('href', '/lucrarile-noastre');
+  const crafts = main.getByRole('region', {name: 'Alegeți după imagine'}).getByRole('link');
+  await expect(crafts).toHaveCount(3);
+  for (const href of await crafts.evaluateAll((links) => links.map((link) => link.getAttribute('href')))) expect(href).toMatch(/^\/servicii\/[\w-]+$/);
+  await expect(main.locator('.dark-panel, .m-dark, .m-dark2')).toHaveCount(0);
   expect((await page.goto('/en/lucrarile-noastre-inexistent'))?.status()).toBe(404);
 });
 
