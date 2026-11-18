@@ -585,7 +585,9 @@ pages, desktop and phone. Scratch checks in `test-results/` (git-ignored):
   the look is unchanged (open 2 : 1 : 1, seams, centred labels; the closed
   slices' photos no longer re-zoom as they narrow). `home.spec.ts` checks the
   open slice by `data-open`, equal shares by `--o`, and that the rotation
-  shifts nothing. Mobile LCP on every page is mostly TTFB (≈ 1.4 s from the
+  shifts nothing. Lighthouse on the preview afterwards, `/`: desktop
+  97 · 100 · 100 (LCP 1.1 s, CLS 0.001), mobile 84 · 100 · 100 (LCP 4.0 s,
+  CLS 0.003, TBT 10 ms; the 1.7 s of blocking time went with the layout work). Mobile LCP on every page is mostly TTFB (≈ 1.4 s from the
   Netlify function) plus the hero photo's load.
 
 ## Content still needed from the user
