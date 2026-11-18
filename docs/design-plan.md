@@ -587,7 +587,15 @@ pages, desktop and phone. Scratch checks in `test-results/` (git-ignored):
   open slice by `data-open`, equal shares by `--o`, and that the rotation
   shifts nothing. Lighthouse on the preview afterwards, `/`: desktop
   97 · 100 · 100 (LCP 1.1 s, CLS 0.001), mobile 84 · 100 · 100 (LCP 4.0 s,
-  CLS 0.003, TBT 10 ms; the 1.7 s of blocking time went with the layout work). Mobile LCP on every page is mostly TTFB (≈ 1.4 s from the
+  CLS 0.003, TBT 10 ms; the 1.7 s of blocking time went with the layout work).
+- **Hero photos written 2026-11-18** (approved by the user): after a raw export
+  (`.migration/backups/production-2026-11-18-before-hero-slices.tar.gz`),
+  `scripts/v6-hero-slices.mts --write` set `homePage.hero.slices[].image` on the
+  published document: Policandre = Drobeta-Turnu Severin (existing asset,
+  3200 × 2134), Clopote = inscription close-up (new upload, 2000 × 1333),
+  Recondiționare = gilded cast piece (new upload, 1957 × 1305), each with an
+  alt text and a hotspot (adjust in the Studio if needed). The triptych no
+  longer falls back to the small service covers; live on the preview at once. Mobile LCP on every page is mostly TTFB (≈ 1.4 s from the
   Netlify function) plus the hero photo's load.
 
 ## Content still needed from the user
