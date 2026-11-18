@@ -18,5 +18,6 @@ export const getHomePage = cache((lang: Lang) =>
     tags: [cacheTags.homePage, cacheTags.homeMedia, cacheTags.services, cacheTags.blog, cacheTags.categories, cacheTags.projectCounts],
   }));
 
-export const getCatalogDownloads = cache(() =>
-  sanityFetch<CATALOG_DOWNLOADS_QUERY_RESULT>({query: CATALOG_DOWNLOADS_QUERY, params: {}, tags: [cacheTags.homeMedia]}));
+/** The titles and cover alt texts are localized, so the query needs the page language. */
+export const getCatalogDownloads = cache((lang: Lang) =>
+  sanityFetch<CATALOG_DOWNLOADS_QUERY_RESULT>({query: CATALOG_DOWNLOADS_QUERY, params: {lang}, tags: [cacheTags.homeMedia]}));

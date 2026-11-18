@@ -76,7 +76,7 @@ export default async function HomePage({params}: PageProps<'/[lang]'>) {
   // Only read what a visible section needs.
   const [posts, downloads] = await Promise.all([
     blog && blog.enabled !== false ? getBlogPosts(lang) : [],
-    catalogues?.enabled === true ? getCatalogDownloads() : [],
+    catalogues?.enabled === true ? getCatalogDownloads(lang) : [],
   ]);
   const chosenPosts = blog?.postIds?.length
     ? blog.postIds.flatMap((id) => posts.filter((post) => post._id === id && post.slug))

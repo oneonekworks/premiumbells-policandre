@@ -140,9 +140,15 @@ test('the about video stays a poster until played from the keyboard', async ({pa
   if (await play.count() === 0) return;
   await play.focus();
   await page.keyboard.press('Enter');
-  const frame = about.locator('iframe');
-  await expect(frame).toHaveAttribute('src', /^https:\/\/www\.youtube-nocookie\.com\/embed\/[\w-]{11}\?/);
-  await expect(frame).toBeFocused();
+  // A YouTube video becomes the privacy-enhanced player; an uploaded file a <video>.
+  const player = about.locator('iframe, video');
+  await expect(player).toHaveCount(1);
+  if (await about.locator('iframe').count()) {
+    await expect(player).toHaveAttribute('src', /^https:\/\/www\.youtube-nocookie\.com\/embed\/[\w-]{11}\?/);
+  } else {
+    await expect(player).toHaveAttribute('controls', '');
+  }
+  await expect(player).toBeFocused();
 });
 
 test('the about anchor from the footer lands on the section', async ({page}) => {
