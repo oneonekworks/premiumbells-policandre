@@ -18,7 +18,6 @@ import {ComandaPage} from './pages/comanda';
 import {PolicandrePage} from './pages/policandre';
 import {ReconditionarePage} from './pages/reconditionare';
 import {UsiPage} from './pages/usi';
-import {ServiceSections} from './service-sections';
 import {StoryHero} from './story-hero';
 
 /** Internal paths per published language, for canonical and hreflang. */
@@ -49,8 +48,9 @@ export function serviceMetadata(lang: Lang, service: ServiceDetail): Metadata {
 type Props = {lang: Lang; service: ServiceDetail; dictionary: Dictionary};
 
 /**
- * Any other public service: the story hero, its text and its CMS sections.
- * The v6 pages (boards) are below; every current service has one.
+ * Any other public service: the story hero and its text. The v6 pages
+ * (boards) are below; every current service has one, so a new service gets a
+ * board-made page before its sections show.
  */
 function GenericServicePage({lang, service, dictionary}: Props) {
   const title = service.shortName ?? service.title ?? '';
@@ -61,13 +61,12 @@ function GenericServicePage({lang, service, dictionary}: Props) {
         title={title} metal="gold" subline={service.cardLabel} lead={service.summary}
         factsLabel={dictionary.services.facts} facts={heroFacts(service)} photo={service.coverImage} insets={heroInsets(service)} />
       <Section ground="band">
-        <div className={`${wrap} space-y-16`}>
+        <div className={wrap}>
           {service.body?.length ? (
             <div className="max-w-(--container-text) space-y-4 text-body">
               <PortableText value={service.body} components={portableText} />
             </div>
           ) : null}
-          <ServiceSections sections={service.sections ?? []} lang={lang} dictionary={dictionary} subject={service.title ?? ''} />
         </div>
       </Section>
     </div>

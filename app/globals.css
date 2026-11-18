@@ -3,10 +3,9 @@
 /*
  * Design tokens · v6 "Clarity" (v6.2, locked 2026-11-17).
  * Source: docs/design/clarity-v6/tokens.css (the board files win where they
- * differ). Adapted: fonts come from next/font (see @theme inline below), the
- * warm v2–v6.1 lightbox recipes are left out, and the Patina names that pages
- * not yet redesigned still use are kept as aliases at the end of @theme
- * (delete them in V7, docs/design-plan.md).
+ * differ). Adapted: fonts come from next/font (see @theme inline below) and
+ * the warm v2–v6.1 lightbox recipes are left out. The Patina aliases and
+ * recipes were deleted in V7 (docs/design-plan.md).
  * Contrast ratios (WCAG 2.x) are noted on every colour used for text.
  */
 @theme {
@@ -169,51 +168,11 @@
   --stagger-menu: 30ms;
   --stagger-text: 100ms;
 
-  /* ---------- Patina aliases for pages not yet redesigned (delete in V7) ---------- */
-  --color-sunk: var(--color-band);
-  --color-paper: var(--color-ground);
-  --color-stone: var(--color-band);
-  --color-line: var(--color-hairline);
-  --color-teal-50: var(--color-teal-tint);
-  --color-teal-500: #14a394;
-  --color-gold-500: #b38b4d;
-  --color-gold-700: #7d5f2e;
-  --color-gold-200: #e6d5b5;
-  --color-chip-count-on: #b9d0cb;          /* count inside an active chip · 7.72 on teal-900 */
-  --text-hero-line: clamp(2.625rem, 6.1vw, 5.5rem);
-  --text-hero-line--line-height: 0.95;
-  --text-hero-line--letter-spacing: -0.02em;
-  --text-offer: clamp(4rem, 8.4vw, 7.5rem);
-  --text-offer--line-height: 0.9;
-  --text-offer--letter-spacing: -0.02em;
-  --text-claim: clamp(1.375rem, 2vw, 1.75rem);
-  --text-claim--line-height: 1.2;
-  --text-slice-name: clamp(3rem, 4vw, 3.5rem);
-  --text-slice-name--line-height: 1;
-  --text-craft: clamp(2rem, 2.6vw, 2.25rem);
-  --text-craft--line-height: 0.95;
-  --text-post-title: clamp(1.625rem, 2.1vw, 1.875rem);
-  --text-post-title--line-height: 1.1;
-  --text-quote: clamp(1.5625rem, 2.1vw, 1.875rem);
-  --text-quote--line-height: 1.22;
-  --text-key: clamp(1.5rem, 2vw, 1.75rem);
-  --text-key--line-height: 1;
-  --text-card-lg: 1.375rem;
-  --text-card-lg--line-height: 1.2;
-  --text-article: 1.0625rem;
-  --text-article--line-height: 1.7;
-  --text-chip: 0.875rem;
+  /* ---------- Build tokens without a tokens.css name ---------- */
+  --text-chip: 0.875rem;             /* 14 · language switch */
   --text-chip--line-height: 1;
-  --text-micro: 0.75rem;
-  --text-micro--line-height: 1.35;
-  --spacing-header: 6rem;                  /* anchor scroll offset under the fixed v6 pill (16 + 68 + 12) */
-  --spacing-card-inset: 0.5rem;
-  --spacing-gap-pair: 1.5rem;
-  --spacing-gap-services: 1rem;
-  --spacing-triptych-seam: 0.375rem;
-  --radius-tile: 0.75rem;
-  --radius-menu: 1.5rem;
-  --duration-slice: 480ms;
+  --spacing-header: 6rem;            /* anchor scroll offset under the fixed v6 pill (16 + 68 + 12) */
+  --duration-slice: 480ms;           /* triptych slice change */
 }
 
 /* Fonts: self-hosted by next/font (app/[lang]/layout.tsx). */
@@ -248,32 +207,6 @@
 }
 
 /* ---------- Layout ---------- */
-
-/* Legacy page container (Patina): width now follows --container-page (1248),
-   gutters 20 phones · 32 tablet · 24 inside the 1248 box on desktop. */
-@utility container-site {
-  width: 100%;
-  max-width: var(--container-page);
-  margin-inline: auto;
-  padding-inline: 1.25rem;
-
-  @media (width >= 48rem) {
-    padding-inline: 2rem;
-  }
-
-  @media (width >= 64rem) {
-    padding-inline: var(--spacing-gutter);
-  }
-}
-
-/* Legacy: the redesign has no eyebrows. Remove with the pages that use it. */
-@utility eyebrow {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--color-teal-700);
-}
 
 @utility section-title {
   font-family: var(--font-display);
@@ -484,6 +417,25 @@
   height: 3px;
   flex: none;
   border-radius: 2px;
+}
+
+/* Reduced motion: no movement at all. Tailwind v4 moves with the separate
+   translate / scale properties (from --tw-translate-* / --tw-scale-*), so
+   transform-none alone misses them; zeroing the variables also survives the
+   CSS minifier, which folds translate / scale: none into one transform. Use
+   as motion-reduce:still next to hover lifts and zooms; important, because
+   hover / group-hover variants sort after motion-reduce. */
+@utility still {
+  --tw-translate-x: 0 !important;
+  --tw-translate-y: 0 !important;
+  --tw-translate-z: 0 !important;
+  --tw-scale-x: 100% !important;
+  --tw-scale-y: 100% !important;
+  --tw-scale-z: 100% !important;
+  /* Arbitrary values (scale-[1.03]) set the property itself; var() keeps the minifier from folding it. */
+  scale: var(--still-scale, none) !important;
+  translate: var(--still-translate, none) !important;
+  transform: none !important;
 }
 
 /* ---------- Text helpers ---------- */
@@ -727,97 +679,6 @@
   }
   .focus-ring:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
   .dark-panel .focus-ring:focus-visible { outline-color: var(--color-focus-on-dark); }
-}
-
-/* ---------- Patina recipes for pages not yet redesigned (delete in V7) ---------- */
-@layer components {
-  /* v4 Elevation card; the break-out card (.bo) replaces it page by page. */
-  .card {
-    background: var(--color-surface);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-e1);
-  }
-
-  .card-lift {
-    transition-property: transform, box-shadow;
-    transition-duration: var(--duration-fade);
-    transition-timing-function: var(--ease-light);
-  }
-
-  .card-photo {
-    overflow: hidden;
-  }
-
-  .card-photo img {
-    transition: transform var(--duration-fade) var(--ease-light);
-  }
-
-  .card-lift:hover, .card-lift:has(:focus-visible), .card-lift:focus-visible {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-e2);
-  }
-
-  .card-lift:hover .card-photo img,
-  .card-lift:has(:focus-visible) .card-photo img,
-  .card-lift:focus-visible .card-photo img {
-    transform: scale(1.03);
-  }
-
-  .card-lift:active {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-e1);
-    transition-duration: var(--duration-press);
-  }
-
-  .card-lift.card-bare:hover, .card-lift.card-bare:has(:focus-visible) {
-    box-shadow: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .card-lift:hover, .card-lift:has(:focus-visible), .card-lift:focus-visible, .card-lift:active {
-      transform: none;
-    }
-
-    .card-lift .card-photo img {
-      transform: none !important;
-    }
-  }
-
-  .grain { position: relative; isolation: isolate; }
-  .grain::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: inherit;
-    pointer-events: none;
-    background: url('/img/grain-256.png');
-    opacity: 0.3;
-  }
-
-  .vignette::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    box-shadow: inset 0 0 200px rgb(0 0 0 / 0.55);
-  }
-
-  .arch { border-radius: 9999px 9999px 0 0; overflow: hidden; }
-  .arch-low { border-radius: 50% 50% 0 0 / 24% 24% 0 0; overflow: hidden; }
-
-  .photo-gradient {
-    position: absolute;
-    inset: auto 0 0;
-    height: 62%;
-    background: linear-gradient(to top, rgb(8 16 15 / 0.82) 0%, rgb(8 16 15 / 0.55) 42%, rgb(8 16 15 / 0) 100%);
-    pointer-events: none;
-
-    @media (width >= 64rem) {
-      height: 46%;
-    }
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

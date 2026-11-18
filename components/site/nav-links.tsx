@@ -68,8 +68,8 @@ export function MenuRow({item, active, onNavigate, compact = false}: {
 export function WorksFeature({card, onNavigate}: {card: WorksCard; onNavigate: () => void}) {
   return (
     <Link href={card.href} onClick={onNavigate}
-      className="group relative block min-h-44 overflow-hidden rounded-[18px] bg-band shadow-e2 transition-[transform,box-shadow] duration-(--duration-fade) ease-light hover:-translate-y-1 hover:shadow-e3 focus-visible:-translate-y-1 focus-visible:shadow-e3">
-      <span className="absolute inset-0 transition-transform duration-(--duration-image) ease-light group-hover:scale-[1.03]">
+      className="group relative block min-h-44 overflow-hidden rounded-[18px] bg-band shadow-e2 transition-[translate,scale,box-shadow] duration-(--duration-fade) ease-light hover:-translate-y-1 hover:shadow-e3 focus-visible:-translate-y-1 focus-visible:shadow-e3 motion-reduce:still">
+      <span className="absolute inset-0 transition-transform duration-(--duration-image) ease-light group-hover:scale-[1.03] motion-reduce:still">
         <SanityImage image={card.image && {...card.image, alt: ''}} cover sizes="248px" />
       </span>
       <span className="glass-light absolute inset-x-2.5 bottom-2.5 flex items-center justify-between gap-2 rounded-caption px-3.5 py-3">

@@ -12,7 +12,7 @@ import {crumbs, fill, heroFacts, heroInsets, serviceBySlug, type PageProps} from
 
 type Models = Extract<ServiceSection, {_type: 'sectionModels'}>;
 
-const tile = 'group relative block size-full overflow-hidden rounded-image bg-teal-950 shadow-e2 transition-[transform,box-shadow] duration-(--duration-card) ease-(--ease-light) hover:-translate-y-1 hover:shadow-e3 focus-visible:-translate-y-1 motion-reduce:hover:translate-y-0';
+const tile = 'group relative block size-full overflow-hidden rounded-image bg-teal-950 shadow-e2 transition-[translate,scale,box-shadow] duration-(--duration-card) ease-(--ease-light) hover:-translate-y-1 hover:shadow-e3 focus-visible:-translate-y-1 motion-reduce:hover:translate-y-0';
 
 /**
  * /servicii/usi (boards V6ServiceUsi + Mobile): the client keeps one door

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {youtubeId} from '../components/portfolio/video-embed';
+import {youtubeId} from '../lib/video';
 import {photoAlt, subject} from '../lib/alt';
 import {plural} from '../lib/i18n/format';
 import {alternateHref, localizedHref, parsePublicPath, resolveEnglishPath} from '../lib/i18n/routing';

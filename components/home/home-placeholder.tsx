@@ -1,28 +1,27 @@
 import Link from 'next/link';
-import {ArrowRightIcon, PhoneIcon} from '@/components/site/icons';
+import {PhoneIcon} from '@/components/site/icons';
 import type {Dictionary} from '@/lib/i18n/dictionaries';
 import {localizedHref, type Lang} from '@/lib/i18n/routing';
 
 // Shown while the `homePage` singleton is not published in this language
-// (English for now, decision 12). Remove it, with `home.*`, once the English
-// home page is published.
+// (English for now, decision 12), in the v6 type: white hero, the crafts on
+// the band. Remove it, with `home.*`, once the English home page is published.
 export function HomePlaceholder({lang, dictionary, phoneHref}: {lang: Lang; dictionary: Dictionary; phoneHref: string}) {
   const {home} = dictionary;
+  const page = 'mx-auto max-w-(--container-page) px-5 md:px-6';
+  const bars = ['bar-gold', 'bar-bronze', 'bar-gilt', 'bar-gold'];
 
   return (
-    <>
-      <section className="border-b border-line bg-stone">
-        <div className="container-site py-16 sm:py-24 lg:py-28">
-          <p className="eyebrow">{home.eyebrow}</p>
-          <h1 className="mt-5 max-w-4xl font-display text-5xl font-semibold leading-[1.05] text-teal-900 sm:text-6xl lg:text-7xl">
+    <div className="v6-page mood-subtle">
+      <section className="m-hero pb-22 pt-7 lg:pb-34 lg:pt-11">
+        <div className={page}>
+          <p className="kicker mb-3 md:mb-4">{home.eyebrow}</p>
+          <h1 className="max-w-4xl font-display text-[3.25rem] font-medium leading-[1.02] tracking-[-0.015em] lg:text-[clamp(4rem,7vw,6rem)] lg:leading-[0.98]">
             {home.title}
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft sm:text-xl">{home.lead}</p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <Link href={localizedHref(lang, '/lucrarile-noastre')} className="btn btn-primary">
-              {home.primary}
-              <ArrowRightIcon className="size-4" />
-            </Link>
+          <p className="mt-5 max-w-2xl text-[1.0625rem] leading-[1.6] text-ink-soft lg:text-lead">{home.lead}</p>
+          <div className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:gap-3">
+            <Link href={localizedHref(lang, '/lucrarile-noastre')} className="btn btn-primary">{home.primary}</Link>
             <a href={phoneHref} className="btn btn-secondary">
               <PhoneIcon className="size-4 text-teal-700" />
               {home.secondary}
@@ -31,23 +30,20 @@ export function HomePlaceholder({lang, dictionary, phoneHref}: {lang: Lang; dict
         </div>
       </section>
 
-      <section className="container-site py-16 sm:py-20">
-        <h2 className="font-display text-4xl font-semibold text-teal-900">{home.servicesHeading}</h2>
-        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {home.services.map((service) => (
-            <li key={service.title}>
-              <Link
-                href={localizedHref(lang, '/servicii')}
-                className="group flex h-full flex-col rounded-lg border border-line bg-white p-6 transition-shadow hover:shadow-lg hover:shadow-teal-900/5"
-              >
-                <span aria-hidden="true" className="mb-5 h-0.5 w-10 bg-gold-500" />
-                <span className="font-display text-2xl font-semibold text-teal-900 group-hover:text-teal-700">{service.title}</span>
-                <span className="mt-3 leading-relaxed text-ink-soft">{service.text}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <section aria-labelledby="home-crafts" className="m-band py-22 lg:py-34">
+        <div className={page}>
+          <h2 id="home-crafts" className="section-title">{home.servicesHeading}</h2>
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-6">
+            {home.services.map((service, index) => (
+              <li key={service.title} className="rounded-tray border border-white/90 bg-white/55 px-6 pb-7 pt-6">
+                <i aria-hidden="true" className={`family-bar mb-4 block ${bars[index % bars.length]}`} />
+                <h3 className="font-display text-card font-semibold leading-[1.1]">{service.title}</h3>
+                <p className="mt-2 text-meta leading-[1.5] text-ink-soft">{service.text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
-    </>
+    </div>
   );
 }

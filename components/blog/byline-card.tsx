@@ -52,8 +52,8 @@ export function BylineCard({post, lang, dictionary, className = '', sizes = '(mi
       className={`post-card group relative flex flex-col px-2.5 pb-5 text-ink outline-offset-8 md:px-3.5 md:pb-7 ${className}`}>
       <span aria-hidden="true"
         className={`absolute inset-x-0 bottom-0 top-11 rounded-card border border-white/90 transition-[background-color,box-shadow] duration-(--duration-card) ease-light group-hover:bg-white group-hover:shadow-e1 group-focus-visible:bg-white group-focus-visible:shadow-e1 md:top-16 md:rounded-tray ${ground === 'band' ? 'bg-white/55' : 'bg-band/80'}`} />
-      <span className="relative block aspect-[4/3] overflow-hidden rounded-[1.125rem] bg-band shadow-e2 transition-[translate,box-shadow] duration-(--duration-card) ease-light group-hover:-translate-y-3 group-hover:shadow-e3 group-focus-visible:-translate-y-3 group-focus-visible:shadow-e3 group-active:-translate-y-1 motion-reduce:transform-none md:rounded-card">
-        <span className="absolute inset-0 transition-transform duration-(--duration-image) ease-light group-hover:scale-[1.04] motion-reduce:transform-none">
+      <span className="relative block aspect-[4/3] overflow-hidden rounded-[1.125rem] bg-band shadow-e2 transition-[translate,box-shadow] duration-(--duration-card) ease-light group-hover:-translate-y-3 group-hover:shadow-e3 group-focus-visible:-translate-y-3 group-focus-visible:shadow-e3 group-active:-translate-y-1 motion-reduce:still md:rounded-card">
+        <span className="absolute inset-0 transition-transform duration-(--duration-image) ease-light group-hover:scale-[1.04] motion-reduce:still">
           <SanityImage image={post.cover && {...post.cover, alt: ''}} ratio={4 / 3} sizes={sizes} />
         </span>
       </span>

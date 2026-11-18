@@ -1,8 +1,5 @@
-// Pure helpers for service pages (paths, the overview tree, catalogue
-// formatting), shared by the routes and unit-tested in tests/services.test.ts.
-import type {SERVICES_QUERY_RESULT} from '@/sanity/types';
-
-type ServiceListItem = SERVICES_QUERY_RESULT[number];
+// Pure helpers for service pages (paths, catalogue formatting), shared by
+// the routes and unit-tested in tests/services.test.ts.
 
 export const servicesPath = '/servicii';
 
@@ -19,15 +16,6 @@ export const defaultVariants: Record<string, string> = {clopote: 'cu-jug'};
 export function servicePath(parentSlug: string | null | undefined, slug: string): string {
   if (parentSlug && defaultVariants[parentSlug] === slug) return `${servicesPath}/${parentSlug}`;
   return parentSlug ? `${servicesPath}/${parentSlug}/${slug}` : `${servicesPath}/${slug}`;
-}
-
-export type ServiceNode = ServiceListItem & {variants: ServiceListItem[]};
-
-/** Top-level services in order, each with its public variants; orphaned variants are dropped. */
-export function serviceTree(services: readonly ServiceListItem[]): ServiceNode[] {
-  return services
-    .filter((service) => !service.parentId)
-    .map((parent) => ({...parent, variants: services.filter((service) => service.parentId === parent._id)}));
 }
 
 /** Cache key for getCatalogItems, so ["horos", "policandre"] and the reverse share one read. */

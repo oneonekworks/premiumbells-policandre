@@ -60,7 +60,7 @@ function TypePicker({current, question, hrefs}: {current: BellType; question: st
                   <span className="lg:hidden">{item.lineShort}</span><span className="max-lg:hidden">{item.line}</span>
                 </small>
               </span>
-              {on ? null : <i aria-hidden="true" className="absolute right-3.5 top-4 text-xl not-italic text-teal-700 transition-transform duration-(--duration-fade) group-hover:translate-x-1 lg:static lg:ml-auto lg:text-[1.375rem]">→</i>}
+              {on ? null : <i aria-hidden="true" className="absolute right-3.5 top-4 text-xl not-italic text-teal-700 transition-transform duration-(--duration-fade) group-hover:translate-x-1 motion-reduce:still lg:static lg:ml-auto lg:text-[1.375rem]">→</i>}
             </Link>
           );
         })}

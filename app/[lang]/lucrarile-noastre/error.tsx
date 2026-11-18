@@ -12,8 +12,8 @@ export default function WorksError({retry}: {retry: () => void}) {
   const {lang} = parsePublicPath(usePathname());
   const text = copy[lang];
   return (
-    <div role="alert" className="container-site py-16">
-      <h1 className="font-display text-4xl font-semibold text-teal-900">{text.title}</h1>
+    <div role="alert" className="mx-auto max-w-(--container-page) px-5 pb-22 pt-7 md:px-6 lg:pb-34 lg:pt-11">
+      <h1 className="font-display text-[2.5rem] font-medium leading-[1.05] tracking-[-0.015em] lg:text-[3.5rem]">{text.title}</h1>
       <p className="mt-4 text-ink-soft">{text.text}</p>
       <button type="button" className="btn btn-primary mt-8" onClick={retry}>{text.retry}</button>
     </div>

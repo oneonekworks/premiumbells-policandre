@@ -27,38 +27,6 @@ export function PhoneIcon(props: IconProps) {
   );
 }
 
-export function MailIcon(props: IconProps) {
-  return (
-    <Outline {...props}>
-      <path d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-    </Outline>
-  );
-}
-
-export function MenuIcon(props: IconProps) {
-  return (
-    <Outline {...props}>
-      <path d="M3.75 7.5h16.5M3.75 12h16.5M3.75 16.5h16.5" />
-    </Outline>
-  );
-}
-
-export function CloseIcon(props: IconProps) {
-  return (
-    <Outline {...props}>
-      <path d="M6 18 18 6M6 6l12 12" />
-    </Outline>
-  );
-}
-
-export function ArrowRightIcon(props: IconProps) {
-  return (
-    <Outline {...props}>
-      <path d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-    </Outline>
-  );
-}
-
 export function FacebookIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
@@ -77,14 +45,6 @@ export function InstagramIcon(props: IconProps) {
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="17.25" cy="6.75" r="0.75" fill="currentColor" stroke="none" />
-    </Outline>
-  );
-}
-
-export function ChevronDownIcon(props: IconProps) {
-  return (
-    <Outline {...props}>
-      <path d="m19.5 8.25-7.5 7.5-7.5-7.5" />
     </Outline>
   );
 }

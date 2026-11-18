@@ -189,7 +189,7 @@ export function HomeCatalogues({section, downloads, lang, dictionary}: Base & {s
           return (
             <li key={item._id}>
               <a href={item.url!} target="_blank" rel="noopener" aria-label={`${t.readOnline}: ${item.title}`}
-                className="block rounded-[0.875rem] bg-white p-1.5 shadow-e1 transition-[translate,box-shadow] duration-(--duration-fade) ease-light hover:-translate-y-1.5 hover:shadow-e2 focus-visible:-translate-y-1.5 motion-reduce:transform-none md:rounded-image md:p-2">
+                className="block rounded-[0.875rem] bg-white p-1.5 shadow-e1 transition-[translate,box-shadow] duration-(--duration-fade) ease-light hover:-translate-y-1.5 hover:shadow-e2 focus-visible:-translate-y-1.5 motion-reduce:still md:rounded-image md:p-2">
                 <span className="relative block aspect-[3/4] overflow-hidden rounded-[9px] bg-band md:rounded-[10px]">
                   <SanityImage image={item.cover && {...item.cover, alt: ''}} ratio={3 / 4} sizes="240px" />
                 </span>

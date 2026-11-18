@@ -42,7 +42,7 @@ function Figure({image, index, title, open}: {image: Photo; index: number; title
     <figure className={`my-10 lg:my-14 ${wide ? 'wide' : ''}`}>
       <LightboxTrigger index={index} label={`${open}: ${alt}`} className="group block w-full">
         <span className="relative block overflow-hidden rounded-image bg-band lg:rounded-card" style={{aspectRatio: ratio}}>
-          <span className="absolute inset-0 transition-transform duration-(--duration-image) ease-light group-hover:scale-[1.02] motion-reduce:transform-none">
+          <span className="absolute inset-0 transition-transform duration-(--duration-image) ease-light group-hover:scale-[1.02] motion-reduce:still">
             <SanityImage image={{...image, alt}} ratio={ratio} sizes={wide ? wideSizes : '(min-width: 768px) 680px, 100vw'} />
           </span>
         </span>
@@ -64,7 +64,7 @@ function ArticleGallery({block, start, title, labels}: {block: Block<'articleGal
             <li key={image._key}>
               <LightboxTrigger index={start + index} label={`${labels.portfolio.lightbox.open}: ${alt}`}
                 className="group relative block aspect-square w-full overflow-hidden rounded-[0.875rem] bg-band md:rounded-image">
-                <span className="absolute inset-0 transition-transform duration-(--duration-image) ease-light group-hover:scale-[1.03] motion-reduce:transform-none">
+                <span className="absolute inset-0 transition-transform duration-(--duration-image) ease-light group-hover:scale-[1.03] motion-reduce:still">
                   <SanityImage image={{...image, alt}} ratio={1} sizes="(min-width: 1228px) 390px, (min-width: 768px) 33vw, 50vw" />
                 </span>
               </LightboxTrigger>

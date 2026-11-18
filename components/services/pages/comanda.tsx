@@ -58,7 +58,7 @@ export async function ComandaPage({lang, service, dictionary}: PageProps) {
               {plates.slice(0, copy.plates.shown).map((plate, index) => (
                 <li key={plate._key}>
                   <LightboxTrigger index={cover.length + index} label={`${copy.plates.zoom}: ${plate.alt}`}
-                    className="group block aspect-[5/7] w-full overflow-hidden rounded-[14px] bg-white p-2 shadow-e2 transition-[transform,box-shadow] duration-(--duration-card) ease-(--ease-light) hover:-translate-y-1.5 hover:shadow-e3 focus-visible:-translate-y-1.5 lg:rounded-image lg:p-3 motion-reduce:hover:translate-y-0">
+                    className="group block aspect-[5/7] w-full overflow-hidden rounded-[14px] bg-white p-2 shadow-e2 transition-[translate,scale,box-shadow] duration-(--duration-card) ease-(--ease-light) hover:-translate-y-1.5 hover:shadow-e3 focus-visible:-translate-y-1.5 lg:rounded-image lg:p-3 motion-reduce:hover:translate-y-0">
                     <span className="relative block size-full">
                       <SanityImage image={plate} sizes="(max-width: 1024px) 50vw, 332px"
                         className="transition-transform duration-(--duration-image) ease-(--ease-light) group-hover:scale-[1.03] motion-reduce:group-hover:scale-100" />

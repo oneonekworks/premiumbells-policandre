@@ -41,15 +41,15 @@ export function FeaturedPost({post, lang, dictionary}: {post: BlogListPost; lang
   return (
     <article className={`fp group relative px-3 text-ink lg:grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:px-0 ${rich ? 'lg:gap-18' : 'lg:gap-14'}`}>
       <div className={`relative ${story.length ? 'mb-21 lg:mb-0' : ''}`}>
-        <span className="relative block aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-band shadow-e3 transition-transform duration-(--duration-card) ease-light lg:rounded-panel lg:group-hover:-translate-y-1.5 motion-reduce:transform-none">
-          <span className="absolute inset-0 transition-transform duration-500 ease-light lg:group-hover:scale-[1.03] motion-reduce:transform-none">
+        <span className="relative block aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-band shadow-e3 transition-transform duration-(--duration-card) ease-light lg:rounded-panel lg:group-hover:-translate-y-1.5 motion-reduce:still">
+          <span className="absolute inset-0 transition-transform duration-500 ease-light lg:group-hover:scale-[1.03] motion-reduce:still">
             <SanityImage image={post.cover && {...post.cover, alt: photoAlt(post.cover, title)}} ratio={4 / 3} priority
               sizes="(min-width: 1440px) 700px, (min-width: 1024px) 50vw, 100vw" />
           </span>
         </span>
         {story.map((inset, index) => (
           <figure key={inset._key}
-            className={`pointer-events-none absolute z-[1] m-0 rounded-[14px] bg-white px-[5px] pt-[5px] shadow-e3 transition-transform duration-[420ms] ease-light motion-reduce:transform-none lg:rounded-image lg:px-1.5 lg:pt-1.5 ${index === 0
+            className={`pointer-events-none absolute z-[1] m-0 rounded-[14px] bg-white px-[5px] pt-[5px] shadow-e3 transition-transform duration-[420ms] ease-light motion-reduce:still lg:rounded-image lg:px-1.5 lg:pt-1.5 ${index === 0
               ? 'bottom-[-64px] right-1 w-40 lg:bottom-auto lg:right-[-28px] lg:top-[-48px] lg:w-46 xl:w-59 lg:group-hover:translate-x-2.5 lg:group-hover:-translate-y-2.5'
               : 'bottom-[-84px] left-[-4px] w-44 lg:bottom-[-56px] lg:left-[-12px] lg:w-53 xl:w-68 lg:group-hover:-translate-x-2.5 lg:group-hover:translate-y-2.5 2xl:left-[-40px]'}`}>
             <span className="relative block aspect-[3/2] overflow-hidden rounded-[10px] bg-band lg:rounded-[11px]">

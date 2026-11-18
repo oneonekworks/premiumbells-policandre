@@ -37,7 +37,7 @@ export function VideoFacade({poster, video, playLabel, sizes, caption, look = 'p
 
   const feature = look === 'feature';
   const frame = feature
-    ? 'relative aspect-[4/3] overflow-hidden rounded-card bg-band shadow-e2 transition-[translate,box-shadow] duration-(--duration-card) ease-light hover:-translate-y-2 hover:shadow-e3 has-focus-visible:-translate-y-2 has-focus-visible:shadow-e3 motion-reduce:transform-none md:aspect-[16/10] md:rounded-tray'
+    ? 'relative aspect-[4/3] overflow-hidden rounded-card bg-band shadow-e2 transition-[translate,box-shadow] duration-(--duration-card) ease-light hover:-translate-y-2 hover:shadow-e3 has-focus-visible:-translate-y-2 has-focus-visible:shadow-e3 motion-reduce:still md:aspect-[16/10] md:rounded-tray'
     : 'relative aspect-video overflow-hidden rounded-card bg-band shadow-e1';
 
   if (playing && video) {
@@ -63,7 +63,7 @@ export function VideoFacade({poster, video, playLabel, sizes, caption, look = 'p
 
   return (
     <div className={`${frame} group`}>
-      <span className={`absolute inset-0 transition-transform ease-light group-hover:scale-[1.03] motion-reduce:transform-none ${feature ? 'duration-[800ms]' : 'duration-(--duration-fade)'}`}>
+      <span className={`absolute inset-0 transition-transform ease-light group-hover:scale-[1.03] motion-reduce:still ${feature ? 'duration-[800ms]' : 'duration-(--duration-fade)'}`}>
         {'url' in poster
           // Remote still, not routed through the image optimiser.
           // eslint-disable-next-line @next/next/no-img-element
@@ -72,7 +72,7 @@ export function VideoFacade({poster, video, playLabel, sizes, caption, look = 'p
       </span>
       {video && (
         <button type="button" onClick={() => setPlaying(true)} className="absolute inset-0 grid place-items-center">
-          <span className={`glass-light grid place-items-center rounded-pill text-ink transition-transform group-hover:scale-105 ${feature ? 'size-16 duration-(--duration-card) md:size-22' : 'size-15 shadow-e2 duration-(--duration-fade) lg:size-19'}`}>
+          <span className={`glass-light grid place-items-center rounded-pill text-ink transition-transform group-hover:scale-105 motion-reduce:still ${feature ? 'size-16 duration-(--duration-card) md:size-22' : 'size-15 shadow-e2 duration-(--duration-fade) lg:size-19'}`}>
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="ml-1 size-6 lg:size-7"><path d="M8 5.5v13l10.5-6.5z" /></svg>
           </span>
           <span className="sr-only">{playLabel}: {video.title}</span>

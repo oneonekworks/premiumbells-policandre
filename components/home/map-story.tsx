@@ -134,7 +134,7 @@ function PinCard({pin, lang, className, style, size, photoLabel}: {
   if (!work?.slug || !work.categorySlug) return <div className={frame} style={style}>{body}</div>;
   return (
     <Link href={localizedHref(lang, projectPath(work.categorySlug, work.slug))} aria-haspopup="dialog" style={style}
-      className={`${frame} transition-[translate,box-shadow] duration-300 ease-light hover:z-[3] hover:-translate-y-1 hover:shadow-e3 focus-visible:z-[3] focus-visible:-translate-y-1 focus-visible:shadow-e3 motion-reduce:transform-none`}>
+      className={`${frame} transition-[translate,box-shadow] duration-300 ease-light hover:z-[3] hover:-translate-y-1 hover:shadow-e3 focus-visible:z-[3] focus-visible:-translate-y-1 focus-visible:shadow-e3 motion-reduce:still`}>
       {body}
     </Link>
   );

@@ -12,6 +12,9 @@ import {useProjectList, type ProjectList} from './project-list';
 
 type T = Dictionary['works6']['panel'];
 
+/** What opened the intercepted panel; kept across Anterior / Următor (each is a new panel). */
+let opener: HTMLElement | null = null;
+
 export type PanelVideo = FilmVideo & {poster: string | null};
 export type PanelPhoto = LightboxImage & {alt: string};
 
@@ -65,6 +68,9 @@ export function ProjectPanelView({mode, href, closeHref, fallback, title, bar, c
     const element = dialog.current;
     if (!element || !visible) return;
     closing.current = false;
+    // The tile, pin or card that opened the panel (not Anterior / Următor inside it), for focus on close.
+    const active = document.activeElement;
+    if (active instanceof HTMLElement && active !== document.body && !active.closest('dialog')) opener = active;
     // The server sends the embedded panel open (visible without scripts); make it modal.
     if (element.open && !element.matches(':modal')) element.close();
     if (!element.open) element.showModal();
@@ -76,7 +82,13 @@ export function ProjectPanelView({mode, href, closeHref, fallback, title, bar, c
     if (closing.current) return;
     closing.current = true;
     if (mode === 'intercepted') {
-      if (then) addEventListener('popstate', () => requestAnimationFrame(then), {once: true});
+      // Back to the page under the panel; focus returns to what opened it.
+      const target = opener;
+      opener = null;
+      addEventListener('popstate', () => requestAnimationFrame(() => {
+        if (target?.isConnected) target.focus({preventScroll: true});
+        then?.();
+      }), {once: true});
       router.back();
     } else {
       dialog.current?.close();
@@ -162,7 +174,7 @@ export function ProjectPanelView({mode, href, closeHref, fallback, title, bar, c
           {lead ? (
             <button type="button" aria-haspopup="dialog" aria-label={`${labels.openPhoto}: ${lead.alt}`} onClick={() => photo.show(0)}
               className="group relative block min-h-0 flex-1 cursor-zoom-in overflow-hidden rounded-[18px] bg-white">
-              <SanityImage image={lead} cover sizes="508px" priority className="transition-transform duration-(--duration-image) ease-light group-hover:scale-[1.02] motion-reduce:transform-none" />
+              <SanityImage image={lead} cover sizes="508px" priority className="transition-transform duration-(--duration-image) ease-light group-hover:scale-[1.02] motion-reduce:still" />
               <span className="glass-light absolute bottom-3 right-3 inline-flex h-10 items-center gap-2 rounded-pill px-3.5 text-caption font-medium text-ink"><ZoomGlyph />{labels.zoom}</span>
             </button>
           ) : <div className="flex-1 rounded-[18px] bg-white" />}

@@ -3,7 +3,7 @@ import test from 'node:test';
 import {evaluate, parse} from 'groq-js';
 import * as queries from '../sanity/queries';
 import {CATALOG_QUERY, SERVICE_QUERY, SERVICES_QUERY} from '../sanity/queries';
-import {catalogAnchors, catalogKey, formatLength, servicePath, serviceTree} from '../lib/services';
+import {catalogAnchors, catalogKey, formatLength, servicePath} from '../lib/services';
 
 const image = (id: string) => ({_type: 'imageWithMetadata', asset: {_type: 'reference', _ref: `image-${id}-800x600-jpg`}});
 const service = (id: string, extra: Record<string, unknown>) => ({
@@ -56,9 +56,6 @@ test('no query reads prices or spreads whole documents', () => {
 test('the overview lists active published services in order; hidden ones and their variants are absent', async () => {
   const list = await query(SERVICES_QUERY, {lang: 'ro'});
   assert.deepEqual(list.map((item: {slug: string}) => item.slug), ['policandre', 'cu-jug', 'clopote']);
-  const tree = serviceTree(list);
-  assert.deepEqual(tree.map((node) => [node.slug, node.variants.map((variant) => variant.slug)]),
-    [['policandre', []], ['clopote', ['cu-jug']]]);
   assert.equal(list.find((item: {slug: string}) => item.slug === 'policandre').title, 'Policandre');
   const en = await query(SERVICES_QUERY, {lang: 'en'});
   assert.deepEqual(en.map((item: {slug: string}) => item.slug), ['bells']);
