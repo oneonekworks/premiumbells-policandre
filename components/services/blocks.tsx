@@ -7,7 +7,8 @@ import {specText} from '@/lib/projects';
 import {localizedHref, type Lang} from '@/lib/i18n/routing';
 import type {ProjectCard} from '@/sanity/portfolio';
 import {projectPath} from '@/sanity/portfolio-routes';
-import type {SanityImageValue} from '@/sanity/image';
+import {sanityImageUrl, type SanityImageValue} from '@/sanity/image';
+import {ProjectListScope} from '@/components/works/project-list';
 import {metalBar, type HeroMetal} from './story-hero';
 
 // Pieces shared by the v6 service pages (boards V6Service*, V6Clopote*,
@@ -110,7 +111,7 @@ export function workLine(work: Pick<ProjectCard, 'location' | 'year' | 'displayD
  * Works as break-out cards (text left): 4 (or 3) columns on desktop, a swipe
  * rail of 280 cards on phones. Each opens the project.
  */
-export function WorkCards({works, lang, categorySlug, metal, countries, columns = 4, hint}: {
+export function WorkCards({works, lang, categorySlug, metal, countries, columns = 4, hint, list}: {
   works: ProjectCard[];
   lang: Lang;
   categorySlug: string;
@@ -119,11 +120,22 @@ export function WorkCards({works, lang, categorySlug, metal, countries, columns 
   columns?: 3 | 4;
   /** "Vedeți lucrarea" glass hint on hover (cards that open the Project panel). */
   hint?: string;
+  /**
+   * The Project panel browses these works only ("Lucrarea 1 din N · label"),
+   * with the category as plain text (routes.md, "Layers").
+   */
+  list?: {label: string; works: ProjectCard[]};
 }) {
+  const href = (work: ProjectCard) => localizedHref(lang, projectPath(categorySlug, work.slug ?? ''));
+  const items = (list?.works ?? works).map((work) => ({
+    href: href(work), title: work.title ?? '', category: '',
+    thumb: work.coverImage?.asset ? sanityImageUrl(work.coverImage, 72, 96) ?? null : null,
+  }));
   return (
+    <ProjectListScope label={list?.label ?? ''} items={items} plain>
     <div className={`-mx-5 mt-7 flex snap-x snap-mandatory scroll-px-5 gap-3.5 overflow-x-auto px-5 pb-3 pt-1 [scrollbar-width:none] md:mx-0 md:px-0 lg:mt-16 lg:grid lg:gap-x-6 lg:gap-y-10 lg:overflow-visible lg:p-0 ${columns === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-4'}`}>
       {works.map((work) => (
-        <Link key={work._id} href={localizedHref(lang, projectPath(categorySlug, work.slug ?? ''))} scroll={false}
+        <Link key={work._id} href={href(work)} scroll={false}
           aria-haspopup={hint ? 'dialog' : undefined}
           className="bo bo-left group w-[280px] flex-none snap-start lg:w-auto">
           <span className="ph relative">
@@ -141,6 +153,7 @@ export function WorkCards({works, lang, categorySlug, metal, countries, columns 
         </Link>
       ))}
     </div>
+    </ProjectListScope>
   );
 }
 
@@ -154,7 +167,9 @@ export function RailButton({href, label}: {href: string; label: string}) {
 }
 
 export function HeadLink({href, label, onDark = false}: {href: string; label: string; onDark?: boolean}) {
-  return <Link href={href} className={`text-link ${onDark ? '!text-teal-tint' : ''}`}>{label}</Link>;
+  // Works addresses with a query (?tip=) are not prefetched: Next 16.4 leaves
+  // those segment prefetches open (docs/design-plan.md, V5).
+  return <Link href={href} prefetch={href.includes('?') ? false : undefined} className={`text-link ${onDark ? '!text-teal-tint' : ''}`}>{label}</Link>;
 }
 
 /**

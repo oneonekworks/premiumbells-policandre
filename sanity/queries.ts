@@ -28,7 +28,7 @@ export const PORTFOLIO_PAGE_QUERY = defineQuery(`
 
 export const CATEGORIES_QUERY = defineQuery(`
   *[${publicCategory} && defined(${categorySlug})] | order(displayOrder asc, _id asc){
-    _id, "title": ${localized('title')}, "slug": ${categorySlug},
+    _id, "title": ${localized('title')}, "slug": ${categorySlug}, craft, displayOrder,
     coverImage{${imageFields}},
     "projectCount": count(*[${publicProject} && references(^._id)])
   }
@@ -57,10 +57,27 @@ export const CATEGORY_PROJECTS_QUERY = defineQuery(`
     }
 `);
 
+// Every public work for the Works page (v6, V5): the wall, the Hartă view and
+// the Project panel's list all filter this one cached read (60 works today).
+// `specs` are the values only, for the caption's "what" ("170 și 42 kg").
+export const WORKS_QUERY = defineQuery(`
+  *[${publicProject} && category->enabled != false && defined(category->slug.ro.current)]
+    | order(coalesce(displayOrder, 1000000) asc, coalesce(featured, false) desc, coalesce(year, 0) desc, _createdAt desc, _id asc)[0...500]{
+      _id, "title": ${localized('title')}, "slug": slug.current, location, year, bellTypes, featured,
+      "categoryId": category._ref,
+      "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current),
+      "categoryTitle": select($lang == "en" => category->title.en, category->title.ro),
+      "craft": category->craft,
+      "specs": specifications[]{value, unit, "label": ${localized('label')}},
+      coverImage{${imageFields}}
+    }
+`);
+
 export const PROJECT_QUERY = defineQuery(`
   *[${publicProject} && slug.current == $slug && category._ref == $categoryId][0]{
     _id, "title": ${localized('title')}, "summary": ${localized('summary')}, "body": ${localized('body')},
-    location, year, "displayDate": ${localized('displayDate')}, publishedLanguages,
+    location, year, "displayDate": ${localized('displayDate')}, publishedLanguages, bellTypes,
+    "category": category->{_id, "title": ${localized('title')}, "slug": ${categorySlug}, craft, "offerLine": ${localized('offerLine')}},
     coverImage{${imageFields}},
     "specifications": specifications[]{${specificationFields}},
     "videos": videos[]{${videoFields}},

@@ -1,6 +1,6 @@
 import type {Metadata} from 'next';
 import {PortableText} from 'next-sanity';
-import {portableText} from '@/components/portfolio/project-details';
+import {portableText} from '@/components/portfolio/portable-text';
 import {photoAlt} from '@/lib/alt';
 import type {Dictionary} from '@/lib/i18n/dictionaries';
 import type {Lang} from '@/lib/i18n/routing';

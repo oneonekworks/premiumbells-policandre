@@ -4,11 +4,11 @@ import type {Lang} from '@/lib/i18n/routing';
 import {cacheTags} from './cache-tags';
 import {sanityFetch} from './fetch';
 import {
-  CATEGORIES_QUERY, CATEGORY_PROJECTS_QUERY, CATEGORY_QUERY, PORTFOLIO_PAGE_QUERY, PROJECT_QUERY,
+  CATEGORIES_QUERY, CATEGORY_PROJECTS_QUERY, CATEGORY_QUERY, PORTFOLIO_PAGE_QUERY, PROJECT_QUERY, WORKS_QUERY,
 } from './queries';
 import type {
   CATEGORIES_QUERY_RESULT, CATEGORY_PROJECTS_QUERY_RESULT, CATEGORY_QUERY_RESULT,
-  PORTFOLIO_PAGE_QUERY_RESULT, PROJECT_QUERY_RESULT,
+  PORTFOLIO_PAGE_QUERY_RESULT, PROJECT_QUERY_RESULT, WORKS_QUERY_RESULT,
 } from './types';
 
 // Published reads are cached by tag and cleared by the publish webhook; see
@@ -17,6 +17,7 @@ import type {
 export type ProjectCard = CATEGORY_PROJECTS_QUERY_RESULT[number];
 export type ProjectDetail = NonNullable<PROJECT_QUERY_RESULT>;
 export type Category = NonNullable<CATEGORY_QUERY_RESULT>;
+export type Work = WORKS_QUERY_RESULT[number];
 
 export const getPortfolioPage = cache((lang: Lang) =>
   sanityFetch<PORTFOLIO_PAGE_QUERY_RESULT>({
@@ -45,3 +46,13 @@ export const getProject = cache((lang: Lang, categoryId: string, slug: string) =
   sanityFetch<PROJECT_QUERY_RESULT>({
     query: PROJECT_QUERY, params: {lang, categoryId, slug}, tags: [cacheTags.project(slug)],
   }));
+
+// Every public work (the Works page, the Project panel's list). Tagged with each
+// category's projects tag, so any project publish clears it (cache-tags.ts).
+export const getWorks = cache(async (lang: Lang) => {
+  const categories = await getCategories(lang);
+  return sanityFetch<WORKS_QUERY_RESULT>({
+    query: WORKS_QUERY, params: {lang},
+    tags: [cacheTags.categories, cacheTags.projectCounts, ...categories.map((category) => cacheTags.categoryProjects(category._id))],
+  });
+});

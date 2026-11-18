@@ -125,7 +125,8 @@ export async function PolicandrePage({lang, service, dictionary}: PageProps) {
           <div className={wrap}>
             <SectionHead kicker={copy.works.kicker} title={fill(copy.works.title, {n: count})}
               aside={<HeadLink href={works.href} label={fill(copy.works.all, {n: count})} />} />
-            <WorkCards works={works.works.slice(0, 4)} lang={lang} categorySlug={works.slug} metal="gold" countries={dictionary.countries} />
+            <WorkCards works={works.works.slice(0, 4)} lang={lang} categorySlug={works.slug} metal="gold" countries={dictionary.countries}
+              hint={dictionary.services.seeWork} list={{label: service.shortName || service.title || '', works: works.works}} />
             <RailButton href={works.href} label={fill(copy.works.all, {n: count})} />
           </div>
         </Section>

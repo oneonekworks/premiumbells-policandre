@@ -99,7 +99,8 @@ export async function BellsPage({lang, service, dictionary}: PageProps) {
   const sets: BellSet[] = (setsSection?.sets ?? []).flatMap((set, index) => (set.weightsKg?.length
     ? [{key: set._key, title: `Set ${index + 1}`, weights: set.weightsKg, ringer: Boolean(set.withElectronicRinger), audio: set.audio ?? null}] : []));
   const notes = sizes?.groupNotes;
-  const shownWorks = works ? typeWorks(works.works, type).slice(0, 3) : [];
+  const listWorks = works ? typeWorks(works.works, type) : [];
+  const shownWorks = listWorks.slice(0, 3);
   const allHref = works ? `${localizedHref(lang, categoryPath(works.slug))}?tip=${type}` : null;
   const includedItems = included?.items?.length ? included.items.map((item) => item.title ?? '') : copy.included.items;
 
@@ -162,7 +163,8 @@ export async function BellsPage({lang, service, dictionary}: PageProps) {
             <>
               <SectionHead kicker={copy.works.kicker} title={copy.works.title} aside={<HeadLink href={allHref} label={copy.works.all} />} />
               <WorkCards works={shownWorks} lang={lang} categorySlug={works.slug} metal={type === 'cu-jug' ? 'bronze' : 'graphite'}
-                countries={dictionary.countries} columns={3} hint={dictionary.services.seeWork} />
+                countries={dictionary.countries} columns={3} hint={dictionary.services.seeWork}
+                list={{label: dictionary.works6.bellLong[type], works: listWorks}} />
               <div className="mt-3 lg:hidden"><HeadLink href={allHref} label={copy.works.all} /></div>
             </>
           ) : null}

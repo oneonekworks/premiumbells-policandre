@@ -672,6 +672,47 @@
     .mc .fin .pr { grid-column: 3; grid-row: 1; font-size: var(--text-caption); }
   }
 
+  /* ---------- Lucrările noastre (V5, boards V6Works + V6WorksSticky) ---------- */
+  /* Project tile: lift −6 + e3, photo 1.03 (components.md "Project tile"). */
+  .wt { transition: transform var(--duration-card) var(--ease-light), box-shadow var(--duration-card) var(--ease-light); }
+  .wt img { transition: transform var(--duration-image) var(--ease-light); }
+  .wt:hover, .wt:focus-visible { transform: translateY(-6px); box-shadow: var(--shadow-e3); }
+  .wt:hover img, .wt:focus-visible img { transform: scale(1.03); }
+  @media (prefers-reduced-motion: reduce) { .wt:hover, .wt:focus-visible, .wt:hover img, .wt:focus-visible img { transform: none; } }
+
+  /* Craft mood on the band: one glow per craft, cross-faded (500 ms; none with reduced motion). */
+  .fxg { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+  .fxg i { position: absolute; inset: 0; opacity: 0; transition: opacity 500ms var(--ease-light); }
+  .fxg .g-pol { background: radial-gradient(ellipse 1100px 760px at 12% 0%, rgb(var(--mood-pol) / 0.22), transparent 70%), radial-gradient(ellipse 900px 700px at 100% 70%, rgb(var(--mood-pol) / 0.14), transparent 70%); }
+  .fxg .g-clo { background: radial-gradient(ellipse 1100px 760px at 12% 0%, rgb(var(--mood-clo-a) / 0.20), transparent 70%), radial-gradient(ellipse 900px 700px at 100% 70%, rgb(var(--mood-clo-b) / 0.24), transparent 70%); }
+  .fxg .g-ico { background: radial-gradient(ellipse 1100px 760px at 12% 0%, rgb(var(--mood-ico) / 0.18), transparent 70%), radial-gradient(ellipse 900px 700px at 100% 70%, rgb(var(--mood-ico) / 0.12), transparent 70%); }
+  .fxg .g-rec { background: radial-gradient(ellipse 1100px 760px at 12% 0%, rgb(var(--mood-rec) / 0.16), transparent 70%), radial-gradient(ellipse 900px 700px at 100% 70%, rgb(var(--mood-rec) / 0.10), transparent 70%); }
+  @media (max-width: 47.99rem) {
+    .fxg .g-pol { background: radial-gradient(ellipse 520px 520px at 12% 0%, rgb(var(--mood-pol) / 0.22), transparent 70%), radial-gradient(ellipse 460px 520px at 100% 70%, rgb(var(--mood-pol) / 0.14), transparent 70%); }
+    .fxg .g-clo { background: radial-gradient(ellipse 520px 520px at 12% 0%, rgb(var(--mood-clo-a) / 0.20), transparent 70%), radial-gradient(ellipse 460px 520px at 100% 70%, rgb(var(--mood-clo-b) / 0.24), transparent 70%); }
+    .fxg .g-ico { background: radial-gradient(ellipse 520px 520px at 12% 0%, rgb(var(--mood-ico) / 0.18), transparent 70%), radial-gradient(ellipse 460px 520px at 100% 70%, rgb(var(--mood-ico) / 0.12), transparent 70%); }
+    .fxg .g-rec { background: radial-gradient(ellipse 520px 520px at 12% 0%, rgb(var(--mood-rec) / 0.16), transparent 70%), radial-gradient(ellipse 460px 520px at 100% 70%, rgb(var(--mood-rec) / 0.10), transparent 70%); }
+  }
+  .fx-pol .g-pol, .fx-clo .g-clo, .fx-ico .g-ico, .fx-rec .g-rec { opacity: 1; }
+  /* Bell type chips slide in after Clopote (≈ 200 ms, width + fade). */
+  .works-sub { animation: works-sub-in 220ms var(--ease-light); }
+  /* Filter changes cross-fade the wall. */
+  .works-fade { animation: works-fade 320ms var(--ease-light); }
+  /* The docked bar moves up with the header when it hides on a fast scroll. */
+  html[data-header-hidden] .works-dock { translate: 0 -5rem; }
+  @media (width < 64rem) { html[data-header-hidden] .works-dock { translate: 0 -4.5rem; } }
+
+  /* Project panel: floating from the right (phones: a sheet from below). */
+  .project-panel { animation: works-fade 280ms var(--ease-light); }
+  .project-panel .pp-sheet { animation: panel-in 320ms var(--ease-light); }
+  @media (width < 64rem) { .project-panel .pp-sheet { animation-name: sheet-in; } }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .project-panel { background: rgb(11 37 35 / 0.6); } }
+  @media (prefers-reduced-transparency: reduce) { .project-panel { background: rgb(11 37 35 / 0.6); backdrop-filter: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .works-sub, .project-panel .pp-sheet { animation-name: works-fade; }
+    .fxg i { transition: none; }
+  }
+
   .shimmer {                          /* gilded photos only, once per hover/focus */
     position: absolute; top: -20%; bottom: -20%; left: -40%; width: 30%;
     background: rgb(255 226 170 / 0.28); filter: blur(26px);
@@ -781,3 +822,8 @@
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
 }
+
+@keyframes works-sub-in { from { opacity: 0; max-width: 0; } to { opacity: 1; max-width: 280px; } }
+@keyframes works-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes panel-in { from { opacity: 0; transform: translateX(32px); } to { opacity: 1; transform: none; } }
+@keyframes sheet-in { from { opacity: 0; transform: translateY(48px); } to { opacity: 1; transform: none; } }

@@ -32,7 +32,7 @@ export function generateStaticParams() {
   return languages.map((lang) => ({lang}));
 }
 
-export default async function RootLayout({children, params}: LayoutProps<'/[lang]'>) {
+export default async function RootLayout({children, modal, params}: LayoutProps<'/[lang]'>) {
   const {lang} = await params;
   if (!isLang(lang)) notFound();
   const dictionary = getDictionary(lang);
@@ -50,6 +50,8 @@ export default async function RootLayout({children, params}: LayoutProps<'/[lang
         <SiteHeader lang={lang} dictionary={dictionary} shell={shell} />
         <main id="continut" className="flex-1 pt-18 lg:pt-21">{children}</main>
         <SiteFooter lang={lang} dictionary={dictionary} shell={shell} />
+        {/* The Project panel, opened over any page (app/[lang]/@modal). */}
+        {modal}
       </body>
     </html>
   );

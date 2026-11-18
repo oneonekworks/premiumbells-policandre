@@ -205,7 +205,7 @@ export function HomeMapStory({section, works, places, lang, dictionary}: {
           })}
           <nav aria-label={t.mapPlaces} className="glass-light absolute left-6 top-6 z-[2] w-66 rounded-card px-5 pb-5 pt-2.5 shadow-e2">
             {rows.map((row) => (
-              <Link key={row.country} href={row.href}
+              <Link key={row.country} href={row.href} prefetch={false}
                 className="flex items-baseline justify-between gap-4 border-b border-hairline px-0.5 py-[9px] text-ink transition-[padding,color] duration-(--duration-fade) ease-light last-of-type:border-b-0 hover:pl-2 hover:text-teal-700">
                 <b className="font-display text-[1.25rem] font-semibold leading-[1.1]">{row.name}</b>
                 <span className="text-[0.8125rem] text-ink-soft">{row.count}</span>
@@ -213,7 +213,7 @@ export function HomeMapStory({section, works, places, lang, dictionary}: {
             ))}
             <div className="mt-3 flex flex-col items-start gap-1 border-t border-hairline pt-4">
               <Link href={allHref} className="btn btn-primary min-h-11.5 px-5.5 text-[0.9375rem]">{t.allWorks}</Link>
-              <Link href={mapHref} className="text-link text-[0.9375rem]">{t.openMap} →</Link>
+              <Link href={mapHref} prefetch={false} className="text-link text-[0.9375rem]">{t.openMap} →</Link>
             </div>
           </nav>
         </EuropeMap>
@@ -221,7 +221,7 @@ export function HomeMapStory({section, works, places, lang, dictionary}: {
 
       {/* Below 1200px: map with dots, pin rail, country chips (the pins need the full width). */}
       <div className="xl:hidden">
-        <Link href={mapHref} aria-label={t.openMapLabel}
+        <Link href={mapHref} prefetch={false} aria-label={t.openMapLabel}
           className="mx-3 mt-6 block rounded-[22px] bg-[linear-gradient(180deg,#f1f5f4,#e9efed)] p-2.5 md:mx-6">
           <EuropeMap size="compact" dots={dots} label={mapLabel} className="overflow-hidden rounded-[14px]" />
         </Link>
@@ -236,7 +236,7 @@ export function HomeMapStory({section, works, places, lang, dictionary}: {
         <div className="px-5 md:px-6">
           <nav aria-label={t.mapPlaces} className="-mx-5 mt-1 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] md:-mx-6 md:px-6 [&::-webkit-scrollbar]:hidden">
             {rows.map((row) => (
-              <Link key={row.country} href={row.href}
+              <Link key={row.country} href={row.href} prefetch={false}
                 className="inline-flex h-11 flex-none items-center gap-1.5 rounded-pill border border-hairline bg-white px-3.5 text-ink">
                 <b className="text-[0.875rem] font-semibold">{row.name}</b>
                 <span className="text-[0.8125rem] text-ink-soft">{row.count}</span>
@@ -244,7 +244,7 @@ export function HomeMapStory({section, works, places, lang, dictionary}: {
             ))}
           </nav>
           <Link href={allHref} className="btn btn-primary mt-6 flex w-full">{t.allWorks}</Link>
-          <Link href={mapHref} className="text-link mt-1 flex justify-center text-[0.9375rem]">{t.openMap} →</Link>
+          <Link href={mapHref} prefetch={false} className="text-link mt-1 flex justify-center text-[0.9375rem]">{t.openMap} →</Link>
         </div>
       </div>
     </section>

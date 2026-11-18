@@ -47,6 +47,18 @@
       "env": {
         "SANITY_PREVIEW_DRAFTS": "1"
       }
+    },
+    {
+      "name": "web-prod-3101",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "start",
+        "--",
+        "-p",
+        "3101"
+      ],
+      "port": 3101
     }
   ]
 }

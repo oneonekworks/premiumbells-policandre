@@ -1,14 +1,12 @@
 import type {Metadata} from 'next';
-import Link from 'next/link';
 import {notFound} from 'next/navigation';
-import {FromBlog} from '@/components/blog/from-blog';
-import {ProjectDetails} from '@/components/portfolio/project-details';
+import {fallbackList, ProjectPanel} from '@/components/works/project-panel';
+import {worksData, WorksPage} from '@/components/works/works-page';
 import {photoAlt, subject} from '@/lib/alt';
-import {sanityImageUrl} from '@/sanity/image';
-import {localizedHref} from '@/lib/i18n/routing';
 import {languageAlternates, truncate} from '@/lib/seo';
+import {sanityImageUrl} from '@/sanity/image';
 import {getProject} from '@/sanity/portfolio';
-import {categoryPath, projectPath, resolveCategory, worksPath} from '@/sanity/portfolio-routes';
+import {projectPath, resolveCategory} from '@/sanity/portfolio-routes';
 
 type Props = PageProps<'/[lang]/lucrarile-noastre/[category]/[project]'>;
 
@@ -42,32 +40,16 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
   };
 }
 
-// Direct visits and refreshes render the complete page; client navigation
-// from the grid is intercepted by @modal/(.)[project] instead.
-export default async function ProjectPage({params}: Props) {
-  const {lang, category, project, dictionary} = await load(params);
-  const categoryHref = localizedHref(lang, categoryPath(category.slug!));
-
+// No project page (v6.2): a direct visit or shared link renders Lucrările
+// noastre filtered to the project's category with the Project panel open,
+// server-rendered so the text and photos are indexable. Clicks from any page
+// are intercepted by app/[lang]/@modal instead.
+export default async function ProjectDirect({params, searchParams}: Props) {
+  const {lang, category, project, projectSlug, dictionary} = await load(params);
+  const {works, categories} = await worksData(lang);
+  const list = fallbackList(works, categories, category.slug!, lang, dictionary);
   return (
-    <>
-      <nav aria-label="Breadcrumb" className="mb-8 text-sm text-ink-soft">
-        <ol className="flex flex-wrap items-center gap-2">
-          <li><Link href={localizedHref(lang, worksPath)} className="hover:text-teal-700">{dictionary.nav.works}</Link></li>
-          <li aria-hidden="true">/</li>
-          <li><Link href={categoryHref} className="hover:text-teal-700">{category.title}</Link></li>
-          <li aria-hidden="true">/</li>
-          <li aria-current="page" className="text-ink">{project.title}</li>
-        </ol>
-      </nav>
-      <ProjectDetails project={project} category={category.title ?? ''} dictionary={dictionary} headingLevel="h1" />
-      <div className="mt-14">
-        <FromBlog id={project._id} lang={lang} dictionary={dictionary} />
-      </div>
-      <p className="mt-14">
-        <Link href={categoryHref} className="btn btn-secondary">
-          {dictionary.portfolio.backTo} {category.title}
-        </Link>
-      </p>
-    </>
+    <WorksPage lang={lang} category={category.slug} searchParams={await searchParams}
+      panel={<ProjectPanel project={project} slug={projectSlug} mode="embedded" list={list} lang={lang} dictionary={dictionary} />} />
   );
 }

@@ -38,6 +38,11 @@ export function HeaderFrame({children}: {children: ReactNode}) {
     return () => removeEventListener('scroll', onScroll);
   }, []);
 
+  // Docked bars under the header (the Works filter bar) follow it up.
+  useEffect(() => {
+    document.documentElement.toggleAttribute('data-header-hidden', hidden);
+  }, [hidden]);
+
   return (
     <div
       ref={frame}
