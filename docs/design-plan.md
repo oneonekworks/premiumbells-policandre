@@ -517,6 +517,51 @@ Reveals, layer transitions, filter cross-fades, reduced motion and reduced
 transparency audit, keyboard and screen-reader pass of every layer, delete the
 token aliases, redirects check (`url-map.md`), Lighthouse on the preview.
 
+**V7 done (2026-11-18).** Production build: typecheck, lint, 38 unit tests,
+all browser specs pass; axe-core (WCAG 2.0–2.2 A/AA rules) finds nothing on 15
+pages, desktop and phone. Scratch checks in `test-results/` (git-ignored):
+`urlmap.mjs`, `layers.mjs`, `mega.mjs`, `rm.mjs`, `axe.mjs`, `footgap.mjs`.
+
+- Clean-up: the Patina aliases and recipes are gone from `globals.css`
+  (`container-site`, `eyebrow`, `card*`, `grain`, `arch`, `photo-gradient`,
+  the colour / type aliases); the three build tokens still in use
+  (`--text-chip`, `--spacing-header`, `--duration-slice`) moved out of the
+  alias block. The footer's legacy top margin is gone: it now sits 16 from
+  the last section and the edges (8 on phones), as the boards' spacer, on
+  every page (`v6-page` stays only as the page-root marker with the mood).
+  Removed: the `/v6` preview route, `service-sections.tsx`,
+  `catalogue-section.tsx`, `dialog-grid.tsx`, `portfolio/gallery.tsx`,
+  `portfolio/video-embed.tsx`, `coming-soon.tsx`, `serviceTree`, five unused
+  icons and 48 unused dictionary keys (`portfolio.filters`, `portfolio.backTo`,
+  `pagination`, `comingSoon`, `home5.*` leftovers …). The generic service
+  fallback (no current service uses it) shows the story hero and the body
+  text, no longer the pre-v6 sections. The English home placeholder and the
+  Works error state use the v6 type.
+- Redirects: every row of `url-map.md` (v6 overrides applied) checked on the
+  production build: 22 pages 200, 11 redirects 308 to their targets
+  (`/servicii` → `/#servicii`), 4 removed paths 404.
+- Reduced motion: Tailwind v4 moves with the separate `translate` / `scale`
+  properties, so the `motion-reduce:transform-none` guards never stopped the
+  hover lifts and zooms (byline cards, featured story, figures, menu card).
+  New utility `still` (zeroes `--tw-translate-*` / `--tw-scale-*`, resets
+  `scale` / `translate` through `var()` so the CSS minifier does not fold
+  them into `transform`; important, because hover variants sort after
+  `motion-reduce`); all guards use `motion-reduce:still`. Arbitrary
+  `transition-[transform,…]` did not animate `translate` either: now
+  `transition-[translate,scale,box-shadow]`. Reduced transparency: every
+  glass recipe and the panel overlay have solid fallbacks (tokens.css); the
+  remaining translucent trays sit on solid grounds without blur.
+- Keyboard and screen reader: mobile menu, Project panel (desktop and phone),
+  Lightbox, Iconostase layer and the article Lightbox are named modal dialogs;
+  focus starts inside, 25 Tabs stay inside, Escape closes, focus returns to
+  the opener. **Fixed:** the intercepted Project panel now returns focus to
+  the tile / pin / card that opened it (kept across Anterior / Următor). The
+  mega menu is a disclosure: Enter opens, Tab enters it, Escape closes and
+  refocuses "Servicii", tabbing out closes it.
+- Not added: scroll reveals (v6 has only the `--duration-reveal` token, no
+  component or board asks for one); layer transitions and the Works / Blog
+  cross-fades exist already.
+
 ## Content still needed from the user
 
 See `docs/design/clarity-v6/open-questions.md`; the main ones: Policandre
