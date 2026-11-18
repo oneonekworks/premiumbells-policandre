@@ -595,7 +595,15 @@ pages, desktop and phone. Scratch checks in `test-results/` (git-ignored):
   3200 × 2134), Clopote = inscription close-up (new upload, 2000 × 1333),
   Recondiționare = gilded cast piece (new upload, 1957 × 1305), each with an
   alt text and a hotspot (adjust in the Studio if needed). The triptych no
-  longer falls back to the small service covers; live on the preview at once. Mobile LCP on every page is mostly TTFB (≈ 1.4 s from the
+  longer falls back to the small service covers; live on the preview at once.
+- **Bell types written 2026-11-18** (approved by the user: the "sigur" and
+  "probabil" rows of `docs/v6-bell-types-proposal.md`): after a raw export
+  (`.migration/backups/production-2026-11-18-before-bell-types.tar.gz`),
+  `scripts/v6-bell-types.mts --write` set `bellTypes` on 27 published works
+  (cu jug 11, fără balans 17, Rauseni Doina both) in one transaction. The 12
+  "de verificat" / "?" works and the 2 bell works outside the proposal stay
+  unmarked, so they still show under both types, after the marked ones,
+  until an editor marks them in the Studio. Mobile LCP on every page is mostly TTFB (≈ 1.4 s from the
   Netlify function) plus the hero photo's load.
 
 ## Content still needed from the user
