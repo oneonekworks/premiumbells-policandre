@@ -605,6 +605,19 @@ pages, desktop and phone. Scratch checks in `test-results/` (git-ignored):
   unmarked, so they still show under both types, after the marked ones,
   until an editor marks them in the Studio. Mobile LCP on every page is mostly TTFB (≈ 1.4 s from the
   Netlify function) plus the hero photo's load.
+- **Homepage catalogues crash fixed (`8e3ea7d`):** switching on
+  `homePage.catalogues.enabled` gave a 500, because `CATALOG_DOWNLOADS_QUERY`
+  uses `localized()` and `getCatalogDownloads` sent no `$lang`. It now takes the
+  page language. Checked locally with the section on (both catalogues, no
+  errors, 1440 and 390); the about-video spec also accepts the uploaded MP4.
+  The first switch-on (after a raw export,
+  `.migration/backups/production-2026-11-18-before-catalogues-on.tar.gz`) was
+  reverted at once: Netlify had skipped the deploy (team credits used up).
+- **Netlify, 2026-11-18:** each push to this branch was a production deploy
+  (15 credits). The user set the production branch to `main` and made
+  `prototype/mobile-publishing` a branch deploy:
+  `https://prototype-mobile-publishing--premiumbells-preview.netlify.app`.
+  `premiumbells-preview.netlify.app` stays on `9f15951` until `main` moves.
 
 ## Content still needed from the user
 
