@@ -589,6 +589,36 @@
     .bo:hover .ph, .bo:focus-visible .ph, .bo:active .ph, .bo:hover .ph img, .bo:focus-visible .ph img { transform: none; }
   }
 
+  /* ---------- Homepage triptych: slices move, they never resize ----------
+     Every slice keeps the box of an open slice and is placed with translate;
+     the visible part is a clip-path. So rotating slices never moves a box in
+     layout (no layout shift, CLS), and the panel keeps one height on phones.
+     Per slice (style): --n slices, --i index, --o openness 0–1 (the opens sum
+     to 1; equal slices are 1/n each), --p the opens before it, --t / --b the
+     seam cuts on phones (26px or 0). Phones: bands 132 + 198 × open on 8°
+     seams (22 overlap); desktop: slanted columns (−10°), gap 6, closed : open
+     = 1 : 2 of the width. */
+  .tri-row { position: relative; height: calc(110px * var(--n) + 220px); }
+  .tri-slice { --cut: calc(198px * (1 - var(--o))); position: absolute; inset-inline: 0; top: 0; height: 330px;
+    translate: 0 calc(110px * var(--i) + 198px * var(--p)); pointer-events: none;
+    transition: translate var(--duration-slice) var(--ease-light); }
+  .tri-frame { position: absolute; inset: 0; overflow: hidden; pointer-events: auto;
+    clip-path: polygon(0 var(--t), 100% 0, 100% calc(330px - var(--cut) - var(--b)), 0 calc(330px - var(--cut)));
+    transition: clip-path var(--duration-slice) var(--ease-light); }
+  .tri-photo { position: absolute; inset: 0; translate: 0 calc(var(--cut) / -2); transition: translate var(--duration-slice) var(--ease-light); }
+  .tri-label { left: 50%; top: 50%; translate: -50% calc(-50% - var(--cut) / 2); transition: opacity var(--duration-fade) var(--ease-light), translate var(--duration-slice) var(--ease-light); }
+  @media (width >= 64rem) {
+    .tri-row { position: absolute; inset-block: 0; inset-inline: -4rem; height: auto; container-type: inline-size; }
+    .tri-slice { --u: calc((100cqw - 6px * (var(--n) - 1)) / (var(--n) + 1)); --cut: calc(var(--u) * (1 - var(--o)));
+      inset-inline: auto; left: 0; height: 100%; width: calc(2 * var(--u));
+      translate: calc(var(--u) * (var(--i) + var(--p)) + 6px * var(--i)) 0; transform: skewX(-10deg); }
+    .tri-frame { clip-path: inset(0 var(--cut) 0 0); }
+    .tri-photo { inset-inline: -40%; translate: calc(var(--cut) / -2) 0; transform: skewX(10deg); }
+    .tri-label { translate: calc(-50% - var(--cut) / 2) -50%; }
+    .tri-label.tri-first { left: auto; right: 1.75rem; translate: calc(-1 * var(--cut)) -50%; }
+    .tri-label.tri-last { left: 1.75rem; translate: 0 -50%; }
+  }
+
   /* ---------- Article (V6): text in the 680 column, .wide children up to 1180 ----------
      The text track is fixed first, so the wide tracks only take what is left. */
   .article-grid { display: grid; grid-template-columns: [full-start] minmax(1.25rem, 1fr) [wide-start] minmax(0, 15.625rem) [text-start] min(var(--container-text), 100% - 2.5rem) [text-end] minmax(0, 15.625rem) [wide-end] minmax(1.25rem, 1fr) [full-end]; }

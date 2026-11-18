@@ -30,7 +30,8 @@ const FIRST_STEP_MS = 1200;
  * word; on load Clopote is open, then the slices rotate every 6 s. The first
  * hover or focus stops the rotation for good; the pause pill restarts it
  * (WCAG 2.2.2). Rotation pauses off screen and in a hidden tab. Reduced
- * motion: equal slices, no rotation, no pill.
+ * motion: equal slices, no rotation, no pill. Slices only move and clip
+ * (`.tri-*` in globals.css), so the rotation causes no layout shift.
  */
 export function Triptych({slices, joiner, highlight, labels}: {
   slices: TriptychSlice[];
@@ -115,46 +116,48 @@ export function Triptych({slices, joiner, highlight, labels}: {
       <div className="mt-8 px-3 md:mt-12 md:px-4">
         <div ref={panel}
           className="relative mx-auto max-w-[88rem] overflow-hidden rounded-[1.5rem] bg-teal-950 text-left shadow-e3 lg:h-[clamp(520px,44vw,640px)] lg:rounded-hero">
-          <div className="flex flex-col lg:absolute lg:inset-y-0 lg:-inset-x-16 lg:flex-row lg:gap-1.5">
+          <div className="tri-row" style={{'--n': slices.length} as CSSProperties}>
             {slices.map((slice, index) => {
               const isOpen = open === index;
-              const seam = index === 0
-                ? 'max-lg:[clip-path:polygon(0_0,100%_0,100%_calc(100%_-_26px),0_100%)]'
-                : index === last
-                  ? 'max-lg:-mt-[22px] max-lg:[clip-path:polygon(0_26px,100%_0,100%_100%,0_100%)]'
-                  : 'max-lg:-mt-[22px] max-lg:[clip-path:polygon(0_26px,100%_0,100%_calc(100%_-_26px),0_100%)]';
-              const label = index === 0 ? 'lg:right-7 lg:left-auto lg:translate-x-0' : index === last ? 'lg:left-7 lg:translate-x-0' : '';
+              // Openness: 1 open and the rest 0, or equal shares (reduced motion), so the opens always sum to 1.
+              const share = (value: number) => (open === null ? `calc(${value} / ${slices.length})` : String(value));
+              const opened = open !== null && open < index ? 1 : 0;
+              const vars = {
+                '--i': index, '--o': share(open === null ? 1 : isOpen ? 1 : 0), '--p': share(open === null ? index : opened),
+                '--t': index === 0 ? '0px' : '26px', '--b': index === last ? '0px' : '26px',
+              } as CSSProperties;
+              const label = index === 0 && last > 0 ? 'tri-first' : index === last && last > 0 ? 'tri-last' : '';
               const text = index === 0 ? 'lg:left-44' : index === last ? 'lg:right-24' : '';
-              // One value drives both layouts: band height on phones, column width on desktop.
-              const grow = {'--open': open === null ? 0.5 : isOpen ? 1 : 0} as CSSProperties;
               return (
                 <Link key={slice.key} href={slice.href} onMouseEnter={() => choose(index)} onFocus={() => choose(index)}
-                  style={grow}
-                  className={`group relative block min-w-0 overflow-hidden text-white outline-offset-[-6px] transition-[height,flex-grow] duration-(--duration-slice) ease-light focus-visible:outline-3 h-[calc(132px_+_198px_*_var(--open))] ${seam} lg:h-auto lg:basis-0 lg:[flex-grow:calc(1_+_var(--open))] lg:-skew-x-[10deg]`}>
-                  <span className="absolute inset-0 lg:-inset-x-[40%] lg:skew-x-[10deg]">
-                    <span className={`absolute inset-0 transition-[filter] duration-(--duration-slice) ease-light ${isOpen ? '' : 'brightness-[.92]'}`}>
-                      <SanityImage image={slice.image && {...slice.image, alt: slice.image.alt ?? ''}} cover priority={index === 1}
-                        sizes="(min-width: 1024px) 60vw, 100vw" />
+                  style={vars} data-open={isOpen ? '' : undefined}
+                  className="tri-slice group block text-white outline-offset-[-6px] focus-visible:outline-3">
+                  <span className="tri-frame">
+                    <span className="tri-photo">
+                      <span className={`absolute inset-0 transition-[filter] duration-(--duration-slice) ease-light ${isOpen ? '' : 'brightness-[.92]'}`}>
+                        <SanityImage image={slice.image && {...slice.image, alt: slice.image.alt ?? ''}} cover priority={index === 1}
+                          sizes="(min-width: 1024px) 60vw, 100vw" />
+                      </span>
+                      <span aria-hidden="true"
+                        className={`absolute inset-x-0 bottom-0 h-[62%] bg-[linear-gradient(to_top,rgb(8_16_15/0.8),rgb(8_16_15/0))] transition-opacity duration-(--duration-fade) ease-light lg:h-[44%] lg:bg-[linear-gradient(to_top,rgb(8_16_15/0.78)_0%,rgb(8_16_15/0.45)_45%,rgb(8_16_15/0)_100%)] ${isOpen ? 'opacity-100' : 'opacity-0'}`} />
                     </span>
+
+                    {/* Closed: the name on a glass label, centred in the visible part. */}
                     <span aria-hidden="true"
-                      className={`absolute inset-x-0 bottom-0 h-[62%] bg-[linear-gradient(to_top,rgb(8_16_15/0.8),rgb(8_16_15/0))] transition-opacity duration-(--duration-fade) ease-light lg:h-[44%] lg:bg-[linear-gradient(to_top,rgb(8_16_15/0.78)_0%,rgb(8_16_15/0.45)_45%,rgb(8_16_15/0)_100%)] ${isOpen ? 'opacity-100' : 'opacity-0'}`} />
-                  </span>
+                      className={`tri-label glass-light absolute whitespace-nowrap rounded-pill px-4 py-2.5 text-[0.9375rem] font-semibold text-ink lg:skew-x-[10deg] lg:px-5 lg:py-3 lg:text-base ${label} ${isOpen ? 'opacity-0' : 'opacity-100'}`}>
+                      {slice.title}
+                    </span>
 
-                  {/* Closed: the name on a glass label. */}
-                  <span aria-hidden="true"
-                    className={`glass-light absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-pill px-4 py-2.5 text-[0.9375rem] font-semibold text-ink transition-opacity duration-(--duration-fade) ease-light lg:skew-x-[10deg] lg:px-5 lg:py-3 lg:text-base ${label} ${isOpen ? 'opacity-0' : 'opacity-100'}`}>
-                    {slice.title}
-                  </span>
-
-                  {/* Open: name, one line and the call to action. */}
-                  <span
-                    className={`absolute inset-x-5 bottom-11 transition-opacity ease-light lg:bottom-16 lg:left-24 lg:right-[110px] lg:skew-x-[10deg] ${text} ${
-                      isOpen ? 'opacity-100 delay-120 duration-(--duration-fade)' : 'pointer-events-none opacity-0 duration-(--duration-out)'
-                    }`}>
-                    <span className="block font-display text-[3.25rem] font-semibold leading-none tracking-[-0.015em] lg:text-[4.75rem]">{slice.title}</span>
-                    {slice.line && <span className="mt-2 block text-base leading-[1.6] lg:mt-3 lg:text-[1.1875rem]">{slice.line}</span>}
-                    <span className="glass-light mt-3.5 inline-flex h-11 items-center rounded-pill px-4 text-[0.9375rem] font-semibold text-ink lg:mt-5 lg:px-4.5">
-                      {slice.cta} →
+                    {/* Open: name, one line and the call to action. */}
+                    <span
+                      className={`absolute inset-x-5 bottom-11 transition-opacity ease-light lg:bottom-16 lg:left-24 lg:right-[110px] lg:skew-x-[10deg] ${text} ${
+                        isOpen ? 'opacity-100 delay-120 duration-(--duration-fade)' : 'pointer-events-none opacity-0 duration-(--duration-out)'
+                      }`}>
+                      <span className="block font-display text-[3.25rem] font-semibold leading-none tracking-[-0.015em] lg:text-[4.75rem]">{slice.title}</span>
+                      {slice.line && <span className="mt-2 block text-base leading-[1.6] lg:mt-3 lg:text-[1.1875rem]">{slice.line}</span>}
+                      <span className="glass-light mt-3.5 inline-flex h-11 items-center rounded-pill px-4 text-[0.9375rem] font-semibold text-ink lg:mt-5 lg:px-4.5">
+                        {slice.cta} →
+                      </span>
                     </span>
                   </span>
                 </Link>

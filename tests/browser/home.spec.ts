@@ -60,7 +60,7 @@ test('every home section renders in order, without prices or horizontal scroll',
   expect(errors).toEqual([]);
 });
 
-test('the triptych rotates until a visitor chooses a slice, and can be restarted', async ({page, isMobile}) => {
+test('the triptych rotates until a visitor chooses a slice, and can be restarted', async ({page}) => {
   await openHome(page);
   const toggle = page.locator('#inceput').getByRole('button', {name: 'Opriți derularea automată'});
   await expect(toggle).toBeVisible();
@@ -69,23 +69,38 @@ test('the triptych rotates until a visitor chooses a slice, and can be restarted
   await page.locator('h1').getByRole('link').nth(2).focus();
   const play = page.locator('#inceput').getByRole('button', {name: 'Porniți derularea automată'});
   await expect(play).toBeVisible();
-  if (!isMobile) {
-    // The open slice takes half the panel once its 480ms transition ends.
-    await expect.poll(() => page.locator('#inceput a[href^="/servicii/"]').evaluateAll((links) =>
-      links.filter((link) => !link.closest('h1')).map((link) => getComputedStyle(link).flexGrow))).toEqual(['1', '1', '2']);
-  }
+  await expect.poll(() => page.locator('#inceput .tri-slice').evaluateAll((links) =>
+    links.map((link) => link.hasAttribute('data-open')))).toEqual([false, false, true]);
   await play.click();
   await expect(toggle).toBeVisible();
 });
 
-test('reduced motion keeps the triptych still, without the pause control', async ({page, isMobile}) => {
+test('the rotating triptych causes no layout shift', async ({page}) => {
+  await page.addInitScript(() => {
+    const shifts: number[] = [];
+    (window as unknown as {shifts: number[]}).shifts = shifts;
+    new PerformanceObserver((list) => {
+      for (const entry of list.getEntries() as (PerformanceEntry & {value: number; hadRecentInput: boolean})[]) {
+        if (!entry.hadRecentInput) shifts.push(entry.value);
+      }
+    }).observe({type: 'layout-shift', buffered: true});
+  });
+  await openHome(page);
+  // The first step comes after 1.2 s; its transition takes 480 ms.
+  await page.waitForTimeout(2500);
+  const total = await page.evaluate(() => (window as unknown as {shifts: number[]}).shifts.reduce((sum, value) => sum + value, 0));
+  expect(total).toBeLessThan(0.01);
+});
+
+test('reduced motion keeps the triptych still, without the pause control', async ({page}) => {
   await page.emulateMedia({reducedMotion: 'reduce'});
   await openHome(page);
   await expect(page.locator('#inceput').getByRole('button')).toHaveCount(0);
-  // Equal slices: columns on desktop, bands on phones.
-  const sizes = () => page.locator('#inceput a[href^="/servicii/"]').evaluateAll((links, mobile) =>
-    links.filter((link) => !link.closest('h1')).map((link) => Math.round(link.getBoundingClientRect()[mobile ? 'height' : 'width'])), isMobile);
-  await expect.poll(async () => new Set(await sizes()).size).toBe(1);
+  // Equal slices (columns on desktop, bands on phones): every slice has the same share.
+  const shares = () => page.locator('#inceput .tri-slice').evaluateAll((links) =>
+    links.map((link) => getComputedStyle(link).getPropertyValue('--o').trim()));
+  await expect.poll(async () => new Set(await shares()).size).toBe(1);
+  expect((await shares()).length).toBeGreaterThan(1);
 });
 
 test('metadata and Organization JSON-LD come from Sanity', async ({page}) => {

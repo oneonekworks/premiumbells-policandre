@@ -574,12 +574,18 @@ pages, desktop and phone. Scratch checks in `test-results/` (git-ignored):
   | `/blog` | 86 · 100 · 100 (LCP 3.9 s) | 99 · 100 · 100 |
   | `/blog/clopotele-manastirii-putna` | 83 · 100 · 100 (LCP 4.7 s) | 98 · 100 · 100 |
 
-  (The 404 cannot be scored: Lighthouse stops on a 404 status.) **Open:** the
-  homepage triptych's auto-rotation animates the slices' flex width (desktop)
-  and height (phones), so every step counts as a layout shift (desktop CLS
-  0.25, "needs improvement" at the edge of "poor"; phones also shift the page
-  below on the first step). Fix: move the slices with transforms / clip-path
-  instead of layout. Mobile LCP on every page is mostly TTFB (≈ 1.4 s from the
+  (The 404 cannot be scored: Lighthouse stops on a 404 status.) The homepage
+  triptych's auto-rotation animated the slices' flex width (desktop) and
+  height (phones), so every step counted as a layout shift (desktop CLS 0.25 in
+  Lighthouse, 0.33 over 9 s in Chrome; phones 0.10). **Fixed (V7 step 5):**
+  every slice keeps the box of an open slice, placed with `translate`; the
+  visible part is a `clip-path` (`.tri-*` in `globals.css`); equal slices
+  (reduced motion) share the same total height as one open slice, so the
+  panel never changes height. CLS over 9 s is now 0 on desktop and phones;
+  the look is unchanged (open 2 : 1 : 1, seams, centred labels; the closed
+  slices' photos no longer re-zoom as they narrow). `home.spec.ts` checks the
+  open slice by `data-open`, equal shares by `--o`, and that the rotation
+  shifts nothing. Mobile LCP on every page is mostly TTFB (≈ 1.4 s from the
   Netlify function) plus the hero photo's load.
 
 ## Content still needed from the user
