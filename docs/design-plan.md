@@ -618,6 +618,11 @@ pages, desktop and phone. Scratch checks in `test-results/` (git-ignored):
   `prototype/mobile-publishing` a branch deploy:
   `https://prototype-mobile-publishing--premiumbells-preview.netlify.app`.
   `premiumbells-preview.netlify.app` stays on `9f15951` until `main` moves.
+  A second switch-on (export `…-before-catalogues-on-2.tar.gz`) was reverted
+  too: the Sanity webhook still refreshes the old address, whose code crashes
+  on the section, and the branch deploy has no `SANITY_REVALIDATE_SECRET`
+  (its webhook answers "not configured"), so it keeps a cached homepage for
+  up to an hour.
 
 ## Content still needed from the user
 
