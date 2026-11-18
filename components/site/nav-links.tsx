@@ -19,7 +19,9 @@ export type NavItem = {
 /** The featured card of the mega menu: all works, their number and a photo. */
 export type WorksCard = {href: string; label: string; meta: string; image: SanityImageValue | null};
 
-export function isActive(pathname: string, href: string): boolean {
+export function isActive(internal: string, href: string): boolean {
+  // Prerendered pages report the internal /ro path (the proxy rewrites / to /ro).
+  const pathname = internal.replace(/^\/ro(?=\/|$)/, '') || '/';
   if (href === '/' || href === '/en') return pathname === href;
   return pathname === href || pathname.startsWith(`${href}/`);
 }

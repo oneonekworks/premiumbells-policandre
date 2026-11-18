@@ -279,9 +279,16 @@ export const CATALOG_DOWNLOADS_QUERY = defineQuery(`
 `);
 
 // Every public post in $lang, newest first; the listing, the home teaser
-// and "Alte articole" take what they need from it (there are few posts).
+// and "Citiți și" take what they need from it (there are few posts). `story`
+// is the Blog's featured story preview (highlights, two insets, a film).
 export const BLOG_POSTS_QUERY = defineQuery(`
-  *[${publicPost}] | order(publishedAt desc, _id asc){${blogCardFields}}
+  *[${publicPost}] | order(publishedAt desc, _id asc){${blogCardFields},
+    "story": story{
+      "highlights": highlights[]{_key, figure, line},
+      "insets": insetPhotos[]{_key, image{${imageFields}}, title, line},
+      "video": featuredVideo{${videoFields}}
+    }
+  }
 `);
 
 // Body blocks are projected field by field (no spreads); internal links
@@ -311,20 +318,17 @@ export const BLOG_POST_QUERY = defineQuery(`
     "translations": *[_type == "blogPost" && ${notDraft} && defined(slug.current)
       && (_id == ^.translationOf._ref || translationOf._ref == ^._id)]{language, "slug": slug.current},
     "relatedProjects": *[${publicProject} && _id in ^.relatedProjects[]._ref] | order(year desc, _id asc){
-      _id, "title": ${localized('title')}, "slug": slug.current, year,
-      "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current),
+      _id, "title": ${localized('title')}, "slug": slug.current, year, "displayDate": ${localized('displayDate')}, location,
+      "keySpec": specifications[0]{value, unit, "label": ${localized('label')}},
+      "categorySlug": select($lang == "en" => category->slug.en.current, category->slug.ro.current), "craft": category->craft,
       coverImage{${imageFields}}
     },
     "relatedServices": *[${publicService} && _id in ^.relatedServices[]._ref] | order(displayOrder asc, _id asc){
       _id, "title": ${localized('title')}, "slug": ${serviceSlug},
       "parentSlug": select($lang == "en" => parent->slug.en.current, parent->slug.ro.current),
-      "summary": ${localized('summary')}, coverImage{${imageFields}}
+      "cardLabel": ${localized('cardLabel')}, coverImage{${imageFields}}
     },
     ${seoFields}
   }
 `);
 
-// "Din blog" on a project or service page: posts in $lang that link to it.
-export const POSTS_REFERENCING_QUERY = defineQuery(`
-  *[${publicPost} && references($id)] | order(publishedAt desc, _id asc)[0...3]{${blogCardFields}}
-`);

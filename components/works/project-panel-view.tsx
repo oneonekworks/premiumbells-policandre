@@ -7,11 +7,12 @@ import {Lightbox, usePhotoParam, type LightboxImage} from '@/components/portfoli
 import {SanityImage} from '@/components/sanity-image';
 import {ChevronLeftIcon, ChevronRightIcon, CloseV6Icon} from '@/components/site/icons';
 import type {Dictionary} from '@/lib/i18n/dictionaries';
+import {FilmLayer, type FilmVideo} from '@/components/site/film-layer';
 import {useProjectList, type ProjectList} from './project-list';
 
 type T = Dictionary['works6']['panel'];
 
-export type PanelVideo = {title: string; poster: string | null} & ({provider: 'youtube'; id: string} | {provider: 'file'; src: string});
+export type PanelVideo = FilmVideo & {poster: string | null};
 export type PanelPhoto = LightboxImage & {alt: string};
 
 function ZoomGlyph() {
@@ -19,36 +20,6 @@ function ZoomGlyph() {
 }
 function PlayGlyph() {
   return <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" /></svg>;
-}
-
-/** The film, in a layer over the panel; YouTube loads only now. */
-function FilmLayer({video, label, onClose}: {video: PanelVideo; label: string; onClose: () => void}) {
-  const dialog = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
-    const element = dialog.current;
-    element?.showModal();
-    return () => element?.close();
-  }, []);
-  return (
-    <dialog ref={dialog} aria-label={video.title} onClose={onClose}
-      onClick={(event) => event.target === dialog.current && dialog.current?.close()}
-      className="overlay-backdrop m-0 grid h-dvh max-h-none w-screen max-w-none place-items-center border-0 p-3 text-overlay-text backdrop:bg-transparent md:p-16">
-      <button type="button" onClick={() => dialog.current?.close()} aria-label={label} autoFocus
-        className="glass-on-dark absolute right-4 top-4 grid size-11 place-items-center rounded-full text-overlay-text">
-        <CloseV6Icon className="size-[18px]" />
-      </button>
-      <div className="relative aspect-video w-full max-w-275 overflow-hidden rounded-[12px] bg-black shadow-overlay-photo md:rounded-image">
-        {video.provider === 'youtube' ? (
-          <iframe src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0`} title={video.title}
-            allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen className="absolute inset-0 size-full" />
-        ) : (
-          <video controls autoPlay playsInline preload="metadata" aria-label={video.title} className="absolute inset-0 size-full">
-            <source src={video.src} />
-          </video>
-        )}
-      </div>
-    </dialog>
-  );
 }
 
 /**

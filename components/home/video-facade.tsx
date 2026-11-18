@@ -12,7 +12,8 @@ export type FacadeVideo = {title: string} & ({provider: 'youtube'; id: string} |
 // place and receives focus, so keyboard users can carry on from there.
 // Without a video the poster is shown on its own, with no play button.
 export function VideoFacade({poster, video, playLabel, sizes, caption, look = 'plain'}: {
-  poster: SanityImageValue;
+  /** A Sanity image, or a remote still (the YouTube thumbnail when the editor set no poster). */
+  poster: SanityImageValue | {url: string};
   video: FacadeVideo | null;
   playLabel: string;
   sizes: string;
@@ -37,7 +38,7 @@ export function VideoFacade({poster, video, playLabel, sizes, caption, look = 'p
   const feature = look === 'feature';
   const frame = feature
     ? 'relative aspect-[4/3] overflow-hidden rounded-card bg-band shadow-e2 transition-[translate,box-shadow] duration-(--duration-card) ease-light hover:-translate-y-2 hover:shadow-e3 has-focus-visible:-translate-y-2 has-focus-visible:shadow-e3 motion-reduce:transform-none md:aspect-[16/10] md:rounded-tray'
-    : 'relative aspect-video overflow-hidden rounded-card bg-sunk shadow-e1';
+    : 'relative aspect-video overflow-hidden rounded-card bg-band shadow-e1';
 
   if (playing && video) {
     return (
@@ -63,7 +64,11 @@ export function VideoFacade({poster, video, playLabel, sizes, caption, look = 'p
   return (
     <div className={`${frame} group`}>
       <span className={`absolute inset-0 transition-transform ease-light group-hover:scale-[1.03] motion-reduce:transform-none ${feature ? 'duration-[800ms]' : 'duration-(--duration-fade)'}`}>
-        <SanityImage image={poster} ratio={feature ? undefined : 16 / 9} cover={feature} sizes={sizes} />
+        {'url' in poster
+          // Remote still, not routed through the image optimiser.
+          // eslint-disable-next-line @next/next/no-img-element
+          ? <img src={poster.url} alt="" loading="lazy" className="size-full object-cover" />
+          : <SanityImage image={poster} ratio={feature ? undefined : 16 / 9} cover={feature} sizes={sizes} />}
       </span>
       {video && (
         <button type="button" onClick={() => setPlaying(true)} className="absolute inset-0 grid place-items-center">

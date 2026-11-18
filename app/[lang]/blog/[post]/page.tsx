@@ -2,19 +2,27 @@ import type {Metadata} from 'next';
 import Link from 'next/link';
 import {notFound} from 'next/navigation';
 import {ArticleBody} from '@/components/blog/article-body';
-import {PostGrid, PostMeta, postPath} from '@/components/blog/post-card';
+import {BylineCard, MetaLine, postPath} from '@/components/blog/byline-card';
 import {SanityImage} from '@/components/sanity-image';
-import {ArrowRightIcon} from '@/components/site/icons';
-import {photoAlt} from '@/lib/alt';
+import {workLine} from '@/components/services/blocks';
+import {Breadcrumb} from '@/components/services/story-hero';
+import {photoAlt, subject} from '@/lib/alt';
 import {getDictionary, type Dictionary} from '@/lib/i18n/dictionaries';
 import {isLang, localizedHref, type Lang} from '@/lib/i18n/routing';
 import {languageAlternates, truncate} from '@/lib/seo';
 import {servicePath} from '@/lib/services';
-import {getShell} from '@/lib/shell';
+import {craftMetal, getShell, type Metal, type Shell} from '@/lib/shell';
 import {site} from '@/lib/site';
 import {getBlogPost, getBlogPosts, type BlogPost} from '@/sanity/blog';
 import {sanityImageUrl} from '@/sanity/image';
 import {projectPath, routeLang} from '@/sanity/portfolio-routes';
+
+// Article v6 (boards V6Article, V6ArticleMobile; pages.md "Article"): white
+// hero (breadcrumb Jurnal / kind, kind · date · time, H1 up to 72, cover 16:9
+// r28, 4:3 on phones), the body in the 680 column (article-body.tsx), then
+// the band: "Citiți și" ×2 byline cards and the works and services the post
+// is about (works open the Project panel over the article). The footer is
+// the only dark panel.
 
 type Props = PageProps<'/[lang]/blog/[post]'>;
 
@@ -74,145 +82,132 @@ function blogPosting(lang: Lang, post: BlogPost, publisher: string) {
   };
 }
 
-function Byline({post, dictionary}: {post: BlogPost; dictionary: Dictionary}) {
+/** Who published the post and whose text it is, in one quiet line under the body. */
+function Credits({post, dictionary}: {post: BlogPost; dictionary: Dictionary}) {
   const {author, source} = post;
   if (!author?.name && !source?.text) return null;
   return (
-    <div className="mt-8 flex flex-wrap items-center gap-x-10 gap-y-5 border-y border-line py-5">
-      {author?.name && (
-        <div className="flex items-center gap-4">
-          {author.portrait?.asset && (
-            <span className="relative size-12 shrink-0 overflow-hidden rounded-full bg-stone">
-              <SanityImage image={{...author.portrait, alt: ''}} ratio={1} sizes="3rem" />
-            </span>
-          )}
-          <p className="leading-tight">
-            <span className="block text-xs uppercase tracking-[0.14em] text-ink-soft">{dictionary.blog.publisher}</span>
-            <span className="mt-1 block font-semibold text-ink">{author.name}</span>
-            {author.role && <span className="block text-sm text-ink-soft">{author.role}</span>}
-          </p>
-        </div>
-      )}
+    <p className="mt-4 flex flex-wrap gap-x-6 gap-y-1 border-t border-hairline pt-5 text-caption leading-[1.5] text-ink-soft lg:mt-6">
+      {author?.name && <span>{dictionary.blog.publisher} <b className="font-semibold text-ink">{author.name}</b>{author.role ? `, ${author.role}` : ''}</span>}
       {source?.text && (
-        <p className="leading-tight">
-          <span className="block text-xs uppercase tracking-[0.14em] text-ink-soft">{dictionary.blog.source}</span>
-          <span className="mt-1 block text-ink">
-            {source.url
-              ? <a href={source.url} rel="noopener" target="_blank" className="underline decoration-line underline-offset-4 hover:text-teal-700">{source.text}</a>
-              : source.text}
-          </span>
-        </p>
+        <span>
+          {dictionary.blog.source}:{' '}
+          {source.url
+            ? <a href={source.url} rel="noopener" target="_blank" className="text-teal-700 underline decoration-1 underline-offset-4">{source.text}</a>
+            : <span className="text-ink">{source.text}</span>}
+        </span>
       )}
-    </div>
+    </p>
   );
 }
 
-const publicRelated = (post: BlogPost) => ({
-  projects: post.relatedProjects.filter((project) => project.slug && project.categorySlug),
-  services: post.relatedServices.filter((service) => service.slug),
-});
-const hasRelated = (post: BlogPost) => {
-  const {projects, services} = publicRelated(post);
-  return projects.length + services.length > 0;
-};
+const metalBar: Record<Metal, string> = {gold: 'bar-gold', bronze: 'bar-bronze', gilt: 'bar-gilt'};
 
-function Related({post, lang, dictionary}: {post: BlogPost; lang: Lang; dictionary: Dictionary}) {
-  const {projects, services} = publicRelated(post);
+/** The works (→ Project panel) and services the post is about, as break-out cards. */
+function Related({post, lang, dictionary, shell}: {post: BlogPost; lang: Lang; dictionary: Dictionary; shell: Shell}) {
+  const projects = post.relatedProjects.filter((project) => project.slug && project.categorySlug);
+  const services = post.relatedServices.filter((service) => service.slug);
   if (!projects.length && !services.length) return null;
-  const card = (key: string, href: string, title: string | null, image: BlogPost['cover'], detail: string | number | null) => (
-    <li key={key} className="group relative">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-stone">
-        <SanityImage image={image && {...image, alt: photoAlt(image, title ?? '')}} ratio={4 / 3}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="transition-transform duration-700 group-hover:scale-[1.03]" />
-      </div>
-      <h3 className="mt-4 font-display text-xl font-semibold leading-snug text-teal-900">
-        <Link href={href} className="after:absolute after:inset-0 group-hover:text-teal-700">{title}</Link>
-      </h3>
-      {detail ? <p className="mt-1 line-clamp-2 text-sm text-ink-soft">{detail}</p> : null}
-    </li>
-  );
+  const serviceMetal = (href: string) =>
+    shell.serviceGroups.find((group) => group.href === href || group.items.some((item) => item.href === href))?.metal ?? 'gold';
+  const cards = [
+    ...projects.map((project) => ({
+      key: project._id, href: localizedHref(lang, projectPath(project.categorySlug!, project.slug!)), work: true,
+      title: project.title ?? '', line: workLine(project, dictionary.countries), metal: craftMetal(project.craft),
+      image: project.coverImage && {...project.coverImage, alt: photoAlt(project.coverImage, subject(project.title, project.location?.locality))},
+    })),
+    ...services.map((service) => {
+      const href = localizedHref(lang, servicePath(service.parentSlug, service.slug!));
+      return {
+        key: service._id, href, work: false, title: service.title ?? '', line: service.cardLabel ?? '', metal: serviceMetal(href),
+        image: service.coverImage && {...service.coverImage, alt: service.coverImage.alt ?? ''},
+      };
+    }),
+  ];
 
   return (
-    <div className="space-y-14">
-      {projects.length > 0 && (
-        <section aria-labelledby="lucrari-legate">
-          <h2 id="lucrari-legate" className="mb-8 font-display text-3xl font-semibold text-teal-900">{dictionary.blog.relatedWorks}</h2>
-          <ul className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
-            {projects.map((project) => card(project._id, localizedHref(lang, projectPath(project.categorySlug!, project.slug!)),
-              project.title, project.coverImage, project.year))}
-          </ul>
-        </section>
-      )}
-      {services.length > 0 && (
-        <section aria-labelledby="servicii-legate">
-          <h2 id="servicii-legate" className="mb-8 font-display text-3xl font-semibold text-teal-900">{dictionary.blog.relatedServices}</h2>
-          <ul className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
-            {services.map((service) => card(service._id, localizedHref(lang, servicePath(service.parentSlug, service.slug!)),
-              service.title, service.coverImage, service.summary))}
-          </ul>
-        </section>
-      )}
-    </div>
+    <section aria-labelledby="din-articol" className="mt-18 first:mt-0 lg:mt-28">
+      <h2 id="din-articol" className="font-display text-[2rem] font-medium leading-[1.1] tracking-[-0.015em] lg:text-[2.5rem]">{dictionary.blog.related}</h2>
+      <ul className="mt-7 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:mt-10 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-10">
+        {cards.map((card) => (
+          <li key={card.key} className="flex">
+            <Link href={card.href} scroll={card.work ? false : undefined} aria-haspopup={card.work ? 'dialog' : undefined}
+              className="bo bo-left group w-full">
+              <span className="ph relative">
+                <SanityImage image={card.image} ratio={4 / 3} sizes="(min-width: 1024px) 300px, (min-width: 480px) 50vw, 100vw" />
+                {card.work ? (
+                  <span className="glass-light pointer-events-none absolute bottom-3 left-3 inline-flex h-9 items-center rounded-pill px-3.5 text-caption font-semibold text-ink opacity-0 transition-opacity duration-(--duration-fade) group-hover:opacity-100 group-focus-visible:opacity-100 [@media(hover:none)]:hidden">{dictionary.services.seeWork}</span>
+                ) : null}
+              </span>
+              <span className="tx">
+                <i className={`bar ${metalBar[card.metal]}`} aria-hidden="true" />
+                <b className="lg:!text-2xl">{card.title}</b>
+                {card.line ? <small>{card.line}</small> : null}
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
 export default async function BlogPostPage({params}: Props) {
   const {lang, post, dictionary} = await load(params);
+  const t = dictionary.blog;
   const [posts, shell] = await Promise.all([getBlogPosts(lang), getShell(lang, dictionary)]);
   const others = posts.filter((other) => other._id !== post._id && other.slug).slice(0, 2);
-  const blogHref = localizedHref(lang, '/blog');
   const title = post.title ?? '';
   const jsonLd = blogPosting(lang, post, shell.company.name);
+  const kind = (post.kind && dictionary.homeSections.kinds[post.kind]) || title;
+  const related = post.relatedProjects.length + post.relatedServices.length > 0;
 
   return (
-    <>
+    <div className="v6-page mood-subtle">
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')}} />
-      <article className="container-site pb-20 pt-10 sm:pb-28 sm:pt-14">
-        <div className="mx-auto max-w-3xl">
-          <nav aria-label="Breadcrumb" className="mb-10 text-sm text-ink-soft">
-            <ol className="flex flex-wrap items-center gap-2">
-              <li><Link href={localizedHref(lang, '/')} className="hover:text-teal-700">{dictionary.nav.home}</Link></li>
-              <li aria-hidden="true">/</li>
-              <li><Link href={blogHref} className="hover:text-teal-700">{dictionary.nav.blog}</Link></li>
-              <li aria-hidden="true">/</li>
-              <li aria-current="page" className="line-clamp-1 text-ink">{title}</li>
-            </ol>
-          </nav>
-          <header>
-            <PostMeta post={post} lang={lang} dictionary={dictionary} />
-            <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.1] text-teal-900 sm:text-5xl lg:text-6xl">{title}</h1>
-            <Byline post={post} dictionary={dictionary} />
-          </header>
-        </div>
-
-        {post.cover?.asset && (
-          <div className="relative mx-auto mt-12 aspect-[3/2] max-w-5xl overflow-hidden rounded-xl bg-stone sm:aspect-[16/9]">
-            <SanityImage image={{...post.cover, alt: photoAlt(post.cover, title)}} cover priority sizes="(max-width: 1024px) 100vw, 64rem" />
+      <article>
+        <header className="m-hero pb-10 pt-7 lg:pb-18 lg:pt-11">
+          <div className="mx-auto max-w-[65.5rem] px-5 md:px-6">
+            <Breadcrumb label={dictionary.services.breadcrumb} items={[{label: t.title, href: localizedHref(lang, '/blog')}, {label: kind}]} />
+            <p className="mt-5 text-caption text-ink-soft lg:mt-8 lg:text-meta"><MetaLine post={post} lang={lang} dictionary={dictionary} /></p>
+            <h1 className="mt-3 font-display text-[2.75rem] font-medium leading-[1.06] tracking-[-0.015em] lg:mt-4 lg:text-[clamp(3rem,5vw,4.5rem)] lg:leading-[1.04]">{title}</h1>
           </div>
-        )}
+          {post.cover?.asset && (
+            <div className="mx-auto mt-7 max-w-[76.75rem] px-3 md:px-6 lg:mt-14">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-band shadow-e3 md:aspect-video lg:rounded-panel">
+                <SanityImage image={{...post.cover, alt: photoAlt(post.cover, title)}} cover priority sizes="(min-width: 1228px) 1180px, 100vw" />
+              </div>
+            </div>
+          )}
+        </header>
 
-        <div className="mx-auto mt-12 max-w-3xl sm:mt-16">
+        <div className="m-white pb-22 pt-4 lg:pb-34 lg:pt-6">
           <ArticleBody post={post} lang={lang} dictionary={dictionary} />
+          <div className="article-grid"><Credits post={post} dictionary={dictionary} /></div>
         </div>
       </article>
 
-      {(others.length > 0 || hasRelated(post)) && <div className="border-t border-line bg-stone">
-        <div className="container-site space-y-16 py-16 sm:py-20">
-          <Related post={post} lang={lang} dictionary={dictionary} />
-          {others.length > 0 && (
-            <section aria-labelledby="alte-articole">
-              <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-                <h2 id="alte-articole" className="font-display text-3xl font-semibold text-teal-900">{dictionary.blog.otherPosts}</h2>
-                <Link href={blogHref} className="group inline-flex min-h-11 items-center gap-2 font-medium text-teal-700 hover:text-teal-900">
-                  {dictionary.homeSections.allPosts}
-                  <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </div>
-              <PostGrid posts={others} lang={lang} dictionary={dictionary} columns={2} />
-            </section>
-          )}
-        </div>
-      </div>}
-    </>
+      {(others.length > 0 || related) && (
+        <section aria-labelledby={others.length ? 'cititi-si' : undefined} className="m-band px-5 pb-22 pt-18 md:px-0 lg:py-34">
+          <div className="mx-auto max-w-(--container-page) md:px-6">
+            {others.length > 0 && (
+              <>
+                <p className="kicker mb-3 md:mb-4">{t.kicker}</p>
+                <h2 id="cititi-si" className="section-title">{t.readAlso}</h2>
+                <ul className="mt-8 flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-8 lg:mt-16">
+                  {others.map((other) => (
+                    <li key={other._id} className="flex">
+                      <BylineCard post={other} lang={lang} dictionary={dictionary} ground="band" className="w-full"
+                        sizes="(min-width: 1248px) 600px, (min-width: 768px) 50vw, 100vw" />
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+            <Related post={post} lang={lang} dictionary={dictionary} shell={shell} />
+          </div>
+        </section>
+      )}
+    </div>
   );
 }

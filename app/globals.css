@@ -637,6 +637,13 @@
     .bo:hover .ph, .bo:focus-visible .ph, .bo:active .ph, .bo:hover .ph img, .bo:focus-visible .ph img { transform: none; }
   }
 
+  /* ---------- Article (V6): text in the 680 column, .wide children up to 1180 ----------
+     The text track is fixed first, so the wide tracks only take what is left. */
+  .article-grid { display: grid; grid-template-columns: [full-start] minmax(1.25rem, 1fr) [wide-start] minmax(0, 15.625rem) [text-start] min(var(--container-text), 100% - 2.5rem) [text-end] minmax(0, 15.625rem) [wide-end] minmax(1.25rem, 1fr) [full-end]; }
+  .article-grid > * { grid-column: text; min-width: 0; }
+  .article-grid > .wide { grid-column: wide; }
+  @media (width >= 48rem) { .article-grid { grid-template-columns: [full-start] minmax(1.5rem, 1fr) [wide-start] minmax(0, 15.625rem) [text-start] min(var(--container-text), 100% - 3rem) [text-end] minmax(0, 15.625rem) [wide-end] minmax(1.5rem, 1fr) [full-end]; } }
+
   /* ---------- Service pages (V4) ---------- */
   /* Policandre model card (boards V6ServicePolicandre + Mobile): .bo.bo-left.mc */
   .mc .ph { aspect-ratio: 4 / 5; background: #fff; width: 100%; border: 0; padding: 0; }
