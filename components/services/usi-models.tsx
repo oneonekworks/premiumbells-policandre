@@ -172,7 +172,7 @@ export function UsiModels({doors, initial, copy, phone}: {
           <a href="#oferta"
             className="mt-6 grid grid-cols-[72px_minmax(0,1fr)_auto] items-center gap-4 rounded-[18px] border border-white/90 bg-white/70 py-2.5 pl-2.5 pr-4.5 text-ink shadow-e1 transition-[background-color,box-shadow] duration-(--duration-fade) hover:bg-white hover:shadow-e2 focus-visible:bg-white focus-visible:shadow-e2">
             <span className="grid h-24 w-18 place-items-center overflow-hidden rounded-[10px] bg-white p-1 outline outline-1 -outline-offset-1 outline-hairline">
-              <Image src="/img/usa-desen.webp" alt="" width={268} height={480} sizes="64px" className="h-full w-auto object-contain" />
+              <Image src="/img/usa-desen.webp" alt="" width={272} height={480} sizes="64px" className="h-full w-auto object-contain" />
             </span>
             <span>
               <small className="block text-[0.8125rem] text-ink-soft">{copy.own.kicker}</small>
