@@ -194,21 +194,28 @@ export const iconostaseCopy = {
   nudge: {slug: 'usi', question: 'Și intrarea bisericii?', name: 'Uși', why: 'Din cupru turnat, cu sfinți în relief.'},
 };
 
+/** 4400 → "4,4 m" (Uși heights). */
+export const metres = (mm: number) => `${(mm / 1000).toFixed(1).replace('.', ',')} m`;
+
 export const usiCopy = {
   hero: {title: 'Uși', subline: 'din cupru turnat, cu sfinți în relief', lead: 'Lucrate doar după proiect, pe măsura bisericii, fiecare cu icoanele ei: uși din cupru turnat, cu sfinți și scene în relief.'},
   place: 'Drobeta-Turnu Severin',
-  /** The one model the client keeps (v6.2): the CMS model whose title has this word. */
-  modelMatch: /cupru/i,
+  /** v6.3: the model shown first (CMS models are ordered by height, `Înălțime` in mm). */
+  defaultModelMm: 4400,
   model: {
-    kicker: 'Modelul nostru', title: 'Uși din cupru',
-    lead: 'Turnate din cupru, cu sfinți și scene în relief; fiecare ușă se face după proiect, pe măsura bisericii.',
-    leadShort: 'Turnate din cupru, cu sfinți și scene în relief, pe măsura bisericii.',
-    photos: 'Fotografii', all: 'Vedeți toate', allLabel: 'Vedeți toate cele {n} fotografii', more: 'fotografii', zoom: 'Măriți',
-    material: 'Cupru', price: 'La comandă',
-    /** Fallback for the CMS model description (v6.2 board). */
-    text: 'Prețul depinde de complexitatea lucrării, de înălțime și lățime. Se lucrează doar după proiect, cu icoane individuale.',
+    kicker: 'Modelele noastre', title: 'Uși din cupru',
+    lead: 'Cinci uși turnate din cupru, de la 2,9 la 5,2 m, fiecare cu sfinții și scenele ei. Oricare se face din nou după proiect, pe măsura bisericii.',
+    leadShort: 'Cinci uși turnate din cupru, de la 2,9 la 5,2 m. Oricare se face din nou după proiect, pe măsura bisericii.',
+    heightLabel: 'Înălțime', placeLabel: 'Montate la',
+    person: 'om, pentru scară', personHeight: '1,8 m',
+    note: 'Toate cele cinci uși, la aceeași scară. Alegeți una ca s-o vedeți de aproape.',
+    pick: 'Alegeți ușa. Toate sunt desenate la aceeași scară.', picked: 'aleasă',
+    photos: 'Fotografii', all: 'Vedeți toate', allLabel: 'Vedeți toate cele {n} fotografii', more: 'fotografii', moreAll: 'fotografii, toate', zoom: 'Măriți',
+    material: 'Cupru', height: '{h} înălțime', position: 'Modelul {n} din {total}', price: 'La comandă',
+    priceText: 'Prețul depinde de complexitatea lucrării, de înălțime și lățime. Se lucrează doar după proiect, cu icoane individuale.',
     quality: 'Calitate garantată',
-    example: 'Montate la Catedrala din Drobeta-Turnu Severin.',
+    place: 'Montate la {place}.',
+    photoOf: 'Ușa din cupru de {h}',
     question: 'Vă place acest model?', call: 'Sunați', offer: 'Cereți o ofertă',
     own: {kicker: 'Al dumneavoastră', title: 'Ușa după desenul dumneavoastră', line: 'Pornim de la un desen și îl ajustăm împreună.'},
   },

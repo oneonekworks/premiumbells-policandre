@@ -1,8 +1,8 @@
 # Migration Status
 
 **Overall status:** Portfolio (60 works), services and catalogue, homepage, blog and global content managed in Sanity and live on the hosted preview; no price figures outside the Policandre catalogue (price wording allowed since v6.3, no automatic blocker)
-**Current phase:** Phase 7 done 2026-11-05; design v6 "Clarity" locked 2026-11-17 (v6.2 release candidate); v6 phase V0 (gap list, schema reconciliation) done and approved 2026-11-17; V1 (tokens and shared pieces) done 2026-11-17, local commits; next: V2–V7 in [design-plan](design-plan.md), then Phase 8 — see [handoff](handoff.md)
-**Last updated:** 2026-11-17
+**Current phase:** Phase 7 done 2026-11-05; design v6 "Clarity" locked 2026-11-17 (v6.2 release candidate); v6 phase V0 (gap list, schema reconciliation) done and approved 2026-11-17; V1–V7 done 2026-11-18; v6.3 pass (phase V8): V8.0 (no price blocker) and V8.1 (Uși: five copper models, doors at scale; content written 2026-11-21) done 2026-11-21, local commits; Studio price-validation removal waits for a deploy OK — see [design-plan](design-plan.md) and [handoff](handoff.md)
+**Last updated:** 2026-11-21
 
 ## Accepted decisions
 

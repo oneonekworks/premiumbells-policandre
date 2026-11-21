@@ -1,7 +1,8 @@
 import {expect, test, type Page} from '@playwright/test';
 
 // Service pages v6 (V4): one story hero per page, the Policandre catalogue,
-// the bell pages, the Iconostase material layer and redirects. Shape, not copy: the published services are the fixtures.
+// the bell pages, the Iconostase material layer, the Uși doors at scale and
+// redirects. Shape, not copy: the published services are the fixtures.
 
 const pages = [
   '/servicii/policandre', '/servicii/policandre-la-comanda', '/servicii/reconditionare-policandre',
@@ -99,4 +100,38 @@ test('Iconostase: a material opens the Lightbox at its own address; Back closes 
   await expect(page.getByRole('dialog')).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page).toHaveURL(/\/servicii\/iconostase$/);
+});
+
+test('Uși: the doors at scale pick the model; ?model= opens one; its photos open its own Lightbox set', async ({page}) => {
+  await page.goto('/servicii/usi');
+  const doors = page.getByRole('group', {name: /aceeași scară/}).getByRole('button');
+  const count = await doors.count();
+  expect(count).toBeGreaterThan(1);
+  // One px-per-metre: taller doors are drawn taller, in height order.
+  const heights = await doors.evaluateAll((buttons) => buttons.map((button) => button.firstElementChild!.getBoundingClientRect().height));
+  expect(heights).toEqual([...heights].sort((a, b) => a - b));
+  await expect(doors.and(page.locator('[aria-pressed="true"]'))).toHaveCount(1);
+
+  const block = page.locator('[aria-live="polite"]');
+  const name = async () => block.getByRole('heading', {level: 3}).textContent();
+  await doors.first().focus();
+  await page.keyboard.press('Enter');
+  await expect(doors.first()).toHaveAttribute('aria-pressed', 'true');
+  await expect(page).toHaveURL(/\?model=\d+$/);
+  const first = await name();
+  await doors.last().click();
+  expect(await name()).not.toEqual(first);
+  const model = new URL(page.url()).searchParams.get('model');
+
+  // The photo count in the block is the size of the Lightbox set.
+  const total = Number((await block.getByText(/^Fotografii · \d+$/).textContent())!.match(/\d+/)![0]);
+  await block.getByRole('button', {name: /^Vedeți toate/}).first().click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText(new RegExp(`1\\s*/\\s*${total}`));
+  await page.keyboard.press('Escape');
+
+  await page.goto(`/servicii/usi?model=${model}`);
+  await expect(doors.last()).toHaveAttribute('aria-pressed', 'true');
+  expect(await noOverflow(page)).toBe(true);
 });

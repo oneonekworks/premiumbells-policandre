@@ -704,6 +704,27 @@ in one transaction; hero Pe scurt row 2 is now “de la 2,9 la 5,2 m, după ușa
 bisericii”. Until step 3 ships, the current page shows the first model (2,9 m)
 because no title matches /cupru/ any more.
 
+*V8.1 step 3–4 done 2026-11-21.* `components/services/usi-models.tsx` (client):
+the scale row (toggle buttons with `aria-pressed`, one px-per-metre via
+`--ppm` 44 phone / 64 at lg / 80 at xl, the door box `--m` × `--ar` from the
+cover's real ratio, arched top radius w/2, floor line on an inner strip so it
+runs under every door when the phone row scrolls, 1,8 m person, snap-x) and
+the model block (`aria-live="polite"`, photos → that model's Lightbox set;
+“+N” tile, or N “fotografii, toate” when N ≤ 3; Cupru · height, Modelul n din
+5, name, La comandă, description, the price sentence, Calitate garantată,
+`Montate la …` only when set, quiet offer, custom card). The page reads the
+models with an `Înălțime` spec, sorted by height; default 4400
+(`usiCopy.defaultModelMm`). **Decision:** the page stays static; `?model=` is
+read in the browser on load (then centred on phones) and replaced on every
+choice, so the server renders the default model rather than the requested
+one (a dynamic render per query would cost the CDN cache). Spec: `services.spec.ts`
+“Uși” (height order, one pressed, Enter / click, `?model=`, Lightbox count =
+Fotografii · N, direct address). Checked at 1440 and 390 against the boards
+(prod build): focus ring gold 3 px on the photo, Space / Enter, reduced motion
+(no transitions), axe clean; Lighthouse local `/servicii/usi`: desktop
+99 · 100 (CLS 0), mobile 82 · 100 (LCP 4.9 s simulated, CLS 0). All 74
+browser specs pass.
+
 ## Content still needed from the user
 
 See `docs/design/clarity-v6/open-questions.md`; the main ones: Policandre
