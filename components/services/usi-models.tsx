@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import {useEffect, useRef, useState, type CSSProperties} from 'react';
 import type {LightboxImage} from '@/components/portfolio/lightbox';
 import {SanityImage} from '@/components/sanity-image';
@@ -97,7 +98,8 @@ export function UsiModels({doors, initial, copy, phone}: {
               <circle cx="15" cy="8" r="7" fill="currentColor" />
               <path d="M6 19h18a3 3 0 0 1 3 3v30a2.5 2.5 0 0 1-5 0V30h-1v79a3 3 0 0 1-6 0V66h-0v43a3 3 0 0 1-6 0V30H8v22a2.5 2.5 0 0 1-5 0V22a3 3 0 0 1 3-3z" fill="currentColor" />
             </svg>
-            <span className="mt-3.5 font-display text-[1.0625rem] font-semibold leading-none text-ink-soft lg:mt-4 lg:text-xl">{copy.personHeight}</span>
+            {/* Same label box as a door's height (22 / 26 tall), so the feet stand on the floor line. */}
+            <span className="mt-3.5 flex h-[22px] items-end font-display text-[1.0625rem] font-semibold leading-none text-ink-soft lg:mt-4 lg:h-[26px] lg:text-xl">{copy.personHeight}</span>
             <span className="mt-1.5 h-8 max-w-24 text-center text-xs leading-[1.3] text-ink-soft lg:h-[18px] lg:max-w-none lg:whitespace-nowrap lg:text-meta">{copy.person}</span>
           </span>
           {doors.map((item, index) => {
@@ -169,7 +171,9 @@ export function UsiModels({doors, initial, copy, phone}: {
           <QuietOffer className="mt-6" question={copy.question} offer={{href: '#oferta', label: copy.offer}} call={{href: phone.href, label: copy.call}} />
           <a href="#oferta"
             className="mt-6 grid grid-cols-[72px_minmax(0,1fr)_auto] items-center gap-4 rounded-[18px] border border-white/90 bg-white/70 py-2.5 pl-2.5 pr-4.5 text-ink shadow-e1 transition-[background-color,box-shadow] duration-(--duration-fade) hover:bg-white hover:shadow-e2 focus-visible:bg-white focus-visible:shadow-e2">
-            <span className="grid h-24 w-18 place-items-center rounded-[10px] bg-white text-center text-[0.6875rem] leading-tight text-ink-soft outline outline-1 -outline-offset-1 outline-hairline">[desen]</span>
+            <span className="grid h-24 w-18 place-items-center overflow-hidden rounded-[10px] bg-white p-1 outline outline-1 -outline-offset-1 outline-hairline">
+              <Image src="/img/usa-desen.webp" alt="" width={268} height={480} sizes="64px" className="h-full w-auto object-contain" />
+            </span>
             <span>
               <small className="block text-[0.8125rem] text-ink-soft">{copy.own.kicker}</small>
               <b className="block font-display text-2xl font-semibold leading-[1.15]">{copy.own.title}</b>
