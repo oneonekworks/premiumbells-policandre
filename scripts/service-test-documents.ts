@@ -10,7 +10,6 @@
 import { parseArgs } from "node:util";
 import { createClient } from "@sanity/client";
 import { API_VERSION, createWriteClient } from "./lib/import-run";
-import { findPriceTextInValue } from "./lib/price-text";
 
 const { values } = parseArgs({ options: { write: { type: "boolean" }, delete: { type: "boolean" } } });
 
@@ -111,9 +110,6 @@ async function main() {
   const categoryId = await readClient.fetch<string | null>(`*[_type == "workCategory" && slug.ro.current == "clopote"][0]._id`);
   const youtube = await readClient.fetch<string | null>(`*[_type == "project" && defined(videos[provider == "youtube"][0].url)][0].videos[provider == "youtube"][0].url`);
   const documents = plan(assets, categoryId, youtube);
-
-  const hits = documents.flatMap((document) => findPriceTextInValue(document).map((hit) => `${document._id}: ${hit.path} „${hit.match}”`));
-  if (hits.length) throw new Error(`Price text in the test documents:\n${hits.join("\n")}`);
 
   console.log(`${documents.length} test documents: ${documents.map(({ _id }) => _id).join(", ")}`);
   console.log(`Reusing ${assets.length} image assets; related category ${categoryId ?? "none"}; video ${youtube ? "yes" : "none"}.`);

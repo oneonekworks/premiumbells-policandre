@@ -1,5 +1,4 @@
 import {expect, test, type Page} from '@playwright/test';
-import {findPriceText} from '../../scripts/lib/price-text';
 
 // Blog and Article, design v6 (V6). Shape, not copy: the listing, filter,
 // featured story and byline cards run on the published posts; the body-block
@@ -24,13 +23,6 @@ async function open(page: Page, path: string) {
 async function newestPost(page: Page) {
   await page.goto('/blog');
   return (await page.locator('main article h2 a').first().getAttribute('href'))!;
-}
-
-async function expectNoPrices(page: Page, path: string) {
-  expect((await page.goto(path))?.status(), path).toBe(200);
-  expect(findPriceText(await page.content()).filter(({level}) => level === 'error').map(({match}) => match), path).toEqual([]);
-  const text = await page.locator('body').innerText();
-  expect(findPriceText(text).filter(({rule}) => rule === 'price-word').map(({match}) => match), path).toEqual([]);
 }
 
 test('the listing: featured story of the newest post, then byline cards newest first', async ({page}) => {
@@ -190,9 +182,9 @@ test('legacy blog addresses redirect permanently', async ({request}) => {
   }
 });
 
-test('no prices in the HTML or visible text of the blog pages', async ({page}) => {
+test('every blog page opens', async ({page}) => {
   await open(page, '/blog');
   const links = await page.locator('main a[href^="/blog/"]').evaluateAll((anchors) =>
     [...new Set(anchors.map((anchor) => anchor.getAttribute('href')!))]);
-  for (const path of ['/blog', ...links]) await expectNoPrices(page, path);
+  for (const path of ['/blog', ...links]) expect((await page.goto(path))?.status(), path).toBe(200);
 });

@@ -3,7 +3,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { ManifestAsset } from "./legacy-media";
 import {
-  checkPrices,
   createMediaResolver,
   issueCollector,
   localeString,
@@ -224,6 +223,5 @@ function mapService(service: SeedService, context: ServicesContext, paths: Set<s
     ...(parentPath ? { parentId: serviceDocumentId(parentPath) } : {}),
     ...(service.relatedCategory ? { relatedCategorySlug: service.relatedCategory } : {}),
   };
-  checkPrices(plan);
   return plan;
 }

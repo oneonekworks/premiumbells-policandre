@@ -1,6 +1,6 @@
 # Migration Status
 
-**Overall status:** Portfolio (60 works), services and catalogue, homepage, blog and global content managed in Sanity and live on the hosted preview; no prices anywhere
+**Overall status:** Portfolio (60 works), services and catalogue, homepage, blog and global content managed in Sanity and live on the hosted preview; no price figures outside the Policandre catalogue (price wording allowed since v6.3, no automatic blocker)
 **Current phase:** Phase 7 done 2026-11-05; design v6 "Clarity" locked 2026-11-17 (v6.2 release candidate); v6 phase V0 (gap list, schema reconciliation) done and approved 2026-11-17; V1 (tokens and shared pieces) done 2026-11-17, local commits; next: V2–V7 in [design-plan](design-plan.md), then Phase 8 — see [handoff](handoff.md)
 **Last updated:** 2026-11-17
 
@@ -27,7 +27,7 @@
 - UX: Preserve grids, slide-overs, fullscreen galleries, lazy loading, and low
   navigation depth.
 - Project overlays: canonical routes plus App Router parallel/intercepted routes.
-- Products: informational catalogue only; do not publish pricing.
+- Products: informational catalogue; price figures only in the Policandre catalogue, price wording allowed elsewhere (v6.3, 2026-11-21; no automatic blocker).
 - Migration: incremental vertical slice before bulk import.
 - Initial slice: Clopote.
 

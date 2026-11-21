@@ -1,7 +1,7 @@
 // Seeds the v6 "Clarity" content (docs/design-plan.md, V2 step 4) as DRAFTS,
 // one step at a time, from the published documents plus the board copy in
 // docs/design/clarity-v6/copy. Dry run by default: prints every changed field,
-// the length and price checks, and any existing draft it would replace.
+// the length check, and any existing draft it would replace.
 // Nothing is published; review the drafts in the Studio. Export the dataset
 // before `--write`.
 //
@@ -14,7 +14,6 @@
 import { parseArgs } from "node:util";
 import type { SanityDocument } from "@sanity/client";
 import { createWriteClient } from "./lib/import-run";
-import { findPriceTextInValue } from "./lib/price-text";
 
 const { values } = parseArgs({ options: { step: { type: "string" }, write: { type: "boolean" } } });
 const steps = ["home", "services", "categories"] as const;
@@ -218,13 +217,10 @@ ids.forEach((id, index) => {
   output.push(draft);
 });
 
-const prices = findPriceTextInValue(allChanges, {});
 console.log(JSON.stringify(allChanges, null, 2));
 console.log(`\nLength check: ${tooLong.length ? `\n  ${tooLong.join("\n  ")}` : "all within the Studio limits"}`);
-console.log(`Price check on the new values: ${prices.length ? JSON.stringify(prices) : "nothing found"}`);
 const existing = drafts.filter(Boolean).map((draft) => draft!._id);
 console.log(`Existing drafts: ${existing.length ? `${existing.join(", ")} (they would be replaced)` : "none"}`);
-if (prices.some((finding) => finding.level === "error")) throw new Error("Price text found; nothing written.");
 if (tooLong.length) console.log("Some values exceed the Studio limits; fix them before --write.");
 
 if (!values.write) {

@@ -14,7 +14,6 @@
 import { parseArgs } from "node:util";
 import { createClient } from "@sanity/client";
 import { API_VERSION, createWriteClient } from "./lib/import-run";
-import { findPriceTextInValue } from "./lib/price-text";
 
 const sections = ["services", "testimonial", "audio", "blog", "about"] as const;
 const { values } = parseArgs({
@@ -180,9 +179,6 @@ async function main() {
   }
   if (existingHome && existingHome !== testHomeTitle) throw new Error("A real homePage is published; refusing to replace it.");
   const documents = plan({ photos, mp3, youtube, projects, service }, values.hide);
-
-  const hits = documents.flatMap((document) => findPriceTextInValue(document).map((hit) => `${document._id}: ${hit.path} „${hit.match}”`));
-  if (hits.length) throw new Error(`Price text in the test documents:\n${hits.join("\n")}`);
 
   console.log(`${documents.length} test documents: ${documents.map(({ _id }) => _id).join(", ")}`);
   console.log(`Reusing ${photos.length} photos, 1 MP3 and 1 YouTube link; hidden section: ${values.hide ?? "none (catalogues stay off)"}.`);

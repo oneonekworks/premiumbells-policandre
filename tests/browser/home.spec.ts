@@ -1,5 +1,4 @@
 import {expect, test, type Page} from '@playwright/test';
-import {findPriceText} from '../../scripts/lib/price-text';
 
 // Home page (design v6 Clarity). Runs against the home page the server reads:
 // the published one, or the draft when the server runs with
@@ -19,7 +18,7 @@ async function openHome(page: Page) {
   return errors;
 }
 
-test('every home section renders in order, without prices or horizontal scroll', async ({page}) => {
+test('every home section renders in order, without horizontal scroll', async ({page}) => {
   const errors = await openHome(page);
   const main = page.locator('main');
 
@@ -53,9 +52,6 @@ test('every home section renders in order, without prices or horizontal scroll',
   await expect(page.locator('footer#oferta')).toContainText('Cereți o ofertă');
   await expect(page.locator('#servicii a[download]')).toHaveCount(0);
 
-  const html = await page.content();
-  expect(findPriceText(html).filter(({level}) => level === 'error').map(({match}) => match)).toEqual([]);
-  expect(findPriceText(await page.locator('body').innerText()).filter(({rule}) => rule === 'price-word')).toEqual([]);
   expect(await noOverflow(page)).toBe(true);
   expect(errors).toEqual([]);
 });

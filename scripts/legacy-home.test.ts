@@ -2,14 +2,11 @@ import assert from "node:assert/strict";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { buildDocumentPlans, loadManifest, parseImportArgs } from "./lib/import-run";
+import { buildDocumentPlans, parseImportArgs } from "./lib/import-run";
 import { countBlocks, htmlToInline, toSpans } from "./lib/legacy-article";
-import { indexManifest } from "./lib/legacy-portfolio";
-import { loadHomeSeed, mapPhase7 } from "./lib/legacy-home";
 
 // Phase 7 importer essentials: the three articles convert with the block
-// counts of the legacy pages, marks survive, the Raport price sentence blocks
-// the record without its override, and a second run plans the same
+// counts of the legacy pages, marks survive, and a second run plans the same
 // documents. Needs ../rbells-tw and the media manifest, like the other tests.
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -41,17 +38,6 @@ test("marks and spaces follow the browser rendering", () => {
   assert.doesNotMatch(text, /Gherasim Soca/); // moved to `source`
   assert.deepEqual(toSpans(htmlToInline("creat de <strong>Belltron</strong> în <em>urmă</em>", [], "x"), "k").map(({ text, marks }) => [text, marks.join()]),
     [["creat de ", ""], ["Belltron", "strong"], [" în ", ""], ["urmă", "em"]]);
-});
-
-test("the Raport price sentence blocks the post without its override", () => {
-  const seed = loadHomeSeed();
-  const raport = seed.posts.find((post) => post.slug === "raport-18-ianuarie-2023")!;
-  raport.replacements = raport.replacements.filter((item) => !item.find.startsWith("In preț"));
-  const [plan] = mapPhase7("blog", {
-    legacyRoot, manifest: indexManifest(loadManifest(manifestFile)), resolveAsset: () => undefined,
-    seed: { ...seed, posts: [raport] },
-  });
-  assert.deepEqual(plan.issues.filter((issue) => issue.severity === "error").map((issue) => issue.code), ["price-word"]);
 });
 
 test("a second run plans identical documents", () => {

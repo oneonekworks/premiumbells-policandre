@@ -624,6 +624,71 @@ pages, desktop and phone. Scratch checks in `test-results/` (git-ignored):
   (its webhook answers "not configured"), so it keeps a cached homepage for
   up to an hour.
 
+### V8 · v6.3 changes (design pass v6.3, from 2026-11-20)
+
+**Source:** `docs/design/clarity-v6/CHANGES-v6.3.md` (one numbered entry per
+change; the boards in `reference/boards/` are the exact design). Build the
+entries in order, one local commit each; mark each one done here with notes.
+
+**V8.0 · Remove the price blocker** (CHANGES-v6.3 §2, user 2026-11-21).
+Remove the blocking price checks (importer price block, seeds,
+`verify-no-prices` as a gate, the no-price assertions in the browser tests;
+Studio validation in `../studio-premiumbells` with the user's OK for the
+deploy) and restore the board copy that was cut for the guard (Uși
+“Prețul depinde…”, the TVA item, “estimarea prețului”). Do this first: V8.1
+uses the restored sentence.
+
+*V8.0 done 2026-11-21.* Deleted `scripts/lib/price-text.ts`, its test and
+`scripts/verify-no-prices.ts`; the importer's `checkPrices` (services,
+catalogue, Phase 7) and the Phase 7 „preț” / „negociabil” block, the seeds'
+and test-document price checks, and the no-price assertions in
+`home.spec.ts`, `services.spec.ts`, `blog.spec.ts` (the blog test now only
+checks every post opens). The importer still drops legacy `price` keys (a
+mapping, not a guard). Restored: “TVA” at the end of Ce este inclus (both
+bell pages; neither has a CMS list, so the code list shows), “Desenul, apoi
+estimarea prețului.” (Iconostase), and the v6.2 Uși sentence as the code
+fallback (the live CMS model has its own description; V8.1 adds the price
+sentence as its own line). Studio (`../studio-premiumbells`, not committed,
+**not deployed**): `priceTextValidation` removed from the 10 document types,
+`lib/priceText*` and `lib/priceValidation*` deleted, the “Fără prețuri…”
+field hints removed; tsc and its 13 tests pass. Deploy waits for the user's OK.
+
+**V8.1 · Uși: five copper models, doors at scale** (CHANGES-v6.3 §1; boards
+`V6ServiceUsi` + `Mobile`; components “Doors at scale · Uși” and “Model block
+· Uși (v6.3)”; copy `copy/usi.md`).
+
+1. **Content model first (read-only, then ask).** The current code reads
+   `sectionModels.models[]` (`title`, `description`, `anchorId`, `cover`,
+   `gallery[]`, `specifications[] {label, value, unit}`) and keeps only the
+   model whose title matches /cupru/. Prefer **no schema change**: height as a
+   specification (`Înălțime`, value in mm), `place` as a specification
+   (`Montate la`) or the description, `cover` = door front for the scale row,
+   `anchorId` = the deep-link key, array order = height order, the featured
+   model chosen in code (4400) or by a flag. Check `../studio-premiumbells`
+   (read-only) and the live dataset, then propose the mapping (and any field
+   that really must be added) for approval.
+2. **Content (each write needs the user's OK; raw export first).** Five models
+   from `/Users/amanoila/Dev/premiumbells/2026+ assets/UȘI CUPRU/` (one
+   subfolder per model: 2900, 3000, Drobeta 4000, 4400 = the current one,
+   5200). Names, descriptions and places: `copy/usi.md`. Move the line
+   “Montate la Catedrala din Drobeta-Turnu Severin” from 4400 to 4000. Let the
+   user pick the gallery order / which photos go in (Drobeta has 164, incl.
+   fitting and visit). Upload originals, not the board web copies.
+3. **Page.** Rework `components/services/pages/usi.tsx` + `usiCopy`: title row
+   (“Modelele noastre”, new lead), scale row (client component: buttons with
+   `aria-pressed`, one px-per-metre, floor line, 1,8 m person SVG, phone
+   scroll-snap with the chosen door centred), Model block bound to the choice
+   (`aria-live`), Lightbox set per model, optional `?model=` via
+   `replaceState`, server render of the default / requested model. Hero Pe
+   scurt “Pe măsură: de la 2,9 la 5,2 m, după ușa bisericii” (CMS heroFacts).
+   Show the board's price sentence “Prețul depinde de complexitatea lucrării,
+   de înălțime și lățime. Se lucrează doar după proiect, cu icoane
+   individuale.” (the price blocker is gone after V8.0).
+4. **Check** at 1440 and 390 on a production build against the boards;
+   keyboard (Tab through the five doors, Space / Enter), reduced motion,
+   Lighthouse a11y on `/servicii/usi`. Update `migration-status.md`, this plan
+   and `docs/handoff.md`.
+
 ## Content still needed from the user
 
 See `docs/design/clarity-v6/open-questions.md`; the main ones: Policandre

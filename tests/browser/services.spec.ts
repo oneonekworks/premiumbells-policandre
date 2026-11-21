@@ -1,9 +1,7 @@
 import {expect, test, type Page} from '@playwright/test';
-import {findPriceText} from '../../scripts/lib/price-text';
 
 // Service pages v6 (V4): one story hero per page, the Policandre catalogue,
-// the bell pages, the Iconostase material layer, redirects and the price
-// guard. Shape, not copy: the published services are the fixtures.
+// the bell pages, the Iconostase material layer and redirects. Shape, not copy: the published services are the fixtures.
 
 const pages = [
   '/servicii/policandre', '/servicii/policandre-la-comanda', '/servicii/reconditionare-policandre',
@@ -101,15 +99,4 @@ test('Iconostase: a material opens the Lightbox at its own address; Back closes 
   await expect(page.getByRole('dialog')).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page).toHaveURL(/\/servicii\/iconostase$/);
-});
-
-// Prices: none on any service page while the Policandre catalogue shows "La comandă" (user, 2026-11-17).
-test('no prices in the HTML or visible text of any service page', async ({page}) => {
-  for (const path of pages) {
-    await page.goto(path);
-    const html = await page.content();
-    expect(findPriceText(html).filter(({level}) => level === 'error').map(({match}) => match), path).toEqual([]);
-    const text = await page.locator('body').innerText();
-    expect(findPriceText(text).filter(({rule}) => rule === 'price-word').map(({match}) => match), path).toEqual([]);
-  }
 });

@@ -1,7 +1,7 @@
 // Seeds the v5.10 home page fields (docs/design-schema-proposal.md §3) as a
 // DRAFT of the `homePage` singleton, from the published document plus the copy
 // in docs/design-handoff/content/homepage.ro.json. Dry run by default: prints
-// the changed sections and the price check. Nothing is published; review the
+// the changed sections. Nothing is published; review the
 // draft in the Studio. Export the dataset before `--write`.
 //
 //   npx tsx scripts/home-v510-seed.mts            # plan only
@@ -12,7 +12,6 @@
 // to the service photos), the "Nou" badge (empty at launch).
 import { parseArgs } from "node:util";
 import { createWriteClient } from "./lib/import-run";
-import { findPriceTextInValue } from "./lib/price-text";
 
 const { values } = parseArgs({ options: { write: { type: "boolean" } } });
 
@@ -131,11 +130,8 @@ const changed = { hero, services, catalogues, works, about, audio, blog, testimo
 const draft = { ...published, ...changed, _id: "drafts.homePage" };
 delete (draft as Record<string, unknown>)._rev;
 
-const prices = findPriceTextInValue(changed, {});
 console.log(JSON.stringify(changed, null, 2));
-console.log(`\nPrice check on the new values: ${prices.length ? JSON.stringify(prices) : "nothing found"}`);
 console.log(`Existing draft: ${existingDraft ? `yes (rev ${existingDraft._rev}), it would be replaced` : "none"}`);
-if (prices.some((finding) => finding.level === "error")) throw new Error("Price text found; nothing written.");
 
 if (!values.write) {
   console.log("\nDry run: nothing written. Add --write to create drafts.homePage.");

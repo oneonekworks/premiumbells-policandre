@@ -1,6 +1,5 @@
 import type { ManifestAsset } from "./legacy-media";
 import {
-  checkPrices,
   createMediaResolver,
   fixWords,
   issueCollector,
@@ -224,6 +223,5 @@ function mapRecord(
     },
   };
   const plan: DocumentPlan = { key, collection: "catalog", document, images: media.needs, issues, review };
-  checkPrices(plan);
   return plan;
 }

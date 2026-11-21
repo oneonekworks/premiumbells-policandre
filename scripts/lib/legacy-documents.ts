@@ -10,7 +10,6 @@ import {
 } from "./legacy-media";
 import type { ImageNeed, IssueSeverity, MappingIssue } from "./legacy-portfolio";
 import { stableStringify } from "./legacy-portfolio";
-import { findPriceText, findPriceTextInValue } from "./price-text";
 import { extractConstants } from "./legacy-source";
 
 // Shared pieces of the Phase 6 services and catalogue importers: reading
@@ -182,24 +181,6 @@ export function createMediaResolver(context: MediaContext, issue: ReturnType<typ
 
 export const localeString = (ro: string) => ({ _type: "localeString", ro });
 export const localeText = (ro: string) => ({ _type: "localeText", ro });
-
-/**
- * The price block: any currency or amount in a planned document (provenance
- * and media filenames included) is an error; pricing words are review notes.
- */
-export function checkPrices(plan: Pick<DocumentPlan, "document" | "images" | "issues" | "review">) {
-  const findings = [
-    ...findPriceTextInValue(plan.document),
-    ...plan.images.flatMap((need) => findPriceText(decodeURIComponent(path.posix.basename(need.canonical)), `file ${need.canonical}`)),
-  ];
-  for (const finding of findings) {
-    if (finding.level === "error") {
-      plan.issues.push({ severity: "error", code: "price-text", message: `${finding.path ?? "?"}: „${finding.match}” (${finding.message})` });
-    } else {
-      plan.review.push(`Pricing word at ${finding.path ?? "?"}: „${finding.match}”`);
-    }
-  }
-}
 
 // Diacritics and spelling for legacy catalogue words; applied word by word
 // and listed in the report. Extend when a dry run shows a new word.

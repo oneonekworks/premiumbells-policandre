@@ -111,8 +111,7 @@ export const cuJugCopy = {
   sizes: {title: 'Dimensiuni clopote cu jug', short: 'cu jug', sets: 'Seturi recomandate după note muzicale', initial: 10},
   included: {
     kicker: 'Clopote cu jug', title: 'Ce este inclus',
-    // The boards end the list with "TVA"; left out: the site's price guard reads VAT as price text (as in the V2 seed).
-    items: ['Limba', 'Icoanele', 'Textul', 'Ornamentele', 'Jugul de stejar', 'Transportul până la biserică'],
+    items: ['Limba', 'Icoanele', 'Textul', 'Ornamentele', 'Jugul de stejar', 'Transportul până la biserică', 'TVA'],
     nudge: {slug: 'automatizari-clopote-cu-balans', question: 'Clopote cu jug, trase automat', name: 'Automatizări pentru clopote cu balans', why: 'Motor liniar, controler și telecomandă.', contain: true},
   },
   works: {...bellCommon.works, title: 'Clopote cu jug montate', all: 'Toate lucrările cu clopote cu jug'},
@@ -124,7 +123,7 @@ export const faraBalansCopy = {
   sizes: {title: 'Dimensiuni clopote fără balans', short: 'fără balans', sets: 'Seturi acordate după note muzicale', initial: 8},
   included: {
     kicker: 'Clopote fără balans', title: 'Ce este inclus',
-    items: ['Limba', 'Icoanele', 'Textul', 'Ornamentele', 'Transportul până la biserică'],
+    items: ['Limba', 'Icoanele', 'Textul', 'Ornamentele', 'Transportul până la biserică', 'TVA'],
     nudge: {slug: 'clopotar-electronic', question: 'Clopote fixe, trase automat', name: 'Clopotar electronic', why: 'Pentru clopote fixe, cu limba trasă ca de mână.', contain: false},
   },
   works: {...bellCommon.works, title: 'Clopote fără balans montate', all: 'Toate lucrările cu clopote fără balans'},
@@ -187,8 +186,7 @@ export const iconostaseCopy = {
     kicker: 'De la proiect la sfințire', title: 'Cum lucrăm',
     items: [
       {title: 'Măsurăm altarul', text: 'Venim în biserică și luăm dimensiunile.'},
-      // Board: "Desenul, apoi estimarea prețului." The word „preț” stays off the site outside the Policandre catalogue.
-      {title: 'Proiectul', text: 'Desenul, apoi oferta.'},
+      {title: 'Proiectul', text: 'Desenul, apoi estimarea prețului.'},
       {title: 'Execuția', text: 'Sculptură manuală, turnare și aurire.'},
       {title: 'Montajul', text: '[Text de confirmat]'},
     ],
@@ -207,8 +205,8 @@ export const usiCopy = {
     leadShort: 'Turnate din cupru, cu sfinți și scene în relief, pe măsura bisericii.',
     photos: 'Fotografii', all: 'Vedeți toate', allLabel: 'Vedeți toate cele {n} fotografii', more: 'fotografii', zoom: 'Măriți',
     material: 'Cupru', price: 'La comandă',
-    /** Fallback for the CMS model description (the board's line starts with „Prețul…”, which the price guard keeps off the site). */
-    text: 'Se lucrează doar după proiect, cu icoane individuale; complexitatea, înălțimea și lățimea se stabilesc pentru fiecare biserică.',
+    /** Fallback for the CMS model description (v6.2 board). */
+    text: 'Prețul depinde de complexitatea lucrării, de înălțime și lățime. Se lucrează doar după proiect, cu icoane individuale.',
     quality: 'Calitate garantată',
     example: 'Montate la Catedrala din Drobeta-Turnu Severin.',
     question: 'Vă place acest model?', call: 'Sunați', offer: 'Cereți o ofertă',

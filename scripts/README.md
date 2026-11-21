@@ -148,18 +148,13 @@ required fields).
   `fields`, `specifications`, `gallery`).
 - `lib/legacy-documents.ts` holds the pointer resolver, the media resolver
   (images and MP3 files; manifest dispositions and the exclusion registry are
-  both honoured) and the price block: any currency or amount anywhere in a
-  planned document, or in a media filename, blocks the record. Parents are
+  both honoured; no price check since v6.3). Parents are
   written before variants; a slug used by another service, a missing parent
   or a missing related category blocks a record.
 - `migrate-assets` uploads MP3s as file assets, unchanged, with the same
   SHA-1 fingerprint and checkpoint.
 
-## Phase 6 price detector and test documents
-
-`lib/price-text.ts` is the importer's copy of the Studio price detector
-(`studio-premiumbells/lib/priceText.ts`); `price-text.test.ts` runs the shared
-fixtures on both and checks the rules match.
+## Phase 6 test documents
 
 `npm run services:test-docs` plans five published Romanian-only test
 documents for the service routes and `tests/browser/services.spec.ts`
@@ -167,8 +162,7 @@ documents for the service routes and `tests/browser/services.spec.ts`
 `policandre` catalogue items, one with the `Policandru-7` anchor), reusing
 existing image assets. Dry run by default; `--write` creates or replaces them,
 `--delete` removes them and their drafts (write token from `.env.local`;
-export the dataset first). The planned documents are checked for price text
-before writing.
+export the dataset first).
 
 ## Next migration stages
 
@@ -214,5 +208,4 @@ npx tsx scripts/verify-migration.ts --collection blog
   repeats the title.
 - References to documents this importer writes (author, testimonial, audio)
   are weak with `_strengthenOnPublish`, so drafts can point at drafts; other
-  references must be published. "preț" and "negociabil" block a Phase 7
-  record (they would reach a public page).
+  references must be published.

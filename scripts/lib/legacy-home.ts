@@ -3,9 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { convertArticle, htmlToInline, toSpans, type ArticleBlock, type ArticleIssue } from "./legacy-article";
 import type { ManifestAsset } from "./legacy-media";
-import { findPriceTextInValue } from "./price-text";
 import {
-  checkPrices,
   createMediaResolver,
   issueCollector,
   localeString,
@@ -95,12 +93,6 @@ function plan(collection: Phase7Collection, key: string, document: DocumentPlan[
   issues: DocumentPlan["issues"]; images: DocumentPlan["images"]; review?: string[];
 }): DocumentPlan {
   const result: DocumentPlan = { key, collection: collection as DocumentPlan["collection"], document, images: parts.images, issues: parts.issues, review: [...(parts.review ?? [])] };
-  checkPrices(result);
-  // These texts go straight to public pages, where "preț" and "negociabil"
-  // are not allowed either: here they block the record instead of a warning.
-  const words = findPriceTextInValue(document).filter((finding) => finding.rule === "price-word" || finding.rule === "negotiable");
-  for (const finding of words) result.issues.push({ severity: "error", code: "price-word", message: `${finding.path ?? "?"}: „${finding.match}” (${finding.message})` });
-  if (words.length) result.review = result.review.filter((note) => !note.startsWith("Pricing word"));
   return result;
 }
 
