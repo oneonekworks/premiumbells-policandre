@@ -689,6 +689,21 @@ field hints removed; tsc and its 13 tests pass. Deploy waits for the user's OK.
    Lighthouse a11y on `/servicii/usi`. Update `migration-status.md`, this plan
    and `docs/handoff.md`.
 
+*V8.1 steps 1–2 done 2026-11-21.* Mapping approved with no schema change
+(title, description, `cover` = cut door front, `gallery` = the set,
+specifications `Înălțime` · mm and, for Drobeta, `Montate la`; list order =
+height; default 4400 in code; `?model=<mm>`). The user approved removing the
+seven legacy oak / bronze models. Door fronts: tight crops of the originals in
+`UȘI CUPRU/_fronts/` (4,4 m is 0.607 wide, not the board's 0.556: the real
+door with its side panels). Picks in `docs/v8-usi-gallery-picks.md`
+(8 · 3 · 26 · 32 · 14 photos). After a raw export
+(`.migration/backups/production-2026-11-21-before-usi-models.tar.gz`),
+`scripts/v8-usi-models.mts --write` uploaded 88 originals (EXIF rotation baked
+in, full size) and replaced the models on the published `legacy-service-usi`
+in one transaction; hero Pe scurt row 2 is now “de la 2,9 la 5,2 m, după ușa
+bisericii”. Until step 3 ships, the current page shows the first model (2,9 m)
+because no title matches /cupru/ any more.
+
 ## Content still needed from the user
 
 See `docs/design/clarity-v6/open-questions.md`; the main ones: Policandre
