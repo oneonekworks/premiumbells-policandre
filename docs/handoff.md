@@ -1,9 +1,76 @@
 # Session handoff
 
-**Updated:** 2026-11-17 · The design is locked as **v6 "Clarity" (v6.2 release
+**Updated:** 2026-11-20 · v6.3 pass started: see “v6.3 changes: kickoff prompt” below. Earlier: The design is locked as **v6 "Clarity" (v6.2 release
 candidate)**. Implementation continues from `docs/design/clarity-v6/` with the
 plan in `docs/design-plan.md`. Start a new Claude Code session with the
 kickoff prompt below.
+
+## v6.3 changes: kickoff prompt (2026-11-20)
+
+Design pass v6.3 extends the implemented v6.2 pages. Changes are listed in
+`docs/design/clarity-v6/CHANGES-v6.3.md`; the plan is phase **V8** in
+`docs/design-plan.md`. First change: **Uși, five copper models with a
+doors-at-scale switch** (approved 2026-11-20).
+
+> We are continuing the v6 "Clarity" implementation of policandre.ro with the
+> **v6.3** design changes, on branch `prototype/mobile-publishing`.
+> Read, in this order: `CLAUDE.md` / `AGENTS.md` (Next 16: read
+> `node_modules/next/dist/docs/` before writing code), `docs/handoff.md`,
+> `docs/design/clarity-v6/README.md`, `rules.md`,
+> `docs/design/clarity-v6/CHANGES-v6.3.md`, then phase **V8** in
+> `docs/design-plan.md`.
+>
+> First do **V8.0 · Remove the price blocker** (CHANGES-v6.3 §2): price
+> wording such as “Prețul depinde…” must no longer be blocked anywhere. Remove
+> the blocking price checks (importer / seeds price block,
+> `scripts/verify-no-prices.ts` as a gate, the no-price assertions in
+> `tests/browser/*.spec.ts`), delete `scripts/lib/price-text.ts` and its test
+> if nothing else needs it, and restore the board copy cut for the guard in
+> `lib/service-copy.ts` (Uși price sentence, the TVA item, “estimarea
+> prețului”). The Studio validation lives in `../studio-premiumbells/lib/priceText.ts`:
+> show me the change there; **deploying the Studio needs my OK.** One local
+> commit.
+>
+> Then implement **V8.1 · Uși: five copper models, doors at scale**. The exact
+> design is `docs/design/clarity-v6/reference/boards/V6ServiceUsi.dc.html` and
+> `V6ServiceUsiMobile.dc.html` (the `USI_MODELS` list in their script holds
+> the five models; `/_blob/<id>` images are web copies, see `assets.md`
+> § v6.3); specs in `components.md` (“Doors at scale · Uși”, “Model block ·
+> Uși (v6.3)”), `pages.md` (Uși), copy in `copy/usi.md`. Today the page is
+> `components/services/pages/usi.tsx` + `usiCopy` in `lib/service-copy.ts`
+> and shows the one `sectionModels` model whose title matches /cupru/.
+>
+> Steps, stopping where marked:
+> 1. Read `../studio-premiumbells` schema and the live Uși document
+>    (read-only). Propose how the five models map onto the existing
+>    `sectionModels.models[]` fields (height, door front, place, deep-link key,
+>    default model), preferring no schema change. **Stop and show me.**
+> 2. After my OK: raw dataset export, then add / update the five models with
+>    originals from `/Users/amanoila/Dev/premiumbells/2026+ assets/UȘI CUPRU/`
+>    (one subfolder per model). Show me the gallery picks per model before
+>    writing (Drobeta has 164 photos, incl. fitting and visit). Move
+>    “Montate la Catedrala din Drobeta-Turnu Severin” from 4400 to 4000; 4400
+>    has no place. **Each write and publish needs my OK.**
+> 3. Build the page: scale row as a small client component (buttons with
+>    `aria-pressed`, one px-per-metre: 80 desktop / 44 phone, floor line, the
+>    1,8 m person, phone scroll-snap with the chosen door centred), the Model
+>    block bound to the choice (`aria-live="polite"`, Lightbox on that model's
+>    full set), default 4,4 m, optional `?model=` with `replaceState` and
+>    server render of the requested model. Hero Pe scurt: “Pe măsură · de la
+>    2,9 la 5,2 m, după ușa bisericii”. Show the board's price sentence
+>    (“Prețul depinde de complexitatea lucrării, de înălțime și lățime. Se
+>    lucrează doar după proiect, cu icoane individuale.”).
+> 4. Compare with the boards at 1440 and 390 on a production build; keyboard,
+>    reduced motion, Lighthouse a11y. One local commit; update
+>    `docs/design-plan.md` (V8.1 notes), `docs/migration-status.md` and this
+>    file. **No git push without my OK.**
+>
+> Rules as before: no Sanity write, publish, Studio deploy or push without my
+> explicit OK; secrets stay in `.env.local`; price figures only in the
+> Policandre catalogue, but no automatic price blocker (price wording is
+> allowed); desktop and phone together; minimal unit tests.
+
+---
 
 ## Where we are (2026-11-17)
 

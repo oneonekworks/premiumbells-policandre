@@ -13,6 +13,11 @@ board; ask before building it that way.
   That includes La comandă, Recondiționare, Clopote, Automatizări (kits without
   prices), Iconostase, Uși, the Project panel and the Lightbox. Currency, VAT and
   scope are open (open-questions.md q51–53).
+- **No automatic price blocker (v6.3, 2026-11-21).** Price wording (e.g.
+  “Prețul depinde de complexitatea lucrării…”, TVA, estimare) is allowed on any
+  page; prices are an editorial and design decision, not a code or Studio
+  check. Price figures stay in the Policandre catalogue until a design change
+  says otherwise.
 - **CTA wording "Cereți o ofertă".** The per-card "Cereți o ofertă" link on the
   Policandre models is gone.
 - **Real photos only.** Stand-ins on the boards are labelled; placeholders stay

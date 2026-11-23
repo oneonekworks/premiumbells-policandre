@@ -66,7 +66,7 @@ ends in `B` are the second half of a long page (the canvas caps a board at
 | Automatizări clopote cu balans | `V6AutomatizariBalans` | `…Mobile` |
 | Iconostase | `V6ServiceIconostase` | `…Mobile` |
 | Lightbox · Iconostase (layer, material tabs + zoom) | `V6IconostasViewer` | `…Mobile` |
-| Uși (one copper model) | `V6ServiceUsi` | `…Mobile` |
+| Uși (five copper models, v6.3) | `V6ServiceUsi` | `…Mobile` |
 | Lucrările noastre (Galerie / Hartă) | `V6Works` | `V6WorksMobile` |
 | Works, filter bar docked while scrolling | `V6WorksSticky` | `V6WorksStickyMobile` |
 | Project panel (layer; the only way a work is shown) | `V6ProjectPanel` | `…Mobile` |

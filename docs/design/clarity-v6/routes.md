@@ -21,7 +21,7 @@ redirects (as in `docs/url-map.md`).
 | `/servicii/iconostase` | Iconostase | hub + 4 material pages | One page; materials open the Lightbox with material tabs |
 | `/servicii/iconostase/marmura` · `/lemn-aur` · `/pristol-marmura` | Iconostase page **with the Lightbox open** on that material | nested pages | Keep the URLs (indexed) as layer addresses: render the page + open layer server-side |
 | `/servicii/iconostase/iconostas-bronz` | — (Bronz removed 2026-11-16) | nested page | 308 → `/servicii/iconostase` |
-| `/servicii/usi` | Uși, one copper model inline | built | Old model links (if any `/servicii/usi/[model]`) 308 → `/servicii/usi` |
+| `/servicii/usi` | Uși, five copper models (v6.3: doors at scale + model block; optional `?model=<heightMm>`) | built (v6.3 change pending) | Old model links (if any `/servicii/usi/[model]`) 308 → `/servicii/usi` |
 | `/lucrarile-noastre` | Works, filter Toate | overview page | One page with the filter bar; Galerie / Hartă |
 | `/lucrarile-noastre/[category]` | Works pre-filtered | category page with sidebar | Same page, category chip on; sidebar and year/county filters removed |
 | `/lucrarile-noastre/[category]/[project]` | Works (that category) **with the Project panel open**, server-rendered | full project page + intercepted slide-over | No full project page any more: the direct route renders the Works page with the panel open; the intercepted route opens the panel over the current page |

@@ -142,27 +142,27 @@ v6.2: the close-up viewer merged into the Lightbox; the “Priviți de aproape�
 
 `/servicii/usi` · dark areas: 1
 
-v6.2: the client keeps one door model, Uși din cupru, shown inline; no model panel, no materials comparison (old /servicii/usi/[model] links → 301 to /servicii/usi). Only the footer is a dark panel.
+v6.3: five copper models (2,9 · 3,0 · 4,0 · 4,4 · 5,2 m) on one page; the doors drawn at scale are the switch and the model block below follows the choice (no panel, no cards; optional deep link `?model=4400`). Old /servicii/usi/[model] links → 301 to /servicii/usi. Only the footer is a dark panel. (v6.2: one model.)
 
 | # | Section | Component | |
 |---|---|---|---|
 | 01 | Header | Header · v6 |  |
-| 02 | Hero (white) | Story hero (split): breadcrumb; H1 + teal italic “din cupru turnat, cu sfinți în relief” + lead + Pe scurt (Cupru · Pe măsură · Proiect) \| mounted doors photo 4:3 + insets (Mântuitorul pe timpan, Sfinți în relief); place caption bottom-left |  |
-| 03 | Modelul nostru (band) | Single model · Uși: photo group (Lightbox) \| Cupru, La comandă, text, Calitate garantată, mounted example, quiet offer, custom-door card |  |
+| 02 | Hero (white) | Story hero (split): breadcrumb; H1 + teal italic “din cupru turnat, cu sfinți în relief” + lead + Pe scurt (Cupru · Pe măsură: de la 2,9 la 5,2 m · Proiect) \| mounted doors photo 4:3 + insets (Mântuitorul pe timpan, Sfinți în relief); place caption bottom-left |  |
+| 03 | Modelele noastre (band) | v6.3: title row; Doors at scale (5 door buttons on one floor line, one px-per-metre, 1,8 m person; phone scrolls sideways); Model block for the chosen door: photo group (Lightbox on that model) \| Cupru · height + Modelul n din 5, name, La comandă, description, Calitate garantată, place (when known), quiet offer, custom-door card |  |
 | 04 | Link (white) | Thumbnail link to Iconostase |  |
 | 05 | Cereți o ofertă + footer | Dark panel | dark |
 
-## Works index · v6.2
+## Works index · v6.3b
 
 `/lucrarile-noastre/[categorie]` · dark areas: 1
 
-v6.2: one tile = one project, captions always on; the map is a view of the same list (Galerie | Hartă), not a section; no Servicii block (it repeated the homepage and menus). Only the footer is a dark panel, in both views (v6.2: the Hartă card is light). Default filter is Toate; service pages link to the pre-filtered URL (e.g. /lucrarile-noastre/clopote). A tile opens the Project panel; the lightbox opens on top of the panel.
+v6.3b (2026-11-23): no visible hero (visually hidden H1); the filter bar opens the page; an edge-to-edge wall of 4:5 photos, gaps 6, no text on the wall (desktop hover reveals name + place; a tap opens the Project panel); the map card is the only tile with text. See `CHANGES-v6.3.md` §4 (it replaces §3, the compact header + captioned cards). v6.2: one tile = one project, captions always on; the map is a view of the same list (Galerie | Hartă), not a section; no Servicii block (it repeated the homepage and menus). Only the footer is a dark panel, in both views (v6.2: the Hartă card is light). Default filter is Toate; service pages link to the pre-filtered URL (e.g. /lucrarile-noastre/clopote). A tile opens the Project panel; the lightbox opens on top of the panel.
 
 | # | Section | Component | |
 |---|---|---|---|
 | 01 | Header | Header · v6 |  |
-| 02 | Hero (white) | Breadcrumb; H1 \| lead “Parohii, mănăstiri și catedrale: 60 de lucrări, din România până la Muntele Athos…” (no stats, no kicker) |  |
-| 03 | Filters + wall (band) | Category segmented (default Toate; service pages link pre-filtered; v6.2: with Clopote on, Cu jug · Fără balans slide in after it inside the same bar (no second line, nothing moves), ?tip=cu-jug \| fara-balans, the bell pages link with the type set; the bar is the docked bar (search as an icon); sticky under the header while scrolling the wall; craft mood glow on the band per category) + search + Galerie \| Hartă; project tiles, 4 cols, 16 gaps, Toate ordered featured-first with crafts alternating; map tile in the first row (Europe mini map, opens Hartă; Hartă view: Europe map, list grouped România by county, then În afara României by country); “Arată încă 24” |  |
+| 02 | H1 (hidden) | v6.3b: no visible hero; visually hidden H1 “Lucrările noastre”; no breadcrumb (the header pill marks the page); the lead sentence becomes the meta description |  |
+| 03 | Filters + wall (band) | Category segmented (default Toate; service pages link pre-filtered; v6.2: with Clopote on, Cu jug · Fără balans slide in after it inside the same bar (no second line, nothing moves), ?tip=cu-jug \| fara-balans, the bell pages link with the type set; the bar is the docked bar (search as an icon); sticky under the header while scrolling the wall; craft mood glow on the band per category) + search + Galerie \| Hartă; v6.3b: Works wall (edge to edge, 4 cols, 4:5, gaps 6, r6, no text; hover reveals name + place; phone 2 cols, gaps 4), Toate ordered featured-first with crafts alternating; map card in the first row, col 4 (same size, the only tile with text; phone: row 2 right; opens Hartă; Hartă view: Europe map, list grouped România by county, then În afara României by country); “Arată încă 24” |  |
 | 04 | Hartă (view, band) | Replaces the wall when chosen: v6.2 the homepage map component (light, 1200 × 700), dots with a photo card on hover / tap, the județe + countries list as a glass island over the Atlantic; phone: map then chips per group |  |
 | 05 | Cereți o ofertă + footer | Dark panel | dark |
 

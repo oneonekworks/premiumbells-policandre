@@ -102,7 +102,7 @@ Handoff · 5–6 of 6
 - 46 — **Answered:** detail texts and pins approved.
 - 47 — **Answered:** sketch under Stejar (A) and the photo placement approved. Panel carries a calm “Calitate garantată” label instead of the old price sentence.
 - 48 — **Answered:** doors show “La comandă”; price figures removed from cards, panel and the comparison.
-- 49 — **Uși din cupru:** the blog report (18 Jan 2023) calls the Drobeta-Turnu Severin cathedral doors “din bronz”; the page and the client call the model “cupru”. Confirm the metal, and whether “Montate la Catedrala din Drobeta-Turnu Severin” may be stated.
+- 49 — **Uși din cupru:** the blog report (18 Jan 2023) calls the Drobeta-Turnu Severin cathedral doors “din bronz”; the page and the client call the model “cupru”. Confirm the metal, and whether “Montate la Catedrala din Drobeta-Turnu Severin” may be stated. **v6.3 (user, 2026-11-20):** Drobeta has the 4,0 m doors; the 4,4 m model is a reference from another church (no place shown). The metal question for the blog wording is still open.
 - 50 — **Countries (v6.2):** the client named Spain, Belgium and Mount Athos besides Romania and Moldova. Confirm the list, whether Athos is counted under Greece (the hero says 5 țări: … Grecia (Muntele Athos)), and the count per country for the homepage list.
 - 51 — **Policandre prices (v6.2):** currency, lei or euro? The boards show placeholders “[12.000] lei”.
 - 52 — **Prices and VAT:** do the prices include VAT? If yes, the date line can read “Prețuri cu TVA, actualizate din data de …”.

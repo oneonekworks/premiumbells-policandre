@@ -157,7 +157,34 @@ Known stand-ins and missing originals: director portrait and the 1:1 avatar (cro
 | `ca6d58f98040e9a46246496a0fc9ea8c` | Glob de bronz | V6ServiceReconditionare, V6ServiceReconditionareMobile |
 | `e1dc1d699238f63d758014dc5c6b3a9e` | Piese comparate după șlefuire | V6ServiceReconditionare, V6ServiceReconditionareMobile |
 | `f06b50389dad32811fc40feeb498fdc7` | Detaliu ornamental | V6ServiceReconditionare, V6ServiceReconditionareMobile |
-| `366402099ce44f667255bbe951e3cfff` | Ușile din cupru montate, cu preoți și credincioși în fața lor, Drobeta-Turnu Severin | V6ServiceUsi, V6ServiceUsiMobile |
+| `366402099ce44f667255bbe951e3cfff` | Ușile din cupru montate, cu preoți și credincioși în fața lor, Drobeta-Turnu Severin | V6ServiceUsi, V6ServiceUsiMobile, V6Works, V6WorksMobile (v6.3 card “Catedrala din Drobeta-Turnu Severin”) |
 | `85a74e7971f40b443aa2240f25cbcba5` | Detaliu: sfinți în relief · Detaliu: sfinți în relief pe ușile din cupru | V6ServiceUsi, V6ServiceUsiMobile |
 | `b1a2a75bd94c856b4ea616ee13aa9491` | Ușile din cupru, cu Mântuitorul pe timpan · Ușile din cupru, cu doi sfinți în relief și Mântuitorul pe timpan | V6ServiceUsi, V6ServiceUsiMobile |
 | `db64092294ff593022b644677a1d90f9` | Desen de proiect pentru o ușă de biserică | V6ServiceUsi, V6ServiceUsiMobile |
+
+## v6.3 Uși: five copper models (2026-11-20)
+
+Web copies (≤ 1200 px) of photos from the folder “2026+ assets/UȘI CUPRU” (one subfolder per model; originals 2000–3500 px). Door fronts are tight crops for the scale row; in the build, use transparent cut-outs if available.
+
+| Asset id | Description (alt text on the boards) | Boards |
+|---|---|---|
+| `da1bc1374186514f6ea2116bd5fdef2a` | Ușa de 2,9 m, front cut-out (scale row) | V6ServiceUsi, V6ServiceUsiMobile |
+| `b9661969d77184fa6a4dd108bf2c6516` | Ușa de 3,0 m, front cut-out (scale row) | V6ServiceUsi, V6ServiceUsiMobile |
+| `ba333d97a095c71fc66d4d5a6df09022` | Ușa de 4,0 m (Drobeta), front cut-out (scale row) | V6ServiceUsi, V6ServiceUsiMobile |
+| `c8e72ea37d0629e03dc9c1145a1c1c27` | Ușa de 4,4 m, front cut-out (scale row) | V6ServiceUsi, V6ServiceUsiMobile |
+| `24444ff3bfeab9a0a250c24791bde404` | Ușa de 5,2 m, front cut-out (scale row) | V6ServiceUsi, V6ServiceUsiMobile |
+| `91726bcde34b0a689d49260d93dc601f` | Ușa din cupru de 2,9 m, cu Sfânta Mahramă pe timpan și cruci pe canate | V6ServiceUsi, V6ServiceUsiMobile |
+| `d50070b49649024df82bdf7fc0e2ab8f` | Detaliu: crucea cu IC XC NIKA, turnată în cupru | V6ServiceUsi, V6ServiceUsiMobile |
+| `5326fb7ca8e78ec4b087b93be2eddd9e` | Ușa de 2,9 m în atelier, cu un om alături, pentru scară | V6ServiceUsi, V6ServiceUsiMobile |
+| `bc89adc2476de745b974d31d958df149` | Ușa din cupru de 3 m, deschisă, cu Maica Domnului a Semnului pe timpan | V6ServiceUsi, V6ServiceUsiMobile |
+| `e59f466511807ec219ff12cd1a7c4a14` | Timpanul: Maica Domnului a Semnului, între doi îngeri | V6ServiceUsi, V6ServiceUsiMobile |
+| `00678699b34e99cbfc56f0889149bc94` | Canatul deschis, cu crucea turnată | V6ServiceUsi, V6ServiceUsiMobile |
+| `8fb7aca52adcbae7a44ecb7606abed29` | Ușa mare din cupru a Catedralei din Drobeta-Turnu Severin | V6ServiceUsi, V6ServiceUsiMobile |
+| `7b991ee69f7f2cb6bd49402b3b046ce2` | Cele trei uși ale catedralei, cu ușa mare deschisă | V6ServiceUsi, V6ServiceUsiMobile |
+| `da8cf7f5c9e17d6d3f9fcce42c698843` | Detaliu: o scenă din Evanghelie, în relief, pe latura ușii | V6ServiceUsi, V6ServiceUsiMobile |
+| `dca7ab593b594da221960d91a4698238` | Ușa din cupru de 4,4 m, cu doi sfinți, praznice și Mântuitorul pe timpan | V6ServiceUsi, V6ServiceUsiMobile |
+| `4adf38f0e6fb5406e431a38e0ed0d8ab` | Detaliu: un praznic în relief, din șirul de deasupra canatelor | V6ServiceUsi, V6ServiceUsiMobile |
+| `6aedefefbb2c35d7da0b8ebf44192816` | Detaliu: cei doi sfinți în relief, de aproape | V6ServiceUsi, V6ServiceUsiMobile |
+| `5b54f6541d7ed2e1aba1807453697da9` | Ușa din cupru de 5,2 m, cu Schimbarea la Față pe timpan și doi arhangheli | V6ServiceUsi, V6ServiceUsiMobile |
+| `92955ebc8b3fbaf503f5bb4e2064a57d` | Detaliu: arhanghelul în relief, de aproape | V6ServiceUsi, V6ServiceUsiMobile |
+| `715d8ee312ec689bfe59279d609b37f1` | Ușa de 5,2 m în atelier, cu doi oameni alături, pentru scară | V6ServiceUsi, V6ServiceUsiMobile |
