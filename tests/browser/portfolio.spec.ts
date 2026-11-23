@@ -1,19 +1,19 @@
 import {expect, test, type Page} from '@playwright/test';
 
 // Lucrările noastre and the Project panel (v6.2, V5). Reads the live published
-// dataset (no writes): needs more than 10 public works, Clopote works with
+// dataset (no writes): needs more than 23 public works, Clopote works with
 // galleries, and the Clopote cu jug service page with its works section.
 
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
 const panel = (page: Page) => page.locator('dialog.project-panel[open]');
-const tiles = (page: Page) => page.locator('main a.wt[aria-haspopup="dialog"]');
+const tiles = (page: Page) => page.locator('main a.ww-tile[aria-haspopup="dialog"]');
 
 test('a tile opens the Project panel over the wall; Anterior / Următor browse the list; Escape and Forward', async ({page}) => {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/lucrarile-noastre');
   await expect(page.locator('main h1')).toHaveText('Lucrările noastre');
-  expect(await tiles(page).count()).toBe(10);
+  expect(await tiles(page).count()).toBe(23);
   await expect(page.getByRole('button', {name: /^Deschideți harta/}).filter({visible: true})).toHaveCount(1);
   expect(await noOverflow(page)).toBe(true);
 

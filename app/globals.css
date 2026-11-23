@@ -662,12 +662,33 @@
   }
 
   /* ---------- Lucrările noastre (V5, boards V6Works + V6WorksSticky) ---------- */
-  /* Project tile: lift −6 + e3, photo 1.03 (components.md "Project tile"). */
-  .wt { transition: transform var(--duration-card) var(--ease-light), box-shadow var(--duration-card) var(--ease-light); }
-  .wt img { transition: transform var(--duration-image) var(--ease-light); }
-  .wt:hover, .wt:focus-visible { transform: translateY(-6px); box-shadow: var(--shadow-e3); }
-  .wt:hover img, .wt:focus-visible img { transform: scale(1.03); }
-  @media (prefers-reduced-motion: reduce) { .wt:hover, .wt:focus-visible, .wt:hover img, .wt:focus-visible img { transform: none; } }
+  /* Works wall v6.3b: flat 4:5 tiles, no text; hover / keyboard focus zooms the
+     photo 1.04 (700 ms) and fades in the overlay (300 ms, slight rise). Touch: no overlay. */
+  .ww-tile { position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 4px; background: #dde5e3; }
+  .ww-tile:focus-visible { outline-offset: 2px; }
+  .ww-tile img { transition: transform 700ms var(--ease-light); }
+  .ww-ov {
+    position: absolute; inset: auto 0 0; display: block; padding: 72px 20px 18px; color: #fff; pointer-events: none;
+    background: linear-gradient(180deg, rgb(11 37 35 / 0) 0%, rgb(11 37 35 / 0.55) 45%, rgb(11 37 35 / 0.86) 100%);
+    opacity: 0; transform: translateY(8px); transition: opacity 300ms var(--ease-light), transform 300ms var(--ease-light);
+  }
+  .ww-tile:focus-visible img { transform: scale(1.04); }
+  .ww-tile:focus-visible .ww-ov { opacity: 1; transform: none; }
+  @media (hover: hover) {
+    .ww-tile:hover img { transform: scale(1.04); }
+    .ww-tile:hover .ww-ov { opacity: 1; transform: none; }
+  }
+  @media (hover: none) { .ww-ov { display: none; } }
+  @media (min-width: 48rem) { .ww-tile { border-radius: 6px; } }
+  @media (prefers-reduced-motion: reduce) {
+    .ww-tile img, .ww-ov { transition: none; }
+    .ww-tile:hover img, .ww-tile:focus-visible img { transform: none; }
+    .ww-ov { transform: none; }
+  }
+  /* The map card: the hatched sea of the map drawing across the whole tile. */
+  .ww-map { background: repeating-linear-gradient(180deg, rgb(14 58 54 / 0.1) 0 0.7px, transparent 0.7px 5px), #f5f7f6; cursor: pointer; }
+  .ww-go { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+  .ww-map:hover .ww-go, .ww-map:focus-visible .ww-go { text-decoration-thickness: 2px; }
 
   /* Craft mood on the band: one glow per craft, cross-faded (500 ms; none with reduced motion). */
   .fxg { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }

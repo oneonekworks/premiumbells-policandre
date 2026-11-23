@@ -11,7 +11,6 @@
 // existing category URLs keep working (design-plan V0, decision 1).
 
 import {fold, countySlug} from './portfolio-filters';
-import {specText} from './projects';
 
 export const crafts = ['policandre', 'clopote', 'iconostase-usi', 'reconditionari'] as const;
 export type Craft = (typeof crafts)[number];
@@ -53,7 +52,8 @@ export type WorkLike = {
   specs: {value: string | null; unit: string | null; label: string | null}[] | null;
 };
 
-export const FIRST_PAGE = 10;
+// First page: 23 works + the map card = 6 full rows of 4 (CHANGES-v6.3 §4).
+export const FIRST_PAGE = 23;
 export const PAGE_STEP = 24;
 export const SEARCH_MAX = 80;
 const countries = ['ro', 'md', 'es', 'be', 'gr'];
@@ -187,53 +187,15 @@ export function shortPlace(work: Pick<WorkLike, 'location'>, countryNames: Recor
   return county?.trim() || locality?.trim() || '';
 }
 
-/**
- * What was made, from the specifications: values that share the first label
- * are joined ("170 și 42 kg"); otherwise the first one ("11 clopote").
- */
-export function whatText(work: Pick<WorkLike, 'specs'>, and = 'și'): string | null {
-  const specs = (work.specs ?? []).filter((spec) => spec.value?.trim());
-  if (!specs.length) return null;
-  const first = specs[0];
-  const same = specs.filter((spec) => spec.label === first.label && spec.unit === first.unit);
-  if (same.length < 2 || !first.unit) return specText(first);
-  const values = same.slice(0, 3).map((spec) => spec.value!.trim());
-  return `${values.slice(0, -1).join(', ')} ${and} ${values.at(-1)} ${first.unit}`;
-}
-
-/** Caption lines: full (desktop), phone (big tile: + year) and short (small phone tile). */
-export function captionLines(work: WorkLike, countryNames: Record<string, string>, and?: string) {
-  const craft = work.categoryTitle ?? '';
-  const year = work.year ? String(work.year) : null;
-  const place = placeText(work, countryNames);
-  const join = (...parts: (string | null | undefined)[]) => parts.filter(Boolean).join(' · ');
-  return {
-    full: join(craft, place, whatText(work, and), year),
-    big: join(craft, place, year),
-    short: join(craft, shortPlace(work, countryNames)),
-  };
+/** The wall tile's line (hover overlay and link name): "craft · place · year". */
+export function tileMeta(work: WorkLike, countryNames: Record<string, string>): string {
+  return [work.categoryTitle, placeText(work, countryNames), work.year ? String(work.year) : null].filter(Boolean).join(' · ');
 }
 
 // ---------- Wall layout ----------
 
-export type TileShape = 'L' | 'T' | 'W' | 'S' | 'F' | 'FW';
-
-// One block of the board's wall, in reading order. Desktop (4 columns): the
-// featured 2 × 2, a tall tile, two small ones (the second is the map tile in the
-// first block), two small, a wide one, tall, 2 × 2, two small. Phone (2
-// columns): the first work full width × 2, tall, two small, the map tile (full
-// width), two small, full width, tall, two small.
-const desktopCycle: TileShape[] = ['L', 'T', 'S', 'S', 'S', 'S', 'W', 'T', 'L', 'S', 'S'];
-const phoneCycle: TileShape[] = ['F', 'T', 'S', 'S', 'FW', 'S', 'S', 'FW', 'T', 'S', 'S'];
-/** Where the map tile sits in the first block. */
-export const MAP_SLOT = {desktop: 3, phone: 4};
-
-/** The shapes of tile `index` (0-based among works, map tile not counted). */
-export function tileShapes(index: number): {desktop: TileShape; phone: TileShape} {
-  const desktop = index < MAP_SLOT.desktop ? index : index + 1;
-  const phone = index < MAP_SLOT.phone ? index : index + 1;
-  return {desktop: desktopCycle[desktop % desktopCycle.length], phone: phoneCycle[phone % phoneCycle.length]};
-}
+/** The map card's place among the tiles: column 4 of row 1 on desktop, right of row 2 on phones. */
+export const MAP_SLOT = 3;
 
 // ---------- Hartă island ----------
 

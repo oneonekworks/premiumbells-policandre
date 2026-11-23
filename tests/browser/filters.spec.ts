@@ -3,10 +3,12 @@ import {expect, test, type Page} from '@playwright/test';
 // The one filter bar on Lucrările noastre (v6.2, V5): crafts, bell type after
 // Clopote, search, Galerie | Hartă, place from the map, "Arată încă 24".
 // Reads the live published dataset (no writes): needs Clopote works in Iași,
-// more than 34 works in all, and the Automatizări category.
+// more than 47 works in all, and the Automatizări category.
 
 const fold = (text: string) => text.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
-const tiles = (page: Page) => page.locator('main a.wt[aria-haspopup="dialog"]');
+const tiles = (page: Page) => page.locator('main a.ww-tile[aria-haspopup="dialog"]');
+// The wall has no visible text (v6.3); each tile's name is "parish, craft · place · year".
+const labels = async (page: Page) => (await tiles(page).evaluateAll((links) => links.map((link) => link.getAttribute('aria-label') ?? '')));
 const chip = (page: Page, name: string | RegExp) =>
   page.getByRole('button', {name, exact: typeof name === 'string'}).filter({visible: true}).first();
 const counter = (page: Page) => page.locator('main p', {hasText: / din \d+/}).last();
@@ -36,7 +38,7 @@ test('crafts and bell type are one bar; the address follows; a type clears with 
   await chip(page, 'Policandre').click();
   await expect(page).toHaveURL(/\/lucrarile-noastre\/policandre$/);
   await expect(page.getByRole('button', {name: /clopote fără balans/})).toHaveCount(0);
-  await expect(tiles(page).first()).toContainText('Policandre ·');
+  await expect(tiles(page).first()).toHaveAttribute('aria-label', /, Policandre · /);
 
   await page.goBack();
   await expect(page).toHaveURL(/tip=fara-balans/);
@@ -46,19 +48,20 @@ test('crafts and bell type are one bar; the address follows; a type clears with 
 
 test('search ignores diacritics; an old category address filters to itself; unknown params are ignored', async ({page}) => {
   await page.goto('/lucrarile-noastre?an=2022');
-  await expect(tiles(page)).toHaveCount(10);
+  await expect(tiles(page)).toHaveCount(23);
   const field = page.getByRole('searchbox', {name: 'Caută o lucrare'}).filter({visible: true});
   if (!(await field.count())) await page.getByRole('button', {name: 'Caută o lucrare'}).filter({visible: true}).first().click();
   await page.getByRole('searchbox', {name: 'Caută o lucrare'}).filter({visible: true}).pressSequentially('iasi', {delay: 30});
   await expect(page).toHaveURL(/cauta=iasi/);
-  const texts = (await tiles(page).allTextContents()).map(fold);
+  const texts = (await labels(page)).map(fold);
   expect(texts.length).toBeGreaterThan(0);
   expect(texts.every((text) => text.includes('iasi'))).toBe(true);
 
   await page.goto('/lucrarile-noastre/automatizari');
   await expect(chip(page, 'Clopote')).toHaveAttribute('aria-pressed', 'true');
-  const captions = await tiles(page).locator('span span').allTextContents();
-  expect(captions.filter(Boolean).every((text) => text.startsWith('Automatizări'))).toBe(true);
+  const names = await labels(page);
+  expect(names.length).toBeGreaterThan(0);
+  expect(names.every((name) => name.includes(', Automatizări · '))).toBe(true);
 });
 
 test('Hartă: a county from the list filters the gallery; its chip clears it', async ({page}) => {
@@ -68,20 +71,20 @@ test('Hartă: a county from the list filters the gallery; its chip clears it', a
   await iasi.click();
   await expect(page).toHaveURL(/judet=iasi/);
   await expect(page).not.toHaveURL(/vedere=harta/);
-  const texts = (await tiles(page).allTextContents()).map(fold);
+  const texts = (await labels(page)).map(fold);
   expect(texts.length).toBeGreaterThan(0);
   expect(texts.every((text) => text.includes('iasi'))).toBe(true);
   await page.getByRole('button', {name: 'Iași, arată toate locurile'}).click();
   await expect(page).toHaveURL(/\/lucrarile-noastre$/);
 
   await page.goto('/lucrarile-noastre?tara=ro');
-  expect(await tiles(page).count()).toBe(10);
+  expect(await tiles(page).count()).toBe(23);
 });
 
 test('"Arată încă 24" adds tiles and keeps the page in the address; the bar docks under the header', async ({page}) => {
   await page.goto('/lucrarile-noastre');
   await page.getByRole('link', {name: 'Arată încă 24'}).click();
-  await expect(tiles(page)).toHaveCount(34);
+  await expect(tiles(page)).toHaveCount(47);
   await expect(page).toHaveURL(/pagina=2/);
 
   await page.evaluate(() => scrollTo(0, 1600));

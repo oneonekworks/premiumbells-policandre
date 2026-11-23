@@ -9,7 +9,7 @@ import {plural} from '@/lib/i18n/format';
 import type {Lang} from '@/lib/i18n/routing';
 import {placeLonLat} from '@/lib/europe-map';
 import {
-  bellTypes, craftCategories, filterWorks, MAP_SLOT, parseWorksState, placeRows, samePlace, selection, tileShapes,
+  bellTypes, craftCategories, filterWorks, MAP_SLOT, parseWorksState, placeRows, samePlace, selection,
   visibleCount, worksHref, type BellType, type Craft, type Place, type WorkCategory, type WorksState,
 } from '@/lib/works';
 import {sanityImageUrl} from '@/sanity/image';
@@ -248,36 +248,33 @@ export function WorksBrowser({works, categories, base, initial, lang, t, countri
     </div>
   );
 
-  const mapTile = (where: 'desktop' | 'phone') => (
-    <button key={`map-${where}`} type="button" aria-label={t.mapTile.label} onClick={() => pickView('harta')}
-      className={`wt relative overflow-hidden rounded-[14px] border border-white/90 bg-[linear-gradient(160deg,#ffffff,#eef2f1)] text-left text-ink shadow-e1 md:rounded-image ${
-        where === 'desktop'
-          ? 'hidden flex-col justify-between px-5 pb-5 pt-4.5 md:col-span-1 md:row-span-1 md:flex'
-          : 'col-span-2 grid grid-cols-[136px_minmax(0,1fr)] items-center gap-3.5 py-3 pl-2.5 pr-4 md:hidden'}`}>
-      <span aria-hidden="true" className={where === 'desktop' ? 'mt-0.5 flex min-h-0 w-[68%] flex-1 items-center justify-center self-center' : 'block'}>
-        <EuropeMap size="compact" label="" className={`[&>img]:rounded-[6px] ${where === 'desktop' ? 'h-full max-w-full' : ''}`}
+  // Map card (Works wall v6.3b): the one tile with text, always visible.
+  const countryCount = new Set(inView.map((work) => work.location?.country || 'RO')).size;
+  const mapWorks = plural(lang, inView.length, projects);
+  const mapCountries = plural(lang, countryCount, t.mapTile.countries);
+  const mapTile = (
+    <button key="map" type="button" onClick={() => pickView('harta')}
+      aria-label={t.mapTile.label.replace('{works}', mapWorks).replace('{countries}', mapCountries)}
+      className="ww-tile ww-map text-left text-ink">
+      <span aria-hidden="true" className="absolute inset-x-0 top-16.5 block md:top-1/2 md:-translate-y-[44%]">
+        <EuropeMap size="compact" label="" src="/maps/europe-800x603-land.svg"
           dots={inView.flatMap((work) => { const lonLat = placeLonLat(work.location ?? {}); return lonLat ? [{key: work._id, lonLat}] : []; })} />
       </span>
-      <span className="block flex-none">
-        <b className={`block font-display font-semibold leading-[1.05] ${where === 'desktop' ? 'text-[1.75rem]' : 'text-[1.625rem]'}`}>{t.mapTile.title}</b>
-        <span className={`mt-0.5 block text-ink-soft ${where === 'desktop' ? 'text-caption' : 'text-[0.8125rem]'}`}>{t.mapTile.line}</span>
-        <i className={`inline-block font-semibold not-italic text-teal-700 underline decoration-1 underline-offset-[5px] ${where === 'desktop' ? 'mt-2 text-caption' : 'mt-1.5 text-[0.8125rem]'}`}>{t.mapTile.link} →</i>
+      <span className="absolute inset-x-3.5 top-3.5 block md:inset-x-6 md:top-5.5">
+        <b className="block font-display text-[1.625rem] font-semibold leading-none md:text-[2.5rem]">{t.mapTile.title}</b>
+        <span className="mt-1 block text-caption font-semibold text-ink-soft md:mt-2">{mapWorks} · {mapCountries}</span>
+      </span>
+      <span className="ww-go absolute bottom-3.5 left-3.5 text-caption font-semibold text-teal-700 md:bottom-5.5 md:left-6 md:text-[0.9375rem]">
+        {t.mapTile.link} →
       </span>
     </button>
   );
 
   const wallKey = `${state.category}|${state.tip}|${state.query}|${state.place?.value}`;
-  const tiles: ReactNode[] = [];
-  shown.forEach((work, index) => {
-    if (index === MAP_SLOT.desktop) tiles.push(mapTile('desktop'));
-    if (index === MAP_SLOT.phone) tiles.push(mapTile('phone'));
-    tiles.push(
-      <WorkTile key={work._id} work={work} shapes={tileShapes(index)} countries={countries} and={t.and} priority={index < 3}
-        sizes={index === 0 ? '(max-width: 768px) 100vw, 50vw' : '(max-width: 768px) 50vw, 25vw'} />,
-    );
-  });
-  if (shown.length <= MAP_SLOT.desktop) tiles.push(mapTile('desktop'));
-  if (shown.length <= MAP_SLOT.phone) tiles.push(mapTile('phone'));
+  const tiles: ReactNode[] = shown.map((work, index) => (
+    <WorkTile key={work._id} work={work} countries={countries} priority={index < 3} />
+  ));
+  tiles.splice(Math.min(MAP_SLOT, tiles.length), 0, mapTile);
 
   const moreHref = worksHref(base, {...state, page: state.page + 1});
   const remaining = matches.length - shown.length;
@@ -289,7 +286,7 @@ export function WorksBrowser({works, categories, base, initial, lang, t, countri
         <SearchIcon />
       </button>
       {searchOpen ? (
-        <div className="absolute inset-y-2 right-2 z-[2] flex w-[min(300px,calc(100%-16px))] items-center gap-1 rounded-pill border border-hairline bg-white pl-4 pr-1 shadow-e1">
+        <div className="absolute right-0 top-1/2 z-[2] flex h-12 w-75 -translate-y-1/2 items-center gap-1 rounded-pill border border-hairline bg-white pl-4 pr-1 shadow-e1">
           <SearchIcon />
           <label className="min-w-0 flex-1">
             <span className="sr-only">{t.search}</span>
@@ -308,23 +305,25 @@ export function WorksBrowser({works, categories, base, initial, lang, t, countri
   return (
     <>
       {children}
-      <section ref={band} aria-label={t.title} className={`m-band fxs relative isolate pb-22 pt-10 lg:pb-34 lg:pt-14 ${craft ? moodClass[craft] : ''}`}>
+      <section ref={band} aria-label={t.title} className={`m-band fxs @container relative isolate -mt-18 pb-22 pt-22 lg:-mt-21 lg:pb-34 lg:pt-28 ${craft ? moodClass[craft] : ''}`}>
         <div className="fxg" aria-hidden="true"><i className="g-pol" /><i className="g-clo" /><i className="g-ico" /><i className="g-rec" /></div>
-        <div className="mx-auto max-w-[90rem] md:px-4">
+        <div className="mx-auto max-w-300 md:px-6 xl:px-0">
           <div ref={sentinel} id="lucrari-filtre" aria-hidden="true" className="h-0 scroll-mt-24" />
 
-          {/* Desktop: one pill, the same at rest and docked (sticky under the header). */}
+          {/* Desktop (board V6Works): the category pill, then search + Galerie | Hartă at the right.
+              It looks the same at the top of the page and while the wall scrolls under it. */}
           <div role="region" aria-label={t.filters}
-            className={`works-dock sticky top-24 z-[19] mx-auto hidden h-15 max-w-300 items-center gap-3.5 rounded-pill px-2 transition-[background-color,box-shadow,translate] duration-(--duration-fade) ease-light xl:flex ${docked ? 'glass-docked' : 'glass-light shadow-e1'}`}>
-            <div role="group" aria-label={t.categoryGroup} className="flex min-w-0 items-center gap-0.5">
+            className="works-dock sticky top-28 z-[19] hidden items-center justify-between gap-3 xl:flex">
+            <div role="group" aria-label={t.categoryGroup} className="glass-light flex min-w-0 items-center gap-0.5 rounded-pill p-1 shadow-e1">
               {craftButtons(false)}
             </div>
-            {/* The count takes the spacer's room only once docked, so nothing moves. */}
-            {docked ? <span className={`works-sub whitespace-nowrap text-caption text-ink-soft ${craft === 'clopote' ? 'max-2xl:hidden' : ''}`}>{total}</span> : null}
-            <span className="flex-1" />
-            {searchDesktop}
-            {/* With the bell types in, the labels give way (they do not fit 1200 with everything else). */}
-            {craft === 'clopote' ? <>{viewToggle(true, docked ? '' : '2xl:hidden')}{docked ? null : viewToggle(false, 'max-2xl:hidden')}</> : viewToggle(false)}
+            <div className="relative flex flex-none items-center gap-2">
+              {searchDesktop}
+              {/* With the bell types in, the labels give way below 1536 (they do not fit 1200 with everything else). */}
+              {craft === 'clopote'
+                ? <>{viewToggle(true, 'glass-light p-1 shadow-e1 2xl:hidden')}{viewToggle(false, 'glass-light p-1 shadow-e1 max-2xl:hidden')}</>
+                : viewToggle(false, 'glass-light p-1 shadow-e1')}
+            </div>
           </div>
 
           {/* Phones and tablets: the chip row, then search + view; a fixed bar once scrolled. */}
@@ -377,8 +376,9 @@ export function WorksBrowser({works, categories, base, initial, lang, t, countri
             </div>
           ) : matches.length ? (
             <>
+              {/* The wall runs edge to edge (16 from the screen; phones 8), out of the 1200 container. */}
               <div key={wallKey} onClickCapture={(event) => { if ((event.target as Element).closest('a[href]')) register(); }}
-                className="works-fade mt-5 grid auto-rows-[150px] grid-cols-2 gap-2.5 px-5 md:mt-8 md:auto-rows-[200px] md:grid-cols-4 md:gap-3 md:px-0 lg:auto-rows-[248px] lg:gap-4">
+                className="works-fade mx-[calc(50%-50cqw)] mt-4 grid grid-cols-2 gap-1 px-2 md:mt-6 md:grid-cols-3 md:gap-1.5 md:px-4 lg:grid-cols-4">
                 {tiles}
               </div>
               <div className="mt-6 flex flex-col-reverse items-stretch gap-2.5 px-5 md:mt-14 md:flex-row md:items-center md:justify-center md:gap-5">

@@ -15,8 +15,10 @@ export type MapDot = {key: string; lonLat: [number, number]; large?: boolean};
 export type MapLeader = {key: string; from: [number, number]; to: [number, number]};
 export type MapLabel = {text: string; at: [number, number]; anchor?: 'start' | 'middle'};
 
-export function EuropeMap({size, dots, leaders = [], labels = [], label, className = '', children}: {
+export function EuropeMap({size, dots, leaders = [], labels = [], label, src: drawing, className = '', children}: {
   size: MapSize;
+  /** Another drawing of the same size (the Works map card uses one without the sea). */
+  src?: string;
   dots: MapDot[];
   leaders?: MapLeader[];
   labels?: MapLabel[];
@@ -25,7 +27,8 @@ export function EuropeMap({size, dots, leaders = [], labels = [], label, classNa
   className?: string;
   children?: ReactNode;
 }) {
-  const {width, height, src} = mapSizes[size];
+  const {width, height, src: defaultSrc} = mapSizes[size];
+  const src = drawing ?? defaultSrc;
   const placed = new Map<string, {x: number; y: number; large: boolean}>();
   for (const dot of dots) {
     const [x, y] = project(dot.lonLat, size);

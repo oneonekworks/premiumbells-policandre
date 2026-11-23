@@ -1,5 +1,5 @@
 import type {Metadata} from 'next';
-import {WorksPage} from '@/components/works/works-page';
+import {WorksPage, worksLead} from '@/components/works/works-page';
 import {getDictionary} from '@/lib/i18n/dictionaries';
 import {languageAlternates} from '@/lib/seo';
 import {routeLang, worksPath} from '@/sanity/portfolio-routes';
@@ -9,6 +9,8 @@ export async function generateMetadata({params}: PageProps<'/[lang]/lucrarile-no
   const t = getDictionary(lang).works6;
   return {
     title: t.title,
+    // v6.3: the lead is no longer on the page; it describes the page to search engines.
+    description: await worksLead(lang),
     alternates: languageAlternates(lang, {ro: worksPath, en: worksPath}),
   };
 }

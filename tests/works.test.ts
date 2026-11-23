@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {fold} from '../lib/portfolio-filters';
-import {filterWorks, parseWorksState, placeText, tileShapes, whatText, worksHref, type WorkLike} from '../lib/works';
+import {filterWorks, parseWorksState, placeText, tileMeta, worksHref, type WorkLike} from '../lib/works';
 
 const categories = [
   {slug: 'policandre', craft: 'policandre', displayOrder: 10},
@@ -35,9 +35,8 @@ test('the address: a craft path, bell type with unmarked works, an old category,
   assert.equal(worksHref('/lucrarile-noastre', {...state, query: 'iasi', page: 2}), '/lucrarile-noastre/clopote?tip=cu-jug&cauta=iasi&pagina=2');
 });
 
-test('captions and the wall layout follow the board', () => {
-  assert.equal(placeText(work('x', 'clopote', 'clopote', {location: {locality: 'Dej', county: 'Cluj', country: 'RO'}}), countries), 'Dej, Cluj');
-  assert.equal(whatText({specs: [{label: 'Greutate', unit: 'kg', value: '170'}, {label: 'Greutate', unit: 'kg', value: '42'}]}), '170 și 42 kg');
-  assert.deepEqual([0, 1, 2, 3].map((index) => tileShapes(index).desktop), ['L', 'T', 'S', 'S']);
-  assert.deepEqual([0, 4, 5].map((index) => tileShapes(index).phone), ['F', 'S', 'S']);
+test('the wall tile line reads craft · place · year', () => {
+  const dej = work('x', 'clopote', 'clopote', {location: {locality: 'Dej', county: 'Cluj', country: 'RO'}, year: 2023});
+  assert.equal(placeText(dej, countries), 'Dej, Cluj');
+  assert.equal(tileMeta({...dej, categoryTitle: 'Policandre'}, countries), 'Policandre · Dej, Cluj · 2023');
 });
