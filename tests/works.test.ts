@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {fold} from '../lib/portfolio-filters';
-import {filterWorks, parseWorksState, placeText, tileMeta, worksHref, type WorkLike} from '../lib/works';
+import {defaultCategory, filterWorks, parseWorksState, placeText, tileMeta, worksHref, type WorkLike} from '../lib/works';
 
 const categories = [
   {slug: 'policandre', craft: 'policandre', displayOrder: 10},
@@ -39,4 +39,9 @@ test('the wall tile line reads craft · place · year', () => {
   const dej = work('x', 'clopote', 'clopote', {location: {locality: 'Dej', county: 'Cluj', country: 'RO'}, year: 2023});
   assert.equal(placeText(dej, countries), 'Dej, Cluj');
   assert.equal(tileMeta({...dej, categoryTitle: 'Policandre'}, countries), 'Policandre · Dej, Cluj · 2023');
+});
+
+test('no "Toate": Policandre first, or the first craft with works for a place', () => {
+  assert.equal(defaultCategory(works, parseWorksState(null, {}), categories, countries), 'policandre');
+  assert.equal(defaultCategory(works, parseWorksState(null, {tara: 'md'}), categories, countries), 'clopote');
 });

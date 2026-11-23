@@ -1,22 +1,19 @@
-import type {Metadata} from 'next';
-import {WorksPage, worksLead} from '@/components/works/works-page';
+import {redirect} from 'next/navigation';
+import {WorksPage, worksData} from '@/components/works/works-page';
 import {getDictionary} from '@/lib/i18n/dictionaries';
-import {languageAlternates} from '@/lib/seo';
+import {localizedHref} from '@/lib/i18n/routing';
+import {defaultCategory, parseWorksState, worksHref} from '@/lib/works';
 import {routeLang, worksPath} from '@/sanity/portfolio-routes';
 
-export async function generateMetadata({params}: PageProps<'/[lang]/lucrarile-noastre'>): Promise<Metadata> {
-  const lang = routeLang((await params).lang);
-  const t = getDictionary(lang).works6;
-  return {
-    title: t.title,
-    // v6.3: the lead is no longer on the page; it describes the page to search engines.
-    description: await worksLead(lang),
-    alternates: languageAlternates(lang, {ro: worksPath, en: worksPath}),
-  };
-}
-
-// Lucrările noastre, filter Toate (v6.2): one page with the filter bar.
+// Lucrările noastre has no "Toate" view (client, 2026-11-23): the address opens
+// Policandre, or the first craft with works for a place / search it carries
+// (homepage map links: ?tara=md). Temporary (307), since the target follows the content.
 export default async function WorksOverview({params, searchParams}: PageProps<'/[lang]/lucrarile-noastre'>) {
   const lang = routeLang((await params).lang);
-  return <WorksPage lang={lang} category={null} searchParams={await searchParams} />;
+  const {works, categories} = await worksData(lang);
+  const state = parseWorksState(null, await searchParams);
+  const category = defaultCategory(works, state, categories, getDictionary(lang).countries);
+  // A language with no categories yet keeps the plain page.
+  if (!category) return <WorksPage lang={lang} category={null} searchParams={await searchParams} />;
+  redirect(worksHref(localizedHref(lang, worksPath), {...state, category}));
 }

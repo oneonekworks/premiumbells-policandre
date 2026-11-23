@@ -163,6 +163,8 @@ These items do not block completing the rest of Phase 0.
 - Covers: read-only query of the published set; contact sheet in
   `.migration/works-grid-covers.html` for the user's review (no hotspots set;
   16 low-resolution covers).
+- Later the same day: no “Toate” on Works (client), Works opens on
+  Policandre (CHANGES-v6.3 §6, design-plan V8.2b).
 - `next build` again stopped once with the security notice; a retry passes;
   the upgrade was not run.
 

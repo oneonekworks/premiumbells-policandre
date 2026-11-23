@@ -13,7 +13,7 @@ test('a tile opens the Project panel over the wall; Anterior / Următor browse t
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/lucrarile-noastre');
   await expect(page.locator('main h1')).toHaveText('Lucrările noastre');
-  expect(await tiles(page).count()).toBe(23);
+  expect(await tiles(page).count()).toBeGreaterThan(3);
   await expect(page.getByRole('button', {name: /^Deschideți harta/}).filter({visible: true})).toHaveCount(1);
   expect(await noOverflow(page)).toBe(true);
 
@@ -23,17 +23,17 @@ test('a tile opens the Project panel over the wall; Anterior / Următor browse t
   await expect(panel(page)).toBeVisible();
   await expect(panel(page).getByRole('heading', {level: 2})).toHaveText(title);
   await expect(page).toHaveURL(/\/lucrarile-noastre\/[a-z0-9-]+\/[a-z0-9-]+$/);
-  await expect(panel(page)).toContainText(/Lucrarea 1 din 60/);
+  await expect(panel(page)).toContainText(/Lucrarea 1 din \d+ · Policandre/);
   await expect(page.locator('main h1')).toHaveText('Lucrările noastre');
   const first = page.url();
 
   await panel(page).getByRole('link', {name: /^Lucrarea următoare/}).click();
-  await expect(panel(page)).toContainText(/Lucrarea 2 din 60/);
+  await expect(panel(page)).toContainText(/Lucrarea 2 din \d+ · Policandre/);
   await expect(page).not.toHaveURL(first);
 
   await page.keyboard.press('Escape');
   await expect(panel(page)).toHaveCount(0);
-  await expect(page).toHaveURL(/\/lucrarile-noastre$/);
+  await expect(page).toHaveURL(/\/lucrarile-noastre\/policandre$/);
   await page.goForward();
   await expect(panel(page)).toBeVisible();
   expect(errors).toEqual([]);

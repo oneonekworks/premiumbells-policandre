@@ -88,6 +88,23 @@ export function craftCategories(categories: WorkCategory[]): Partial<Record<Craf
   return result;
 }
 
+/**
+ * There is no "Toate" view (client, 2026-11-23): an address without a category
+ * opens the first craft in chip order (Policandre) or, when it carries a place
+ * or a search, the first craft that has works for it.
+ */
+export function defaultCategory(
+  works: WorkLike[], state: WorksState, categories: WorkCategory[], countryNames: Record<string, string>,
+): string | null {
+  const bySlug = craftCategories(categories);
+  const first = crafts.map((craft) => bySlug[craft]).filter(Boolean) as string[];
+  if (state.place || state.query) {
+    const found = first.find((slug) => filterWorks(works, {...state, category: slug, tip: null}, categories, countryNames).length);
+    if (found) return found;
+  }
+  return first[0] ?? null;
+}
+
 /** Which craft chip is on, and whether the path narrows it to one category. */
 export function selection(state: WorksState, categories: WorkCategory[]): {craft: Craft | null; only: string | null} {
   if (!state.category) return {craft: null, only: null};

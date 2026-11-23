@@ -17,8 +17,11 @@ const counter = (page: Page) => page.locator('main p', {hasText: / din \d+/}).la
 test('crafts and bell type are one bar; the address follows; a type clears with its category', async ({page}) => {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
+  // No "Toate" (client, 2026-11-23): the Works address opens Policandre.
   await page.goto('/lucrarile-noastre');
-  await expect(chip(page, 'Toate')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page).toHaveURL(/\/lucrarile-noastre\/policandre$/);
+  await expect(chip(page, 'Policandre')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', {name: 'Toate', exact: true})).toHaveCount(0);
   await expect(page.getByRole('button', {name: 'Doar clopote cu jug'})).toHaveCount(0);
 
   await chip(page, 'Clopote').click();
@@ -48,7 +51,7 @@ test('crafts and bell type are one bar; the address follows; a type clears with 
 });
 
 test('search ignores diacritics; an old category address filters to itself; unknown params are ignored', async ({page}) => {
-  await page.goto('/lucrarile-noastre?an=2022');
+  await page.goto('/lucrarile-noastre/clopote?an=2022');
   await expect(tiles(page)).toHaveCount(23);
   const field = page.getByRole('searchbox', {name: 'Caută o lucrare'}).filter({visible: true});
   if (!(await field.count())) await page.getByRole('button', {name: 'Caută o lucrare'}).filter({visible: true}).first().click();
@@ -67,7 +70,7 @@ test('search ignores diacritics; an old category address filters to itself; unkn
 });
 
 test('Hartă: a county from the list filters the gallery; its chip clears it', async ({page}) => {
-  await page.goto('/lucrarile-noastre?vedere=harta');
+  await page.goto('/lucrarile-noastre/clopote?vedere=harta');
   const iasi = page.getByRole('button', {name: /^Iași\s*\d+$/}).filter({visible: true}).first();
   await expect(iasi).toBeVisible();
   await iasi.click();
@@ -78,16 +81,19 @@ test('Hartă: a county from the list filters the gallery; its chip clears it', a
   expect(texts.length).toBeGreaterThan(0);
   expect(texts.every((text) => text.includes('iasi'))).toBe(true);
   await page.getByRole('button', {name: 'Iași, arată toate locurile'}).click();
-  await expect(page).toHaveURL(/\/lucrarile-noastre$/);
+  await expect(page).toHaveURL(/\/lucrarile-noastre\/clopote$/);
 
-  await page.goto('/lucrarile-noastre?tara=ro');
-  expect(await tiles(page).count()).toBe(23);
+  // A place link without a craft (homepage map) opens the first craft with works there.
+  await page.goto('/lucrarile-noastre?tara=md');
+  await expect(page).toHaveURL(/\/lucrarile-noastre\/[a-z-]+\?tara=md$/);
+  await expect(tiles(page).first()).toBeVisible();
+  expect((await labels(page)).every((name) => name.includes('Moldova'))).toBe(true);
 });
 
 test('"Arată încă 24" adds tiles and keeps the page in the address; the bars stay on a fixed shelf', async ({page}) => {
-  await page.goto('/lucrarile-noastre');
-  await page.getByRole('link', {name: 'Arată încă 24'}).click();
-  await expect(tiles(page)).toHaveCount(47);
+  await page.goto('/lucrarile-noastre/clopote');
+  await page.getByRole('link', {name: /^Arată încă \d+$/}).click();
+  await expect.poll(() => tiles(page).count()).toBeGreaterThan(23);
   await expect(page).toHaveURL(/pagina=2/);
 
   // v6.3 §5: desktop keeps the bar at 112 on the shelf; phones show the fixed strip at the top.

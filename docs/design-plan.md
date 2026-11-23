@@ -761,6 +761,10 @@ boards V6Works, V6WorksMobile, V6WorksSticky + Mobile; §3 card grid not built).
   Compared with the boards at 1440 and 390; 900 gives 3 columns, no overflow.
   Lighthouse not run this time. Typecheck: only the earlier
   `scripts/v8-usi-models.mts` implicit-any errors (V8.1 script).
+- *V8.2b, same day (CHANGES-v6.3 §6, client):* no “Toate”; Works opens on
+  Policandre (`/lucrarile-noastre` → 307 → `/policandre`, or the first craft
+  with works for `?tara=` / `?judet=` / `?cauta=`: `defaultCategory()`); the
+  panel's map link keeps the work's category. Browser 72 passed / 4 skipped.
 - Open: grid covers. No cover has a hotspot (all centre-cropped); 16 covers
   are too small for a ≈ 420 px tile at 2×, 23 are landscapes cropped hard.
   Contact sheet: `.migration/works-grid-covers.html`. Next: the user marks the

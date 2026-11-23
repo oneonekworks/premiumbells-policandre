@@ -82,7 +82,7 @@ export function ProjectPanel({project, slug, mode, list, lang, dictionary}: {
   const when = project.displayDate || (project.year ? String(project.year) : null);
   const where = placeOf(project);
   const mapHref = worksHref(localizedHref(lang, worksPath), {
-    category: null, tip: null, query: '', place: where, view: 'harta', page: 1,
+    category: categorySlug || null, tip: null, query: '', place: where, view: 'harta', page: 1,
   });
   const lonLat = placeLonLat(project.location ?? {});
   const specs = specRows(project.specifications);

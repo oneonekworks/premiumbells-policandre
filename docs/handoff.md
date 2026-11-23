@@ -1,6 +1,6 @@
 # Session handoff
 
-**Updated:** 2026-11-23 · V8.2 Works wall + fixed shelf done (local commits `e5c0c8a`, `8cc24e0`); next: the user marks weak grid covers in `.migration/works-grid-covers.html` (see design-plan V8.2 “Open”). Earlier: 2026-11-20 · v6.3 pass started: see “v6.3 changes: kickoff prompt” below. Earlier: The design is locked as **v6 "Clarity" (v6.2 release
+**Updated:** 2026-11-23 · V8.2 Works wall + fixed shelf done, then no “Toate” (Works opens on Policandre, CHANGES-v6.3 §6) (local commits `e5c0c8a`, `8cc24e0`); next: the user marks weak grid covers in `.migration/works-grid-covers.html` (see design-plan V8.2 “Open”). Earlier: 2026-11-20 · v6.3 pass started: see “v6.3 changes: kickoff prompt” below. Earlier: The design is locked as **v6 "Clarity" (v6.2 release
 candidate)**. Implementation continues from `docs/design/clarity-v6/` with the
 plan in `docs/design-plan.md`. Start a new Claude Code session with the
 kickoff prompt below.

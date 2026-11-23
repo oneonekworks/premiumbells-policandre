@@ -17,7 +17,7 @@ test('Romanian and English shells render with language-specific URLs', async ({p
 
   if (!isMobile) {
     await page.getByRole('navigation', {name: 'Main navigation'}).getByRole('link', {name: 'Our work'}).click();
-    await expect(page).toHaveURL(/\/en\/our-work$/);
+    await expect(page).toHaveURL(/\/en\/our-work(\/[a-z-]+)?$/);
     await expect(page.getByRole('navigation', {name: 'Main navigation'}).getByRole('link', {name: 'Our work'}))
       .toHaveAttribute('aria-current', 'page');
   }
@@ -29,7 +29,7 @@ test('language prefixes and section names are canonicalised', async ({page}) => 
   await page.goto('/ro/blog');
   await expect(page).toHaveURL(/\/blog$/);
   await page.goto('/en/lucrarile-noastre');
-  await expect(page).toHaveURL(/\/en\/our-work$/);
+  await expect(page).toHaveURL(/\/en\/our-work(\/[a-z-]+)?$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
 });
 

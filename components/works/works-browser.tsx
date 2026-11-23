@@ -22,8 +22,8 @@ type T = Dictionary['works6'];
 export type BrowserCategory = WorkCategory & {title: string | null};
 
 // The craft's dark tone for its active chip (components.md "Works filter row").
-const chipOn: Record<Craft | 'all', string> = {
-  all: 'bg-teal-900 border-teal-900', policandre: 'bg-[#6e5020] border-[#6e5020]', clopote: 'bg-graphite border-graphite',
+const chipOn: Record<Craft, string> = {
+  policandre: 'bg-[#6e5020] border-[#6e5020]', clopote: 'bg-graphite border-graphite',
   'iconostase-usi': 'bg-[#7a3f1e] border-[#7a3f1e]', reconditionari: 'bg-teal-900 border-teal-900',
 };
 const craftBar: Record<Craft, string> = {policandre: 'bar-gold', clopote: 'bar-bronze', 'iconostase-usi': 'bar-gilt', reconditionari: 'bar-gold'};
@@ -83,10 +83,12 @@ export function WorksBrowser({works, categories, base, initial, lang, t, countri
   // A project address keeps the wall as it was (stored from earlier renders).
   const [kept, setKept] = useState(initial);
   if (fromUrl && !same(fromUrl, kept)) setKept(fromUrl);
-  const state = fromUrl ?? kept;
+  // No "Toate" view: an address without a category (an old history entry) shows Policandre.
+  const craftHref = useMemo(() => craftCategories(categories), [categories]);
+  const loose = fromUrl ?? kept;
+  const state = useMemo(() => (loose.category ? loose : {...loose, category: craftHref.policandre ?? null}), [loose, craftHref]);
 
   const {craft} = selection(state, categories);
-  const craftHref = useMemo(() => craftCategories(categories), [categories]);
 
   const inView = useMemo(() => filterWorks(works, state, categories, countries, {place: false}), [works, state, categories, countries]);
   const matches = useMemo(() => filterWorks(works, state, categories, countries), [works, state, categories, countries]);
@@ -118,7 +120,7 @@ export function WorksBrowser({works, categories, base, initial, lang, t, countri
       scrollTo({top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
     }
   };
-  const pickCraft = (value: Craft | null) => go({category: value ? craftHref[value] ?? null : null, tip: null});
+  const pickCraft = (value: Craft) => go({category: craftHref[value] ?? null, tip: null});
   const pickTip = (tip: BellType) => go({tip: state.tip === tip ? null : tip});
   const pickView = (view: WorksState['view']) => go({view});
   const pickPlace = (place: Place | null) => go({place, view: 'galerie'});
@@ -186,15 +188,15 @@ export function WorksBrowser({works, categories, base, initial, lang, t, countri
 
   // ---------- Pieces ----------
   const craftButtons = (phone: boolean, docks = false) => {
-    const chip = (value: Craft | null, label: string) => {
-      const on = (value ?? null) === craft;
+    const chip = (value: Craft, label: string) => {
+      const on = value === craft;
       return (
-        <button key={value ?? 'all'} type="button" aria-pressed={on} onClick={() => pickCraft(value)}
+        <button key={value} type="button" aria-pressed={on} onClick={() => pickCraft(value)}
           data-craft-on={on ? '' : undefined}
           className={phone
-            ? `inline-flex flex-none items-center rounded-pill border font-medium transition-colors duration-(--duration-line) ${docks ? 'h-10 px-3.5 text-[0.875rem]' : 'h-11 px-4.5 text-[0.9375rem]'} ${on ? `${chipOn[value ?? 'all']} text-white` : 'border-hairline bg-white text-ink hover:bg-teal-tint'}`
-            : `inline-flex h-10 flex-none items-center whitespace-nowrap rounded-pill px-4 text-[0.9375rem] font-medium transition-colors duration-(--duration-line) ${on ? `${chipOn[value ?? 'all']} text-white` : 'text-ink hover:bg-teal-tint'}`}>
-          {value ? <i aria-hidden="true" className={`mr-2 inline-block h-[3px] w-4 flex-none rounded-[2px] ${craftBar[value]}`} /> : null}
+            ? `inline-flex flex-none items-center rounded-pill border font-medium transition-colors duration-(--duration-line) ${docks ? 'h-10 px-3.5 text-[0.875rem]' : 'h-11 px-4.5 text-[0.9375rem]'} ${on ? `${chipOn[value]} text-white` : 'border-hairline bg-white text-ink hover:bg-teal-tint'}`
+            : `inline-flex h-10 flex-none items-center whitespace-nowrap rounded-pill px-4 text-[0.9375rem] font-medium transition-colors duration-(--duration-line) ${on ? `${chipOn[value]} text-white` : 'text-ink hover:bg-teal-tint'}`}>
+          <i aria-hidden="true" className={`mr-2 inline-block h-[3px] w-4 flex-none rounded-[2px] ${craftBar[value]}`} />
           {label}
         </button>
       );
@@ -229,7 +231,6 @@ export function WorksBrowser({works, categories, base, initial, lang, t, countri
     ) : null;
     return (
       <>
-        {chip(null, t.all)}
         {chip('policandre', t.crafts.policandre)}
         {chip('clopote', t.crafts.clopote)}
         {sub}
@@ -404,7 +405,7 @@ export function WorksBrowser({works, categories, base, initial, lang, t, countri
         ) : (
           <div className="mx-5 mt-8 rounded-card bg-white/60 p-8 text-center md:mx-auto md:max-w-300">
             <p className="text-body text-ink-soft">{t.none}</p>
-            <button type="button" onClick={() => go({category: null, tip: null, query: '', place: null})} className="btn btn-secondary mt-5">{t.reset}</button>
+            <button type="button" onClick={() => go({tip: null, query: '', place: null})} className="btn btn-secondary mt-5">{t.reset}</button>
           </div>
         )}
       </section>

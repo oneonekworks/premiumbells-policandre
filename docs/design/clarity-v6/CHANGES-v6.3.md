@@ -114,3 +114,18 @@ Design pass v6.3 extends the implemented v6 “Clarity” design. Each entry: wh
 5. Focus ring: show the gold ring on `:focus-visible` only (the user saw a double ring on a clicked chip).
 
 **Schema impact.** None.
+
+## 6 · Works: no “Toate”, Policandre first (2026-11-23)
+
+**Why.** The client: “Toate” mixes every craft on one wall, so it is unclear what to look at. Each craft is its own view with its own mood glow; Works opens on Policandre.
+
+**What changed.**
+- The “Toate” chip is gone (desktop bar, phone chip row, phone strip). The chips are Policandre · Clopote (+ bell type) · Iconostase și uși · Recondiționări.
+- `/lucrarile-noastre` redirects (307, temporary because the target follows the content) to `/lucrarile-noastre/policandre`; with a place or a search (homepage map links such as `?tara=md`), to the first craft in chip order that has works for it. A language with no categories yet keeps the plain page.
+- The Project panel's “Pe hartă” link opens the work's own category on the map. The empty state's reset clears search, place and bell type, not the craft.
+- The counter, the map card (“N lucrări · N țări”) and the Hartă view count the current craft only. The mood glows are unchanged.
+
+**Open copy.** The mega menu card “Toate lucrările · 60 de lucrări” and the homepage “Toate lucrările” link now land on Policandre; their wording may need a change (client's call).
+
+**Schema impact.** None.
+
