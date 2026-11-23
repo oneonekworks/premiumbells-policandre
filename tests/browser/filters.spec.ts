@@ -1,7 +1,8 @@
 import {expect, test, type Page} from '@playwright/test';
 
 // The one filter bar on Lucrările noastre (v6.2, V5): crafts, bell type after
-// Clopote, search, Galerie | Hartă, place from the map, "Arată încă 24".
+// Clopote, search, Galerie | Hartă, place from the map, "Arată încă 24", the
+// fixed shelf (v6.3).
 // Reads the live published dataset (no writes): needs Clopote works in Iași,
 // more than 47 works in all, and the Automatizări category.
 
@@ -53,6 +54,7 @@ test('search ignores diacritics; an old category address filters to itself; unkn
   if (!(await field.count())) await page.getByRole('button', {name: 'Caută o lucrare'}).filter({visible: true}).first().click();
   await page.getByRole('searchbox', {name: 'Caută o lucrare'}).filter({visible: true}).pressSequentially('iasi', {delay: 30});
   await expect(page).toHaveURL(/cauta=iasi/);
+  await expect(tiles(page).first()).toBeVisible();
   const texts = (await labels(page)).map(fold);
   expect(texts.length).toBeGreaterThan(0);
   expect(texts.every((text) => text.includes('iasi'))).toBe(true);
@@ -71,6 +73,7 @@ test('Hartă: a county from the list filters the gallery; its chip clears it', a
   await iasi.click();
   await expect(page).toHaveURL(/judet=iasi/);
   await expect(page).not.toHaveURL(/vedere=harta/);
+  await expect(tiles(page).first()).toBeVisible();
   const texts = (await labels(page)).map(fold);
   expect(texts.length).toBeGreaterThan(0);
   expect(texts.every((text) => text.includes('iasi'))).toBe(true);
@@ -81,16 +84,18 @@ test('Hartă: a county from the list filters the gallery; its chip clears it', a
   expect(await tiles(page).count()).toBe(23);
 });
 
-test('"Arată încă 24" adds tiles and keeps the page in the address; the bar docks under the header', async ({page}) => {
+test('"Arată încă 24" adds tiles and keeps the page in the address; the bars stay on a fixed shelf', async ({page}) => {
   await page.goto('/lucrarile-noastre');
   await page.getByRole('link', {name: 'Arată încă 24'}).click();
   await expect(tiles(page)).toHaveCount(47);
   await expect(page).toHaveURL(/pagina=2/);
 
+  // v6.3 §5: desktop keeps the bar at 112 on the shelf; phones show the fixed strip at the top.
   await page.evaluate(() => scrollTo(0, 1600));
-  const docked = page.locator('[role=region][aria-label="Filtre lucrări"]').filter({visible: true});
-  await expect(docked).toHaveCount(1);
-  await expect(docked).toHaveClass(/glass-docked/);
-  // Under the header (96 / 84), or at the top while a fast scroll hides the header.
-  expect((await docked.boundingBox())!.y).toBeLessThan(110);
+  const bar = page.locator('[role=region][aria-label="Filtre lucrări"]').filter({visible: true});
+  await expect(bar).toHaveCount(1);
+  const wide = page.viewportSize()!.width >= 1200;
+  await expect.poll(async () => (await bar.boundingBox())!.y).toBe(wide ? 112 : 0);
+  // The header keeps its at-rest look (no scrolled lift) on this page.
+  await expect(page.locator('header [data-docked]')).toHaveCount(0);
 });

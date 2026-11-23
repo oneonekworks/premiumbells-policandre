@@ -8,6 +8,8 @@ import {useEffect, useRef, useState, type ReactNode} from 'react';
  * the stronger glass and shadow keep it readable over photos (v6.2). Scrolling
  * down quickly hides it, any scroll up brings it back (M07); never while a
  * menu is open, never for keyboard focus, never with reduced motion.
+ * On Lucrările noastre (v6.3 fixed shelf, `data-works-shelf` on <html>) the
+ * header keeps its at-rest look while scrolling, and on desktop it stays.
  */
 export function HeaderFrame({children}: {children: ReactNode}) {
   const frame = useRef<HTMLDivElement>(null);
@@ -23,9 +25,13 @@ export function HeaderFrame({children}: {children: ReactNode}) {
       const y = scrollY;
       const delta = y - last;
       last = y;
-      setDocked(y > 8);
-      const menuOpen = Boolean(frame.current?.querySelector('[aria-expanded="true"]'));
-      if (still.matches || menuOpen || y < 400) setHidden(false);
+      const shelf = document.documentElement.hasAttribute('data-works-shelf');
+      setDocked(y > 8 && !shelf);
+      // An expanded control outside a closed dialog (the mobile menu keeps its
+      // accordion state while closed, which used to keep the header from hiding).
+      const menuOpen = [...frame.current?.querySelectorAll('[aria-expanded="true"]') ?? []]
+        .some((control) => !control.closest('dialog:not([open])'));
+      if (still.matches || menuOpen || y < 400 || (shelf && innerWidth >= 1200)) setHidden(false);
       else if (delta > 12) setHidden(true);
       else if (delta < -4) setHidden(false);
     };

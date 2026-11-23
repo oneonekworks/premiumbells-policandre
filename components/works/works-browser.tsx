@@ -104,16 +104,18 @@ export function WorksBrowser({works, categories, base, initial, lang, t, countri
   const band = useRef<HTMLElement>(null);
   const sentinel = useRef<HTMLDivElement>(null);
   const pageBar = useRef<HTMLDivElement>(null);
+  // Desktop: the shelf shows once the wall moves (at the top the band itself is
+  // behind the bar). Phones: the fixed strip takes over once the page bar has scrolled away.
+  const [scrolled, setScrolled] = useState(false);
   const [docked, setDocked] = useState(false);
   const go = (next: Partial<WorksState>, mode: 'push' | 'replace' = 'push') => {
     const target: WorksState = {...state, page: 1, ...next};
     const href = worksHref(base, target);
     history[mode === 'push' ? 'pushState' : 'replaceState'](null, '', href);
-    // Changing the filter while docked scrolls back to the top of the wall.
-    const mark = document.getElementById('lucrari-filtre');
-    if (docked && !('page' in next) && mark) {
-      const top = mark.getBoundingClientRect().top + scrollY - (innerWidth >= 1200 ? 96 : 84);
-      scrollTo({top, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+    // Changing the filter once the wall has scrolled brings the wall back to its top
+    // (the page has no hero, so that is the top of the page).
+    if (scrollY > 0 && !('page' in next)) {
+      scrollTo({top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
     }
   };
   const pickCraft = (value: Craft | null) => go({category: value ? craftHref[value] ?? null : null, tip: null});
@@ -121,25 +123,30 @@ export function WorksBrowser({works, categories, base, initial, lang, t, countri
   const pickView = (view: WorksState['view']) => go({view});
   const pickPlace = (place: Place | null) => go({place, view: 'galerie'});
 
-  // ---------- Docking (desktop: sticky; phones: a second, fixed bar) ----------
+  // ---------- Fixed top shelf (CHANGES-v6.3 §5) ----------
   useEffect(() => {
+    // The header reads this: on Works it keeps its look while scrolling and,
+    // on desktop, never hides (header-frame.tsx).
+    document.documentElement.toggleAttribute('data-works-shelf', true);
     let frame = 0;
     const update = () => {
       frame = 0;
       const area = band.current?.getBoundingClientRect();
-      // Desktop: the sticky pill has reached its place. Phones: the page bar
-      // (chips + search) has gone under the header, so the fixed bar takes over.
-      const wide = innerWidth >= 1200;
-      const mark = (wide ? sentinel.current : pageBar.current)?.getBoundingClientRect();
-      if (!mark || !area) return;
-      const top = wide ? 96 : 84;
-      setDocked((wide ? mark.top < top : mark.bottom < top + 56) && area.bottom > top + 160);
+      const bar = pageBar.current?.getBoundingClientRect();
+      if (!area) return;
+      setScrolled(scrollY > 0);
+      // Phones: the chips + search rows have gone under the header (bottom 72; 84 from 1024).
+      const headerBottom = innerWidth >= 1024 ? 84 : 72;
+      setDocked(Boolean(bar && bar.height && bar.bottom < headerBottom + 56) && area.bottom > headerBottom + 160);
     };
     const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
     update();
     addEventListener('scroll', onScroll, {passive: true});
     addEventListener('resize', onScroll);
-    return () => { removeEventListener('scroll', onScroll); removeEventListener('resize', onScroll); cancelAnimationFrame(frame); };
+    return () => {
+      document.documentElement.removeAttribute('data-works-shelf');
+      removeEventListener('scroll', onScroll); removeEventListener('resize', onScroll); cancelAnimationFrame(frame);
+    };
   }, []);
 
   // ---------- Search (typed text goes to the address after a pause) ----------
@@ -305,97 +312,101 @@ export function WorksBrowser({works, categories, base, initial, lang, t, countri
   return (
     <>
       {children}
-      <section ref={band} aria-label={t.title} className={`m-band fxs @container relative isolate -mt-18 pb-22 pt-22 lg:-mt-21 lg:pb-34 lg:pt-28 ${craft ? moodClass[craft] : ''}`}>
+      <section ref={band} aria-label={t.title} className={`m-band fxs relative isolate -mt-18 pb-22 pt-22 lg:-mt-21 lg:pb-34 lg:pt-28 ${craft ? moodClass[craft] : ''}`}>
         <div className="fxg" aria-hidden="true"><i className="g-pol" /><i className="g-clo" /><i className="g-ico" /><i className="g-rec" /></div>
-        <div className="mx-auto max-w-300 md:px-6 xl:px-0">
-          <div ref={sentinel} id="lucrari-filtre" aria-hidden="true" className="h-0 scroll-mt-24" />
+        {/* Desktop shelf (CHANGES-v6.3 §5): band + the craft's mood behind the header and the
+            bar, fading out over 24 px; the wall passes under it. Sticky inside the band, so it
+            leaves with the band and never covers the footer; shown once the wall has moved. */}
+        <div aria-hidden="true"
+          className={`wshelf pointer-events-none sticky top-0 z-[18] -mb-22 -mt-28 hidden h-50 isolate xl:block ${scrolled ? '' : 'invisible'}`}>
+          <div className="fxg" aria-hidden="true"><i className="g-pol" /><i className="g-clo" /><i className="g-ico" /><i className="g-rec" /></div>
+        </div>
+        <div ref={sentinel} id="lucrari-filtre" aria-hidden="true" className="h-0" />
 
-          {/* Desktop (board V6Works): the category pill, then search + Galerie | Hartă at the right.
-              It looks the same at the top of the page and while the wall scrolls under it. */}
-          <div role="region" aria-label={t.filters}
-            className="works-dock sticky top-28 z-[19] hidden items-center justify-between gap-3 xl:flex">
-            <div role="group" aria-label={t.categoryGroup} className="glass-light flex min-w-0 items-center gap-0.5 rounded-pill p-1 shadow-e1">
-              {craftButtons(false)}
-            </div>
-            <div className="relative flex flex-none items-center gap-2">
-              {searchDesktop}
-              {/* With the bell types in, the labels give way below 1536 (they do not fit 1200 with everything else). */}
-              {craft === 'clopote'
-                ? <>{viewToggle(true, 'glass-light p-1 shadow-e1 2xl:hidden')}{viewToggle(false, 'glass-light p-1 shadow-e1 max-2xl:hidden')}</>
-                : viewToggle(false, 'glass-light p-1 shadow-e1')}
-            </div>
+        {/* Desktop (board V6Works): the category pill, then search + Galerie | Hartă at the right.
+            It looks the same at the top of the page and while the wall scrolls under it. */}
+        <div role="region" aria-label={t.filters}
+          className="sticky top-28 z-[19] mx-auto hidden max-w-300 items-center justify-between gap-3 xl:flex">
+          <div role="group" aria-label={t.categoryGroup} className="glass-light flex min-w-0 items-center gap-0.5 rounded-pill p-1 shadow-e1">
+            {craftButtons(false)}
           </div>
+          <div className="relative flex flex-none items-center gap-2">
+            {searchDesktop}
+            {/* With the bell types in, the labels give way below 1536 (they do not fit 1200 with everything else). */}
+            {craft === 'clopote'
+              ? <>{viewToggle(true, 'glass-light p-1 shadow-e1 2xl:hidden')}{viewToggle(false, 'glass-light p-1 shadow-e1 max-2xl:hidden')}</>
+              : viewToggle(false, 'glass-light p-1 shadow-e1')}
+          </div>
+        </div>
 
-          {/* Phones and tablets: the chip row, then search + view; a fixed bar once scrolled. */}
-          <div ref={pageBar} className="xl:hidden">
-            <div role="group" aria-label={t.categoryGroup} ref={(node) => { chipRows.current[0] = node; }}
-              className="flex gap-2 overflow-x-auto px-5 pb-2 pt-1 [scrollbar-width:none] md:px-0 [&::-webkit-scrollbar]:hidden">
+        {/* Phones and tablets: the chip row, then search + view. */}
+        <div ref={pageBar} className="mx-auto max-w-300 md:px-6 xl:hidden">
+          <div role="group" aria-label={t.categoryGroup} ref={(node) => { chipRows.current[0] = node; }}
+            className="flex gap-2 overflow-x-auto px-5 pb-2 pt-1 [scrollbar-width:none] md:px-0 [&::-webkit-scrollbar]:hidden">
+            {craftButtons(true)}
+          </div>
+          <div className="mt-3 flex items-center gap-2 px-5 md:px-0">
+            <label className="min-w-0 flex-1">
+              <span className="sr-only">{t.search}</span>
+              <input ref={phoneField} type="search" value={draft} placeholder={t.searchPlaceholder} maxLength={80}
+                onChange={(event) => setDraft(event.target.value)}
+                className="h-12 w-full rounded-pill border border-hairline bg-white px-4 text-base text-ink placeholder:text-ink-soft" />
+            </label>
+            {viewToggle(true, 'glass-light p-1 shadow-e1')}
+          </div>
+        </div>
+        {/* …and once that has scrolled away, a fixed strip (band + mood, 20 px fade) with the chip
+            row and the search and map icons; it follows the header up when the header hides. */}
+        <div role="region" aria-label={t.filters} inert={!docked}
+          className={`wshelf works-strip fixed inset-x-0 top-0 z-[19] isolate xl:hidden ${docked ? '' : 'invisible'}`}>
+          <div className="fxg" aria-hidden="true"><i className="g-pol" /><i className="g-clo" /><i className="g-ico" /><i className="g-rec" /></div>
+          <div className="mx-auto flex max-w-300 items-center gap-1 pl-3 pr-2 md:px-6">
+            <div role="group" aria-label={t.categoryGroup} ref={(node) => { chipRows.current[1] = node; }}
+              className="flex min-w-0 flex-1 gap-2 overflow-x-auto [mask-image:linear-gradient(to_right,#000_calc(100%-28px),transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {craftButtons(true)}
             </div>
-            <div className="mt-3 flex items-center gap-2 px-5 md:px-0">
-              <label className="min-w-0 flex-1">
-                <span className="sr-only">{t.search}</span>
-                <input ref={phoneField} type="search" value={draft} placeholder={t.searchPlaceholder} maxLength={80}
-                  onChange={(event) => setDraft(event.target.value)}
-                  className="h-12 w-full rounded-pill border border-hairline bg-white px-4 text-base text-ink placeholder:text-ink-soft" />
-              </label>
-              {viewToggle(true, 'glass-light p-1 shadow-e1')}
-            </div>
-          </div>
-          <div role="region" aria-label={t.filters} inert={!docked}
-            className={`works-dock fixed inset-x-3 top-21 z-[19] flex h-14 items-center gap-1 rounded-pill pl-1 pr-1.5 transition-[opacity,translate] duration-(--duration-fade) ease-light md:inset-x-6 xl:hidden glass-docked ${docked ? 'opacity-100' : 'pointer-events-none -translate-y-2 opacity-0'}`}>
-            <div role="group" aria-label={t.categoryGroup} ref={(node) => { chipRows.current[1] = node; }}
-              className="flex min-w-0 flex-1 gap-2 overflow-x-auto px-1.5 [mask-image:linear-gradient(to_right,#000_calc(100%-28px),transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {craftButtons(true, true)}
-            </div>
-            <span aria-hidden="true" className="h-7 w-px flex-none bg-hairline" />
-            <button type="button" aria-label={t.search} onClick={() => {
-              const top = (sentinel.current?.getBoundingClientRect().top ?? 0) + scrollY - 100;
-              scrollTo({top}); phoneField.current?.focus({preventScroll: true});
-            }} className="grid size-10 flex-none place-items-center rounded-full text-ink"><SearchIcon /></button>
+            <button type="button" aria-label={t.search} onClick={() => { scrollTo({top: 0}); phoneField.current?.focus({preventScroll: true}); }}
+              className="grid size-11 flex-none place-items-center rounded-full border border-hairline bg-white text-ink"><SearchIcon /></button>
             <button type="button" aria-label={state.view === 'harta' ? t.gallery : t.map} onClick={() => pickView(state.view === 'harta' ? 'galerie' : 'harta')}
-              className="grid size-10 flex-none place-items-center rounded-full text-ink">{state.view === 'harta' ? <GridIcon /> : <PinIcon />}</button>
-            <p aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-[calc(100%+6px)] text-center">
-              <span className="glass-light inline-block rounded-pill px-2.5 py-0.5 text-[0.75rem] font-semibold text-ink-soft">{total}</span>
-            </p>
+              className="grid size-11 flex-none place-items-center rounded-full border border-hairline bg-white text-ink">{state.view === 'harta' ? <GridIcon /> : <PinIcon />}</button>
           </div>
-
-          {placeName && state.view === 'galerie' ? (
-            <p className="mt-5 flex justify-center px-5 lg:mt-6">
-              <button type="button" onClick={() => pickPlace(null)} aria-label={t.placeOff.replace('{place}', placeName)}
-                className="inline-flex h-11 items-center gap-2 rounded-pill border-[1.5px] border-teal-700 bg-teal-tint px-4 text-caption font-semibold text-teal-900">
-                <PinIcon />{placeName}<CrossIcon />
-              </button>
-            </p>
-          ) : null}
-
-          {state.view === 'harta' ? (
-            <div key={`map|${wallKey}`} className="works-fade">
-              <WorksMap works={inView} rows={rows} place={state.place} count={plural(lang, inView.length, projects)}
-                onPick={pickPlace} onOpen={register} countries={countries} t={t} />
-            </div>
-          ) : matches.length ? (
-            <>
-              {/* The wall runs edge to edge (16 from the screen; phones 8), out of the 1200 container. */}
-              <div key={wallKey} onClickCapture={(event) => { if ((event.target as Element).closest('a[href]')) register(); }}
-                className="works-fade mx-[calc(50%-50cqw)] mt-4 grid grid-cols-2 gap-1 px-2 md:mt-6 md:grid-cols-3 md:gap-1.5 md:px-4 lg:grid-cols-4">
-                {tiles}
-              </div>
-              <div className="mt-6 flex flex-col-reverse items-stretch gap-2.5 px-5 md:mt-14 md:flex-row md:items-center md:justify-center md:gap-5">
-                <p className="text-center text-caption text-ink-soft md:text-[0.9375rem]">{t.shown.replace('{shown}', String(shown.length)).replace('{total}', count)}</p>
-                {remaining > 0 ? (
-                  <Link href={moreHref} scroll={false} prefetch={false} onClick={(event) => { event.preventDefault(); go({page: state.page + 1}, 'replace'); }}
-                    className="btn btn-primary">{t.more.replace('{n}', String(Math.min(24, remaining)))}</Link>
-                ) : null}
-              </div>
-            </>
-          ) : (
-            <div className="mx-5 mt-8 rounded-card bg-white/60 p-8 text-center md:mx-0">
-              <p className="text-body text-ink-soft">{t.none}</p>
-              <button type="button" onClick={() => go({category: null, tip: null, query: '', place: null})} className="btn btn-secondary mt-5">{t.reset}</button>
-            </div>
-          )}
         </div>
+
+        {placeName && state.view === 'galerie' ? (
+          <p className="mt-5 flex justify-center px-5 lg:mt-6">
+            <button type="button" onClick={() => pickPlace(null)} aria-label={t.placeOff.replace('{place}', placeName)}
+              className="inline-flex h-11 items-center gap-2 rounded-pill border-[1.5px] border-teal-700 bg-teal-tint px-4 text-caption font-semibold text-teal-900">
+              <PinIcon />{placeName}<CrossIcon />
+            </button>
+          </p>
+        ) : null}
+
+        {state.view === 'harta' ? (
+          <div key={`map|${wallKey}`} className="works-fade mx-auto max-w-300 md:px-6 xl:px-0">
+            <WorksMap works={inView} rows={rows} place={state.place} count={plural(lang, inView.length, projects)}
+              onPick={pickPlace} onOpen={register} countries={countries} t={t} />
+          </div>
+        ) : matches.length ? (
+          <>
+            {/* The wall runs edge to edge: 16 from the screen (phones 8), wider than the bar above it. */}
+            <div key={wallKey} onClickCapture={(event) => { if ((event.target as Element).closest('a[href]')) register(); }}
+              className="works-fade mt-4 grid grid-cols-2 gap-1 px-2 md:mt-6 md:grid-cols-3 md:gap-1.5 md:px-4 lg:grid-cols-4">
+              {tiles}
+            </div>
+            <div className="mt-6 flex flex-col-reverse items-stretch gap-2.5 px-5 md:mt-14 md:flex-row md:items-center md:justify-center md:gap-5">
+              <p className="text-center text-caption text-ink-soft md:text-[0.9375rem]">{t.shown.replace('{shown}', String(shown.length)).replace('{total}', count)}</p>
+              {remaining > 0 ? (
+                <Link href={moreHref} scroll={false} prefetch={false} onClick={(event) => { event.preventDefault(); go({page: state.page + 1}, 'replace'); }}
+                  className="btn btn-primary">{t.more.replace('{n}', String(Math.min(24, remaining)))}</Link>
+              ) : null}
+            </div>
+          </>
+        ) : (
+          <div className="mx-5 mt-8 rounded-card bg-white/60 p-8 text-center md:mx-auto md:max-w-300">
+            <p className="text-body text-ink-soft">{t.none}</p>
+            <button type="button" onClick={() => go({category: null, tip: null, query: '', place: null})} className="btn btn-secondary mt-5">{t.reset}</button>
+          </div>
+        )}
       </section>
     </>
   );

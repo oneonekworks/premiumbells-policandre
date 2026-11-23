@@ -708,9 +708,38 @@
   .works-sub { animation: works-sub-in 220ms var(--ease-light); }
   /* Filter changes cross-fade the wall. */
   .works-fade { animation: works-fade 320ms var(--ease-light); }
-  /* The docked bar moves up with the header when it hides on a fast scroll. */
-  html[data-header-hidden] .works-dock { translate: 0 -5rem; }
-  @media (width < 64rem) { html[data-header-hidden] .works-dock { translate: 0 -4.5rem; } }
+  /* Fixed top shelf (CHANGES-v6.3 §5): band + the craft's mood glow (the band's top
+     glow only), fading out at its bottom edge so the wall slides under it with no hard cut. */
+  .wshelf { background: var(--color-band); }
+  .wshelf .fxg .g-pol { background: radial-gradient(ellipse 1100px 760px at 12% 0%, rgb(var(--mood-pol) / 0.22), transparent 70%); }
+  .wshelf .fxg .g-clo { background: radial-gradient(ellipse 1100px 760px at 12% 0%, rgb(var(--mood-clo-a) / 0.20), transparent 70%); }
+  .wshelf .fxg .g-ico { background: radial-gradient(ellipse 1100px 760px at 12% 0%, rgb(var(--mood-ico) / 0.18), transparent 70%); }
+  .wshelf .fxg .g-rec { background: radial-gradient(ellipse 1100px 760px at 12% 0%, rgb(var(--mood-rec) / 0.16), transparent 70%); }
+  @media (max-width: 47.99rem) {
+    .wshelf .fxg .g-pol { background: radial-gradient(ellipse 520px 520px at 12% 0%, rgb(var(--mood-pol) / 0.22), transparent 70%); }
+    .wshelf .fxg .g-clo { background: radial-gradient(ellipse 520px 520px at 12% 0%, rgb(var(--mood-clo-a) / 0.20), transparent 70%); }
+    .wshelf .fxg .g-ico { background: radial-gradient(ellipse 520px 520px at 12% 0%, rgb(var(--mood-ico) / 0.18), transparent 70%); }
+    .wshelf .fxg .g-rec { background: radial-gradient(ellipse 520px 520px at 12% 0%, rgb(var(--mood-rec) / 0.16), transparent 70%); }
+  }
+  /* Desktop: 176 solid + 24 fade, header at 16, bar at 112. */
+  .wshelf:not(.works-strip) {
+    -webkit-mask-image: linear-gradient(#000 176px, transparent 200px);
+    mask-image: linear-gradient(#000 176px, transparent 200px);
+  }
+  /* Phones / tablets: the chips sit 12 under the header (bottom 72; 84 from 1024) and the
+     strip ends 12 under them, then a 20 px fade; when the header hides, the strip follows
+     it up so the chips land at 12 on a 68 px strip. */
+  .works-strip {
+    --hb: 72px;
+    height: calc(var(--hb) + 88px);
+    padding-top: calc(var(--hb) + 12px);
+    -webkit-mask-image: linear-gradient(#000 calc(100% - 20px), transparent);
+    mask-image: linear-gradient(#000 calc(100% - 20px), transparent);
+    transition: translate var(--duration-fade) var(--ease-light);
+  }
+  @media (width >= 64rem) { .works-strip { --hb: 84px; } }
+  html[data-header-hidden] .works-strip { translate: 0 calc(-1 * var(--hb)); }
+  @media (prefers-reduced-motion: reduce) { .works-strip { transition: none; } }
 
   /* Project panel: floating from the right (phones: a sheet from below). */
   .project-panel { animation: works-fade 280ms var(--ease-light); }
