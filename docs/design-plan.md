@@ -725,6 +725,48 @@ Fotografii · N, direct address). Checked at 1440 and 390 against the boards
 99 · 100 (CLS 0), mobile 82 · 100 (LCP 4.9 s simulated, CLS 0). All 74
 browser specs pass.
 
+**V8.2 · Works: edge-to-edge wall and fixed top shelf** (CHANGES-v6.3 §4 + §5;
+boards V6Works, V6WorksMobile, V6WorksSticky + Mobile; §3 card grid not built).
+
+*V8.2 done 2026-11-23* (local commits `e5c0c8a` wall, `8cc24e0` shelf).
+- Page: no visible hero; `<h1 class="sr-only">`; the lead is the meta
+  description (`worksLead()`; omitted while a language has no works; category
+  pages fall back to it). The band is pulled under the header (`-mt` of
+  `main`'s padding), padding-top 88 / 112 at lg.
+- Wall: full width (`px-2` / `md:px-4`), 2 / 3 (768) / 4 (1024) columns, gaps
+  4 / 6, 4:5 tiles, radius 4 / 6, flat. `WorkTile` = link with `aria-label`
+  “parish, craft · place · year” (`tileMeta()`), hover / `:focus-visible`
+  overlay in CSS (`.ww-ov`, none under `hover: none`, no zoom with reduced
+  motion). Mosaic shapes, `captionLines`, `whatText` removed. First page 23
+  works + map card (`FIRST_PAGE`), `MAP_SLOT = 3` for both widths.
+- Map card: hatched sea in CSS + a sea-less copy of the drawing
+  (`public/maps/europe-800x603-land.svg`); “N lucrări · N țări” counted from
+  the filtered list. **The data has 3 countries (RO 56, MD 3, ES 1), so it
+  reads “3 țări”, not the board's “5 țări”.**
+- Desktop bar split as on the board: category pill | search circle +
+  Galerie/Hartă pill, 48 tall, sticky at 112, no docked style or count.
+- Shelf: `.wshelf` sticky inside the band (200, mask 176 → 200), visible once
+  `scrollY > 0`, leaves with the band so it never covers the footer; mood =
+  the band's top glow only. Phones / tablets (< 1200): fixed `.works-strip`
+  (band + mood, 20 px fade), chips + search + map icons, translated up with
+  the header (chips at 12, strip 68). `HeaderFrame` reads `data-works-shelf`:
+  no scrolled lift on Works, and no hiding on desktop. Filter change after
+  scrolling → `scrollTo(0)`.
+- Fix found on the way: the closed mobile menu kept an `aria-expanded="true"`
+  accordion in the header, so the header never hid on phones (any page).
+- Focus ring was already `:focus-visible` only (a clicked chip shows none).
+- Checks (prod build): lint, 38 unit tests, browser 73 passed / 4 skipped
+  (filters + portfolio twice: 36/36), axe (WCAG A/AA + best practice) clean on
+  `/lucrarile-noastre` and `/clopote?tip=cu-jug` at 1440 and phone, scrolled.
+  Compared with the boards at 1440 and 390; 900 gives 3 columns, no overflow.
+  Lighthouse not run this time. Typecheck: only the earlier
+  `scripts/v8-usi-models.mts` implicit-any errors (V8.1 script).
+- Open: grid covers. No cover has a hotspot (all centre-cropped); 16 covers
+  are too small for a ≈ 420 px tile at 2×, 23 are landscapes cropped hard.
+  Contact sheet: `.migration/works-grid-covers.html`. Next: the user marks the
+  weak ones; then decide hotspots / another existing photo vs an optional
+  `project.gridCover` (Studio deploy + writes need the user's OK).
+
 ## Content still needed from the user
 
 See `docs/design/clarity-v6/open-questions.md`; the main ones: Policandre
